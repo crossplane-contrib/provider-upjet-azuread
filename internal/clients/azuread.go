@@ -25,6 +25,9 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal azuread credentials as JSON"
+	keyClientId = "client_id"
+	keyClientSecret = "client_secret"
+	keyTenantId = "tenant_id"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -60,6 +63,17 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		creds := map[string]string{}
 		if err := json.Unmarshal(data, &creds); err != nil {
 			return ps, errors.Wrap(err, errUnmarshalCredentials)
+		}
+		// set provider configuration
+		ps.Configuration = map[string]any{}
+		if v, ok := creds[keyClientId]; ok {
+			ps.Configuration[keyClientId] = v
+		}
+		if v, ok := creds[keyClientSecret]; ok {
+			ps.Configuration[keyClientSecret] = v
+		}
+		if v, ok := creds[keyTenantId]; ok {
+			ps.Configuration[keyTenantId] = v
 		}
 
 		// Set credentials in Terraform provider configuration.
