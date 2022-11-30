@@ -1,4 +1,4 @@
-module github.com/upbound/upjet-provider-template
+module github.com/upbound/provider-azuread
 
 go 1.19
 
