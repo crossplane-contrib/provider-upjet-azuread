@@ -5,18 +5,18 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: resources.null.azuread.upbound.io
+  name: invitations.invitation.azuread.upbound.io
 spec:
-  group: null.azuread.upbound.io
+  group: invitation.azuread.upbound.io
   names:
     categories:
     - crossplane
     - managed
     - azuread
-    kind: Resource
-    listKind: ResourceList
-    plural: resources
-    singular: resource
+    kind: Invitation
+    listKind: InvitationList
+    plural: invitations
+    singular: invitation
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Resource is the Schema for the Resources API. <no value>
+        description: Invitation is the Schema for the Invitations API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: ResourceSpec defines the desired state of Resource
+            description: InvitationSpec defines the desired state of Invitation
             properties:
               deletionPolicy:
                 default: Delete
@@ -63,13 +63,42 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  triggers:
-                    additionalProperties:
-                      type: string
-                    description: A map of arbitrary strings that, when changed, will
-                      force the null resource to be replaced, re-running any associated
-                      provisioners.
-                    type: object
+                  message:
+                    description: Customize the message sent to the invited user
+                    items:
+                      properties:
+                        additionalRecipients:
+                          description: Email addresses of additional recipients the
+                            invitation message should be sent to
+                          items:
+                            type: string
+                          type: array
+                        body:
+                          description: Customized message body you want to send if
+                            you don't want to send the default message
+                          type: string
+                        language:
+                          description: The language you want to send the default message
+                            in
+                          type: string
+                      type: object
+                    type: array
+                  redirectUrl:
+                    description: The URL that the user should be redirected to once
+                      the invitation is redeemed
+                    type: string
+                  userDisplayName:
+                    description: The display name of the user being invited
+                    type: string
+                  userEmailAddress:
+                    description: The email address of the user being invited
+                    type: string
+                  userType:
+                    description: The user type of the user being invited
+                    type: string
+                required:
+                - redirectUrl
+                - userEmailAddress
                 type: object
               providerConfigRef:
                 default:
@@ -243,11 +272,17 @@ spec:
             - forProvider
             type: object
           status:
-            description: ResourceStatus defines the observed state of Resource.
+            description: InvitationStatus defines the observed state of Invitation.
             properties:
               atProvider:
                 properties:
                   id:
+                    type: string
+                  redeemUrl:
+                    description: The URL the user can use to redeem their invitation
+                    type: string
+                  userId:
+                    description: Object ID of the invited user
                     type: string
                 type: object
               conditions:
