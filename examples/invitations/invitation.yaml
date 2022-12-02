@@ -1,0 +1,8 @@
+apiVersion: invitation.azuread.upbound.io/v1alpha1
+kind: Invitation
+metadata:
+  name: example
+spec:
+  forProvider:
+    userEmailAddress: testuser@upbound.io
+    redirectUrl: https://portal.azure.com
