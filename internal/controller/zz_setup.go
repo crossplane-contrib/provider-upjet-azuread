@@ -9,6 +9,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
+	application "github.com/upbound/provider-azuread/internal/controller/application/application"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitation/invitation"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
 )
@@ -17,6 +18,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		application.Setup,
 		invitation.Setup,
 		providerconfig.Setup,
 	} {

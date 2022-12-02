@@ -11,6 +11,9 @@ import "github.com/upbound/upjet/pkg/config"
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// No import documented.
 	"azuread_invitation": config.IdentifierFromProvider,
+
+	//
+	"azuread_application": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

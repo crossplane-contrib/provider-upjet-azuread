@@ -10,6 +10,7 @@ import (
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
 
+	"github.com/upbound/provider-azuread/config/application"
 	"github.com/upbound/provider-azuread/config/invitation"
 )
 
@@ -35,6 +36,7 @@ func GetProvider() *ujconfig.Provider {
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		invitation.Configure,
+		application.Configure,
 	} {
 		configure(pc)
 	}
