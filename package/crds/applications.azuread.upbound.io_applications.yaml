@@ -5,9 +5,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: applications.application.azuread.upbound.io
+  name: applications.applications.azuread.upbound.io
 spec:
-  group: application.azuread.upbound.io
+  group: applications.azuread.upbound.io
   names:
     categories:
     - crossplane

@@ -9,8 +9,8 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
-	application "github.com/upbound/provider-azuread/internal/controller/application/application"
-	invitation "github.com/upbound/provider-azuread/internal/controller/invitation/invitation"
+	application "github.com/upbound/provider-azuread/internal/controller/applications/application"
+	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
 )
 

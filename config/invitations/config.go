@@ -1,4 +1,4 @@
-package invitation
+package invitations
 
 import "github.com/upbound/upjet/pkg/config"
 
@@ -7,6 +7,6 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("azuread_invitation", func(r *config.Resource) {
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
-		r.ShortGroup = "invitation"
+		r.ShortGroup = "invitations"
 	})
 }
