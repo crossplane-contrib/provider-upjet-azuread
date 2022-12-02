@@ -13,6 +13,7 @@ import (
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
+	user "github.com/upbound/provider-azuread/internal/controller/users/user"
 )
 
 // Setup creates all controllers with the supplied logger and adds them to
@@ -23,6 +24,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		group.Setup,
 		invitation.Setup,
 		providerconfig.Setup,
+		user.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
 			return err
