@@ -1,0 +1,8 @@
+apiVersion: groups.azuread.upbound.io/v1alpha1
+kind: Group
+metadata:
+  name: example
+spec:
+  forProvider:
+    displayName: example
+    securityEnabled: true
