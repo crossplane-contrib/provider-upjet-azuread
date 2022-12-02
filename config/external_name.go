@@ -9,11 +9,20 @@ import "github.com/upbound/upjet/pkg/config"
 // ExternalNameConfigs contains all external name configurations for this
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
+	// invitations
+	//
 	// No import documented.
 	"azuread_invitation": config.IdentifierFromProvider,
 
+	// applications
 	//
+	// azuread_application can be imported using their object ID
 	"azuread_application": config.IdentifierFromProvider,
+
+	// groups
+	//
+	// azuread_group can be imported using their object ID
+	"azuread_group": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
