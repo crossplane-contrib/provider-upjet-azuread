@@ -11,6 +11,7 @@ import (
 
 	application "github.com/upbound/provider-azuread/internal/controller/applications/application"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
+	member "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
 	user "github.com/upbound/provider-azuread/internal/controller/users/user"
@@ -22,6 +23,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		application.Setup,
 		group.Setup,
+		member.Setup,
 		invitation.Setup,
 		providerconfig.Setup,
 		user.Setup,
