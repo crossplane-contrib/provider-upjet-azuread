@@ -1,4 +1,4 @@
-package principals
+package serviceprincipals
 
 import "github.com/upbound/upjet/pkg/config"
 
@@ -11,7 +11,7 @@ func Configure(p *config.Provider) {
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
-		r.ShortGroup = "principals"
+		r.ShortGroup = "serviceprincipals"
 
 		config.MoveToStatus(r.TerraformResource, "features")
 	})

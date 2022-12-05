@@ -1,4 +1,4 @@
-apiVersion: principals.azuread.upbound.io/v1alpha1
+apiVersion: serviceprincipals.azuread.upbound.io/v1alpha1
 kind: Principal
 metadata:
   annotations:

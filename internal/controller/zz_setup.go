@@ -13,8 +13,8 @@ import (
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	member "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
-	principal "github.com/upbound/provider-azuread/internal/controller/principals/principal"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
+	principal "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principal"
 	user "github.com/upbound/provider-azuread/internal/controller/users/user"
 )
 
@@ -26,8 +26,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		group.Setup,
 		member.Setup,
 		invitation.Setup,
-		principal.Setup,
 		providerconfig.Setup,
+		principal.Setup,
 		user.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

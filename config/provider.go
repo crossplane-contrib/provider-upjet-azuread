@@ -14,7 +14,7 @@ import (
 	"github.com/upbound/provider-azuread/config/applications"
 	"github.com/upbound/provider-azuread/config/groups"
 	"github.com/upbound/provider-azuread/config/invitations"
-	"github.com/upbound/provider-azuread/config/principals"
+	"github.com/upbound/provider-azuread/config/serviceprincipals"
 	"github.com/upbound/provider-azuread/config/users"
 )
 
@@ -45,7 +45,7 @@ func GetProvider() *ujconfig.Provider {
 		applications.Configure,
 		groups.Configure,
 		users.Configure,
-		principals.Configure,
+		serviceprincipals.Configure,
 	} {
 		configure(pc)
 	}
