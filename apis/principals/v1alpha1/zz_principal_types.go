@@ -53,25 +53,21 @@ type FeatureTagsParameters struct {
 }
 
 type FeaturesObservation struct {
-}
-
-type FeaturesParameters struct {
 
 	// Whether this service principal represents a custom SAML application
-	// +kubebuilder:validation:Optional
 	CustomSingleSignOnApp *bool `json:"customSingleSignOnApp,omitempty" tf:"custom_single_sign_on_app,omitempty"`
 
 	// Whether this service principal represents an Enterprise Application
-	// +kubebuilder:validation:Optional
 	EnterpriseApplication *bool `json:"enterpriseApplication,omitempty" tf:"enterprise_application,omitempty"`
 
 	// Whether this service principal represents a gallery application
-	// +kubebuilder:validation:Optional
 	GalleryApplication *bool `json:"galleryApplication,omitempty" tf:"gallery_application,omitempty"`
 
 	// Whether this app is visible to users in My Apps and Office 365 Launcher
-	// +kubebuilder:validation:Optional
 	VisibleToUsers *bool `json:"visibleToUsers,omitempty" tf:"visible_to_users,omitempty"`
+}
+
+type FeaturesParameters struct {
 }
 
 type Oauth2PermissionScopesObservation struct {
@@ -107,6 +103,9 @@ type PrincipalObservation struct {
 
 	// The display name of the application associated with this service principal
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// Block of features to configure for this service principal using tags
+	Features []FeaturesObservation `json:"features,omitempty" tf:"features,omitempty"`
 
 	// Home page or landing page of the application
 	HomepageURL *string `json:"homepageUrl,omitempty" tf:"homepage_url,omitempty"`
@@ -155,8 +154,18 @@ type PrincipalParameters struct {
 	AppRoleAssignmentRequired *bool `json:"appRoleAssignmentRequired,omitempty" tf:"app_role_assignment_required,omitempty"`
 
 	// The application ID (client ID) of the application for which to create a service principal
-	// +kubebuilder:validation:Required
-	ApplicationID *string `json:"applicationId" tf:"application_id,omitempty"`
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1alpha1.Application
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("application_id",true)
+	// +kubebuilder:validation:Optional
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// Description of the service principal provided for internal end-users
 	// +kubebuilder:validation:Optional
@@ -165,10 +174,6 @@ type PrincipalParameters struct {
 	// Block of features to configure for this service principal using tags
 	// +kubebuilder:validation:Optional
 	FeatureTags []FeatureTagsParameters `json:"featureTags,omitempty" tf:"feature_tags,omitempty"`
-
-	// Block of features to configure for this service principal using tags
-	// +kubebuilder:validation:Optional
-	Features []FeaturesParameters `json:"features,omitempty" tf:"features,omitempty"`
 
 	// The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on
 	// +kubebuilder:validation:Optional
