@@ -18,7 +18,7 @@ import (
 	"github.com/upbound/upjet/pkg/terraform"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1alpha1 "github.com/upbound/provider-azuread/apis/serviceprincipals/v1alpha1"
+	v1alpha1 "github.com/upbound/provider-azuread/apis/policies/v1alpha1"
 )
 
 // Setup adds a controller that reconciles MappingPolicy managed resources.

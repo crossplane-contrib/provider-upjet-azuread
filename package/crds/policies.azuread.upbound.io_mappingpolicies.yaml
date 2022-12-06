@@ -5,9 +5,9 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: mappingpolicies.serviceprincipals.azuread.upbound.io
+  name: mappingpolicies.policies.azuread.upbound.io
 spec:
-  group: serviceprincipals.azuread.upbound.io
+  group: policies.azuread.upbound.io
   names:
     categories:
     - crossplane
