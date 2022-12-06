@@ -72,3 +72,69 @@ func (mg *Principal) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDeta
 func (mg *Principal) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
+
+// GetCondition of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetProviderConfigReference of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+/*
+GetProviderReference of this PrincipalClaimsMappingPolicyAssignment.
+Deprecated: Use GetProviderConfigReference.
+*/
+func (mg *PrincipalClaimsMappingPolicyAssignment) GetProviderReference() *xpv1.Reference {
+	return mg.Spec.ProviderReference
+}
+
+// GetPublishConnectionDetailsTo of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetProviderConfigReference of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+/*
+SetProviderReference of this PrincipalClaimsMappingPolicyAssignment.
+Deprecated: Use SetProviderConfigReference.
+*/
+func (mg *PrincipalClaimsMappingPolicyAssignment) SetProviderReference(r *xpv1.Reference) {
+	mg.Spec.ProviderReference = r
+}
+
+// SetPublishConnectionDetailsTo of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this PrincipalClaimsMappingPolicyAssignment.
+func (mg *PrincipalClaimsMappingPolicyAssignment) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
