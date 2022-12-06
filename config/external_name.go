@@ -37,6 +37,9 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"azuread_service_principal": config.IdentifierFromProvider,
 	// azuread_service_principal_claims_mapping_policy_assignment can be imported using the id
 	"azuread_service_principal_claims_mapping_policy_assignment": config.IdentifierFromProvider,
+	// azuread_service_principal_certificate can be imported using the object ID of the associated
+	// service principal and the key ID of the certificate credential
+	"azuread_service_principal_certificate": config.IdentifierFromProvider,
 
 	// policies
 	//

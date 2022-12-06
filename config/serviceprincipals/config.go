@@ -26,4 +26,9 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "azuread"
 		r.ShortGroup = "serviceprincipals"
 	})
+	p.AddResourceConfigurator("azuread_service_principal_certificate", func(r *config.Resource) {
+		// We need to override the default group that upjet generated for
+		// this resource, which would be "azuread"
+		r.ShortGroup = "serviceprincipals"
+	})
 }

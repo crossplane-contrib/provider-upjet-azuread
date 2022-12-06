@@ -16,6 +16,7 @@ import (
 	mappingpolicy "github.com/upbound/provider-azuread/internal/controller/policies/mappingpolicy"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
 	principal "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principal"
+	principalcertificate "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principalcertificate"
 	principalclaimsmappingpolicyassignment "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principalclaimsmappingpolicyassignment"
 	user "github.com/upbound/provider-azuread/internal/controller/users/user"
 )
@@ -31,6 +32,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		mappingpolicy.Setup,
 		providerconfig.Setup,
 		principal.Setup,
+		principalcertificate.Setup,
 		principalclaimsmappingpolicyassignment.Setup,
 		user.Setup,
 	} {
