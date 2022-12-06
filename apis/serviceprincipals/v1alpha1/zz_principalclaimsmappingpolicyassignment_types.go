@@ -20,12 +20,30 @@ type PrincipalClaimsMappingPolicyAssignmentObservation struct {
 type PrincipalClaimsMappingPolicyAssignmentParameters struct {
 
 	// ID of the claims mapping policy to assign
-	// +kubebuilder:validation:Required
-	ClaimsMappingPolicyID *string `json:"claimsMappingPolicyId" tf:"claims_mapping_policy_id,omitempty"`
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/policies/v1alpha1.MappingPolicy
+	// +kubebuilder:validation:Optional
+	ClaimsMappingPolicyID *string `json:"claimsMappingPolicyId,omitempty" tf:"claims_mapping_policy_id,omitempty"`
+
+	// Reference to a MappingPolicy in policies to populate claimsMappingPolicyId.
+	// +kubebuilder:validation:Optional
+	ClaimsMappingPolicyIDRef *v1.Reference `json:"claimsMappingPolicyIdRef,omitempty" tf:"-"`
+
+	// Selector for a MappingPolicy in policies to populate claimsMappingPolicyId.
+	// +kubebuilder:validation:Optional
+	ClaimsMappingPolicyIDSelector *v1.Selector `json:"claimsMappingPolicyIdSelector,omitempty" tf:"-"`
 
 	// Object ID of the service principal for which to assign the policy
-	// +kubebuilder:validation:Required
-	ServicePrincipalID *string `json:"servicePrincipalId" tf:"service_principal_id,omitempty"`
+	// +crossplane:generate:reference:type=Principal
+	// +kubebuilder:validation:Optional
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
+
+	// Reference to a Principal to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+
+	// Selector for a Principal to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 }
 
 // PrincipalClaimsMappingPolicyAssignmentSpec defines the desired state of PrincipalClaimsMappingPolicyAssignment

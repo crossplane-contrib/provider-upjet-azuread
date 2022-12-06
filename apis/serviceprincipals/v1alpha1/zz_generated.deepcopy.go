@@ -364,10 +364,30 @@ func (in *PrincipalClaimsMappingPolicyAssignmentParameters) DeepCopyInto(out *Pr
 		*out = new(string)
 		**out = **in
 	}
+	if in.ClaimsMappingPolicyIDRef != nil {
+		in, out := &in.ClaimsMappingPolicyIDRef, &out.ClaimsMappingPolicyIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClaimsMappingPolicyIDSelector != nil {
+		in, out := &in.ClaimsMappingPolicyIDSelector, &out.ClaimsMappingPolicyIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.ServicePrincipalID != nil {
 		in, out := &in.ServicePrincipalID, &out.ServicePrincipalID
 		*out = new(string)
 		**out = **in
+	}
+	if in.ServicePrincipalIDRef != nil {
+		in, out := &in.ServicePrincipalIDRef, &out.ServicePrincipalIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServicePrincipalIDSelector != nil {
+		in, out := &in.ServicePrincipalIDSelector, &out.ServicePrincipalIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

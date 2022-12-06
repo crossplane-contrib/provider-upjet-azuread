@@ -16,6 +16,12 @@ func Configure(p *config.Provider) {
 		config.MoveToStatus(r.TerraformResource, "features")
 	})
 	p.AddResourceConfigurator("azuread_service_principal_claims_mapping_policy_assignment", func(r *config.Resource) {
+		r.References["service_principal_id"] = config.Reference{
+			Type: "Principal",
+		}
+		r.References["claims_mapping_policy_id"] = config.Reference{
+			Type: "github.com/upbound/provider-azuread/apis/policies/v1alpha1.MappingPolicy",
+		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
 		r.ShortGroup = "serviceprincipals"
