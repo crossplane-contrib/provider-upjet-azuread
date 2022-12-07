@@ -1,0 +1,20 @@
+apiVersion: users.azuread.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: users/v1beta1/user
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: J. Doe
+    mailNickname: jdoe
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    userPrincipalName: jdoe@hashicorp.com
+
+---
+

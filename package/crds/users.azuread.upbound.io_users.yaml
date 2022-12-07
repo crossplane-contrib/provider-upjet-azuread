@@ -32,10 +32,10 @@ spec:
     - jsonPath: .metadata.creationTimestamp
       name: AGE
       type: date
-    name: v1alpha1
+    name: v1beta1
     schema:
       openAPIV3Schema:
-        description: User is the Schema for the Users API. <no value>
+        description: User is the Schema for the Users API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,99 +64,136 @@ spec:
               forProvider:
                 properties:
                   accountEnabled:
-                    description: Whether or not the account should be enabled
+                    description: Whether or not the account should be enabled. Whether
+                      or not the account should be enabled
                     type: boolean
                   ageGroup:
-                    description: The age group of the user
+                    description: The age group of the user. Supported values are Adult,
+                      NotAdult and Minor. Omit this property or specify a blank string
+                      to unset. The age group of the user
                     type: string
                   businessPhones:
-                    description: The telephone numbers for the user. Only one number
-                      can be set for this property. Read-only for users synced with
-                      Azure AD Connect
+                    description: A list of telephone numbers for the user. Only one
+                      number can be set for this property. Read-only for users synced
+                      with Azure AD Connect. The telephone numbers for the user. Only
+                      one number can be set for this property. Read-only for users
+                      synced with Azure AD Connect
                     items:
                       type: string
                     type: array
                   city:
-                    description: The city in which the user is located
+                    description: The city in which the user is located. The city in
+                      which the user is located
                     type: string
                   companyName:
                     description: The company name which the user is associated. This
                       property can be useful for describing the company that an external
-                      user comes from
+                      user comes from. The company name which the user is associated.
+                      This property can be useful for describing the company that
+                      an external user comes from
                     type: string
                   consentProvidedForMinor:
-                    description: Whether consent has been obtained for minors
+                    description: Whether consent has been obtained for minors. Supported
+                      values are Granted, Denied and NotRequired. Omit this property
+                      or specify a blank string to unset. Whether consent has been
+                      obtained for minors
                     type: string
                   costCenter:
-                    description: The cost center associated with the user.
+                    description: The cost center associated with the user. The cost
+                      center associated with the user.
                     type: string
                   country:
                     description: The country/region in which the user is located,
+                      e.g. US or UK. The country/region in which the user is located,
                       e.g. `US` or `UK`
                     type: string
                   department:
-                    description: The name for the department in which the user works
+                    description: The name for the department in which the user works.
+                      The name for the department in which the user works
                     type: string
                   disablePasswordExpiration:
-                    description: Whether the users password is exempt from expiring
+                    description: Whether the user's password is exempt from expiring.
+                      Defaults to false. Whether the users password is exempt from
+                      expiring
                     type: boolean
                   disableStrongPassword:
                     description: Whether the user is allowed weaker passwords than
-                      the default policy to be specified.
+                      the default policy to be specified. Defaults to false. Whether
+                      the user is allowed weaker passwords than the default policy
+                      to be specified.
                     type: boolean
                   displayName:
-                    description: The name to display in the address book for the user
+                    description: The name to display in the address book for the user.
+                      The name to display in the address book for the user
                     type: string
                   division:
                     description: The name of the division in which the user works.
+                      The name of the division in which the user works.
                     type: string
                   employeeId:
                     description: The employee identifier assigned to the user by the
-                      organisation
+                      organisation. The employee identifier assigned to the user by
+                      the organisation
                     type: string
                   employeeType:
                     description: Captures enterprise worker type. For example, Employee,
-                      Contractor, Consultant, or Vendor.
+                      Contractor, Consultant, or Vendor. Captures enterprise worker
+                      type. For example, Employee, Contractor, Consultant, or Vendor.
                     type: string
                   faxNumber:
-                    description: The fax number of the user
+                    description: The fax number of the user. The fax number of the
+                      user
                     type: string
                   forcePasswordChange:
                     description: Whether the user is forced to change the password
                       during the next sign-in. Only takes effect when also changing
-                      the password
+                      the password. Defaults to false. Whether the user is forced
+                      to change the password during the next sign-in. Only takes effect
+                      when also changing the password
                     type: boolean
                   givenName:
-                    description: The given name (first name) of the user
+                    description: The given name (first name) of the user. The given
+                      name (first name) of the user
                     type: string
                   jobTitle:
-                    description: The user’s job title
+                    description: The user’s job title. The user’s job title
                     type: string
                   mail:
-                    description: The SMTP address for the user. Cannot be unset.
+                    description: The SMTP address for the user. This property cannot
+                      be unset once specified. The SMTP address for the user. Cannot
+                      be unset.
                     type: string
                   mailNickname:
                     description: The mail alias for the user. Defaults to the user
-                      name part of the user principal name (UPN)
+                      name part of the user principal name (UPN). The mail alias for
+                      the user. Defaults to the user name part of the user principal
+                      name (UPN)
                     type: string
                   managerId:
-                    description: The object ID of the user's manager
+                    description: The object ID of the user's manager. The object ID
+                      of the user's manager
                     type: string
                   mobilePhone:
-                    description: The primary cellular telephone number for the user
+                    description: The primary cellular telephone number for the user.
+                      The primary cellular telephone number for the user
                     type: string
                   officeLocation:
-                    description: The office location in the user's place of business
+                    description: The office location in the user's place of business.
+                      The office location in the user's place of business
                     type: string
                   onpremisesImmutableId:
                     description: The value used to associate an on-premise Active
                       Directory user account with their Azure AD user object. This
                       must be specified if you are using a federated domain for the
-                      user's `user_principal_name` property when creating a new user
-                      account
+                      user's user_principal_name property when creating a new user
+                      account. The value used to associate an on-premise Active Directory
+                      user account with their Azure AD user object. This must be specified
+                      if you are using a federated domain for the user's `user_principal_name`
+                      property when creating a new user account
                     type: string
                   otherMails:
-                    description: Additional email addresses for the user
+                    description: A list of additional email addresses for the user.
+                      Additional email addresses for the user
                     items:
                       type: string
                     type: array
@@ -164,7 +201,10 @@ spec:
                     description: The password for the user. The password must satisfy
                       minimum requirements as specified by the password policy. The
                       maximum length is 256 characters. This property is required
-                      when creating a new user
+                      when creating a new user. The password for the user. The password
+                      must satisfy minimum requirements as specified by the password
+                      policy. The maximum length is 256 characters. This property
+                      is required when creating a new user
                     properties:
                       key:
                         description: The key to select.
@@ -183,33 +223,47 @@ spec:
                   postalCode:
                     description: The postal code for the user's postal address. The
                       postal code is specific to the user's country/region. In the
-                      United States of America, this attribute contains the ZIP code
+                      United States of America, this attribute contains the ZIP code.
+                      The postal code for the user's postal address. The postal code
+                      is specific to the user's country/region. In the United States
+                      of America, this attribute contains the ZIP code
                     type: string
                   preferredLanguage:
-                    description: The user's preferred language, in ISO 639-1 notation
+                    description: The user's preferred language, in ISO 639-1 notation.
+                      The user's preferred language, in ISO 639-1 notation
                     type: string
                   showInAddressList:
                     description: Whether or not the Outlook global address list should
-                      include this user
+                      include this user. Defaults to true. Whether or not the Outlook
+                      global address list should include this user
                     type: boolean
                   state:
-                    description: The state or province in the user's address
+                    description: The state or province in the user's address. The
+                      state or province in the user's address
                     type: string
                   streetAddress:
-                    description: The street address of the user's place of business
+                    description: The street address of the user's place of business.
+                      The street address of the user's place of business
                     type: string
                   surname:
-                    description: The user's surname (family name or last name)
+                    description: The user's surname (family name or last name). The
+                      user's surname (family name or last name)
                     type: string
                   usageLocation:
                     description: 'The usage location of the user. Required for users
                       that will be assigned licenses due to legal requirement to check
                       for availability of services in countries. The usage location
                       is a two letter country code (ISO standard 3166). Examples include:
-                      `NO`, `JP`, and `GB`. Cannot be reset to null once set'
+                      NO, JP, and GB. Cannot be reset to null once set. The usage
+                      location of the user. Required for users that will be assigned
+                      licenses due to legal requirement to check for availability
+                      of services in countries. The usage location is a two letter
+                      country code (ISO standard 3166). Examples include: `NO`, `JP`,
+                      and `GB`. Cannot be reset to null once set'
                     type: string
                   userPrincipalName:
-                    description: The user principal name (UPN) of the user
+                    description: The user principal name (UPN) of the user. The user
+                      principal name (UPN) of the user
                     type: string
                 required:
                 - displayName
@@ -396,56 +450,77 @@ spec:
                     type: string
                   creationType:
                     description: Indicates whether the user account was created as
-                      a regular school or work account (`null`), an external account
-                      (`Invitation`), a local account for an Azure Active Directory
-                      B2C tenant (`LocalAccount`) or self-service sign-up using email
-                      verification (`EmailVerified`)
+                      a regular school or work account (null), an external account
+                      (Invitation), a local account for an Azure Active Directory
+                      B2C tenant (LocalAccount) or self-service sign-up using email
+                      verification (EmailVerified). Indicates whether the user account
+                      was created as a regular school or work account (`null`), an
+                      external account (`Invitation`), a local account for an Azure
+                      Active Directory B2C tenant (`LocalAccount`) or self-service
+                      sign-up using email verification (`EmailVerified`)
                     type: string
                   externalUserState:
                     description: For an external user invited to the tenant, this
-                      property represents the invited user's invitation status
+                      property represents the invited user's invitation status. Possible
+                      values are PendingAcceptance or Accepted. For an external user
+                      invited to the tenant, this property represents the invited
+                      user's invitation status
                     type: string
                   id:
                     type: string
                   imAddresses:
-                    description: The instant message voice over IP (VOIP) session
-                      initiation protocol (SIP) addresses for the user
+                    description: A list of instant message voice over IP (VOIP) session
+                      initiation protocol (SIP) addresses for the user. The instant
+                      message voice over IP (VOIP) session initiation protocol (SIP)
+                      addresses for the user
                     items:
                       type: string
                     type: array
                   objectId:
-                    description: The object ID of the user
+                    description: The object ID of the user. The object ID of the user
                     type: string
                   onpremisesDistinguishedName:
-                    description: The on-premise Active Directory distinguished name
+                    description: The on-premises distinguished name (DN) of the user,
+                      synchronised from the on-premises directory when Azure AD Connect
+                      is used. The on-premise Active Directory distinguished name
                       (DN) of the user
                     type: string
                   onpremisesDomainName:
-                    description: The on-premise FQDN (i.e. dnsDomainName) of the user
+                    description: The on-premises FQDN, also called dnsDomainName,
+                      synchronised from the on-premises directory when Azure AD Connect
+                      is used. The on-premise FQDN (i.e. dnsDomainName) of the user
                     type: string
                   onpremisesSamAccountName:
-                    description: The on-premise SAM account name of the user
+                    description: The on-premise SAM account name of the user. The
+                      on-premise SAM account name of the user
                     type: string
                   onpremisesSecurityIdentifier:
-                    description: The on-premise security identifier (SID) of the user
+                    description: The on-premises security identifier (SID), synchronised
+                      from the on-premises directory when Azure AD Connect is used.
+                      The on-premise security identifier (SID) of the user
                     type: string
                   onpremisesSyncEnabled:
-                    description: Whether this user is synchronized from an on-premises
-                      directory (true), no longer synchronized (false), or has never
-                      been synchronized (null)
+                    description: Whether this user is synchronised from an on-premises
+                      directory (true), no longer synchronised (false), or has never
+                      been synchronised (null). Whether this user is synchronized
+                      from an on-premises directory (true), no longer synchronized
+                      (false), or has never been synchronized (null)
                     type: boolean
                   onpremisesUserPrincipalName:
-                    description: The on-premise user principal name of the user
+                    description: The on-premise user principal name of the user. The
+                      on-premise user principal name of the user
                     type: string
                   proxyAddresses:
-                    description: Email addresses for the user that direct to the same
-                      mailbox
+                    description: List of email addresses for the user that direct
+                      to the same mailbox. Email addresses for the user that direct
+                      to the same mailbox
                     items:
                       type: string
                     type: array
                   userType:
                     description: The user type in the directory. Possible values are
-                      `Guest` or `Member`
+                      Guest or Member. The user type in the directory. Possible values
+                      are `Guest` or `Member`
                     type: string
                 type: object
               conditions:

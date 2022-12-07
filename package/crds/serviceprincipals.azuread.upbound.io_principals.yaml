@@ -32,10 +32,10 @@ spec:
     - jsonPath: .metadata.creationTimestamp
       name: AGE
       type: date
-    name: v1alpha1
+    name: v1beta1
     schema:
       openAPIV3Schema:
-        description: Principal is the Schema for the Principals API. <no value>
+        description: Principal is the Schema for the Principals API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -79,8 +79,9 @@ spec:
                       or access token to the application
                     type: boolean
                   applicationId:
-                    description: The application ID (client ID) of the application
-                      for which to create a service principal
+                    description: The ID of the delegated permission grant. The application
+                      ID (client ID) of the application for which to create a service
+                      principal
                     type: string
                   applicationIdRef:
                     description: Reference to a Application in applications to populate
@@ -429,14 +430,15 @@ spec:
                         enabled:
                           type: boolean
                         id:
+                          description: The ID of the delegated permission grant.
                           type: string
                         value:
                           type: string
                       type: object
                     type: array
                   applicationTenantId:
-                    description: The tenant ID where the associated application is
-                      registered
+                    description: The ID of the delegated permission grant. The tenant
+                      ID where the associated application is registered
                     type: string
                   displayName:
                     description: The display name of the application associated with
@@ -469,6 +471,7 @@ spec:
                     description: Home page or landing page of the application
                     type: string
                   id:
+                    description: The ID of the delegated permission grant.
                     type: string
                   logoutUrl:
                     description: The URL that will be used by Microsoft's authorization
@@ -490,6 +493,7 @@ spec:
                         enabled:
                           type: boolean
                         id:
+                          description: The ID of the delegated permission grant.
                           type: string
                         type:
                           type: string
@@ -502,7 +506,8 @@ spec:
                       type: object
                     type: array
                   objectId:
-                    description: The object ID of the service principal
+                    description: The ID of the delegated permission grant. The object
+                      ID of the service principal
                     type: string
                   redirectUris:
                     description: The URLs where user tokens are sent for sign-in with

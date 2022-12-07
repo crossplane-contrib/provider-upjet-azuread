@@ -32,10 +32,10 @@ spec:
     - jsonPath: .metadata.creationTimestamp
       name: AGE
       type: date
-    name: v1alpha1
+    name: v1beta1
     schema:
       openAPIV3Schema:
-        description: MappingPolicy is the Schema for the MappingPolicys API. <no value>
+        description: MappingPolicy is the Schema for the MappingPolicys API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,13 +64,16 @@ spec:
               forProvider:
                 properties:
                   definition:
-                    description: A string collection containing a JSON string that
-                      defines the rules and settings for this policy
+                    description: The claims mapping policy. This is a JSON formatted
+                      string, for which the jsonencode() function can be used. A string
+                      collection containing a JSON string that defines the rules and
+                      settings for this policy
                     items:
                       type: string
                     type: array
                   displayName:
-                    description: Display name for this policy
+                    description: The display name for this Claims Mapping Policy.
+                      Display name for this policy
                     type: string
                 required:
                 - definition
@@ -253,6 +256,7 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The ID of the Claims Mapping Policy.
                     type: string
                 type: object
               conditions:

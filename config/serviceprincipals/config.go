@@ -6,7 +6,7 @@ import "github.com/upbound/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("azuread_service_principal", func(r *config.Resource) {
 		r.References["application_id"] = config.Reference{
-			Type:      "github.com/upbound/provider-azuread/apis/applications/v1alpha1.Application",
+			Type:      "github.com/upbound/provider-azuread/apis/applications/v1beta1.Application",
 			Extractor: `github.com/upbound/upjet/pkg/resource.ExtractParamPath("application_id",true)`,
 		}
 		// We need to override the default group that upjet generated for
@@ -20,13 +20,16 @@ func Configure(p *config.Provider) {
 			Type: "Principal",
 		}
 		r.References["claims_mapping_policy_id"] = config.Reference{
-			Type: "github.com/upbound/provider-azuread/apis/policies/v1alpha1.MappingPolicy",
+			Type: "github.com/upbound/provider-azuread/apis/policies/v1beta1.MappingPolicy",
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
 		r.ShortGroup = "serviceprincipals"
 	})
 	p.AddResourceConfigurator("azuread_service_principal_certificate", func(r *config.Resource) {
+		r.References["service_principal_id"] = config.Reference{
+			Type: "Principal",
+		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
 		r.ShortGroup = "serviceprincipals"

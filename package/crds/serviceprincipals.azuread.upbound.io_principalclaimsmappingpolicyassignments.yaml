@@ -32,11 +32,11 @@ spec:
     - jsonPath: .metadata.creationTimestamp
       name: AGE
       type: date
-    name: v1alpha1
+    name: v1beta1
     schema:
       openAPIV3Schema:
         description: PrincipalClaimsMappingPolicyAssignment is the Schema for the
-          PrincipalClaimsMappingPolicyAssignments API. <no value>
+          PrincipalClaimsMappingPolicyAssignments API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -66,7 +66,8 @@ spec:
               forProvider:
                 properties:
                   claimsMappingPolicyId:
-                    description: ID of the claims mapping policy to assign
+                    description: The ID of the claims mapping policy to assign. ID
+                      of the claims mapping policy to assign
                     type: string
                   claimsMappingPolicyIdRef:
                     description: Reference to a MappingPolicy in policies to populate
@@ -144,8 +145,9 @@ spec:
                         type: object
                     type: object
                   servicePrincipalId:
-                    description: Object ID of the service principal for which to assign
-                      the policy
+                    description: The object ID of the service principal for the policy
+                      assignment. Object ID of the service principal for which to
+                      assign the policy
                     type: string
                   servicePrincipalIdRef:
                     description: Reference to a Principal to populate servicePrincipalId.
@@ -399,6 +401,7 @@ spec:
               atProvider:
                 properties:
                   id:
+                    description: The ID of the Claims Mapping Policy Assignment.
                     type: string
                 type: object
               conditions:

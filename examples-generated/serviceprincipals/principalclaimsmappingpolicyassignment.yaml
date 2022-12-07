@@ -1,0 +1,19 @@
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: PrincipalClaimsMappingPolicyAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/principalclaimsmappingpolicyassignment
+  labels:
+    testing.upbound.io/example-name: app
+  name: app
+spec:
+  forProvider:
+    claimsMappingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_policy
+    servicePrincipalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: my_principal
+
+---
+
