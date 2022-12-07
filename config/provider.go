@@ -9,6 +9,7 @@ import (
 	_ "embed"
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
+	"github.com/upbound/upjet/pkg/registry/reference"
 
 	"github.com/upbound/provider-azuread/config/applications"
 	"github.com/upbound/provider-azuread/config/invitations"
@@ -31,7 +32,9 @@ func GetProvider() *ujconfig.Provider {
 		ujconfig.WithIncludeList(ExternalNameConfigured()),
 		ujconfig.WithDefaultResourceOptions(
 			ExternalNameConfigurations(),
-		))
+		),
+		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),
+	)
 
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions

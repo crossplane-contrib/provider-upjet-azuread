@@ -32,10 +32,10 @@ spec:
     - jsonPath: .metadata.creationTimestamp
       name: AGE
       type: date
-    name: v1alpha1
+    name: v1beta1
     schema:
       openAPIV3Schema:
-        description: Application is the Schema for the Applications API. <no value>
+        description: Application is the Schema for the Applications API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -99,8 +99,9 @@ spec:
                                   enabled
                                 type: boolean
                               id:
-                                description: The unique identifier of the delegated
-                                  permission
+                                description: An ID used to uniquely identify this
+                                  synchronization sec. The unique identifier of the
+                                  delegated permission
                                 type: string
                               type:
                                 description: Whether this delegated permission should
@@ -118,8 +119,9 @@ spec:
                                   that appears in the end user consent experience
                                 type: string
                               value:
-                                description: The value that is used for the `scp`
-                                  claim in OAuth 2.0 access tokens
+                                description: The value of the secret. The value that
+                                  is used for the `scp` claim in OAuth 2.0 access
+                                  tokens
                                 type: string
                             required:
                             - id
@@ -155,12 +157,14 @@ spec:
                           description: Determines if the app role is enabled
                           type: boolean
                         id:
-                          description: The unique identifier of the app role
+                          description: An ID used to uniquely identify this synchronization
+                            sec. The unique identifier of the app role
                           type: string
                         value:
-                          description: The value that is used for the `roles` claim
-                            in ID tokens and OAuth 2.0 access tokens that are authenticating
-                            an assigned service or user principal
+                          description: The value of the secret. The value that is
+                            used for the `roles` claim in ID tokens and OAuth 2.0
+                            access tokens that are authenticating an assigned service
+                            or user principal
                           type: string
                       required:
                       - allowedMemberTypes
@@ -345,6 +349,8 @@ spec:
                           items:
                             properties:
                               id:
+                                description: An ID used to uniquely identify this
+                                  synchronization sec.
                                 type: string
                               type:
                                 type: string
@@ -354,6 +360,8 @@ spec:
                             type: object
                           type: array
                         resourceAppId:
+                          description: An ID used to uniquely identify this synchronization
+                            sec.
                           type: string
                       required:
                       - resourceAccess
@@ -385,8 +393,9 @@ spec:
                       type: string
                     type: array
                   templateId:
-                    description: Unique ID of the application template from which
-                      this application is created
+                    description: An ID used to uniquely identify this synchronization
+                      sec. Unique ID of the application template from which this application
+                      is created
                     type: string
                   termsOfServiceUrl:
                     description: URL of the application's terms of service statement
@@ -609,12 +618,15 @@ spec:
                     description: Mapping of app role names to UUIDs
                     type: object
                   applicationId:
-                    description: The Application ID (also called Client ID)
+                    description: An ID used to uniquely identify this synchronization
+                      sec. The Application ID (also called Client ID)
                     type: string
                   disabledByMicrosoft:
                     description: Whether Microsoft has disabled the registered application
                     type: string
                   id:
+                    description: An ID used to uniquely identify this synchronization
+                      sec.
                     type: string
                   logoUrl:
                     description: CDN URL to the application's logo
@@ -625,7 +637,8 @@ spec:
                     description: Mapping of OAuth2.0 permission scope names to UUIDs
                     type: object
                   objectId:
-                    description: The application's object ID
+                    description: An ID used to uniquely identify this synchronization
+                      sec. The application's object ID
                     type: string
                   publisherDomain:
                     description: The verified publisher domain for the application
