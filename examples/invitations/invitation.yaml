@@ -1,4 +1,4 @@
-apiVersion: invitations.azuread.upbound.io/v1alpha1
+apiVersion: invitations.azuread.upbound.io/v1beta1
 kind: Invitation
 metadata:
   name: example

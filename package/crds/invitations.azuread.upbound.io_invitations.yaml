@@ -32,10 +32,10 @@ spec:
     - jsonPath: .metadata.creationTimestamp
       name: AGE
       type: date
-    name: v1alpha1
+    name: v1beta1
     schema:
       openAPIV3Schema:
-        description: Invitation is the Schema for the Invitations API. <no value>
+        description: Invitation is the Schema for the Invitations API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,37 +64,53 @@ spec:
               forProvider:
                 properties:
                   message:
-                    description: Customize the message sent to the invited user
+                    description: A message block as documented below, which configures
+                      the message being sent to the invited user. If this block is
+                      omitted, no message will be sent. Customize the message sent
+                      to the invited user
                     items:
                       properties:
                         additionalRecipients:
                           description: Email addresses of additional recipients the
-                            invitation message should be sent to
+                            invitation message should be sent to. Only 1 additional
+                            recipient is currently supported by Azure. Email addresses
+                            of additional recipients the invitation message should
+                            be sent to
                           items:
                             type: string
                           type: array
                         body:
                           description: Customized message body you want to send if
-                            you don't want to send the default message
+                            you don't want to send the default message. Cannot be
+                            specified with language. Customized message body you want
+                            to send if you don't want to send the default message
                           type: string
                         language:
                           description: The language you want to send the default message
-                            in
+                            in. The value specified must be in ISO 639 format. Defaults
+                            to en-US. Cannot be specified with body. The language
+                            you want to send the default message in
                           type: string
                       type: object
                     type: array
                   redirectUrl:
                     description: The URL that the user should be redirected to once
-                      the invitation is redeemed
+                      the invitation is redeemed. The URL that the user should be
+                      redirected to once the invitation is redeemed
                     type: string
                   userDisplayName:
-                    description: The display name of the user being invited
+                    description: The display name of the user being invited. The display
+                      name of the user being invited
                     type: string
                   userEmailAddress:
-                    description: The email address of the user being invited
+                    description: The email address of the user being invited. The
+                      email address of the user being invited
                     type: string
                   userType:
-                    description: The user type of the user being invited
+                    description: The user type of the user being invited. Must be
+                      one of Guest or Member. Only Global Administrators can invite
+                      users as members. Defaults to Guest. The user type of the user
+                      being invited
                     type: string
                 required:
                 - redirectUrl
@@ -279,10 +295,12 @@ spec:
                   id:
                     type: string
                   redeemUrl:
-                    description: The URL the user can use to redeem their invitation
+                    description: The URL the user can use to redeem their invitation.
+                      The URL the user can use to redeem their invitation
                     type: string
                   userId:
-                    description: Object ID of the invited user
+                    description: Object ID of the invited user. Object ID of the invited
+                      user
                     type: string
                 type: object
               conditions:
