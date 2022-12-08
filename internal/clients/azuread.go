@@ -1,6 +1,16 @@
-/*
-Copyright 2021 Upbound Inc.
-*/
+// Copyright 2022 Upbound Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 
 package clients
 
@@ -25,9 +35,9 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal azuread credentials as JSON"
-	keyClientID             = "client_id"
-	keyClientSecret         = "client_secret"
-	keyTenantID             = "tenant_id"
+	keyClientID             = "clientId"
+	keyClientSecret         = "clientSecret"
+	keyTenantID             = "tenantId"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -75,12 +85,6 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		if v, ok := creds[keyTenantID]; ok {
 			ps.Configuration[keyTenantID] = v
 		}
-
-		// Set credentials in Terraform provider configuration.
-		/*ps.Configuration = map[string]any{
-			"username": creds["username"],
-			"password": creds["password"],
-		}*/
 		return ps, nil
 	}
 }
