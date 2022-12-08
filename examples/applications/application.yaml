@@ -4,4 +4,4 @@ metadata:
   name: example
 spec:
   forProvider:
-    displayName: example
+    displayName: example-${Rand.RFC1123Subdomain}

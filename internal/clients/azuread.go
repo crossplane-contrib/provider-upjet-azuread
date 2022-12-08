@@ -30,14 +30,17 @@ import (
 
 const (
 	// error messages
-	errNoProviderConfig     = "no providerConfigRef provided"
-	errGetProviderConfig    = "cannot get referenced ProviderConfig"
-	errTrackUsage           = "cannot track ProviderConfig usage"
-	errExtractCredentials   = "cannot extract credentials"
-	errUnmarshalCredentials = "cannot unmarshal azuread credentials as JSON"
-	keyClientID             = "clientId"
-	keyClientSecret         = "clientSecret"
-	keyTenantID             = "tenantId"
+	errNoProviderConfig      = "no providerConfigRef provided"
+	errGetProviderConfig     = "cannot get referenced ProviderConfig"
+	errTrackUsage            = "cannot track ProviderConfig usage"
+	errExtractCredentials    = "cannot extract credentials"
+	errUnmarshalCredentials  = "cannot unmarshal azuread credentials as JSON"
+	keyClientID              = "clientId"
+	keyClientSecret          = "clientSecret"
+	keyTenantID              = "tenantId"
+	keyTerraformClientID     = "client_id"
+	keyTerraformClientSecret = "client_secret"
+	keyTerraformTenantID     = "tenant_id"
 )
 
 // TerraformSetupBuilder builds Terraform a terraform.SetupFn function which
@@ -77,13 +80,13 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 		// set provider configuration
 		ps.Configuration = map[string]any{}
 		if v, ok := creds[keyClientID]; ok {
-			ps.Configuration[keyClientID] = v
+			ps.Configuration[keyTerraformClientID] = v
 		}
 		if v, ok := creds[keyClientSecret]; ok {
-			ps.Configuration[keyClientSecret] = v
+			ps.Configuration[keyTerraformClientSecret] = v
 		}
 		if v, ok := creds[keyTenantID]; ok {
-			ps.Configuration[keyTenantID] = v
+			ps.Configuration[keyTerraformTenantID] = v
 		}
 		return ps, nil
 	}
