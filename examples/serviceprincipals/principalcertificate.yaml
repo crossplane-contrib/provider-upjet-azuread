@@ -1,4 +1,4 @@
-apiVersion: serviceprincipals.azuread.upbound.io/v1alpha1
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
 kind: PrincipalCertificate
 metadata:
   annotations:
@@ -42,7 +42,7 @@ stringData:
     Jkwjr/Q/rTbKQwInAY9P/IOundWd7lknL8V/y1CB6awl//r6K/WBybEp
     -----END CERTIFICATE-----
 ---
-apiVersion: serviceprincipals.azuread.upbound.io/v1alpha1
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
 kind: Principal
 metadata:
   annotations:
@@ -57,7 +57,7 @@ spec:
         testing.upbound.io/example-name: example
     appRoleAssignmentRequired: false
 ---
-apiVersion: applications.azuread.upbound.io/v1alpha1
+apiVersion: applications.azuread.upbound.io/v1beta1
 kind: Application
 metadata:
   annotations:

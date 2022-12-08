@@ -1,4 +1,4 @@
-apiVersion: policies.azuread.upbound.io/v1alpha1
+apiVersion: policies.azuread.upbound.io/v1beta1
 kind: MappingPolicy
 metadata:
   annotations:

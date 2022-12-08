@@ -1,4 +1,4 @@
-apiVersion: users.azuread.upbound.io/v1alpha1
+apiVersion: users.azuread.upbound.io/v1beta1
 kind: User
 metadata:
   annotations:

@@ -1,4 +1,4 @@
-apiVersion: groups.azuread.upbound.io/v1alpha1
+apiVersion: groups.azuread.upbound.io/v1beta1
 kind: Member
 metadata:
   annotations:
@@ -15,7 +15,7 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: example
 ---
-apiVersion: groups.azuread.upbound.io/v1alpha1
+apiVersion: groups.azuread.upbound.io/v1beta1
 kind: Group
 metadata:
   annotations:
@@ -28,7 +28,7 @@ spec:
     displayName: example
     securityEnabled: true
 ---
-apiVersion: users.azuread.upbound.io/v1alpha1
+apiVersion: users.azuread.upbound.io/v1beta1
 kind: User
 metadata:
   annotations:

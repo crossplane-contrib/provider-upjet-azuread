@@ -1,4 +1,4 @@
-apiVersion: serviceprincipals.azuread.upbound.io/v1alpha1
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
 kind: PrincipalClaimsMappingPolicyAssignment
 metadata:
   annotations:
@@ -15,7 +15,7 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: example
 ---
-apiVersion: serviceprincipals.azuread.upbound.io/v1alpha1
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
 kind: Principal
 metadata:
   annotations:
@@ -30,7 +30,7 @@ spec:
         testing.upbound.io/example-name: example
     appRoleAssignmentRequired: false
 ---
-apiVersion: applications.azuread.upbound.io/v1alpha1
+apiVersion: applications.azuread.upbound.io/v1beta1
 kind: Application
 metadata:
   annotations:
@@ -42,7 +42,7 @@ spec:
   forProvider:
     displayName: example
 ---
-apiVersion: policies.azuread.upbound.io/v1alpha1
+apiVersion: policies.azuread.upbound.io/v1beta1
 kind: MappingPolicy
 metadata:
   annotations:
