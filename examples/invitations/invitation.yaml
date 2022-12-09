@@ -3,6 +3,7 @@ kind: Invitation
 metadata:
   annotations:
     meta.upbound.io/example-id: invitations/v1beta1/invitation
+    upjet.upbound.io/manual-intervention: "This resource requires a user with the correct domain"
   labels:
     testing.upbound.io/example-name: example
   name: example
