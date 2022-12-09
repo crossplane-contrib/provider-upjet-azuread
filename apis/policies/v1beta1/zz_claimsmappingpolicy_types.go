@@ -13,13 +13,13 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type MappingPolicyObservation struct {
+type ClaimsMappingPolicyObservation struct {
 
 	// The ID of the Claims Mapping Policy.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type MappingPolicyParameters struct {
+type ClaimsMappingPolicyParameters struct {
 
 	// The claims mapping policy. This is a JSON formatted string, for which the jsonencode() function can be used.
 	// A string collection containing a JSON string that defines the rules and settings for this policy
@@ -32,51 +32,51 @@ type MappingPolicyParameters struct {
 	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
 }
 
-// MappingPolicySpec defines the desired state of MappingPolicy
-type MappingPolicySpec struct {
+// ClaimsMappingPolicySpec defines the desired state of ClaimsMappingPolicy
+type ClaimsMappingPolicySpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     MappingPolicyParameters `json:"forProvider"`
+	ForProvider     ClaimsMappingPolicyParameters `json:"forProvider"`
 }
 
-// MappingPolicyStatus defines the observed state of MappingPolicy.
-type MappingPolicyStatus struct {
+// ClaimsMappingPolicyStatus defines the observed state of ClaimsMappingPolicy.
+type ClaimsMappingPolicyStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        MappingPolicyObservation `json:"atProvider,omitempty"`
+	AtProvider        ClaimsMappingPolicyObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// MappingPolicy is the Schema for the MappingPolicys API.
+// ClaimsMappingPolicy is the Schema for the ClaimsMappingPolicys API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}
-type MappingPolicy struct {
+type ClaimsMappingPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              MappingPolicySpec   `json:"spec"`
-	Status            MappingPolicyStatus `json:"status,omitempty"`
+	Spec              ClaimsMappingPolicySpec   `json:"spec"`
+	Status            ClaimsMappingPolicyStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// MappingPolicyList contains a list of MappingPolicys
-type MappingPolicyList struct {
+// ClaimsMappingPolicyList contains a list of ClaimsMappingPolicys
+type ClaimsMappingPolicyList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []MappingPolicy `json:"items"`
+	Items           []ClaimsMappingPolicy `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	MappingPolicy_Kind             = "MappingPolicy"
-	MappingPolicy_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: MappingPolicy_Kind}.String()
-	MappingPolicy_KindAPIVersion   = MappingPolicy_Kind + "." + CRDGroupVersion.String()
-	MappingPolicy_GroupVersionKind = CRDGroupVersion.WithKind(MappingPolicy_Kind)
+	ClaimsMappingPolicy_Kind             = "ClaimsMappingPolicy"
+	ClaimsMappingPolicy_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: ClaimsMappingPolicy_Kind}.String()
+	ClaimsMappingPolicy_KindAPIVersion   = ClaimsMappingPolicy_Kind + "." + CRDGroupVersion.String()
+	ClaimsMappingPolicy_GroupVersionKind = CRDGroupVersion.WithKind(ClaimsMappingPolicy_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&MappingPolicy{}, &MappingPolicyList{})
+	SchemeBuilder.Register(&ClaimsMappingPolicy{}, &ClaimsMappingPolicyList{})
 }

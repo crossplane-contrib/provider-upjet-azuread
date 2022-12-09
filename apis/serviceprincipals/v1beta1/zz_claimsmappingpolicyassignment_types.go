@@ -13,25 +13,25 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type PrincipalClaimsMappingPolicyAssignmentObservation struct {
+type ClaimsMappingPolicyAssignmentObservation struct {
 
 	// The ID of the Claims Mapping Policy Assignment.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type PrincipalClaimsMappingPolicyAssignmentParameters struct {
+type ClaimsMappingPolicyAssignmentParameters struct {
 
 	// The ID of the claims mapping policy to assign.
 	// ID of the claims mapping policy to assign
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/policies/v1beta1.MappingPolicy
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/policies/v1beta1.ClaimsMappingPolicy
 	// +kubebuilder:validation:Optional
 	ClaimsMappingPolicyID *string `json:"claimsMappingPolicyId,omitempty" tf:"claims_mapping_policy_id,omitempty"`
 
-	// Reference to a MappingPolicy in policies to populate claimsMappingPolicyId.
+	// Reference to a ClaimsMappingPolicy in policies to populate claimsMappingPolicyId.
 	// +kubebuilder:validation:Optional
 	ClaimsMappingPolicyIDRef *v1.Reference `json:"claimsMappingPolicyIdRef,omitempty" tf:"-"`
 
-	// Selector for a MappingPolicy in policies to populate claimsMappingPolicyId.
+	// Selector for a ClaimsMappingPolicy in policies to populate claimsMappingPolicyId.
 	// +kubebuilder:validation:Optional
 	ClaimsMappingPolicyIDSelector *v1.Selector `json:"claimsMappingPolicyIdSelector,omitempty" tf:"-"`
 
@@ -50,51 +50,51 @@ type PrincipalClaimsMappingPolicyAssignmentParameters struct {
 	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 }
 
-// PrincipalClaimsMappingPolicyAssignmentSpec defines the desired state of PrincipalClaimsMappingPolicyAssignment
-type PrincipalClaimsMappingPolicyAssignmentSpec struct {
+// ClaimsMappingPolicyAssignmentSpec defines the desired state of ClaimsMappingPolicyAssignment
+type ClaimsMappingPolicyAssignmentSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     PrincipalClaimsMappingPolicyAssignmentParameters `json:"forProvider"`
+	ForProvider     ClaimsMappingPolicyAssignmentParameters `json:"forProvider"`
 }
 
-// PrincipalClaimsMappingPolicyAssignmentStatus defines the observed state of PrincipalClaimsMappingPolicyAssignment.
-type PrincipalClaimsMappingPolicyAssignmentStatus struct {
+// ClaimsMappingPolicyAssignmentStatus defines the observed state of ClaimsMappingPolicyAssignment.
+type ClaimsMappingPolicyAssignmentStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        PrincipalClaimsMappingPolicyAssignmentObservation `json:"atProvider,omitempty"`
+	AtProvider        ClaimsMappingPolicyAssignmentObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// PrincipalClaimsMappingPolicyAssignment is the Schema for the PrincipalClaimsMappingPolicyAssignments API.
+// ClaimsMappingPolicyAssignment is the Schema for the ClaimsMappingPolicyAssignments API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}
-type PrincipalClaimsMappingPolicyAssignment struct {
+type ClaimsMappingPolicyAssignment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              PrincipalClaimsMappingPolicyAssignmentSpec   `json:"spec"`
-	Status            PrincipalClaimsMappingPolicyAssignmentStatus `json:"status,omitempty"`
+	Spec              ClaimsMappingPolicyAssignmentSpec   `json:"spec"`
+	Status            ClaimsMappingPolicyAssignmentStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// PrincipalClaimsMappingPolicyAssignmentList contains a list of PrincipalClaimsMappingPolicyAssignments
-type PrincipalClaimsMappingPolicyAssignmentList struct {
+// ClaimsMappingPolicyAssignmentList contains a list of ClaimsMappingPolicyAssignments
+type ClaimsMappingPolicyAssignmentList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []PrincipalClaimsMappingPolicyAssignment `json:"items"`
+	Items           []ClaimsMappingPolicyAssignment `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	PrincipalClaimsMappingPolicyAssignment_Kind             = "PrincipalClaimsMappingPolicyAssignment"
-	PrincipalClaimsMappingPolicyAssignment_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: PrincipalClaimsMappingPolicyAssignment_Kind}.String()
-	PrincipalClaimsMappingPolicyAssignment_KindAPIVersion   = PrincipalClaimsMappingPolicyAssignment_Kind + "." + CRDGroupVersion.String()
-	PrincipalClaimsMappingPolicyAssignment_GroupVersionKind = CRDGroupVersion.WithKind(PrincipalClaimsMappingPolicyAssignment_Kind)
+	ClaimsMappingPolicyAssignment_Kind             = "ClaimsMappingPolicyAssignment"
+	ClaimsMappingPolicyAssignment_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: ClaimsMappingPolicyAssignment_Kind}.String()
+	ClaimsMappingPolicyAssignment_KindAPIVersion   = ClaimsMappingPolicyAssignment_Kind + "." + CRDGroupVersion.String()
+	ClaimsMappingPolicyAssignment_GroupVersionKind = CRDGroupVersion.WithKind(ClaimsMappingPolicyAssignment_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&PrincipalClaimsMappingPolicyAssignment{}, &PrincipalClaimsMappingPolicyAssignmentList{})
+	SchemeBuilder.Register(&ClaimsMappingPolicyAssignment{}, &ClaimsMappingPolicyAssignmentList{})
 }

@@ -5,7 +5,7 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: principalcertificates.serviceprincipals.azuread.upbound.io
+  name: certificates.serviceprincipals.azuread.upbound.io
 spec:
   group: serviceprincipals.azuread.upbound.io
   names:
@@ -13,10 +13,10 @@ spec:
     - crossplane
     - managed
     - azuread
-    kind: PrincipalCertificate
-    listKind: PrincipalCertificateList
-    plural: principalcertificates
-    singular: principalcertificate
+    kind: Certificate
+    listKind: CertificateList
+    plural: certificates
+    singular: certificate
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +35,7 @@ spec:
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: PrincipalCertificate is the Schema for the PrincipalCertificates
-          API. <no value>
+        description: Certificate is the Schema for the Certificates API. <no value>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,7 +50,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: PrincipalCertificateSpec defines the desired state of PrincipalCertificate
+            description: CertificateSpec defines the desired state of Certificate
             properties:
               deletionPolicy:
                 default: Delete
@@ -359,8 +358,7 @@ spec:
             - forProvider
             type: object
           status:
-            description: PrincipalCertificateStatus defines the observed state of
-              PrincipalCertificate.
+            description: CertificateStatus defines the observed state of Certificate.
             properties:
               atProvider:
                 properties:

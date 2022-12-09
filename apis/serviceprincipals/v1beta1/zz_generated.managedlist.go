@@ -7,8 +7,8 @@ package v1beta1
 
 import resource "github.com/crossplane/crossplane-runtime/pkg/resource"
 
-// GetItems of this PrincipalCertificateList.
-func (l *PrincipalCertificateList) GetItems() []resource.Managed {
+// GetItems of this CertificateList.
+func (l *CertificateList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]
@@ -16,8 +16,8 @@ func (l *PrincipalCertificateList) GetItems() []resource.Managed {
 	return items
 }
 
-// GetItems of this PrincipalClaimsMappingPolicyAssignmentList.
-func (l *PrincipalClaimsMappingPolicyAssignmentList) GetItems() []resource.Managed {
+// GetItems of this ClaimsMappingPolicyAssignmentList.
+func (l *ClaimsMappingPolicyAssignmentList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
 	for i := range l.Items {
 		items[i] = &l.Items[i]

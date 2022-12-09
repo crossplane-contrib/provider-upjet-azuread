@@ -5,7 +5,7 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: mappingpolicies.policies.azuread.upbound.io
+  name: claimsmappingpolicies.policies.azuread.upbound.io
 spec:
   group: policies.azuread.upbound.io
   names:
@@ -13,10 +13,10 @@ spec:
     - crossplane
     - managed
     - azuread
-    kind: MappingPolicy
-    listKind: MappingPolicyList
-    plural: mappingpolicies
-    singular: mappingpolicy
+    kind: ClaimsMappingPolicy
+    listKind: ClaimsMappingPolicyList
+    plural: claimsmappingpolicies
+    singular: claimsmappingpolicy
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,7 +35,8 @@ spec:
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: MappingPolicy is the Schema for the MappingPolicys API.
+        description: ClaimsMappingPolicy is the Schema for the ClaimsMappingPolicys
+          API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -50,7 +51,7 @@ spec:
           metadata:
             type: object
           spec:
-            description: MappingPolicySpec defines the desired state of MappingPolicy
+            description: ClaimsMappingPolicySpec defines the desired state of ClaimsMappingPolicy
             properties:
               deletionPolicy:
                 default: Delete
@@ -251,7 +252,7 @@ spec:
             - forProvider
             type: object
           status:
-            description: MappingPolicyStatus defines the observed state of MappingPolicy.
+            description: ClaimsMappingPolicyStatus defines the observed state of ClaimsMappingPolicy.
             properties:
               atProvider:
                 properties:

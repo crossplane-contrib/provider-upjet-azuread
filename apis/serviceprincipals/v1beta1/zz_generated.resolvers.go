@@ -9,40 +9,14 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1beta1 "github.com/upbound/provider-azuread/apis/applications/v1beta1"
-	v1beta11 "github.com/upbound/provider-azuread/apis/policies/v1beta1"
+	v1beta11 "github.com/upbound/provider-azuread/apis/applications/v1beta1"
+	v1beta1 "github.com/upbound/provider-azuread/apis/policies/v1beta1"
 	resource "github.com/upbound/upjet/pkg/resource"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-// ResolveReferences of this Principal.
-func (mg *Principal) ResolveReferences(ctx context.Context, c client.Reader) error {
-	r := reference.NewAPIResolver(c, mg)
-
-	var rsp reference.ResolutionResponse
-	var err error
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationID),
-		Extract:      resource.ExtractParamPath("application_id", true),
-		Reference:    mg.Spec.ForProvider.ApplicationIDRef,
-		Selector:     mg.Spec.ForProvider.ApplicationIDSelector,
-		To: reference.To{
-			List:    &v1beta1.ApplicationList{},
-			Managed: &v1beta1.Application{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationID")
-	}
-	mg.Spec.ForProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ApplicationIDRef = rsp.ResolvedReference
-
-	return nil
-}
-
-// ResolveReferences of this PrincipalCertificate.
-func (mg *PrincipalCertificate) ResolveReferences(ctx context.Context, c client.Reader) error {
+// ResolveReferences of this Certificate.
+func (mg *Certificate) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
@@ -67,8 +41,8 @@ func (mg *PrincipalCertificate) ResolveReferences(ctx context.Context, c client.
 	return nil
 }
 
-// ResolveReferences of this PrincipalClaimsMappingPolicyAssignment.
-func (mg *PrincipalClaimsMappingPolicyAssignment) ResolveReferences(ctx context.Context, c client.Reader) error {
+// ResolveReferences of this ClaimsMappingPolicyAssignment.
+func (mg *ClaimsMappingPolicyAssignment) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
 
 	var rsp reference.ResolutionResponse
@@ -80,8 +54,8 @@ func (mg *PrincipalClaimsMappingPolicyAssignment) ResolveReferences(ctx context.
 		Reference:    mg.Spec.ForProvider.ClaimsMappingPolicyIDRef,
 		Selector:     mg.Spec.ForProvider.ClaimsMappingPolicyIDSelector,
 		To: reference.To{
-			List:    &v1beta11.MappingPolicyList{},
-			Managed: &v1beta11.MappingPolicy{},
+			List:    &v1beta1.ClaimsMappingPolicyList{},
+			Managed: &v1beta1.ClaimsMappingPolicy{},
 		},
 	})
 	if err != nil {
@@ -105,6 +79,32 @@ func (mg *PrincipalClaimsMappingPolicyAssignment) ResolveReferences(ctx context.
 	}
 	mg.Spec.ForProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServicePrincipalIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this Principal.
+func (mg *Principal) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationID),
+		Extract:      resource.ExtractParamPath("application_id", true),
+		Reference:    mg.Spec.ForProvider.ApplicationIDRef,
+		Selector:     mg.Spec.ForProvider.ApplicationIDSelector,
+		To: reference.To{
+			List:    &v1beta11.ApplicationList{},
+			Managed: &v1beta11.Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationID")
+	}
+	mg.Spec.ForProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ApplicationIDRef = rsp.ResolvedReference
 
 	return nil
 }

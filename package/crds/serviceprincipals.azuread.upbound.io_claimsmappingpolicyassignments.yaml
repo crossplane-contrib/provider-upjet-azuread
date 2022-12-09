@@ -5,7 +5,7 @@ metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.8.0
   creationTimestamp: null
-  name: principalclaimsmappingpolicyassignments.serviceprincipals.azuread.upbound.io
+  name: claimsmappingpolicyassignments.serviceprincipals.azuread.upbound.io
 spec:
   group: serviceprincipals.azuread.upbound.io
   names:
@@ -13,10 +13,10 @@ spec:
     - crossplane
     - managed
     - azuread
-    kind: PrincipalClaimsMappingPolicyAssignment
-    listKind: PrincipalClaimsMappingPolicyAssignmentList
-    plural: principalclaimsmappingpolicyassignments
-    singular: principalclaimsmappingpolicyassignment
+    kind: ClaimsMappingPolicyAssignment
+    listKind: ClaimsMappingPolicyAssignmentList
+    plural: claimsmappingpolicyassignments
+    singular: claimsmappingpolicyassignment
   scope: Cluster
   versions:
   - additionalPrinterColumns:
@@ -35,8 +35,8 @@ spec:
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: PrincipalClaimsMappingPolicyAssignment is the Schema for the
-          PrincipalClaimsMappingPolicyAssignments API.
+        description: ClaimsMappingPolicyAssignment is the Schema for the ClaimsMappingPolicyAssignments
+          API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -51,8 +51,8 @@ spec:
           metadata:
             type: object
           spec:
-            description: PrincipalClaimsMappingPolicyAssignmentSpec defines the desired
-              state of PrincipalClaimsMappingPolicyAssignment
+            description: ClaimsMappingPolicyAssignmentSpec defines the desired state
+              of ClaimsMappingPolicyAssignment
             properties:
               deletionPolicy:
                 default: Delete
@@ -70,8 +70,8 @@ spec:
                       of the claims mapping policy to assign
                     type: string
                   claimsMappingPolicyIdRef:
-                    description: Reference to a MappingPolicy in policies to populate
-                      claimsMappingPolicyId.
+                    description: Reference to a ClaimsMappingPolicy in policies to
+                      populate claimsMappingPolicyId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -105,8 +105,8 @@ spec:
                     - name
                     type: object
                   claimsMappingPolicyIdSelector:
-                    description: Selector for a MappingPolicy in policies to populate
-                      claimsMappingPolicyId.
+                    description: Selector for a ClaimsMappingPolicy in policies to
+                      populate claimsMappingPolicyId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
@@ -395,8 +395,8 @@ spec:
             - forProvider
             type: object
           status:
-            description: PrincipalClaimsMappingPolicyAssignmentStatus defines the
-              observed state of PrincipalClaimsMappingPolicyAssignment.
+            description: ClaimsMappingPolicyAssignmentStatus defines the observed
+              state of ClaimsMappingPolicyAssignment.
             properties:
               atProvider:
                 properties:

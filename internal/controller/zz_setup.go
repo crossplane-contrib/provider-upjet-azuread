@@ -13,11 +13,11 @@ import (
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	member "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
-	mappingpolicy "github.com/upbound/provider-azuread/internal/controller/policies/mappingpolicy"
+	claimsmappingpolicy "github.com/upbound/provider-azuread/internal/controller/policies/claimsmappingpolicy"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
+	certificate "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/certificate"
+	claimsmappingpolicyassignment "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/claimsmappingpolicyassignment"
 	principal "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principal"
-	principalcertificate "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principalcertificate"
-	principalclaimsmappingpolicyassignment "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principalclaimsmappingpolicyassignment"
 	user "github.com/upbound/provider-azuread/internal/controller/users/user"
 )
 
@@ -29,11 +29,11 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		group.Setup,
 		member.Setup,
 		invitation.Setup,
-		mappingpolicy.Setup,
+		claimsmappingpolicy.Setup,
 		providerconfig.Setup,
+		certificate.Setup,
+		claimsmappingpolicyassignment.Setup,
 		principal.Setup,
-		principalcertificate.Setup,
-		principalclaimsmappingpolicyassignment.Setup,
 		user.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

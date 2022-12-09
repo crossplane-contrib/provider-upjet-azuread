@@ -2,6 +2,8 @@ package serviceprincipals
 
 import "github.com/upbound/upjet/pkg/config"
 
+const group = "serviceprincipals"
+
 // Configure configures individual resources by adding custom ResourceConfigurators.
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("azuread_service_principal", func(r *config.Resource) {
@@ -11,27 +13,29 @@ func Configure(p *config.Provider) {
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
-		r.ShortGroup = "serviceprincipals"
+		r.ShortGroup = group
 
 		config.MoveToStatus(r.TerraformResource, "features")
 	})
 	p.AddResourceConfigurator("azuread_service_principal_claims_mapping_policy_assignment", func(r *config.Resource) {
+		r.Kind = "ClaimsMappingPolicyAssignment"
 		r.References["service_principal_id"] = config.Reference{
 			Type: "Principal",
 		}
 		r.References["claims_mapping_policy_id"] = config.Reference{
-			Type: "github.com/upbound/provider-azuread/apis/policies/v1beta1.MappingPolicy",
+			Type: "github.com/upbound/provider-azuread/apis/policies/v1beta1.ClaimsMappingPolicy",
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
-		r.ShortGroup = "serviceprincipals"
+		r.ShortGroup = group
 	})
 	p.AddResourceConfigurator("azuread_service_principal_certificate", func(r *config.Resource) {
+		r.Kind = "Certificate"
 		r.References["service_principal_id"] = config.Reference{
 			Type: "Principal",
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
-		r.ShortGroup = "serviceprincipals"
+		r.ShortGroup = group
 	})
 }

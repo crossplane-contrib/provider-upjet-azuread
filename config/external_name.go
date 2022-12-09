@@ -23,7 +23,9 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// azuread_group can be imported using their object ID
 	"azuread_group": config.IdentifierFromProvider,
-	// azuread_group_member can be imported using the object ID of the group and the object ID of the member
+	// azuread_group_member can be imported using the object ID of the group and the object ID of the member:
+	// {GroupObjectID}/member/{MemberObjectID}
+	// 00000000-0000-0000-0000-000000000000/member/11111111-1111-1111-1111-111111111111
 	"azuread_group_member": config.IdentifierFromProvider,
 
 	// users

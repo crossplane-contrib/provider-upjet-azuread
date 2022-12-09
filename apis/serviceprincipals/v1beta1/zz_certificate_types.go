@@ -13,11 +13,11 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
-type PrincipalCertificateObservation struct {
+type CertificateObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
-type PrincipalCertificateParameters struct {
+type CertificateParameters struct {
 
 	// Specifies the encoding used for the supplied certificate data
 	// +kubebuilder:validation:Optional
@@ -61,51 +61,51 @@ type PrincipalCertificateParameters struct {
 	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
-// PrincipalCertificateSpec defines the desired state of PrincipalCertificate
-type PrincipalCertificateSpec struct {
+// CertificateSpec defines the desired state of Certificate
+type CertificateSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     PrincipalCertificateParameters `json:"forProvider"`
+	ForProvider     CertificateParameters `json:"forProvider"`
 }
 
-// PrincipalCertificateStatus defines the observed state of PrincipalCertificate.
-type PrincipalCertificateStatus struct {
+// CertificateStatus defines the observed state of Certificate.
+type CertificateStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        PrincipalCertificateObservation `json:"atProvider,omitempty"`
+	AtProvider        CertificateObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// PrincipalCertificate is the Schema for the PrincipalCertificates API. <no value>
+// Certificate is the Schema for the Certificates API. <no value>
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}
-type PrincipalCertificate struct {
+type Certificate struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              PrincipalCertificateSpec   `json:"spec"`
-	Status            PrincipalCertificateStatus `json:"status,omitempty"`
+	Spec              CertificateSpec   `json:"spec"`
+	Status            CertificateStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// PrincipalCertificateList contains a list of PrincipalCertificates
-type PrincipalCertificateList struct {
+// CertificateList contains a list of Certificates
+type CertificateList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []PrincipalCertificate `json:"items"`
+	Items           []Certificate `json:"items"`
 }
 
 // Repository type metadata.
 var (
-	PrincipalCertificate_Kind             = "PrincipalCertificate"
-	PrincipalCertificate_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: PrincipalCertificate_Kind}.String()
-	PrincipalCertificate_KindAPIVersion   = PrincipalCertificate_Kind + "." + CRDGroupVersion.String()
-	PrincipalCertificate_GroupVersionKind = CRDGroupVersion.WithKind(PrincipalCertificate_Kind)
+	Certificate_Kind             = "Certificate"
+	Certificate_GroupKind        = schema.GroupKind{Group: CRDGroup, Kind: Certificate_Kind}.String()
+	Certificate_KindAPIVersion   = Certificate_Kind + "." + CRDGroupVersion.String()
+	Certificate_GroupVersionKind = CRDGroupVersion.WithKind(Certificate_Kind)
 )
 
 func init() {
-	SchemeBuilder.Register(&PrincipalCertificate{}, &PrincipalCertificateList{})
+	SchemeBuilder.Register(&Certificate{}, &CertificateList{})
 }

@@ -1,8 +1,8 @@
 apiVersion: policies.azuread.upbound.io/v1beta1
-kind: MappingPolicy
+kind: ClaimsMappingPolicy
 metadata:
   annotations:
-    meta.upbound.io/example-id: applications/v1beta1/mappingpolicy
+    meta.upbound.io/example-id: applications/v1beta1/claimsmappingpolicy
   labels:
     testing.upbound.io/example-name: example
   name: example

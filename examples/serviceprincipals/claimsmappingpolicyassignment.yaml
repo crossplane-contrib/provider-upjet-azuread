@@ -1,8 +1,8 @@
 apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
-kind: PrincipalClaimsMappingPolicyAssignment
+kind: ClaimsMappingPolicyAssignment
 metadata:
   annotations:
-    meta.upbound.io/example-id: groups/v1beta1/principalclaimsmappingpolicyassignment
+    meta.upbound.io/example-id: groups/v1beta1/claimsmappingpolicyassignment
   labels:
     testing.upbound.io/example-name: example
   name: example
@@ -19,7 +19,7 @@ apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
 kind: Principal
 metadata:
   annotations:
-    meta.upbound.io/example-id: applications/v1beta1/principalclaimsmappingpolicyassignment
+    meta.upbound.io/example-id: applications/v1beta1/claimsmappingpolicyassignment
   labels:
     testing.upbound.io/example-name: example
   name: example
@@ -34,7 +34,7 @@ apiVersion: applications.azuread.upbound.io/v1beta1
 kind: Application
 metadata:
   annotations:
-    meta.upbound.io/example-id: applications/v1beta1/principalclaimsmappingpolicyassignment
+    meta.upbound.io/example-id: applications/v1beta1/claimsmappingpolicyassignment
   labels:
     testing.upbound.io/example-name: example
   name: example
@@ -43,10 +43,10 @@ spec:
     displayName: example
 ---
 apiVersion: policies.azuread.upbound.io/v1beta1
-kind: MappingPolicy
+kind: ClaimsMappingPolicy
 metadata:
   annotations:
-    meta.upbound.io/example-id: applications/v1beta1/mappingpolicy
+    meta.upbound.io/example-id: applications/v1beta1/claimsmappingpolicyassignment
   labels:
     testing.upbound.io/example-name: example
   name: example

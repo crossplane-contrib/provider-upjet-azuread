@@ -87,18 +87,18 @@ func (tr *Principal) GetTerraformSchemaVersion() int {
 	return 0
 }
 
-// GetTerraformResourceType returns Terraform resource type for this PrincipalCertificate
-func (mg *PrincipalCertificate) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this Certificate
+func (mg *Certificate) GetTerraformResourceType() string {
 	return "azuread_service_principal_certificate"
 }
 
-// GetConnectionDetailsMapping for this PrincipalCertificate
-func (tr *PrincipalCertificate) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this Certificate
+func (tr *Certificate) GetConnectionDetailsMapping() map[string]string {
 	return map[string]string{"value": "spec.forProvider.valueSecretRef"}
 }
 
-// GetObservation of this PrincipalCertificate
-func (tr *PrincipalCertificate) GetObservation() (map[string]any, error) {
+// GetObservation of this Certificate
+func (tr *Certificate) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -107,8 +107,8 @@ func (tr *PrincipalCertificate) GetObservation() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this PrincipalCertificate
-func (tr *PrincipalCertificate) SetObservation(obs map[string]any) error {
+// SetObservation for this Certificate
+func (tr *Certificate) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -116,16 +116,16 @@ func (tr *PrincipalCertificate) SetObservation(obs map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this PrincipalCertificate
-func (tr *PrincipalCertificate) GetID() string {
+// GetID returns ID of underlying Terraform resource of this Certificate
+func (tr *Certificate) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this PrincipalCertificate
-func (tr *PrincipalCertificate) GetParameters() (map[string]any, error) {
+// GetParameters of this Certificate
+func (tr *Certificate) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -134,8 +134,8 @@ func (tr *PrincipalCertificate) GetParameters() (map[string]any, error) {
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this PrincipalCertificate
-func (tr *PrincipalCertificate) SetParameters(params map[string]any) error {
+// SetParameters for this Certificate
+func (tr *Certificate) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -143,10 +143,10 @@ func (tr *PrincipalCertificate) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this PrincipalCertificate using its observed tfState.
+// LateInitialize this Certificate using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *PrincipalCertificate) LateInitialize(attrs []byte) (bool, error) {
-	params := &PrincipalCertificateParameters{}
+func (tr *Certificate) LateInitialize(attrs []byte) (bool, error) {
+	params := &CertificateParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -157,22 +157,22 @@ func (tr *PrincipalCertificate) LateInitialize(attrs []byte) (bool, error) {
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *PrincipalCertificate) GetTerraformSchemaVersion() int {
+func (tr *Certificate) GetTerraformSchemaVersion() int {
 	return 0
 }
 
-// GetTerraformResourceType returns Terraform resource type for this PrincipalClaimsMappingPolicyAssignment
-func (mg *PrincipalClaimsMappingPolicyAssignment) GetTerraformResourceType() string {
+// GetTerraformResourceType returns Terraform resource type for this ClaimsMappingPolicyAssignment
+func (mg *ClaimsMappingPolicyAssignment) GetTerraformResourceType() string {
 	return "azuread_service_principal_claims_mapping_policy_assignment"
 }
 
-// GetConnectionDetailsMapping for this PrincipalClaimsMappingPolicyAssignment
-func (tr *PrincipalClaimsMappingPolicyAssignment) GetConnectionDetailsMapping() map[string]string {
+// GetConnectionDetailsMapping for this ClaimsMappingPolicyAssignment
+func (tr *ClaimsMappingPolicyAssignment) GetConnectionDetailsMapping() map[string]string {
 	return nil
 }
 
-// GetObservation of this PrincipalClaimsMappingPolicyAssignment
-func (tr *PrincipalClaimsMappingPolicyAssignment) GetObservation() (map[string]any, error) {
+// GetObservation of this ClaimsMappingPolicyAssignment
+func (tr *ClaimsMappingPolicyAssignment) GetObservation() (map[string]any, error) {
 	o, err := json.TFParser.Marshal(tr.Status.AtProvider)
 	if err != nil {
 		return nil, err
@@ -181,8 +181,8 @@ func (tr *PrincipalClaimsMappingPolicyAssignment) GetObservation() (map[string]a
 	return base, json.TFParser.Unmarshal(o, &base)
 }
 
-// SetObservation for this PrincipalClaimsMappingPolicyAssignment
-func (tr *PrincipalClaimsMappingPolicyAssignment) SetObservation(obs map[string]any) error {
+// SetObservation for this ClaimsMappingPolicyAssignment
+func (tr *ClaimsMappingPolicyAssignment) SetObservation(obs map[string]any) error {
 	p, err := json.TFParser.Marshal(obs)
 	if err != nil {
 		return err
@@ -190,16 +190,16 @@ func (tr *PrincipalClaimsMappingPolicyAssignment) SetObservation(obs map[string]
 	return json.TFParser.Unmarshal(p, &tr.Status.AtProvider)
 }
 
-// GetID returns ID of underlying Terraform resource of this PrincipalClaimsMappingPolicyAssignment
-func (tr *PrincipalClaimsMappingPolicyAssignment) GetID() string {
+// GetID returns ID of underlying Terraform resource of this ClaimsMappingPolicyAssignment
+func (tr *ClaimsMappingPolicyAssignment) GetID() string {
 	if tr.Status.AtProvider.ID == nil {
 		return ""
 	}
 	return *tr.Status.AtProvider.ID
 }
 
-// GetParameters of this PrincipalClaimsMappingPolicyAssignment
-func (tr *PrincipalClaimsMappingPolicyAssignment) GetParameters() (map[string]any, error) {
+// GetParameters of this ClaimsMappingPolicyAssignment
+func (tr *ClaimsMappingPolicyAssignment) GetParameters() (map[string]any, error) {
 	p, err := json.TFParser.Marshal(tr.Spec.ForProvider)
 	if err != nil {
 		return nil, err
@@ -208,8 +208,8 @@ func (tr *PrincipalClaimsMappingPolicyAssignment) GetParameters() (map[string]an
 	return base, json.TFParser.Unmarshal(p, &base)
 }
 
-// SetParameters for this PrincipalClaimsMappingPolicyAssignment
-func (tr *PrincipalClaimsMappingPolicyAssignment) SetParameters(params map[string]any) error {
+// SetParameters for this ClaimsMappingPolicyAssignment
+func (tr *ClaimsMappingPolicyAssignment) SetParameters(params map[string]any) error {
 	p, err := json.TFParser.Marshal(params)
 	if err != nil {
 		return err
@@ -217,10 +217,10 @@ func (tr *PrincipalClaimsMappingPolicyAssignment) SetParameters(params map[strin
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
-// LateInitialize this PrincipalClaimsMappingPolicyAssignment using its observed tfState.
+// LateInitialize this ClaimsMappingPolicyAssignment using its observed tfState.
 // returns True if there are any spec changes for the resource.
-func (tr *PrincipalClaimsMappingPolicyAssignment) LateInitialize(attrs []byte) (bool, error) {
-	params := &PrincipalClaimsMappingPolicyAssignmentParameters{}
+func (tr *ClaimsMappingPolicyAssignment) LateInitialize(attrs []byte) (bool, error) {
+	params := &ClaimsMappingPolicyAssignmentParameters{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
@@ -231,6 +231,6 @@ func (tr *PrincipalClaimsMappingPolicyAssignment) LateInitialize(attrs []byte) (
 }
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
-func (tr *PrincipalClaimsMappingPolicyAssignment) GetTerraformSchemaVersion() int {
+func (tr *ClaimsMappingPolicyAssignment) GetTerraformSchemaVersion() int {
 	return 0
 }
