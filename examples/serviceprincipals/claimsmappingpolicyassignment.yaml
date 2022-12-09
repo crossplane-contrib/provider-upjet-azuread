@@ -1,0 +1,77 @@
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: ClaimsMappingPolicyAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: groups/v1beta1/claimsmappingpolicyassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    servicePrincipalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    claimsMappingPolicyIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+---
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: applications/v1beta1/claimsmappingpolicyassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    appRoleAssignmentRequired: false
+---
+apiVersion: applications.azuread.upbound.io/v1beta1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: applications/v1beta1/claimsmappingpolicyassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: example
+---
+apiVersion: policies.azuread.upbound.io/v1beta1
+kind: ClaimsMappingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: applications/v1beta1/claimsmappingpolicyassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: My Policy
+    definition:
+    - |-
+      {
+        "ClaimsMappingPolicy": {
+          "ClaimsSchema": [
+            {
+              "ID"            : "employeeid",
+              "JwtClaimType"  : "name",
+              "SamlClaimType" : "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+              "Source"        : "user"
+            },
+            {
+              "ID"            : "tenantcountry",
+              "JwtClaimType"  : "country",
+              "SamlClaimType" : "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/country",
+              "Source"        : "company"
+            }
+          ],
+          "IncludeBasicClaimSet" : "true",
+          "Version"              : 1
+        }
+      }

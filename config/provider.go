@@ -12,7 +12,11 @@ import (
 	"github.com/upbound/upjet/pkg/registry/reference"
 
 	"github.com/upbound/provider-azuread/config/applications"
+	"github.com/upbound/provider-azuread/config/groups"
 	"github.com/upbound/provider-azuread/config/invitations"
+	"github.com/upbound/provider-azuread/config/policies"
+	"github.com/upbound/provider-azuread/config/serviceprincipals"
+	"github.com/upbound/provider-azuread/config/users"
 )
 
 const (
@@ -40,6 +44,10 @@ func GetProvider() *ujconfig.Provider {
 		// add custom config functions
 		invitations.Configure,
 		applications.Configure,
+		groups.Configure,
+		users.Configure,
+		serviceprincipals.Configure,
+		policies.Configure,
 	} {
 		configure(pc)
 	}

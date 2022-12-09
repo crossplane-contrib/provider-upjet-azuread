@@ -16,3 +16,20 @@ spec:
 
 ---
 
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: applications/v1beta1/application
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    useExisting: true
+
+---
+

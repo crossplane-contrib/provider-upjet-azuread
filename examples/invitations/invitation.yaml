@@ -1,6 +1,13 @@
 apiVersion: invitations.azuread.upbound.io/v1beta1
 kind: Invitation
 metadata:
+  annotations:
+    meta.upbound.io/example-id: invitations/v1beta1/invitation
+    upjet.upbound.io/manual-intervention: "This resource either requires a user with an email in untrusted domain 
+    (but this needs collaboration configuration) or an email in a trusted domain (but in our testing account invitations 
+    in this domain has been disabled)"
+  labels:
+    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
