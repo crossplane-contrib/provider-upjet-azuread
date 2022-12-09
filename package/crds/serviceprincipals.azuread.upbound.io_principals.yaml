@@ -444,29 +444,6 @@ spec:
                     description: The display name of the application associated with
                       this service principal
                     type: string
-                  features:
-                    description: Block of features to configure for this service principal
-                      using tags
-                    items:
-                      properties:
-                        customSingleSignOnApp:
-                          description: Whether this service principal represents a
-                            custom SAML application
-                          type: boolean
-                        enterpriseApplication:
-                          description: Whether this service principal represents an
-                            Enterprise Application
-                          type: boolean
-                        galleryApplication:
-                          description: Whether this service principal represents a
-                            gallery application
-                          type: boolean
-                        visibleToUsers:
-                          description: Whether this app is visible to users in My
-                            Apps and Office 365 Launcher
-                          type: boolean
-                      type: object
-                    type: array
                   homepageUrl:
                     description: Home page or landing page of the application
                     type: string

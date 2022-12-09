@@ -15,7 +15,13 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "azuread"
 		r.ShortGroup = group
 
-		config.MoveToStatus(r.TerraformResource, "features")
+		delete(r.TerraformResource.Schema, "features")
+
+		r.LateInitializer = config.LateInitializer{
+			IgnoredFields: []string{
+				"tags",
+			},
+		}
 	})
 	p.AddResourceConfigurator("azuread_service_principal_claims_mapping_policy_assignment", func(r *config.Resource) {
 		r.Kind = "ClaimsMappingPolicyAssignment"

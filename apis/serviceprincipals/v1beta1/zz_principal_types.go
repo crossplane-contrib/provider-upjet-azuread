@@ -53,24 +53,6 @@ type FeatureTagsParameters struct {
 	Hide *bool `json:"hide,omitempty" tf:"hide,omitempty"`
 }
 
-type FeaturesObservation struct {
-
-	// Whether this service principal represents a custom SAML application
-	CustomSingleSignOnApp *bool `json:"customSingleSignOnApp,omitempty" tf:"custom_single_sign_on_app,omitempty"`
-
-	// Whether this service principal represents an Enterprise Application
-	EnterpriseApplication *bool `json:"enterpriseApplication,omitempty" tf:"enterprise_application,omitempty"`
-
-	// Whether this service principal represents a gallery application
-	GalleryApplication *bool `json:"galleryApplication,omitempty" tf:"gallery_application,omitempty"`
-
-	// Whether this app is visible to users in My Apps and Office 365 Launcher
-	VisibleToUsers *bool `json:"visibleToUsers,omitempty" tf:"visible_to_users,omitempty"`
-}
-
-type FeaturesParameters struct {
-}
-
 type Oauth2PermissionScopesObservation struct {
 	AdminConsentDescription *string `json:"adminConsentDescription,omitempty" tf:"admin_consent_description,omitempty"`
 
@@ -106,9 +88,6 @@ type PrincipalObservation struct {
 
 	// The display name of the application associated with this service principal
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
-
-	// Block of features to configure for this service principal using tags
-	Features []FeaturesObservation `json:"features,omitempty" tf:"features,omitempty"`
 
 	// Home page or landing page of the application
 	HomepageURL *string `json:"homepageUrl,omitempty" tf:"homepage_url,omitempty"`
