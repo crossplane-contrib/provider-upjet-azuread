@@ -23,6 +23,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// 00000000-0000-0000-0000-000000000000/certificate/11111111-1111-1111-1111-111111111111
 	"azuread_application_certificate": config.IdentifierFromProvider,
 	// "azuread_application_certificate": config.TemplatedStringAsIdentifier("", "{{ .parameters.application_object_id }}/certificate/{{ .parameters.key_id }}"),
+	// no import section
+	"azuread_application_password": config.IdentifierFromProvider,
 
 	// groups
 	//
@@ -47,7 +49,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// azuread_service_principal_certificate can be imported using the object ID of the associated
 	// service principal and the key ID of the certificate credential
 	"azuread_service_principal_certificate": config.IdentifierFromProvider,
-	//
+	// no import section
 	"azuread_service_principal_password": config.IdentifierFromProvider,
 
 	// policies

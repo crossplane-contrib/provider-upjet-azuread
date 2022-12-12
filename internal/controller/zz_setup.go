@@ -11,6 +11,7 @@ import (
 
 	application "github.com/upbound/provider-azuread/internal/controller/applications/application"
 	certificate "github.com/upbound/provider-azuread/internal/controller/applications/certificate"
+	password "github.com/upbound/provider-azuread/internal/controller/applications/password"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	member "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
@@ -18,7 +19,7 @@ import (
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
 	certificateserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/certificate"
 	claimsmappingpolicyassignment "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/claimsmappingpolicyassignment"
-	password "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/password"
+	passwordserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/password"
 	principal "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principal"
 	user "github.com/upbound/provider-azuread/internal/controller/users/user"
 )
@@ -29,6 +30,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		application.Setup,
 		certificate.Setup,
+		password.Setup,
 		group.Setup,
 		member.Setup,
 		invitation.Setup,
@@ -36,7 +38,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		providerconfig.Setup,
 		certificateserviceprincipals.Setup,
 		claimsmappingpolicyassignment.Setup,
-		password.Setup,
+		passwordserviceprincipals.Setup,
 		principal.Setup,
 		user.Setup,
 	} {

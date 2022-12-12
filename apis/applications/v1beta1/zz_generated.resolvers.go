@@ -37,3 +37,29 @@ func (mg *Certificate) ResolveReferences(ctx context.Context, c client.Reader) e
 
 	return nil
 }
+
+// ResolveReferences of this Password.
+func (mg *Password) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ApplicationObjectIDRef,
+		Selector:     mg.Spec.ForProvider.ApplicationObjectIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationObjectID")
+	}
+	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
+
+	return nil
+}
