@@ -44,4 +44,13 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "azuread"
 		r.ShortGroup = group
 	})
+	p.AddResourceConfigurator("azuread_service_principal_password", func(r *config.Resource) {
+		r.Kind = "Password"
+		r.References["service_principal_id"] = config.Reference{
+			Type: "Principal",
+		}
+		// We need to override the default group that upjet generated for
+		// this resource, which would be "azuread"
+		r.ShortGroup = group
+	})
 }

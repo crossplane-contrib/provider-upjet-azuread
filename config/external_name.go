@@ -47,6 +47,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// azuread_service_principal_certificate can be imported using the object ID of the associated
 	// service principal and the key ID of the certificate credential
 	"azuread_service_principal_certificate": config.IdentifierFromProvider,
+	//
+	"azuread_service_principal_password": config.IdentifierFromProvider,
 
 	// policies
 	//

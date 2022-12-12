@@ -83,6 +83,32 @@ func (mg *ClaimsMappingPolicyAssignment) ResolveReferences(ctx context.Context, 
 	return nil
 }
 
+// ResolveReferences of this Password.
+func (mg *Password) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ServicePrincipalID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ServicePrincipalIDRef,
+		Selector:     mg.Spec.ForProvider.ServicePrincipalIDSelector,
+		To: reference.To{
+			List:    &PrincipalList{},
+			Managed: &Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ServicePrincipalID")
+	}
+	mg.Spec.ForProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ServicePrincipalIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this Principal.
 func (mg *Principal) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
