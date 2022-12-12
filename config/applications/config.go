@@ -27,4 +27,12 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "azuread"
 		r.ShortGroup = group
 	})
+	p.AddResourceConfigurator("azuread_application_federated_identity_credential", func(r *config.Resource) {
+		r.References["application_object_id"] = config.Reference{
+			Type: "Application",
+		}
+		// We need to override the default group that upjet generated for
+		// this resource, which would be "azuread"
+		r.ShortGroup = group
+	})
 }

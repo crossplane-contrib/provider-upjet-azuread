@@ -11,6 +11,7 @@ import (
 
 	application "github.com/upbound/provider-azuread/internal/controller/applications/application"
 	certificate "github.com/upbound/provider-azuread/internal/controller/applications/certificate"
+	federatedidentitycredential "github.com/upbound/provider-azuread/internal/controller/applications/federatedidentitycredential"
 	password "github.com/upbound/provider-azuread/internal/controller/applications/password"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	member "github.com/upbound/provider-azuread/internal/controller/groups/member"
@@ -30,6 +31,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		application.Setup,
 		certificate.Setup,
+		federatedidentitycredential.Setup,
 		password.Setup,
 		group.Setup,
 		member.Setup,

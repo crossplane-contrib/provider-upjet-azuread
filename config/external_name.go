@@ -22,7 +22,11 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// {ObjectId}/certificate/{CertificateKeyId}
 	// 00000000-0000-0000-0000-000000000000/certificate/11111111-1111-1111-1111-111111111111
 	"azuread_application_certificate": config.IdentifierFromProvider,
-	// "azuread_application_certificate": config.TemplatedStringAsIdentifier("", "{{ .parameters.application_object_id }}/certificate/{{ .parameters.key_id }}"),
+	// ***"azuread_application_certificate": config.TemplatedStringAsIdentifier("", "{{ .parameters.application_object_id }}/certificate/{{ .parameters.key_id }}"),
+	// azuread_application_federated_identity_credential can be imported using the object ID of the associated application and the ID of the federated identity credential:
+	// {ObjectId}/federatedIdentityCredential/{CredentialId}
+	// 00000000-0000-0000-0000-000000000000/federatedIdentityCredential/11111111-1111-1111-1111-111111111111
+	"azuread_application_federated_identity_credential": config.IdentifierFromProvider,
 	// no import section
 	"azuread_application_password": config.IdentifierFromProvider,
 
