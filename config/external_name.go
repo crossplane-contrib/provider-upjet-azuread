@@ -18,6 +18,11 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// azuread_application can be imported using their object ID
 	"azuread_application": config.IdentifierFromProvider,
+	// azuread_application_certificate can be imported using the object ID of the associated application and the key ID of the certificate credential:
+	// {ObjectId}/certificate/{CertificateKeyId}
+	// 00000000-0000-0000-0000-000000000000/certificate/11111111-1111-1111-1111-111111111111
+	"azuread_application_certificate": config.IdentifierFromProvider,
+	// "azuread_application_certificate": config.TemplatedStringAsIdentifier("", "{{ .parameters.application_object_id }}/certificate/{{ .parameters.key_id }}"),
 
 	// groups
 	//
