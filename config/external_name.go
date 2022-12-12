@@ -29,6 +29,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"azuread_application_federated_identity_credential": config.IdentifierFromProvider,
 	// no import section
 	"azuread_application_password": config.IdentifierFromProvider,
+	// azuread_application_pre_authorized imported using the object ID of the authorizing application and the application ID of the application being authorized:
+	// {ObjectId}/preAuthorizedApplication/{ApplicationId}
+	// 00000000-0000-0000-0000-000000000000/preAuthorizedApplication/11111111-1111-1111-1111-111111111111
+	"azuread_application_pre_authorized": config.IdentifierFromProvider,
 
 	// groups
 	//

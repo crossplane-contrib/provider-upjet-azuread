@@ -13,6 +13,7 @@ import (
 	certificate "github.com/upbound/provider-azuread/internal/controller/applications/certificate"
 	federatedidentitycredential "github.com/upbound/provider-azuread/internal/controller/applications/federatedidentitycredential"
 	password "github.com/upbound/provider-azuread/internal/controller/applications/password"
+	preauthorized "github.com/upbound/provider-azuread/internal/controller/applications/preauthorized"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	member "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
@@ -33,6 +34,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		certificate.Setup,
 		federatedidentitycredential.Setup,
 		password.Setup,
+		preauthorized.Setup,
 		group.Setup,
 		member.Setup,
 		invitation.Setup,

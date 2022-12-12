@@ -9,6 +9,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
+	resource "github.com/upbound/upjet/pkg/resource"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -86,6 +87,48 @@ func (mg *Password) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this PreAuthorized.
+func (mg *PreAuthorized) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.ApplicationObjectIDRef,
+		Selector:     mg.Spec.ForProvider.ApplicationObjectIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationObjectID")
+	}
+	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AuthorizedAppID),
+		Extract:      resource.ExtractParamPath("application_id", true),
+		Reference:    mg.Spec.ForProvider.AuthorizedAppIDRef,
+		Selector:     mg.Spec.ForProvider.AuthorizedAppIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.AuthorizedAppID")
+	}
+	mg.Spec.ForProvider.AuthorizedAppID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.AuthorizedAppIDRef = rsp.ResolvedReference
 
 	return nil
 }

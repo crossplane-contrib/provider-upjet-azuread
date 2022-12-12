@@ -35,4 +35,16 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "azuread"
 		r.ShortGroup = group
 	})
+	p.AddResourceConfigurator("azuread_application_pre_authorized", func(r *config.Resource) {
+		r.References["application_object_id"] = config.Reference{
+			Type: "Application",
+		}
+		r.References["authorized_app_id"] = config.Reference{
+			Type:      "Application",
+			Extractor: `github.com/upbound/upjet/pkg/resource.ExtractParamPath("application_id",true)`,
+		}
+		// We need to override the default group that upjet generated for
+		// this resource, which would be "azuread"
+		r.ShortGroup = group
+	})
 }
