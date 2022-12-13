@@ -64,6 +64,11 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// azuread_claims_mapping_policy can be imported using the id
 	"azuread_claims_mapping_policy": config.IdentifierFromProvider,
+
+	// administrativeunits
+	//
+	// azuread_administrative_unit can be imported using their object ID
+	"azuread_administrative_unit": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

@@ -9,6 +9,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
+	unit "github.com/upbound/provider-azuread/internal/controller/administrativeunits/unit"
 	application "github.com/upbound/provider-azuread/internal/controller/applications/application"
 	certificate "github.com/upbound/provider-azuread/internal/controller/applications/certificate"
 	federatedidentitycredential "github.com/upbound/provider-azuread/internal/controller/applications/federatedidentitycredential"
@@ -30,6 +31,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		unit.Setup,
 		application.Setup,
 		certificate.Setup,
 		federatedidentitycredential.Setup,
