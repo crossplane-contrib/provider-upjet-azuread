@@ -9,6 +9,7 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
+	member "github.com/upbound/provider-azuread/internal/controller/administrativeunits/member"
 	unit "github.com/upbound/provider-azuread/internal/controller/administrativeunits/unit"
 	application "github.com/upbound/provider-azuread/internal/controller/applications/application"
 	certificate "github.com/upbound/provider-azuread/internal/controller/applications/certificate"
@@ -16,7 +17,7 @@ import (
 	password "github.com/upbound/provider-azuread/internal/controller/applications/password"
 	preauthorized "github.com/upbound/provider-azuread/internal/controller/applications/preauthorized"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
-	member "github.com/upbound/provider-azuread/internal/controller/groups/member"
+	membergroups "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
 	claimsmappingpolicy "github.com/upbound/provider-azuread/internal/controller/policies/claimsmappingpolicy"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
@@ -31,6 +32,7 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		member.Setup,
 		unit.Setup,
 		application.Setup,
 		certificate.Setup,
@@ -38,7 +40,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		password.Setup,
 		preauthorized.Setup,
 		group.Setup,
-		member.Setup,
+		membergroups.Setup,
 		invitation.Setup,
 		claimsmappingpolicy.Setup,
 		providerconfig.Setup,

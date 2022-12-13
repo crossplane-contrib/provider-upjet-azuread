@@ -69,6 +69,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// azuread_administrative_unit can be imported using their object ID
 	"azuread_administrative_unit": config.IdentifierFromProvider,
+	// azuread_administrative_unit_member can be imported using the object ID of the administrative unit and the object ID of the member:
+	// {AdministrativeUnitObjectID}/member/{MemberObjectID}
+	// 00000000-0000-0000-0000-000000000000/member/11111111-1111-1111-1111-111111111111
+	"azuread_administrative_unit_member": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
