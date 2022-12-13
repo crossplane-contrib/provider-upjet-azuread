@@ -73,6 +73,13 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// {AdministrativeUnitObjectID}/member/{MemberObjectID}
 	// 00000000-0000-0000-0000-000000000000/member/11111111-1111-1111-1111-111111111111
 	"azuread_administrative_unit_member": config.IdentifierFromProvider,
+
+	// synchronization
+	//
+	// azuread_administrative_unit can be imported using the id:
+	// {servicePrincipalId}/job/{jobId}
+	// 00000000-0000-0000-0000-000000000000/job/dataBricks.f5532fc709734b1a90e8a1fa9fd03a82.8442fd39-2183-419c-8732-74b6ce866bd5
+	"azuread_synchronization_job": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

@@ -25,6 +25,7 @@ import (
 	claimsmappingpolicyassignment "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/claimsmappingpolicyassignment"
 	passwordserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/password"
 	principal "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principal"
+	job "github.com/upbound/provider-azuread/internal/controller/synchronization/job"
 	user "github.com/upbound/provider-azuread/internal/controller/users/user"
 )
 
@@ -48,6 +49,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		claimsmappingpolicyassignment.Setup,
 		passwordserviceprincipals.Setup,
 		principal.Setup,
+		job.Setup,
 		user.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {
