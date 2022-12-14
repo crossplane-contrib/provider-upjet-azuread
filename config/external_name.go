@@ -11,7 +11,7 @@ import "github.com/upbound/upjet/pkg/config"
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// invitations
 	//
-	// No import documented.
+	// No import documented
 	"azuread_invitation": config.IdentifierFromProvider,
 
 	// applications
@@ -27,7 +27,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// {ObjectId}/federatedIdentityCredential/{CredentialId}
 	// 00000000-0000-0000-0000-000000000000/federatedIdentityCredential/11111111-1111-1111-1111-111111111111
 	"azuread_application_federated_identity_credential": config.IdentifierFromProvider,
-	// no import section
+	// No import documented
 	"azuread_application_password": config.IdentifierFromProvider,
 	// azuread_application_pre_authorized imported using the object ID of the authorizing application and the application ID of the application being authorized:
 	// {ObjectId}/preAuthorizedApplication/{ApplicationId}
@@ -57,7 +57,7 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// azuread_service_principal_certificate can be imported using the object ID of the associated
 	// service principal and the key ID of the certificate credential
 	"azuread_service_principal_certificate": config.IdentifierFromProvider,
-	// no import section
+	// No import documented
 	"azuread_service_principal_password": config.IdentifierFromProvider,
 
 	// policies
@@ -80,6 +80,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// {servicePrincipalId}/job/{jobId}
 	// 00000000-0000-0000-0000-000000000000/job/dataBricks.f5532fc709734b1a90e8a1fa9fd03a82.8442fd39-2183-419c-8732-74b6ce866bd5
 	"azuread_synchronization_job": config.IdentifierFromProvider,
+	// No import documented
+	"azuread_synchronization_secret": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

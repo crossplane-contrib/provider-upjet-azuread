@@ -26,6 +26,7 @@ import (
 	passwordserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/password"
 	principal "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principal"
 	job "github.com/upbound/provider-azuread/internal/controller/synchronization/job"
+	secret "github.com/upbound/provider-azuread/internal/controller/synchronization/secret"
 	user "github.com/upbound/provider-azuread/internal/controller/users/user"
 )
 
@@ -50,6 +51,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		passwordserviceprincipals.Setup,
 		principal.Setup,
 		job.Setup,
+		secret.Setup,
 		user.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

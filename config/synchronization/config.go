@@ -14,5 +14,12 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "azuread"
 		r.ShortGroup = group
 	})
-
+	p.AddResourceConfigurator("azuread_synchronization_secret", func(r *config.Resource) {
+		r.References["service_principal_id"] = config.Reference{
+			Type: "github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal",
+		}
+		// We need to override the default group that upjet generated for
+		// this resource, which would be "azuread"
+		r.ShortGroup = group
+	})
 }
