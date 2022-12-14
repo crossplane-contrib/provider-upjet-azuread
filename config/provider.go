@@ -13,6 +13,7 @@ import (
 
 	"github.com/upbound/provider-azuread/config/administrativeunits"
 	"github.com/upbound/provider-azuread/config/applications"
+	"github.com/upbound/provider-azuread/config/conditionalaccess"
 	"github.com/upbound/provider-azuread/config/groups"
 	"github.com/upbound/provider-azuread/config/invitations"
 	"github.com/upbound/provider-azuread/config/policies"
@@ -52,6 +53,7 @@ func GetProvider() *ujconfig.Provider {
 		policies.Configure,
 		administrativeunits.Configure,
 		synchronization.Configure,
+		conditionalaccess.Configure,
 	} {
 		configure(pc)
 	}

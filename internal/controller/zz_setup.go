@@ -16,6 +16,7 @@ import (
 	federatedidentitycredential "github.com/upbound/provider-azuread/internal/controller/applications/federatedidentitycredential"
 	password "github.com/upbound/provider-azuread/internal/controller/applications/password"
 	preauthorized "github.com/upbound/provider-azuread/internal/controller/applications/preauthorized"
+	policy "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/policy"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	membergroups "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
@@ -41,6 +42,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		federatedidentitycredential.Setup,
 		password.Setup,
 		preauthorized.Setup,
+		policy.Setup,
 		group.Setup,
 		membergroups.Setup,
 		invitation.Setup,

@@ -12,6 +12,7 @@ import (
 
 	v1beta1 "github.com/upbound/provider-azuread/apis/administrativeunits/v1beta1"
 	v1beta1applications "github.com/upbound/provider-azuread/apis/applications/v1beta1"
+	v1beta1conditionalaccess "github.com/upbound/provider-azuread/apis/conditionalaccess/v1beta1"
 	v1beta1groups "github.com/upbound/provider-azuread/apis/groups/v1beta1"
 	v1beta1invitations "github.com/upbound/provider-azuread/apis/invitations/v1beta1"
 	v1beta1policies "github.com/upbound/provider-azuread/apis/policies/v1beta1"
@@ -27,6 +28,7 @@ func init() {
 	AddToSchemes = append(AddToSchemes,
 		v1beta1.SchemeBuilder.AddToScheme,
 		v1beta1applications.SchemeBuilder.AddToScheme,
+		v1beta1conditionalaccess.SchemeBuilder.AddToScheme,
 		v1beta1groups.SchemeBuilder.AddToScheme,
 		v1beta1invitations.SchemeBuilder.AddToScheme,
 		v1beta1policies.SchemeBuilder.AddToScheme,

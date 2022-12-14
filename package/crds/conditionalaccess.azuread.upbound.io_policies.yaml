@@ -1,0 +1,559 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.8.0
+  creationTimestamp: null
+  name: policies.conditionalaccess.azuread.upbound.io
+spec:
+  group: conditionalaccess.azuread.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - azuread
+    kind: Policy
+    listKind: PolicyList
+    plural: policies
+    singular: policy
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: Policy is the Schema for the Policys API.
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PolicySpec defines the desired state of Policy
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: DeletionPolicy specifies what will happen to the underlying
+                  external when this managed resource is deleted - either "Delete"
+                  or "Orphan" the external resource.
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  conditions:
+                    description: A conditions block as documented below, which specifies
+                      the rules that must be met for the policy to apply.
+                    items:
+                      properties:
+                        applications:
+                          description: An applications block as documented below,
+                            which specifies applications and user actions included
+                            in and excluded from the policy.
+                          items:
+                            properties:
+                              excludedApplications:
+                                description: A list of application IDs explicitly
+                                  excluded from the policy. Can also be set to Office365.
+                                items:
+                                  type: string
+                                type: array
+                              includedApplications:
+                                description: A list of application IDs the policy
+                                  applies to, unless explicitly excluded (in excluded_applications).
+                                  Can also be set to All, None or Office365. Cannot
+                                  be specified with included_user_actions. One of
+                                  included_applications or included_user_actions must
+                                  be specified.
+                                items:
+                                  type: string
+                                type: array
+                              includedUserActions:
+                                description: A list of user actions to include. Supported
+                                  values are urn:user:registerdevice and urn:user:registersecurityinfo.
+                                  Cannot be specified with included_applications.
+                                  One of included_applications or included_user_actions
+                                  must be specified.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        clientAppTypes:
+                          description: 'A list of client application types included
+                            in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients,
+                            exchangeActiveSync, easSupported and other.'
+                          items:
+                            type: string
+                          type: array
+                        devices:
+                          description: A devices block as documented below, which
+                            describes devices to be included in and excluded from
+                            the policy. A devices block can be added to an existing
+                            policy, but removing the devices block forces a new resource
+                            to be created.
+                          items:
+                            properties:
+                              filter:
+                                description: A filter block as described below. A
+                                  filter block can be added to an existing policy,
+                                  but removing the filter block forces a new resource
+                                  to be created.
+                                items:
+                                  properties:
+                                    mode:
+                                      description: Whether to include in, or exclude
+                                        from, matching devices from the policy. Supported
+                                        values are include or exclude.
+                                      type: string
+                                    rule:
+                                      description: Condition filter to match devices.
+                                        For more information, see official documentation.
+                                      type: string
+                                  required:
+                                  - mode
+                                  - rule
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        locations:
+                          description: A locations block as documented below, which
+                            specifies locations included in and excluded from the
+                            policy.
+                          items:
+                            properties:
+                              excludedLocations:
+                                description: A list of location IDs excluded from
+                                  scope of policy. Can also be set to AllTrusted.
+                                items:
+                                  type: string
+                                type: array
+                              includedLocations:
+                                description: A list of location IDs in scope of policy
+                                  unless explicitly excluded. Can also be set to All,
+                                  or AllTrusted.
+                                items:
+                                  type: string
+                                type: array
+                            required:
+                            - includedLocations
+                            type: object
+                          type: array
+                        platforms:
+                          description: A platforms block as documented below, which
+                            specifies platforms included in and excluded from the
+                            policy.
+                          items:
+                            properties:
+                              excludedPlatforms:
+                                description: 'A list of platforms explicitly excluded
+                                  from the policy. Possible values are: all, android,
+                                  iOS, linux, macOS, windows, windowsPhone or unknownFutureValue.'
+                                items:
+                                  type: string
+                                type: array
+                              includedPlatforms:
+                                description: 'A list of platforms the policy applies
+                                  to, unless explicitly excluded. Possible values
+                                  are: all, android, iOS, linux, macOS, windows, windowsPhone
+                                  or unknownFutureValue.'
+                                items:
+                                  type: string
+                                type: array
+                            required:
+                            - includedPlatforms
+                            type: object
+                          type: array
+                        signInRiskLevels:
+                          description: 'A list of sign-in risk levels included in
+                            the policy. Possible values are: low, medium, high, hidden,
+                            none, unknownFutureValue.'
+                          items:
+                            type: string
+                          type: array
+                        userRiskLevels:
+                          description: 'A list of user risk levels included in the
+                            policy. Possible values are: low, medium, high, hidden,
+                            none, unknownFutureValue.'
+                          items:
+                            type: string
+                          type: array
+                        users:
+                          description: A users block as documented below, which specifies
+                            users, groups, and roles included in and excluded from
+                            the policy.
+                          items:
+                            properties:
+                              excludedGroups:
+                                description: A list of group IDs excluded from scope
+                                  of policy.
+                                items:
+                                  type: string
+                                type: array
+                              excludedRoles:
+                                description: A list of role IDs excluded from scope
+                                  of policy.
+                                items:
+                                  type: string
+                                type: array
+                              excludedUsers:
+                                description: A list of user IDs excluded from scope
+                                  of policy and/or GuestsOrExternalUsers.
+                                items:
+                                  type: string
+                                type: array
+                              includedGroups:
+                                description: A list of group IDs in scope of policy
+                                  unless explicitly excluded.
+                                items:
+                                  type: string
+                                type: array
+                              includedRoles:
+                                description: A list of role IDs in scope of policy
+                                  unless explicitly excluded.
+                                items:
+                                  type: string
+                                type: array
+                              includedUsers:
+                                description: A list of user IDs in scope of policy
+                                  unless explicitly excluded, or None or All or GuestsOrExternalUsers.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      required:
+                      - applications
+                      - clientAppTypes
+                      - users
+                      type: object
+                    type: array
+                  displayName:
+                    description: The friendly name for this Conditional Access Policy.
+                    type: string
+                  grantControls:
+                    description: A grant_controls block as documented below, which
+                      specifies the grant controls that must be fulfilled to pass
+                      the policy.
+                    items:
+                      properties:
+                        builtInControls:
+                          description: 'List of built-in controls required by the
+                            policy. Possible values are: block, mfa, approvedApplication,
+                            compliantApplication, compliantDevice, domainJoinedDevice,
+                            passwordChange or unknownFutureValue.'
+                          items:
+                            type: string
+                          type: array
+                        customAuthenticationFactors:
+                          description: List of custom controls IDs required by the
+                            policy.
+                          items:
+                            type: string
+                          type: array
+                        operator:
+                          description: 'Defines the relationship of the grant controls.
+                            Possible values are: AND, OR.'
+                          type: string
+                        termsOfUse:
+                          description: List of terms of use IDs required by the policy.
+                          items:
+                            type: string
+                          type: array
+                      required:
+                      - builtInControls
+                      - operator
+                      type: object
+                    type: array
+                  sessionControls:
+                    description: A session_controls block as documented below, which
+                      specifies the session controls that are enforced after sign-in.
+                    items:
+                      properties:
+                        applicationEnforcedRestrictionsEnabled:
+                          description: Whether or not application enforced restrictions
+                            are enabled. Defaults to false.
+                          type: boolean
+                        cloudAppSecurityPolicy:
+                          description: 'Enables cloud app security and specifies the
+                            cloud app security policy to use. Possible values are:
+                            blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.'
+                          type: string
+                        persistentBrowserMode:
+                          description: 'Session control to define whether to persist
+                            cookies or not. Possible values are: always or never.'
+                          type: string
+                        signInFrequency:
+                          description: Number of days or hours to enforce sign-in
+                            frequency. Required when sign_in_frequency_period is specified.
+                            Due to an API issue, removing this property forces a new
+                            resource to be created.
+                          type: number
+                        signInFrequencyPeriod:
+                          description: 'The time period to enforce sign-in frequency.
+                            Possible values are: hours or days. Required when sign_in_frequency_period
+                            is specified. Due to an API issue, removing this property
+                            forces a new resource to be created.'
+                          type: string
+                      type: object
+                    type: array
+                  state:
+                    description: 'Specifies the state of the policy object. Possible
+                      values are: enabled, disabled and enabledForReportingButNotEnforced'
+                    type: string
+                required:
+                - conditions
+                - displayName
+                - grantControls
+                - state
+                type: object
+              providerConfigRef:
+                default:
+                  name: default
+                description: ProviderConfigReference specifies how the provider that
+                  will be used to create, observe, update, and delete this managed
+                  resource should be configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              providerRef:
+                description: 'ProviderReference specifies the provider that will be
+                  used to create, observe, update, and delete this managed resource.
+                  Deprecated: Please use ProviderConfigReference, i.e. `providerConfigRef`'
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: Resolution specifies whether resolution of this
+                          reference is required. The default is 'Required', which
+                          means the reconcile will fail if the reference cannot be
+                          resolved. 'Optional' means this reference will be a no-op
+                          if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: Resolve specifies when this reference should
+                          be resolved. The default is 'IfNotPresent', which will attempt
+                          to resolve the reference only when the corresponding field
+                          is not present. Use 'Always' to resolve the reference on
+                          every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              publishConnectionDetailsTo:
+                description: PublishConnectionDetailsTo specifies the connection secret
+                  config which contains a name, metadata and a reference to secret
+                  store config to which any connection details for this managed resource
+                  should be written. Connection details frequently include the endpoint,
+                  username, and password required to connect to the managed resource.
+                properties:
+                  configRef:
+                    default:
+                      name: default
+                    description: SecretStoreConfigRef specifies which secret store
+                      config should be used for this ConnectionSecret.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  metadata:
+                    description: Metadata is the metadata for connection secret.
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        description: Annotations are the annotations to be added to
+                          connection secret. - For Kubernetes secrets, this will be
+                          used as "metadata.annotations". - It is up to Secret Store
+                          implementation for others store types.
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        description: Labels are the labels/tags to be added to connection
+                          secret. - For Kubernetes secrets, this will be used as "metadata.labels".
+                          - It is up to Secret Store implementation for others store
+                          types.
+                        type: object
+                      type:
+                        description: Type is the SecretType for the connection secret.
+                          - Only valid for Kubernetes Secret Stores.
+                        type: string
+                    type: object
+                  name:
+                    description: Name is the name of the connection secret.
+                    type: string
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: WriteConnectionSecretToReference specifies the namespace
+                  and name of a Secret to which any connection details for this managed
+                  resource should be written. Connection details frequently include
+                  the endpoint, username, and password required to connect to the
+                  managed resource. This field is planned to be replaced in a future
+                  release in favor of PublishConnectionDetailsTo. Currently, both
+                  could be set independently and connection details would be published
+                  to both without affecting each other.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: PolicyStatus defines the observed state of Policy.
+            properties:
+              atProvider:
+                properties:
+                  id:
+                    description: The ID of the Conditional Access Policy.
+                    type: string
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: LastTransitionTime is the last time this condition
+                        transitioned from one status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: A Message containing details about this condition's
+                        last transition from one status to another, if any.
+                      type: string
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: Type of this condition. At most one of each condition
+                        type may apply to a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []

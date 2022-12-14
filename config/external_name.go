@@ -82,6 +82,11 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"azuread_synchronization_job": config.IdentifierFromProvider,
 	// No import documented
 	"azuread_synchronization_secret": config.IdentifierFromProvider,
+
+	// conditionalaccess
+	//
+	// azuread_conditional_access_policy can be imported using the id
+	"azuread_conditional_access_policy": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
