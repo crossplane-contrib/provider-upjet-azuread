@@ -3,7 +3,7 @@ kind: Member
 metadata:
   annotations:
     meta.upbound.io/example-id: administrativeunits/v1beta1/member
-    upjet.upbound.io/manual-intervention: "This resource either requires object ID of the user or group"
+    upjet.upbound.io/manual-intervention: "This resource either requires object ID of an existing user or group"
   labels:
     testing.upbound.io/example-name: example
   name: example
