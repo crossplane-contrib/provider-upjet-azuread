@@ -1,0 +1,25 @@
+apiVersion: directoryroles.azuread.upbound.io/v1beta1
+kind: CustomDirectoryRole
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/customdirectoryrole
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Allows reading applications and updating groups
+    displayName: My Custom Role
+    enabled: true
+    permissions:
+    - allowedResourceActions:
+      - microsoft.directory/applications/basic/update
+      - microsoft.directory/applications/create
+      - microsoft.directory/applications/standard/read
+    - allowedResourceActions:
+      - microsoft.directory/groups/allProperties/read
+      - microsoft.directory/groups/allProperties/read
+      - microsoft.directory/groups/basic/update
+      - microsoft.directory/groups/create
+      - microsoft.directory/groups/delete
+    version: "1.0"
