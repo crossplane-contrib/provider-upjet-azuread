@@ -18,6 +18,7 @@ import (
 	preauthorized "github.com/upbound/provider-azuread/internal/controller/applications/preauthorized"
 	location "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/location"
 	policy "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/policy"
+	customdirectoryrole "github.com/upbound/provider-azuread/internal/controller/directoryroles/customdirectoryrole"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	membergroups "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
@@ -45,6 +46,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		preauthorized.Setup,
 		location.Setup,
 		policy.Setup,
+		customdirectoryrole.Setup,
 		group.Setup,
 		membergroups.Setup,
 		invitation.Setup,
