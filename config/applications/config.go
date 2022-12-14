@@ -10,6 +10,12 @@ func Configure(p *config.Provider) {
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
 		r.ShortGroup = group
+
+		r.LateInitializer = config.LateInitializer{
+			IgnoredFields: []string{
+				"tags",
+			},
+		}
 	})
 	p.AddResourceConfigurator("azuread_application_certificate", func(r *config.Resource) {
 		r.References["application_object_id"] = config.Reference{
