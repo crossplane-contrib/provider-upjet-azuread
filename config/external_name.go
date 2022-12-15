@@ -96,6 +96,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"azuread_custom_directory_role": config.IdentifierFromProvider,
 	// No import documented
 	"azuread_directory_role": config.IdentifierFromProvider,
+	// azuread_directory_role_assignment can be imported using the ID of the assignment
+	"azuread_directory_role_assignment": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

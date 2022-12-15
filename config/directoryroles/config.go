@@ -17,6 +17,21 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "azuread"
 		r.ShortGroup = group
 
-		config.MoveToStatus(r.TerraformResource, "template_id")
+		r.LateInitializer = config.LateInitializer{
+			IgnoredFields: []string{
+				"template_id",
+			},
+		}
+	})
+	p.AddResourceConfigurator("azuread_directory_role_assignment", func(r *config.Resource) {
+		r.References["role_id"] = config.Reference{
+			Type: "Role",
+		}
+		r.References["principal_object_id"] = config.Reference{
+			Type: "github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal",
+		}
+		// We need to override the default group that upjet generated for
+		// this resource, which would be "azuread"
+		r.ShortGroup = group
 	})
 }

@@ -20,6 +20,7 @@ import (
 	policy "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/policy"
 	customdirectoryrole "github.com/upbound/provider-azuread/internal/controller/directoryroles/customdirectoryrole"
 	role "github.com/upbound/provider-azuread/internal/controller/directoryroles/role"
+	roleassignment "github.com/upbound/provider-azuread/internal/controller/directoryroles/roleassignment"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	membergroups "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
@@ -49,6 +50,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		policy.Setup,
 		customdirectoryrole.Setup,
 		role.Setup,
+		roleassignment.Setup,
 		group.Setup,
 		membergroups.Setup,
 		invitation.Setup,
