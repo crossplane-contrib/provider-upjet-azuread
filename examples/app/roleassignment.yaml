@@ -1,0 +1,64 @@
+apiVersion: app.azuread.upbound.io/v1beta1
+kind: RoleAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: app/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    appRoleId: df021288-bdef-4463-88db-98f22de89214
+    principalObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    resourceObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: msgraph
+---
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: app/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+---
+apiVersion: applications.azuread.upbound.io/v1beta1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: app/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: example
+    requiredResourceAccess:
+      - resourceAppId: 00000003-0000-0000-c000-000000000000
+        resourceAccess:
+            # Id obtained from status.atProvider.appRoleIds["User.Read.All"] from the Principal resource below.
+          - id: df021288-bdef-4463-88db-98f22de89214
+            type: Role
+          - id: b4e74841-8e56-480b-be8b-910348b18b4c
+            type: Scope
+---
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: app/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: msgraph
+  name: msgraph
+spec:
+  forProvider:
+    applicationId: 00000003-0000-0000-c000-000000000000
+    useExisting: true

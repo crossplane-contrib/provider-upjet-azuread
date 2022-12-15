@@ -12,6 +12,7 @@ import (
 	"github.com/upbound/upjet/pkg/registry/reference"
 
 	"github.com/upbound/provider-azuread/config/administrativeunits"
+	"github.com/upbound/provider-azuread/config/app"
 	"github.com/upbound/provider-azuread/config/applications"
 	"github.com/upbound/provider-azuread/config/conditionalaccess"
 	"github.com/upbound/provider-azuread/config/directoryroles"
@@ -56,6 +57,7 @@ func GetProvider() *ujconfig.Provider {
 		synchronization.Configure,
 		conditionalaccess.Configure,
 		directoryroles.Configure,
+		app.Configure,
 	} {
 		configure(pc)
 	}

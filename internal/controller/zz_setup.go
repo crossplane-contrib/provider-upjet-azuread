@@ -11,6 +11,7 @@ import (
 
 	member "github.com/upbound/provider-azuread/internal/controller/administrativeunits/member"
 	unit "github.com/upbound/provider-azuread/internal/controller/administrativeunits/unit"
+	roleassignment "github.com/upbound/provider-azuread/internal/controller/app/roleassignment"
 	application "github.com/upbound/provider-azuread/internal/controller/applications/application"
 	certificate "github.com/upbound/provider-azuread/internal/controller/applications/certificate"
 	federatedidentitycredential "github.com/upbound/provider-azuread/internal/controller/applications/federatedidentitycredential"
@@ -20,7 +21,7 @@ import (
 	policy "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/policy"
 	customdirectoryrole "github.com/upbound/provider-azuread/internal/controller/directoryroles/customdirectoryrole"
 	role "github.com/upbound/provider-azuread/internal/controller/directoryroles/role"
-	roleassignment "github.com/upbound/provider-azuread/internal/controller/directoryroles/roleassignment"
+	roleassignmentdirectoryroles "github.com/upbound/provider-azuread/internal/controller/directoryroles/roleassignment"
 	rolemember "github.com/upbound/provider-azuread/internal/controller/directoryroles/rolemember"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	membergroups "github.com/upbound/provider-azuread/internal/controller/groups/member"
@@ -42,6 +43,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
 		member.Setup,
 		unit.Setup,
+		roleassignment.Setup,
 		application.Setup,
 		certificate.Setup,
 		federatedidentitycredential.Setup,
@@ -51,7 +53,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		policy.Setup,
 		customdirectoryrole.Setup,
 		role.Setup,
-		roleassignment.Setup,
+		roleassignmentdirectoryroles.Setup,
 		rolemember.Setup,
 		group.Setup,
 		membergroups.Setup,
