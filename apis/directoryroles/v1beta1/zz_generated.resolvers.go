@@ -55,3 +55,45 @@ func (mg *RoleAssignment) ResolveReferences(ctx context.Context, c client.Reader
 
 	return nil
 }
+
+// ResolveReferences of this RoleMember.
+func (mg *RoleMember) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var rsp reference.ResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MemberObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.MemberObjectIDRef,
+		Selector:     mg.Spec.ForProvider.MemberObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta1.UserList{},
+			Managed: &v1beta1.User{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.MemberObjectID")
+	}
+	mg.Spec.ForProvider.MemberObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.MemberObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoleObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.ForProvider.RoleObjectIDRef,
+		Selector:     mg.Spec.ForProvider.RoleObjectIDSelector,
+		To: reference.To{
+			List:    &RoleList{},
+			Managed: &Role{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.RoleObjectID")
+	}
+	mg.Spec.ForProvider.RoleObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.RoleObjectIDRef = rsp.ResolvedReference
+
+	return nil
+}
