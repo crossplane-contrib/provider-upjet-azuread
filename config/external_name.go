@@ -92,8 +92,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 
 	// directoryroles
 	//
-	// azuread_conditional_access_policy can be imported using the id
+	// No import documented
 	"azuread_custom_directory_role": config.IdentifierFromProvider,
+	// No import documented
+	"azuread_directory_role": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

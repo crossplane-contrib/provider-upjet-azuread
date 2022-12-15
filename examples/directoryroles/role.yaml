@@ -1,0 +1,11 @@
+apiVersion: directoryroles.azuread.upbound.io/v1beta1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/role
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: Security administrator
