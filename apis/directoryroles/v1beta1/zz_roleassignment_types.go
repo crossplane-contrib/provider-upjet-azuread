@@ -36,20 +36,21 @@ type RoleAssignmentParameters struct {
 	DirectoryScopeObjectID *string `json:"directoryScopeObjectId,omitempty" tf:"directory_scope_object_id,omitempty"`
 
 	// The object ID of the member principal
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
 	// +kubebuilder:validation:Optional
 	PrincipalObjectID *string `json:"principalObjectId,omitempty" tf:"principal_object_id,omitempty"`
 
-	// Reference to a Principal in serviceprincipals to populate principalObjectId.
+	// Reference to a User in users to populate principalObjectId.
 	// +kubebuilder:validation:Optional
 	PrincipalObjectIDRef *v1.Reference `json:"principalObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Principal in serviceprincipals to populate principalObjectId.
+	// Selector for a User in users to populate principalObjectId.
 	// +kubebuilder:validation:Optional
 	PrincipalObjectIDSelector *v1.Selector `json:"principalObjectIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the directory role for this assignment
 	// +crossplane:generate:reference:type=Role
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("template_id",true)
 	// +kubebuilder:validation:Optional
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 

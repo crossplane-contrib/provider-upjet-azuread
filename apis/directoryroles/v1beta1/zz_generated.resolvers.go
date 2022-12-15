@@ -9,7 +9,8 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1beta1 "github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1"
+	v1beta1 "github.com/upbound/provider-azuread/apis/users/v1beta1"
+	resource "github.com/upbound/upjet/pkg/resource"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
@@ -26,8 +27,8 @@ func (mg *RoleAssignment) ResolveReferences(ctx context.Context, c client.Reader
 		Reference:    mg.Spec.ForProvider.PrincipalObjectIDRef,
 		Selector:     mg.Spec.ForProvider.PrincipalObjectIDSelector,
 		To: reference.To{
-			List:    &v1beta1.PrincipalList{},
-			Managed: &v1beta1.Principal{},
+			List:    &v1beta1.UserList{},
+			Managed: &v1beta1.User{},
 		},
 	})
 	if err != nil {
@@ -38,7 +39,7 @@ func (mg *RoleAssignment) ResolveReferences(ctx context.Context, c client.Reader
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RoleID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("template_id", true),
 		Reference:    mg.Spec.ForProvider.RoleIDRef,
 		Selector:     mg.Spec.ForProvider.RoleIDSelector,
 		To: reference.To{

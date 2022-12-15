@@ -66,10 +66,6 @@ spec:
                   displayName:
                     description: The display name of the directory role
                     type: string
-                  templateId:
-                    description: The object ID of the template associated with the
-                      directory role
-                    type: string
                 type: object
               providerConfigRef:
                 default:
@@ -254,6 +250,10 @@ spec:
                     type: string
                   objectId:
                     description: The object ID of the directory role
+                    type: string
+                  templateId:
+                    description: The object ID of the template associated with the
+                      directory role
                     type: string
                 type: object
               conditions:

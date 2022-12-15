@@ -84,8 +84,7 @@ spec:
                     description: The object ID of the member principal
                     type: string
                   principalObjectIdRef:
-                    description: Reference to a Principal in serviceprincipals to
-                      populate principalObjectId.
+                    description: Reference to a User in users to populate principalObjectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -119,8 +118,7 @@ spec:
                     - name
                     type: object
                   principalObjectIdSelector:
-                    description: Selector for a Principal in serviceprincipals to
-                      populate principalObjectId.
+                    description: Selector for a User in users to populate principalObjectId.
                     properties:
                       matchControllerRef:
                         description: MatchControllerRef ensures an object with the
