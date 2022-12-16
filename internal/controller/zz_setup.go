@@ -28,6 +28,7 @@ import (
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
 	claimsmappingpolicy "github.com/upbound/provider-azuread/internal/controller/policies/claimsmappingpolicy"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
+	permissiongrant "github.com/upbound/provider-azuread/internal/controller/serviceprincipaldelegated/permissiongrant"
 	certificateserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/certificate"
 	claimsmappingpolicyassignment "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/claimsmappingpolicyassignment"
 	passwordserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/password"
@@ -60,6 +61,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		invitation.Setup,
 		claimsmappingpolicy.Setup,
 		providerconfig.Setup,
+		permissiongrant.Setup,
 		certificateserviceprincipals.Setup,
 		claimsmappingpolicyassignment.Setup,
 		passwordserviceprincipals.Setup,

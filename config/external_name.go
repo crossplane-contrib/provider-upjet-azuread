@@ -103,10 +103,17 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	// 00000000-0000-0000-0000-000000000000/member/11111111-1111-1111-1111-111111111111
 	"azuread_directory_role_member": config.IdentifierFromProvider,
 
+	// app
+	//
 	// azuread_app_role_assignment can be can be imported using the object ID of the service principal representing the resource and the ID of the app role assignment (note: not the ID of the app role):
 	// {ResourcePrincipalID}/appRoleAssignment/{AppRoleAssignmentID}
 	// 00000000-0000-0000-0000-000000000000/appRoleAssignment/aaBBcDDeFG6h5JKLMN2PQrrssTTUUvWWxxxxxyyyzzz
 	"azuread_app_role_assignment": config.IdentifierFromProvider,
+
+	// serviceprincipaldelegated
+	//
+	// azuread_service_principal_delegated_permission_grant can be imported using their ID
+	"azuread_service_principal_delegated_permission_grant": config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the
