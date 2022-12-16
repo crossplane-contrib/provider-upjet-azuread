@@ -18,12 +18,6 @@ func Configure(p *config.Provider) {
 		r.ShortGroup = group
 
 		config.MoveToStatus(r.TerraformResource, "template_id")
-
-		//r.LateInitializer = config.LateInitializer{
-		//	IgnoredFields: []string{
-		//		"template_id",
-		//	},
-		//}
 	})
 	p.AddResourceConfigurator("azuread_directory_role_assignment", func(r *config.Resource) {
 		r.References["role_id"] = config.Reference{
