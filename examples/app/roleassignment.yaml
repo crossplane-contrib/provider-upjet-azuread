@@ -8,6 +8,7 @@ metadata:
   name: example
 spec:
   forProvider:
+    # Id obtained from status.atProvider.appRoleIds["User.Read.All"] from the Principal(msgraph) resource below.
     appRoleId: df021288-bdef-4463-88db-98f22de89214
     principalObjectIdSelector:
       matchLabels:
@@ -42,11 +43,13 @@ spec:
   forProvider:
     displayName: example
     requiredResourceAccess:
+        # I got this id from "data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph"
       - resourceAppId: 00000003-0000-0000-c000-000000000000
         resourceAccess:
-            # Id obtained from status.atProvider.appRoleIds["User.Read.All"] from the Principal resource below.
+            # Id obtained from status.atProvider.appRoleIds["User.Read.All"] from the Principal(msgraph) resource below.
           - id: df021288-bdef-4463-88db-98f22de89214
             type: Role
+            # Id obtained from status.atProvider.oauth2PermissionScopeIds["User.ReadWrite"] from the Principal(msgraph) resource below.
           - id: b4e74841-8e56-480b-be8b-910348b18b4c
             type: Scope
 ---
@@ -60,5 +63,6 @@ metadata:
   name: msgraph
 spec:
   forProvider:
+    # I got this id from "data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph" 
     applicationId: 00000003-0000-0000-c000-000000000000
     useExisting: true
