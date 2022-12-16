@@ -37,15 +37,4 @@ func Configure(p *config.Provider) {
 			},
 		}
 	})
-	p.AddResourceConfigurator("azuread_directory_role_member", func(r *config.Resource) {
-		r.References["role_object_id"] = config.Reference{
-			Type: "Role",
-		}
-		r.References["member_object_id"] = config.Reference{
-			Type: "github.com/upbound/provider-azuread/apis/users/v1beta1.User",
-		}
-		// We need to override the default group that upjet generated for
-		// this resource, which would be "azuread"
-		r.ShortGroup = group
-	})
 }

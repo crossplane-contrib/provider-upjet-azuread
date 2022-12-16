@@ -98,10 +98,6 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"azuread_directory_role": config.IdentifierFromProvider,
 	// azuread_directory_role_assignment can be imported using the ID of the assignment
 	"azuread_directory_role_assignment": config.IdentifierFromProvider,
-	// azuread_directory_role_member can be imported using the object ID of the role and the object ID of the member:
-	// {RoleObjectID}/member/{MemberObjectID}
-	// 00000000-0000-0000-0000-000000000000/member/11111111-1111-1111-1111-111111111111
-	"azuread_directory_role_member": config.IdentifierFromProvider,
 
 	// app
 	//
