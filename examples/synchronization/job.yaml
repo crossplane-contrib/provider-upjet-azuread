@@ -19,6 +19,7 @@ kind: Secret
 metadata:
   annotations:
     meta.upbound.io/example-id: synchronization/v1beta1/job
+    uptest.upbound.io/pre-delete-hook: testhooks/delete-secret.sh
   labels:
     testing.upbound.io/example-name: example
   name: example
