@@ -175,14 +175,12 @@ This example creates an Azuread resource group.
 apiVersion: applications.azuread.upbound.io/v1beta1
 kind: Application
 metadata:
-  annotations:
-    meta.upbound.io/example-id: applications/v1beta1/application
-  labels:
-    testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
     displayName: example
+  providerConfigRef:
+    name: default
 ```
 
 **Note:** the `spec.providerConfigRef.name` must match the `ProviderConfig` `metadata.name` value.?????

@@ -9,3 +9,7 @@ cover.out
 # ignore IDE folders
 .vscode/
 .idea/
+
+# common credentials
+kubeconfig
+credentials.json
