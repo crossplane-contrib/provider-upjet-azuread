@@ -18,7 +18,6 @@ import (
 	password "github.com/upbound/provider-azuread/internal/controller/applications/password"
 	preauthorized "github.com/upbound/provider-azuread/internal/controller/applications/preauthorized"
 	location "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/location"
-	policy "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/policy"
 	customdirectoryrole "github.com/upbound/provider-azuread/internal/controller/directoryroles/customdirectoryrole"
 	role "github.com/upbound/provider-azuread/internal/controller/directoryroles/role"
 	roleassignmentdirectoryroles "github.com/upbound/provider-azuread/internal/controller/directoryroles/roleassignment"
@@ -50,7 +49,6 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		password.Setup,
 		preauthorized.Setup,
 		location.Setup,
-		policy.Setup,
 		customdirectoryrole.Setup,
 		role.Setup,
 		roleassignmentdirectoryroles.Setup,
