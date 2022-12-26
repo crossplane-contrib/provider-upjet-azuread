@@ -11,11 +11,17 @@ import (
 	ujconfig "github.com/upbound/upjet/pkg/config"
 	"github.com/upbound/upjet/pkg/registry/reference"
 
+	"github.com/upbound/provider-azuread/config/administrativeunits"
+	"github.com/upbound/provider-azuread/config/app"
 	"github.com/upbound/provider-azuread/config/applications"
+	"github.com/upbound/provider-azuread/config/conditionalaccess"
+	"github.com/upbound/provider-azuread/config/directoryroles"
 	"github.com/upbound/provider-azuread/config/groups"
 	"github.com/upbound/provider-azuread/config/invitations"
 	"github.com/upbound/provider-azuread/config/policies"
+	"github.com/upbound/provider-azuread/config/serviceprincipaldelegated"
 	"github.com/upbound/provider-azuread/config/serviceprincipals"
+	"github.com/upbound/provider-azuread/config/synchronization"
 	"github.com/upbound/provider-azuread/config/users"
 )
 
@@ -48,6 +54,12 @@ func GetProvider() *ujconfig.Provider {
 		users.Configure,
 		serviceprincipals.Configure,
 		policies.Configure,
+		administrativeunits.Configure,
+		synchronization.Configure,
+		conditionalaccess.Configure,
+		directoryroles.Configure,
+		app.Configure,
+		serviceprincipaldelegated.Configure,
 	} {
 		configure(pc)
 	}

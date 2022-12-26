@@ -1,0 +1,11 @@
+apiVersion: administrativeunits.azuread.upbound.io/v1beta1
+kind: Unit
+metadata:
+  annotations:
+    meta.upbound.io/example-id: administrativeunits/v1beta1/unit
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: Example-AU

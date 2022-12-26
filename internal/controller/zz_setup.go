@@ -9,15 +9,30 @@ import (
 
 	"github.com/upbound/upjet/pkg/controller"
 
+	member "github.com/upbound/provider-azuread/internal/controller/administrativeunits/member"
+	unit "github.com/upbound/provider-azuread/internal/controller/administrativeunits/unit"
+	roleassignment "github.com/upbound/provider-azuread/internal/controller/app/roleassignment"
 	application "github.com/upbound/provider-azuread/internal/controller/applications/application"
+	certificate "github.com/upbound/provider-azuread/internal/controller/applications/certificate"
+	federatedidentitycredential "github.com/upbound/provider-azuread/internal/controller/applications/federatedidentitycredential"
+	password "github.com/upbound/provider-azuread/internal/controller/applications/password"
+	preauthorized "github.com/upbound/provider-azuread/internal/controller/applications/preauthorized"
+	location "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/location"
+	customdirectoryrole "github.com/upbound/provider-azuread/internal/controller/directoryroles/customdirectoryrole"
+	role "github.com/upbound/provider-azuread/internal/controller/directoryroles/role"
+	roleassignmentdirectoryroles "github.com/upbound/provider-azuread/internal/controller/directoryroles/roleassignment"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
-	member "github.com/upbound/provider-azuread/internal/controller/groups/member"
+	membergroups "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
 	claimsmappingpolicy "github.com/upbound/provider-azuread/internal/controller/policies/claimsmappingpolicy"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
-	certificate "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/certificate"
+	permissiongrant "github.com/upbound/provider-azuread/internal/controller/serviceprincipaldelegated/permissiongrant"
+	certificateserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/certificate"
 	claimsmappingpolicyassignment "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/claimsmappingpolicyassignment"
+	passwordserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/password"
 	principal "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principal"
+	job "github.com/upbound/provider-azuread/internal/controller/synchronization/job"
+	secret "github.com/upbound/provider-azuread/internal/controller/synchronization/secret"
 	user "github.com/upbound/provider-azuread/internal/controller/users/user"
 )
 
@@ -25,15 +40,30 @@ import (
 // the supplied manager.
 func Setup(mgr ctrl.Manager, o controller.Options) error {
 	for _, setup := range []func(ctrl.Manager, controller.Options) error{
-		application.Setup,
-		group.Setup,
 		member.Setup,
+		unit.Setup,
+		roleassignment.Setup,
+		application.Setup,
+		certificate.Setup,
+		federatedidentitycredential.Setup,
+		password.Setup,
+		preauthorized.Setup,
+		location.Setup,
+		customdirectoryrole.Setup,
+		role.Setup,
+		roleassignmentdirectoryroles.Setup,
+		group.Setup,
+		membergroups.Setup,
 		invitation.Setup,
 		claimsmappingpolicy.Setup,
 		providerconfig.Setup,
-		certificate.Setup,
+		permissiongrant.Setup,
+		certificateserviceprincipals.Setup,
 		claimsmappingpolicyassignment.Setup,
+		passwordserviceprincipals.Setup,
 		principal.Setup,
+		job.Setup,
+		secret.Setup,
 		user.Setup,
 	} {
 		if err := setup(mgr, o); err != nil {

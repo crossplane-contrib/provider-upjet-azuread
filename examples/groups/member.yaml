@@ -33,7 +33,7 @@ apiVersion: users.azuread.upbound.io/v1beta1
 kind: User
 metadata:
   annotations:
-    meta.upbound.io/example-id: users/v1beta1/member
+    meta.upbound.io/example-id: groups/v1beta1/member
   labels:
     testing.upbound.io/example-name: example
   name: example

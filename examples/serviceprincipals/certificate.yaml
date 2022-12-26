@@ -2,7 +2,7 @@ apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
 kind: Certificate
 metadata:
   annotations:
-    meta.upbound.io/example-id: groups/v1beta1/certificate
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/certificate
   labels:
     testing.upbound.io/example-name: example
   name: example
@@ -46,7 +46,7 @@ apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
 kind: Principal
 metadata:
   annotations:
-    meta.upbound.io/example-id: applications/v1beta1/certificate
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/certificate
   labels:
     testing.upbound.io/example-name: example
   name: example
@@ -61,7 +61,7 @@ apiVersion: applications.azuread.upbound.io/v1beta1
 kind: Application
 metadata:
   annotations:
-    meta.upbound.io/example-id: applications/v1beta1/certificate
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/certificate
   labels:
     testing.upbound.io/example-name: example
   name: example
