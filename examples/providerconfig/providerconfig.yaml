@@ -7,5 +7,5 @@ spec:
     source: Secret
     secretRef:
       name: example-creds
-      namespace: crossplane-system
+      namespace: upbound-system
       key: credentials

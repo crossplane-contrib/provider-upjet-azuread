@@ -162,6 +162,10 @@ CROSSPLANE_NAMESPACE = upbound-system
 -include build/makelib/local.xpkg.mk
 -include build/makelib/controlplane.mk
 
+# This target requires the following environment variables to be set:
+# - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
+# - UPTEST_CLOUD_CREDENTIALS (optional), cloud credentials for the provider being tested, e.g. export UPTEST_CLOUD_CREDENTIALS=$(cat ~/.aws/credentials)
+# - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
 uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 	@$(INFO) running automated tests
 	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --setup-script=cluster/test/setup.sh || $(FAIL)
@@ -173,6 +177,10 @@ local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
 	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
 	@$(OK) running locally built provider
 
+# This target requires the following environment variables to be set:
+# - UPTEST_CLOUD_CREDENTIALS, cloud credentials for the provider being tested, e.g. export UPTEST_CLOUD_CREDENTIALS=$(cat ~/.aws/credentials)
+# - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
+# - UPTEST_DATASOURCE_PATH, see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
 e2e: local-deploy uptest
 
 .PHONY: cobertura submodules fallthrough run crds.clean

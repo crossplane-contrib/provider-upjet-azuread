@@ -1,60 +1,45 @@
-# Provider Azuread
+# Official Azuread Provider
 
-`provider-azuread` is a [Crossplane](https://crossplane.io/) provider that
+<div align="center">
+
+![CI](https://github.com/upbound/provider-azuread/workflows/CI/badge.svg) [![GitHub release](https://img.shields.io/github/release/upbound/provider-azuread/all.svg?style=flat-square)](https://github.com/upbound/provider-azuread/releases) [![Go Report Card](https://goreportcard.com/badge/github.com/upbound/provider-azuread)](https://goreportcard.com/report/github.com/upbound/provider-azuread) [![Slack](https://slack.crossplane.io/badge.svg)](https://crossplane.slack.com/archives/C01TRKD4623) [![Twitter Follow](https://img.shields.io/twitter/follow/upbound_io.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=upbound_io&user_id=788180534543339520)
+
+</div>
+
+Provider Azuread is a [Crossplane](https://crossplane.io/) provider that
 is built using [Upjet](https://github.com/upbound/upjet) code
-generation tools and exposes XRM-conformant managed resources for the
-Azuread API.
+generation tools and exposes XRM-conformant managed resources for
+[Microsoft Azure Active Directory](https://azure.microsoft.com/en-us/products/active-directory/).
 
 ## Getting Started
 
-Install the provider by using the following command after changing the image tag
-to the [latest release](https://marketplace.upbound.io/providers/upbound/provider-azuread):
-```
-up ctp provider install upbound/provider-azuread:v0.1.0
-```
+Follow the quick start guide [here](https://marketplace.upbound.io/providers/upbound/provider-azuread/latest/docs/quickstart).
 
-Alternatively, you can use declarative installation:
-```
-cat <<EOF | kubectl apply -f -
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-azuread
-spec:
-  package: upbound/provider-azuread:v0.1.0
-EOF
-```
+You can find a detailed API reference with all CRDs and examples [here](https://marketplace.upbound.io/providers/upbound/provider-azuread/latest/crds).
 
-Notice that in this example Provider resource is referencing ControllerConfig with debug enabled.
+## Contributing
 
-You can see the API reference [here](https://doc.crds.dev/github.com/upbound/provider-azuread).
+For the general contribution guide, see [Upjet Contribution Guide](https://github.com/upbound/upjet/blob/main/CONTRIBUTING.md)
 
-## Developing
+If you'd like to learn how to use Upjet, see [Usage Guide](https://github.com/upbound/upjet/tree/main/docs).
 
-Run code-generation pipeline:
-```console
-go run cmd/generator/main.go "$PWD"
-```
+### Add a New Resource
 
-Run against a Kubernetes cluster:
-
-```console
-make run
-```
-
-Build, push, and install:
-
-```console
-make all
-```
-
-Build binary:
-
-```console
-make build
-```
+Follow the guide [here](https://github.com/upbound/upjet/blob/main/docs/add-new-resource-short.md).
 
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
 open an [issue](https://github.com/upbound/provider-azuread/issues).
+
+## Contact
+
+Please open a Github issue for all requests. If you need to reach out to Upbound,
+you can do so via the following channels:
+* Slack: [#upbound](https://crossplane.slack.com/archives/C01TRKD4623) channel in [Crossplane Slack](https://slack.crossplane.io)
+* Twitter: [@upbound_io](https://twitter.com/upbound_io)
+* Email: [support@upbound.io](mailto:support@upbound.io)
+
+## Licensing
+
+Provider Azuread is under [the Apache 2.0 license](LICENSE) with [notice](NOTICE).
