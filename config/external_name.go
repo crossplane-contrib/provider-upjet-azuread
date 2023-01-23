@@ -87,6 +87,8 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// azuread_named_location can be imported using the id
 	"azuread_named_location": config.IdentifierFromProvider,
+	// azuread_conditional_access_policy can be imported using the id
+	"azuread_conditional_access_policy": config.IdentifierFromProvider,
 
 	// directoryroles
 	//
