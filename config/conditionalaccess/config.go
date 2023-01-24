@@ -11,4 +11,9 @@ func Configure(p *config.Provider) {
 		// this resource, which would be "azuread"
 		r.ShortGroup = group
 	})
+	p.AddResourceConfigurator("azuread_conditional_access_policy", func(r *config.Resource) {
+		// We need to override the default group that upjet generated for
+		// this resource, which would be "azuread"
+		r.ShortGroup = group
+	})
 }

@@ -17,6 +17,7 @@ import (
 	federatedidentitycredential "github.com/upbound/provider-azuread/internal/controller/applications/federatedidentitycredential"
 	password "github.com/upbound/provider-azuread/internal/controller/applications/password"
 	preauthorized "github.com/upbound/provider-azuread/internal/controller/applications/preauthorized"
+	accesspolicy "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/accesspolicy"
 	location "github.com/upbound/provider-azuread/internal/controller/conditionalaccess/location"
 	customdirectoryrole "github.com/upbound/provider-azuread/internal/controller/directoryroles/customdirectoryrole"
 	role "github.com/upbound/provider-azuread/internal/controller/directoryroles/role"
@@ -48,6 +49,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		federatedidentitycredential.Setup,
 		password.Setup,
 		preauthorized.Setup,
+		accesspolicy.Setup,
 		location.Setup,
 		customdirectoryrole.Setup,
 		role.Setup,
