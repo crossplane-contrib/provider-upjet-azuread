@@ -173,6 +173,9 @@ spec:
                       - id
                       type: object
                     type: array
+                  description:
+                    description: Description of the application as shown to end users
+                    type: string
                   deviceOnlyAuthEnabled:
                     description: Specifies whether this application supports device
                       authentication without a user.
