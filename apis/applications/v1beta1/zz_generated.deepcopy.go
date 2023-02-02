@@ -345,6 +345,11 @@ func (in *ApplicationParameters) DeepCopyInto(out *ApplicationParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Description != nil {
+		in, out := &in.Description, &out.Description
+		*out = new(string)
+		**out = **in
+	}
 	if in.DeviceOnlyAuthEnabled != nil {
 		in, out := &in.DeviceOnlyAuthEnabled, &out.DeviceOnlyAuthEnabled
 		*out = new(bool)

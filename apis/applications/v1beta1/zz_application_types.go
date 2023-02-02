@@ -126,6 +126,10 @@ type ApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	AppRole []AppRoleParameters `json:"appRole,omitempty" tf:"app_role,omitempty"`
 
+	// Description of the application as shown to end users
+	// +kubebuilder:validation:Optional
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
 	// Specifies whether this application supports device authentication without a user.
 	// +kubebuilder:validation:Optional
 	DeviceOnlyAuthEnabled *bool `json:"deviceOnlyAuthEnabled,omitempty" tf:"device_only_auth_enabled,omitempty"`
