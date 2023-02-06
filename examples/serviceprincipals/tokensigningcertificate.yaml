@@ -1,0 +1,40 @@
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: TokenSigningCertificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/tokensigningcertificate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    servicePrincipalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+---
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/tokensigningcertificate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    appRoleAssignmentRequired: false
+---
+apiVersion: applications.azuread.upbound.io/v1beta1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/tokensigningcertificate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: example

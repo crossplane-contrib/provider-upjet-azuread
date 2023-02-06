@@ -32,6 +32,7 @@ import (
 	claimsmappingpolicyassignment "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/claimsmappingpolicyassignment"
 	passwordserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/password"
 	principal "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/principal"
+	tokensigningcertificate "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/tokensigningcertificate"
 	job "github.com/upbound/provider-azuread/internal/controller/synchronization/job"
 	secret "github.com/upbound/provider-azuread/internal/controller/synchronization/secret"
 	user "github.com/upbound/provider-azuread/internal/controller/users/user"
@@ -64,6 +65,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		claimsmappingpolicyassignment.Setup,
 		passwordserviceprincipals.Setup,
 		principal.Setup,
+		tokensigningcertificate.Setup,
 		job.Setup,
 		secret.Setup,
 		user.Setup,

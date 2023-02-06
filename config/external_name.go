@@ -59,6 +59,10 @@ var ExternalNameConfigs = map[string]config.ExternalName{
 	"azuread_service_principal_certificate": config.IdentifierFromProvider,
 	// No import documented
 	"azuread_service_principal_password": config.IdentifierFromProvider,
+	// azuread_service_principal_token_signing_certificate can be imported using the object ID of the associated service principal and the key ID of the verify certificate credential
+	// {ServicePrincipalObjectId}/tokenSigningCertificate/{CertificateKeyId}
+	// 00000000-0000-0000-0000-000000000000/tokenSigningCertificate/11111111-1111-1111-1111-111111111111
+	"azuread_service_principal_token_signing_certificate": config.IdentifierFromProvider,
 
 	// policies
 	//
