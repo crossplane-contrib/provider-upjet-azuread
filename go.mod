@@ -6,7 +6,7 @@ require (
 	github.com/crossplane/crossplane-runtime v0.19.0-rc.0.0.20221012013934-bce61005a175
 	github.com/crossplane/crossplane-tools v0.0.0-20220310165030-1f43fc12793e
 	github.com/pkg/errors v0.9.1
-	github.com/upbound/upjet v0.9.0-rc.0.0.20230123082609-531a9950f91e
+	github.com/upbound/upjet v0.9.0-rc.0.0.20230207105359-b1ed9245d05c
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.25.0
 	k8s.io/client-go v0.25.0
