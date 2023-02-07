@@ -56,7 +56,7 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("azuread_service_principal_token_signing_certificate", func(r *config.Resource) {
 		r.Kind = "TokenSigningCertificate"
 		r.References["service_principal_id"] = config.Reference{
-			Type: "Principal",
+			TerraformName: "azuread_service_principal",
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"

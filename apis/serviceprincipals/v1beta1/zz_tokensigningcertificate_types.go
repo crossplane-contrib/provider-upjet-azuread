@@ -37,15 +37,15 @@ type TokenSigningCertificateParameters struct {
 	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
 
 	// The object ID of the service principal for which this certificate should be created
-	// +crossplane:generate:reference:type=Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
 	// +kubebuilder:validation:Optional
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
-	// Reference to a Principal to populate servicePrincipalId.
+	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
 	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
-	// Selector for a Principal to populate servicePrincipalId.
+	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
 	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 }
