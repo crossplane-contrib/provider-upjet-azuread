@@ -9,7 +9,7 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  provider-ci:
+  ci:
     uses: upbound/uptest/.github/workflows/provider-ci.yml@main
     secrets:
       UPBOUND_MARKETPLACE_PUSH_ROBOT_USR: ${{ secrets.UPBOUND_MARKETPLACE_PUSH_ROBOT_USR }}
