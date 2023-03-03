@@ -59,6 +59,10 @@ type GroupObservation struct {
 
 type GroupParameters struct {
 
+	// The administrative unit IDs in which the group should be. If empty, the group will be created at the tenant level.
+	// +kubebuilder:validation:Optional
+	AdministrativeUnitIds []*string `json:"administrativeUnitIds,omitempty" tf:"administrative_unit_ids,omitempty"`
+
 	// Indicates whether this group can be assigned to an Azure Active Directory role. This property can only be `true` for security-enabled groups.
 	// +kubebuilder:validation:Optional
 	AssignableToRole *bool `json:"assignableToRole,omitempty" tf:"assignable_to_role,omitempty"`
