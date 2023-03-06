@@ -63,6 +63,12 @@ spec:
                 type: string
               forProvider:
                 properties:
+                  administrativeUnitIds:
+                    description: The administrative unit IDs in which the group should
+                      be. If empty, the group will be created at the tenant level.
+                    items:
+                      type: string
+                    type: array
                   assignableToRole:
                     description: Indicates whether this group can be assigned to an
                       Azure Active Directory role. This property can only be `true`

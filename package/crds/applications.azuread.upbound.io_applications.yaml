@@ -230,6 +230,10 @@ spec:
                   marketingUrl:
                     description: URL of the application's marketing page
                     type: string
+                  notes:
+                    description: User-specified notes relevant for the management
+                      of the application
+                    type: string
                   oauth2PostResponseRequired:
                     description: Specifies whether, as part of OAuth 2.0 token requests,
                       Azure AD allows POST requests, as opposed to GET requests.
