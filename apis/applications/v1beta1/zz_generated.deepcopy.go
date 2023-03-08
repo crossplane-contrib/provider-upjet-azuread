@@ -404,6 +404,11 @@ func (in *ApplicationParameters) DeepCopyInto(out *ApplicationParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.Notes != nil {
+		in, out := &in.Notes, &out.Notes
+		*out = new(string)
+		**out = **in
+	}
 	if in.Oauth2PostResponseRequired != nil {
 		in, out := &in.Oauth2PostResponseRequired, &out.Oauth2PostResponseRequired
 		*out = new(bool)

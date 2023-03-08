@@ -162,6 +162,10 @@ type ApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	MarketingURL *string `json:"marketingUrl,omitempty" tf:"marketing_url,omitempty"`
 
+	// User-specified notes relevant for the management of the application
+	// +kubebuilder:validation:Optional
+	Notes *string `json:"notes,omitempty" tf:"notes,omitempty"`
+
 	// Specifies whether, as part of OAuth 2.0 token requests, Azure AD allows POST requests, as opposed to GET requests.
 	// +kubebuilder:validation:Optional
 	Oauth2PostResponseRequired *bool `json:"oauth2PostResponseRequired,omitempty" tf:"oauth2_post_response_required,omitempty"`
