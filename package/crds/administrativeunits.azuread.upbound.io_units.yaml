@@ -64,10 +64,12 @@ spec:
               forProvider:
                 properties:
                   description:
-                    description: The description for the administrative unit
+                    description: The description of the administrative unit. The description
+                      for the administrative unit
                     type: string
                   displayName:
-                    description: The display name for the administrative unit
+                    description: The display name of the administrative unit. The
+                      display name for the administrative unit
                     type: string
                   hiddenMembershipEnabled:
                     description: Whether the administrative unit and its members are
@@ -75,6 +77,8 @@ spec:
                     type: boolean
                   members:
                     description: A set of object IDs of members who should be present
+                      in this administrative unit. Supported object types are Users
+                      or Groups. A set of object IDs of members who should be present
                       in this administrative unit. Supported object types are Users
                       or Groups
                     items:
@@ -266,7 +270,8 @@ spec:
                   id:
                     type: string
                   objectId:
-                    description: The object ID of the administrative unit
+                    description: The object ID of the administrative unit. The object
+                      ID of the administrative unit
                     type: string
                 type: object
               conditions:

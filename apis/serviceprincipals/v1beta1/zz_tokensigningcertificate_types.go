@@ -17,25 +17,32 @@ type TokenSigningCertificateObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// A UUID used to uniquely identify the verify certificate.
+	// A UUID used to uniquely identify the verify certificate.
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
+	// The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
 	// The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`).
 	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
 
+	// A SHA-1 generated thumbprint of the token signing certificate, which can be used to set the preferred signing certificate for a service principal.
 	// The thumbprint of the certificate.
 	Thumbprint *string `json:"thumbprint,omitempty" tf:"thumbprint,omitempty"`
 }
 
 type TokenSigningCertificateParameters struct {
 
+	// Specifies a friendly name for the certificate.
+	// Must start with CN=. Changing this field forces a new resource to be created.
 	// A friendly name for the certificate
 	// +kubebuilder:validation:Optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	// The end date until which the token signing certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
 	// The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). Default is 3 years from current date.
 	// +kubebuilder:validation:Optional
 	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
 
+	// The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this certificate should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
 	// +kubebuilder:validation:Optional
@@ -64,7 +71,7 @@ type TokenSigningCertificateStatus struct {
 
 // +kubebuilder:object:root=true
 
-// TokenSigningCertificate is the Schema for the TokenSigningCertificates API. <no value>
+// TokenSigningCertificate is the Schema for the TokenSigningCertificates API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

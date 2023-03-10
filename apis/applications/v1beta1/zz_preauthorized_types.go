@@ -19,6 +19,7 @@ type PreAuthorizedObservation struct {
 
 type PreAuthorizedParameters struct {
 
+	// The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
 	// The object ID of the application to which this pre-authorized application should be added
 	// +crossplane:generate:reference:type=Application
 	// +kubebuilder:validation:Optional
@@ -46,6 +47,7 @@ type PreAuthorizedParameters struct {
 	// +kubebuilder:validation:Optional
 	AuthorizedAppIDSelector *v1.Selector `json:"authorizedAppIdSelector,omitempty" tf:"-"`
 
+	// A set of permission scope IDs required by the authorized application.
 	// The IDs of the permission scopes required by the pre-authorized application
 	// +kubebuilder:validation:Required
 	PermissionIds []*string `json:"permissionIds" tf:"permission_ids,omitempty"`
@@ -65,7 +67,7 @@ type PreAuthorizedStatus struct {
 
 // +kubebuilder:object:root=true
 
-// PreAuthorized is the Schema for the PreAuthorizeds API. <no value>
+// PreAuthorized is the Schema for the PreAuthorizeds API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

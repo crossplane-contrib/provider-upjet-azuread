@@ -14,15 +14,19 @@ import (
 )
 
 type PermissionGrantObservation struct {
+
+	// The ID of the delegated permission grant.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type PermissionGrantParameters struct {
 
+	// - A set of claim values for delegated permission scopes which should be included in access tokens for the resource.
 	// A set of claim values for delegated permission scopes which should be included in access tokens for the resource
 	// +kubebuilder:validation:Required
 	ClaimValues []*string `json:"claimValues" tf:"claim_values,omitempty"`
 
+	// The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.
 	// The object ID of the service principal representing the resource to be accessed
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
 	// +kubebuilder:validation:Optional
@@ -36,6 +40,7 @@ type PermissionGrantParameters struct {
 	// +kubebuilder:validation:Optional
 	ResourceServicePrincipalObjectIDSelector *v1.Selector `json:"resourceServicePrincipalObjectIdSelector,omitempty" tf:"-"`
 
+	// The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.
 	// The object ID of the service principal for which this delegated permission grant should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
 	// +kubebuilder:validation:Optional
@@ -49,9 +54,20 @@ type PermissionGrantParameters struct {
 	// +kubebuilder:validation:Optional
 	ServicePrincipalObjectIDSelector *v1.Selector `json:"servicePrincipalObjectIdSelector,omitempty" tf:"-"`
 
+	// - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.
 	// The object ID of the user on behalf of whom the service principal is authorized to access the resource
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
+	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	UserObjectID *string `json:"userObjectId,omitempty" tf:"user_object_id,omitempty"`
+
+	// Reference to a User in users to populate userObjectId.
+	// +kubebuilder:validation:Optional
+	UserObjectIDRef *v1.Reference `json:"userObjectIdRef,omitempty" tf:"-"`
+
+	// Selector for a User in users to populate userObjectId.
+	// +kubebuilder:validation:Optional
+	UserObjectIDSelector *v1.Selector `json:"userObjectIdSelector,omitempty" tf:"-"`
 }
 
 // PermissionGrantSpec defines the desired state of PermissionGrant
@@ -68,7 +84,7 @@ type PermissionGrantStatus struct {
 
 // +kubebuilder:object:root=true
 
-// PermissionGrant is the Schema for the PermissionGrants API. <no value>
+// PermissionGrant is the Schema for the PermissionGrants API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

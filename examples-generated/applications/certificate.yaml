@@ -1,19 +1,22 @@
-apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
-kind: Principal
+apiVersion: applications.azuread.upbound.io/v1beta1
+kind: Certificate
 metadata:
   annotations:
-    meta.upbound.io/example-id: serviceprincipals/v1beta1/principal
+    meta.upbound.io/example-id: applications/v1beta1/certificate
   labels:
     testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
-    appRoleAssignmentRequired: false
-    applicationIdSelector:
+    applicationObjectIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-    owners:
-    - ${data.azuread_client_config.current.object_id}
+    endDate: "2021-05-01T01:02:03Z"
+    type: AsymmetricX509Cert
+    valueSecretRef:
+      key: attribute.cert.pem
+      name: example-secret
+      namespace: upbound-system
 
 ---
 
@@ -21,15 +24,13 @@ apiVersion: applications.azuread.upbound.io/v1beta1
 kind: Application
 metadata:
   annotations:
-    meta.upbound.io/example-id: serviceprincipals/v1beta1/principal
+    meta.upbound.io/example-id: applications/v1beta1/certificate
   labels:
     testing.upbound.io/example-name: example
   name: example
 spec:
   forProvider:
     displayName: example
-    owners:
-    - ${data.azuread_client_config.current.object_id}
 
 ---
 

@@ -16,22 +16,27 @@ import (
 type RoleAssignmentObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The display name of the principal to which the app role is assigned.
 	// The display name of the principal to which the app role is assigned
 	PrincipalDisplayName *string `json:"principalDisplayName,omitempty" tf:"principal_display_name,omitempty"`
 
+	// The object type of the principal to which the app role is assigned.
 	// The object type of the principal to which the app role is assigned
 	PrincipalType *string `json:"principalType,omitempty" tf:"principal_type,omitempty"`
 
+	// The display name of the application representing the resource.
 	// The display name of the application representing the resource
 	ResourceDisplayName *string `json:"resourceDisplayName,omitempty" tf:"resource_display_name,omitempty"`
 }
 
 type RoleAssignmentParameters struct {
 
+	// The ID of the app role to be assigned, or the default role ID 00000000-0000-0000-0000-000000000000. Changing this forces a new resource to be created.
 	// The ID of the app role to be assigned
 	// +kubebuilder:validation:Required
 	AppRoleID *string `json:"appRoleId" tf:"app_role_id,omitempty"`
 
+	// The object ID of the user, group or service principal to be assigned this app role. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the user, group or service principal to be assigned this app role
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
 	// +kubebuilder:validation:Optional
@@ -45,6 +50,7 @@ type RoleAssignmentParameters struct {
 	// +kubebuilder:validation:Optional
 	PrincipalObjectIDSelector *v1.Selector `json:"principalObjectIdSelector,omitempty" tf:"-"`
 
+	// The object ID of the service principal representing the resource. Changing this forces a new resource to be created.
 	// The object ID of the service principal representing the resource
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
 	// +kubebuilder:validation:Optional
@@ -73,7 +79,7 @@ type RoleAssignmentStatus struct {
 
 // +kubebuilder:object:root=true
 
-// RoleAssignment is the Schema for the RoleAssignments API. <no value>
+// RoleAssignment is the Schema for the RoleAssignments API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

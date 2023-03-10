@@ -35,7 +35,7 @@ spec:
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: Member is the Schema for the Members API. <no value>
+        description: Member is the Schema for the Members API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,7 +64,9 @@ spec:
               forProvider:
                 properties:
                   administrativeUnitObjectId:
-                    description: The object ID of the administrative unit
+                    description: The object ID of the administrative unit you want
+                      to add the member to. Changing this forces a new resource to
+                      be created. The object ID of the administrative unit
                     type: string
                   administrativeUnitObjectIdRef:
                     description: Reference to a Unit to populate administrativeUnitObjectId.
@@ -140,7 +142,9 @@ spec:
                         type: object
                     type: object
                   memberObjectId:
-                    description: The object ID of the member
+                    description: The object ID of the user or group you want to add
+                      as a member of the administrative unit. Changing this forces
+                      a new resource to be created. The object ID of the member
                     type: string
                 type: object
               providerConfigRef:

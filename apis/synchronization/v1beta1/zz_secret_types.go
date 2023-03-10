@@ -18,24 +18,30 @@ type CredentialObservation struct {
 
 type CredentialParameters struct {
 
+	// The key of the secret.
 	// Name for this key-value pair.
 	// +kubebuilder:validation:Required
 	Key *string `json:"key" tf:"key,omitempty"`
 
+	// The value of the secret.
 	// Value for this key-value pair.
 	// +kubebuilder:validation:Required
 	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type SecretObservation struct {
+
+	// An ID used to uniquely identify this synchronization sec.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
 
 type SecretParameters struct {
 
+	// One or more credential blocks as documented below.
 	// +kubebuilder:validation:Optional
 	Credential []CredentialParameters `json:"credential,omitempty" tf:"credential,omitempty"`
 
+	// The object ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this synchronization secret should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
 	// +kubebuilder:validation:Optional
@@ -64,7 +70,7 @@ type SecretStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Secret is the Schema for the Secrets API. <no value>
+// Secret is the Schema for the Secrets API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

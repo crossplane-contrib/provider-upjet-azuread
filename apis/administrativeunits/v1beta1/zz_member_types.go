@@ -19,6 +19,7 @@ type MemberObservation struct {
 
 type MemberParameters struct {
 
+	// The object ID of the administrative unit you want to add the member to. Changing this forces a new resource to be created.
 	// The object ID of the administrative unit
 	// +crossplane:generate:reference:type=Unit
 	// +kubebuilder:validation:Optional
@@ -32,6 +33,7 @@ type MemberParameters struct {
 	// +kubebuilder:validation:Optional
 	AdministrativeUnitObjectIDSelector *v1.Selector `json:"administrativeUnitObjectIdSelector,omitempty" tf:"-"`
 
+	// The object ID of the user or group you want to add as a member of the administrative unit. Changing this forces a new resource to be created.
 	// The object ID of the member
 	// +kubebuilder:validation:Optional
 	MemberObjectID *string `json:"memberObjectId,omitempty" tf:"member_object_id,omitempty"`
@@ -51,7 +53,7 @@ type MemberStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Member is the Schema for the Members API. <no value>
+// Member is the Schema for the Members API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

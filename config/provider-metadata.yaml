@@ -8,27 +8,320 @@ resources:
             - name: example
               manifest: |-
                 {
-                  "display_name": "Example-AU"
+                  "description": "Just an example",
+                  "display_name": "Example-AU",
+                  "visibility": "Public"
                 }
+        argumentDocs:
+            description: '- (Optional) The description of the administrative unit.'
+            display_name: '- (Required) The display name of the administrative unit.'
+            members: '- (Optional) A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups.'
+            object_id: '- The object ID of the administrative unit.'
+            visibility: '- (Optional) Whether the administrative unit and its members are hidden or publicly viewable in the directory. Must be one of: Hiddenmembership or Public. Defaults to Public.'
+        importStatements:
+            - terraform import azuread_administrative_unit.example 00000000-0000-0000-0000-000000000000
+    azuread_administrative_unit_member:
+        subCategory: Administrative Units
+        name: azuread_administrative_unit_member
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "administrative_unit_object_id": "${azuread_administrative_unit.example.id}",
+                  "member_object_id": "${data.azuread_user.example.id}"
+                }
+              references:
+                administrative_unit_object_id: azuread_administrative_unit.example.id
+                member_object_id: data.azuread_user.example.id
               dependencies:
-                azuread_administrative_unit_member.example: |-
+                azuread_administrative_unit.example: |-
                     {
-                      "administrative_unit_object_id": "${azuread_administrative_unit.example.id}",
-                      "member_object_id": "${data.azuread_user.example.id}"
+                      "display_name": "Example-AU"
                     }
         argumentDocs:
             administrative_unit_object_id: '- (Required) The object ID of the administrative unit you want to add the member to. Changing this forces a new resource to be created.'
             member_object_id: '- (Required) The object ID of the user or group you want to add as a member of the administrative unit. Changing this forces a new resource to be created.'
         importStatements:
             - terraform import azuread_administrative_unit_member.test 00000000-0000-0000-0000-000000000000/member/11111111-1111-1111-1111-111111111111
+    azuread_app_role_assignment:
+        subCategory: App Role Assignments
+        name: azuread_app_role_assignment
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "app_role_id": "${azuread_service_principal.msgraph.app_role_ids[\"User.Read.All\"]}",
+                  "principal_object_id": "${azuread_service_principal.example.object_id}",
+                  "resource_object_id": "${azuread_service_principal.msgraph.object_id}"
+                }
+              references:
+                app_role_id: azuread_service_principal.msgraph.app_role_ids["User.Read.All"]
+                principal_object_id: azuread_service_principal.example.object_id
+                resource_object_id: azuread_service_principal.msgraph.object_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example",
+                      "required_resource_access": [
+                        {
+                          "resource_access": [
+                            {
+                              "id": "${azuread_service_principal.msgraph.app_role_ids[\"User.Read.All\"]}",
+                              "type": "Role"
+                            },
+                            {
+                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"User.ReadWrite\"]}",
+                              "type": "Scope"
+                            }
+                          ],
+                          "resource_app_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}"
+                        }
+                      ]
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+                azuread_service_principal.msgraph: |-
+                    {
+                      "application_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
+                      "use_existing": true
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "app_role_id": "${azuread_service_principal.internal.app_role_ids[\"Query.All\"]}",
+                  "principal_object_id": "${azuread_service_principal.example.object_id}",
+                  "resource_object_id": "${azuread_service_principal.internal.object_id}"
+                }
+              references:
+                app_role_id: azuread_service_principal.internal.app_role_ids["Query.All"]
+                principal_object_id: azuread_service_principal.example.object_id
+                resource_object_id: azuread_service_principal.internal.object_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example",
+                      "required_resource_access": [
+                        {
+                          "resource_access": [
+                            {
+                              "id": "${azuread_service_principal.internal.app_role_ids[\"Query.All\"]}",
+                              "type": "Role"
+                            }
+                          ],
+                          "resource_app_id": "${azuread_application.internal.application_id}"
+                        }
+                      ]
+                    }
+                azuread_application.internal: |-
+                    {
+                      "app_role": [
+                        {
+                          "allowed_member_types": [
+                            "Application"
+                          ],
+                          "description": "Apps can query the database",
+                          "display_name": "Query",
+                          "enabled": true,
+                          "id": "00000000-0000-0000-0000-111111111111",
+                          "value": "Query.All"
+                        }
+                      ],
+                      "display_name": "internal"
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+                azuread_service_principal.internal: |-
+                    {
+                      "application_id": "${azuread_application.internal.application_id}"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "app_role_id": "${azuread_service_principal.internal.app_role_ids[\"Admin.All\"]}",
+                  "principal_object_id": "${azuread_group.example.object_id}",
+                  "resource_object_id": "${azuread_service_principal.internal.object_id}"
+                }
+              references:
+                app_role_id: azuread_service_principal.internal.app_role_ids["Admin.All"]
+                principal_object_id: azuread_group.example.object_id
+                resource_object_id: azuread_service_principal.internal.object_id
+              dependencies:
+                azuread_application.internal: |-
+                    {
+                      "app_role": [
+                        {
+                          "allowed_member_types": [
+                            "Application",
+                            "User"
+                          ],
+                          "description": "Admins can perform all task actions",
+                          "display_name": "Admin",
+                          "enabled": true,
+                          "id": "00000000-0000-0000-0000-222222222222",
+                          "value": "Admin.All"
+                        }
+                      ],
+                      "display_name": "internal"
+                    }
+                azuread_group.example: |-
+                    {
+                      "display_name": "example",
+                      "security_enabled": true
+                    }
+                azuread_service_principal.internal: |-
+                    {
+                      "application_id": "${azuread_application.internal.application_id}"
+                    }
+                azuread_user.example: |-
+                    {
+                      "display_name": "D. Duck",
+                      "password": "SecretP@sswd99!",
+                      "user_principal_name": "d.duck@${data.azuread_domains.example.domains.0.domain_name}"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "app_role_id": "${azuread_service_principal.internal.app_role_ids[\"Admin.All\"]}",
+                  "principal_object_id": "${azuread_user.example.object_id}",
+                  "resource_object_id": "${azuread_service_principal.internal.object_id}"
+                }
+              references:
+                app_role_id: azuread_service_principal.internal.app_role_ids["Admin.All"]
+                principal_object_id: azuread_user.example.object_id
+                resource_object_id: azuread_service_principal.internal.object_id
+              dependencies:
+                azuread_application.internal: |-
+                    {
+                      "app_role": [
+                        {
+                          "allowed_member_types": [
+                            "Application",
+                            "User"
+                          ],
+                          "description": "Admins can perform all task actions",
+                          "display_name": "Admin",
+                          "enabled": true,
+                          "id": "00000000-0000-0000-0000-222222222222",
+                          "value": "Admin.All"
+                        }
+                      ],
+                      "display_name": "internal"
+                    }
+                azuread_group.example: |-
+                    {
+                      "display_name": "example",
+                      "security_enabled": true
+                    }
+                azuread_service_principal.internal: |-
+                    {
+                      "application_id": "${azuread_application.internal.application_id}"
+                    }
+                azuread_user.example: |-
+                    {
+                      "display_name": "D. Duck",
+                      "password": "SecretP@sswd99!",
+                      "user_principal_name": "d.duck@${data.azuread_domains.example.domains.0.domain_name}"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "app_role_id": "00000000-0000-0000-0000-000000000000",
+                  "principal_object_id": "${azuread_group.example.object_id}",
+                  "resource_object_id": "${azuread_service_principal.internal.object_id}"
+                }
+              references:
+                principal_object_id: azuread_group.example.object_id
+                resource_object_id: azuread_service_principal.internal.object_id
+              dependencies:
+                azuread_application.internal: |-
+                    {
+                      "display_name": "internal"
+                    }
+                azuread_group.example: |-
+                    {
+                      "display_name": "example",
+                      "security_enabled": true
+                    }
+                azuread_service_principal.internal: |-
+                    {
+                      "application_id": "${azuread_application.internal.application_id}"
+                    }
+        argumentDocs:
+            app_role_id: '- (Required) The ID of the app role to be assigned, or the default role ID 00000000-0000-0000-0000-000000000000. Changing this forces a new resource to be created.'
+            principal_display_name: '- The display name of the principal to which the app role is assigned.'
+            principal_object_id: '- (Required) The object ID of the user, group or service principal to be assigned this app role. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.'
+            principal_type: '- The object type of the principal to which the app role is assigned.'
+            resource_display_name: '- The display name of the application representing the resource.'
+            resource_object_id: '- (Required) The object ID of the service principal representing the resource. Changing this forces a new resource to be created.'
+        importStatements:
+            - terraform import azuread_app_role_assignment.example 00000000-0000-0000-0000-000000000000/appRoleAssignment/aaBBcDDeFG6h5JKLMN2PQrrssTTUUvWWxxxxxyyyzzz
     azuread_application:
-        subCategory: Synchronization
+        subCategory: Applications
         name: azuread_application
         title: ""
         examples:
             - name: example
               manifest: |-
                 {
+                  "api": [
+                    {
+                      "known_client_applications": [
+                        "${azuread_application.known1.application_id}",
+                        "${azuread_application.known2.application_id}"
+                      ],
+                      "mapped_claims_enabled": true,
+                      "oauth2_permission_scope": [
+                        {
+                          "admin_consent_description": "Allow the application to access example on behalf of the signed-in user.",
+                          "admin_consent_display_name": "Access example",
+                          "enabled": true,
+                          "id": "96183846-204b-4b43-82e1-5d2222eb4b9b",
+                          "type": "User",
+                          "user_consent_description": "Allow the application to access example on your behalf.",
+                          "user_consent_display_name": "Access example",
+                          "value": "user_impersonation"
+                        },
+                        {
+                          "admin_consent_description": "Administer the example application",
+                          "admin_consent_display_name": "Administer",
+                          "enabled": true,
+                          "id": "be98fa3e-ab5b-4b11-83d9-04ba2b7946bc",
+                          "type": "Admin",
+                          "value": "administer"
+                        }
+                      ],
+                      "requested_access_token_version": 2
+                    }
+                  ],
+                  "app_role": [
+                    {
+                      "allowed_member_types": [
+                        "User",
+                        "Application"
+                      ],
+                      "description": "Admins can manage roles and perform all task actions",
+                      "display_name": "Admin",
+                      "enabled": true,
+                      "id": "1b19509b-32b1-4e9f-b71d-4992aa991967",
+                      "value": "admin"
+                    },
+                    {
+                      "allowed_member_types": [
+                        "User"
+                      ],
+                      "description": "ReadOnly roles have limited query access",
+                      "display_name": "ReadOnly",
+                      "enabled": true,
+                      "id": "497406e4-012a-4267-bf18-45a1cb148a01",
+                      "value": "User"
+                    }
+                  ],
                   "display_name": "example",
                   "feature_tags": [
                     {
@@ -36,6 +329,85 @@ resources:
                       "gallery": true
                     }
                   ],
+                  "identifier_uris": [
+                    "api://example-app"
+                  ],
+                  "logo_image": "${filebase64(\"/path/to/logo.png\")}",
+                  "optional_claims": [
+                    {
+                      "access_token": [
+                        {
+                          "name": "myclaim"
+                        },
+                        {
+                          "name": "otherclaim"
+                        }
+                      ],
+                      "id_token": [
+                        {
+                          "additional_properties": [
+                            "emit_as_roles"
+                          ],
+                          "essential": true,
+                          "name": "userclaim",
+                          "source": "user"
+                        }
+                      ],
+                      "saml2_token": [
+                        {
+                          "name": "samlexample"
+                        }
+                      ]
+                    }
+                  ],
+                  "owners": [
+                    "${data.azuread_client_config.current.object_id}"
+                  ],
+                  "required_resource_access": [
+                    {
+                      "resource_access": [
+                        {
+                          "id": "df021288-bdef-4463-88db-98f22de89214",
+                          "type": "Role"
+                        },
+                        {
+                          "id": "b4e74841-8e56-480b-be8b-910348b18b4c",
+                          "type": "Scope"
+                        }
+                      ],
+                      "resource_app_id": "00000003-0000-0000-c000-000000000000"
+                    },
+                    {
+                      "resource_access": [
+                        {
+                          "id": "594c1fb6-4f81-4475-ae41-0c394909246c",
+                          "type": "Role"
+                        }
+                      ],
+                      "resource_app_id": "c5393580-f805-4401-95e8-94b7a6ef2fc2"
+                    }
+                  ],
+                  "sign_in_audience": "AzureADMultipleOrgs",
+                  "web": [
+                    {
+                      "homepage_url": "https://app.example.net",
+                      "implicit_grant": [
+                        {
+                          "access_token_issuance_enabled": true,
+                          "id_token_issuance_enabled": true
+                        }
+                      ],
+                      "logout_url": "https://app.example.net/logout",
+                      "redirect_uris": [
+                        "https://app.example.net/account"
+                      ]
+                    }
+                  ]
+                }
+            - name: example
+              manifest: |-
+                {
+                  "display_name": "example",
                   "template_id": "${data.azuread_application_template.example.template_id}"
                 }
               references:
@@ -46,27 +418,351 @@ resources:
                       "application_id": "${azuread_application.example.application_id}",
                       "use_existing": true
                     }
-                azuread_synchronization_secret.example: |-
+        argumentDocs:
+            api: '- (Optional) An api block as documented below, which configures API related settings for this application.'
+            api.known_client_applications: '- (Optional) A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.'
+            api.mapped_claims_enabled: '- (Optional) Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.'
+            api.oauth2_permission_scope: '- (Optional) One or more oauth2_permission_scope blocks as documented below, to describe delegated permissions exposed by the web API represented by this application.'
+            api.oauth2_permission_scope.admin_consent_description: '- (Required) Delegated permission description that appears in all tenant-wide admin consent experiences, intended to be read by an administrator granting the permission on behalf of all users.'
+            api.oauth2_permission_scope.admin_consent_display_name: '- (Required) Display name for the delegated permission, intended to be read by an administrator granting the permission on behalf of all users.'
+            api.oauth2_permission_scope.enabled: '- (Optional) Determines if the permission scope is enabled. Defaults to true.'
+            api.oauth2_permission_scope.id: '- (Required) The unique identifier of the delegated permission. Must be a valid UUID.'
+            api.oauth2_permission_scope.type: '- (Optional) Whether this delegated permission should be considered safe for non-admin users to consent to on behalf of themselves, or whether an administrator should be required for consent to the permissions. Defaults to User. Possible values are User or Admin.'
+            api.oauth2_permission_scope.user_consent_description: '- (Optional) Delegated permission description that appears in the end user consent experience, intended to be read by a user consenting on their own behalf.'
+            api.oauth2_permission_scope.user_consent_display_name: '- (Optional) Display name for the delegated permission that appears in the end user consent experience.'
+            api.oauth2_permission_scope.value: '- (Optional) The value that is used for the scp claim in OAuth 2.0 access tokens.'
+            api.requested_access_token_version: '- (Optional) The access token version expected by this resource. Must be one of 1 or 2, and must be 2 when sign_in_audience is either AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount Defaults to 1.'
+            app_role: '- (Optional) A collection of app_role blocks as documented below. For more information see official documentation on Application Roles.'
+            app_role.allowed_member_types: '- (Required) Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.'
+            app_role.description: '- (Required) Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.'
+            app_role.display_name: '- (Required) Display name for the app role that appears during app role assignment and in consent experiences.'
+            app_role.enabled: '- (Optional) Determines if the app role is enabled. Defaults to true.'
+            app_role.id: '- (Required) The unique identifier of the app role. Must be a valid UUID.'
+            app_role.value: '- (Optional) The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.'
+            app_role_ids: '- A mapping of app role values to app role IDs, intended to be useful when referencing app roles in other resources in your configuration.'
+            application_id: '- The Application ID (also called Client ID).'
+            description: '- (Optional) A description of the application, as shown to end users.'
+            device_only_auth_enabled: '- (Optional) Specifies whether this application supports device authentication without a user. Defaults to false.'
+            disabled_by_microsoft: '- Whether Microsoft has disabled the registered application. If the application is disabled, this will be a string indicating the status/reason, e.g. DisabledDueToViolationOfServicesAgreement'
+            display_name: '- (Required) The display name for the application.'
+            fallback_public_client_enabled: '- (Optional) Specifies whether the application is a public client. Appropriate for apps using token grant flows that don''t use a redirect URI. Defaults to false.'
+            feature_tags: '- (Optional) A feature_tags block as described below. Cannot be used together with the tags property.'
+            feature_tags.custom_single_sign_on: '- (Optional) Whether this application represents a custom SAML application for linked service principals. Enabling this will assign the WindowsAzureActiveDirectoryCustomSingleSignOnApplication tag. Defaults to false.'
+            feature_tags.enterprise: '- (Optional) Whether this application represents an Enterprise Application for linked service principals. Enabling this will assign the WindowsAzureActiveDirectoryIntegratedApp tag. Defaults to false.'
+            feature_tags.gallery: '- (Optional) Whether this application represents a gallery application for linked service principals. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1 tag. Defaults to false.'
+            feature_tags.hide: '- (Optional) Whether this app is invisible to users in My Apps and Office 365 Launcher. Enabling this will assign the HideApp tag. Defaults to false.'
+            group_membership_claims: '- (Optional) Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.'
+            identifier_uris: '- (Optional) A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant.'
+            logo_image: '- (Optional) A logo image to upload for the application, as a raw base64-encoded string. The image should be in gif, jpeg or png format. Note that once an image has been uploaded, it is not possible to remove it without replacing it with another image.'
+            logo_url: '- CDN URL to the application''s logo, as uploaded with the logo_image property.'
+            marketing_url: '- (Optional) URL of the application''s marketing page.'
+            notes: '- (Optional) User-specified notes relevant for the management of the application.'
+            oauth2_permission_scope_ids: '- A mapping of OAuth2.0 permission scope values to scope IDs, intended to be useful when referencing permission scopes in other resources in your configuration.'
+            oauth2_post_response_required: '- (Optional) Specifies whether, as part of OAuth 2.0 token requests, Azure AD allows POST requests, as opposed to GET requests. Defaults to false, which specifies that only GET requests are allowed.'
+            object_id: '- The application''s object ID.'
+            optional_claims: '- (Optional) An optional_claims block as documented below.'
+            optional_claims.access_token: '- (Optional) One or more access_token blocks as documented below.'
+            optional_claims.access_token.additional_properties: '- List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.'
+            optional_claims.access_token.essential: '- Whether the claim specified by the client is necessary to ensure a smooth authorization experience.'
+            optional_claims.access_token.name: '- The name of the optional claim.'
+            optional_claims.access_token.source: '- The source of the claim. If source is absent, the claim is a predefined optional claim. If source is user, the value of name is the extension property from the user object.'
+            optional_claims.id_token: '- (Optional) One or more id_token blocks as documented below.'
+            optional_claims.saml2_token: '- (Optional) One or more saml2_token blocks as documented below.'
+            owners: '- (Optional) A set of object IDs of principals that will be granted ownership of the application. Supported object types are users or service principals. By default, no owners are assigned.'
+            prevent_duplicate_names: '- (Optional) If true, will return an error if an existing application is found with the same name. Defaults to false.'
+            privacy_statement_url: '- (Optional) URL of the application''s privacy statement.'
+            public_client: '- (Optional) A public_client block as documented below, which configures non-web app or non-web API application settings, for example mobile or other public clients such as an installed application running on a desktop device.'
+            public_client.redirect_uris: '- (Optional) A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https or ms-appx-web URL.'
+            publisher_domain: '- The verified publisher domain for the application.'
+            required_resource_access: '- (Optional) A collection of required_resource_access blocks as documented below.'
+            required_resource_access.resource_access: '- (Required) A collection of resource_access blocks as documented below, describing OAuth2.0 permission scopes and app roles that the application requires from the specified resource.'
+            required_resource_access.resource_access.id: '- (Required) The unique identifier for an app role or OAuth2 permission scope published by the resource application.'
+            required_resource_access.resource_access.type: '- (Required) Specifies whether the id property references an app role or an OAuth2 permission scope. Possible values are Role or Scope.'
+            required_resource_access.resource_app_id: '- (Required) The unique identifier for the resource that the application requires access to. This should be the Application ID of the target application.'
+            sign_in_audience: '- (Optional) The Microsoft account types that are supported for the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount. Defaults to AzureADMyOrg.'
+            single_page_application: '- (Optional) A single_page_application block as documented below, which configures single-page application (SPA) related settings for this application.'
+            single_page_application.redirect_uris: '- (Optional) A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https URL.'
+            support_url: '- (Optional) URL of the application''s support page.'
+            tags: '- (Optional) A set of tags to apply to the application for configuring specific behaviours of the application and linked service principals. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.'
+            tags.template_id: '- (Optional) Unique ID for a templated application in the Azure AD App Gallery, from which to create the application. Changing this forces a new resource to be created.'
+            tags.terms_of_service_url: '- (Optional) URL of the application''s terms of service statement.'
+            tags.web: '- (Optional) A web block as documented below, which configures web related settings for this application.'
+            web.homepage_url: '- (Optional) Home page or landing page of the application.'
+            web.implicit_grant: '- (Optional) An implicit_grant block as documented above.'
+            web.implicit_grant.access_token_issuance_enabled: '- (Optional) Whether this web application can request an access token using OAuth 2.0 implicit flow.'
+            web.implicit_grant.id_token_issuance_enabled: '- (Optional) Whether this web application can request an ID token using OAuth 2.0 implicit flow.'
+            web.logout_url: '- (Optional) The URL that will be used by Microsoft''s authorization service to sign out a user using front-channel, back-channel or SAML logout protocols.'
+            web.redirect_uris: '- (Optional) A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid http URL or a URN.'
+        importStatements:
+            - terraform import azuread_application.test 00000000-0000-0000-0000-000000000000
+    azuread_application_certificate:
+        subCategory: Applications
+        name: azuread_application_certificate
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "application_object_id": "${azuread_application.example.id}",
+                  "end_date": "2021-05-01T01:02:03Z",
+                  "type": "AsymmetricX509Cert",
+                  "value": "${file(\"cert.pem\")}"
+                }
+              references:
+                application_object_id: azuread_application.example.id
+              dependencies:
+                azuread_application.example: |-
                     {
-                      "credential": [
+                      "display_name": "example"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "application_object_id": "${azuread_application.example.id}",
+                  "encoding": "base64",
+                  "end_date": "2021-05-01T01:02:03Z",
+                  "type": "AsymmetricX509Cert",
+                  "value": "${base64encode(file(\"cert.der\"))}"
+                }
+              references:
+                application_object_id: azuread_application.example.id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "application_object_id": "${azuread_application.example.id}",
+                  "encoding": "hex",
+                  "end_date": "${azurerm_key_vault_certificate.example.certificate_attribute[0].expires}",
+                  "start_date": "${azurerm_key_vault_certificate.example.certificate_attribute[0].not_before}",
+                  "type": "AsymmetricX509Cert",
+                  "value": "${azurerm_key_vault_certificate.example.certificate_data}"
+                }
+              references:
+                application_object_id: azuread_application.example.id
+                end_date: azurerm_key_vault_certificate.example.certificate_attribute[0].expires
+                start_date: azurerm_key_vault_certificate.example.certificate_attribute[0].not_before
+                value: azurerm_key_vault_certificate.example.certificate_data
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+                azurerm_key_vault_certificate.example: |-
+                    {
+                      "certificate_policy": [
                         {
-                          "key": "BaseAddress",
-                          "value": "abc"
-                        },
-                        {
-                          "key": "SecretToken",
-                          "value": "some-token"
+                          "issuer_parameters": [
+                            {
+                              "name": "Self"
+                            }
+                          ],
+                          "key_properties": [
+                            {
+                              "exportable": true,
+                              "key_size": 2048,
+                              "key_type": "RSA",
+                              "reuse_key": true
+                            }
+                          ],
+                          "lifetime_action": [
+                            {
+                              "action": [
+                                {
+                                  "action_type": "AutoRenew"
+                                }
+                              ],
+                              "trigger": [
+                                {
+                                  "days_before_expiry": 30
+                                }
+                              ]
+                            }
+                          ],
+                          "secret_properties": [
+                            {
+                              "content_type": "application/x-pkcs12"
+                            }
+                          ],
+                          "x509_certificate_properties": [
+                            {
+                              "extended_key_usage": [
+                                "1.3.6.1.5.5.7.3.2"
+                              ],
+                              "key_usage": [
+                                "dataEncipherment",
+                                "digitalSignature",
+                                "keyCertSign",
+                                "keyEncipherment"
+                              ],
+                              "subject": "CN=${azuread_application.example.name}",
+                              "subject_alternative_names": [
+                                {
+                                  "dns_names": [
+                                    "internal.contoso.com",
+                                    "domain.hello.world"
+                                  ]
+                                }
+                              ],
+                              "validity_in_months": 12
+                            }
+                          ]
                         }
                       ],
-                      "service_principal_id": "${azuread_service_principal.example.id}"
+                      "key_vault_id": "${azurerm_key_vault.example.id}",
+                      "name": "generated-cert"
                     }
         argumentDocs:
-            credential: '- (Optional) One or more credential blocks as documented below.'
-            credential.key: '- (Required) The key of the secret.'
-            credential.value: '- (Required) The value of the secret.'
-            id: '- An ID used to uniquely identify this synchronization sec.'
-            service_principal_id: '- (Required) The object ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.'
+            application_object_id: '- (Required) The object ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.'
+            encoding: '- (Optional) Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.'
+            end_date: '- (Optional) The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If omitted, the API will decide a suitable expiry date, which is typically around 2 years from the start date. Changing this field forces a new resource to be created.'
+            end_date_relative: '- (Optional) A relative duration for which the certificate is valid until, for example 240h (10 days) or 2400h30m. Changing this field forces a new resource to be created.'
+            key_id: '- (Optional) A UUID used to uniquely identify this certificate. If omitted, a random UUID will be automatically generated. Changing this field forces a new resource to be created.'
+            start_date: '- (Optional) The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn''t specified, the value is determined by Azure Active Directory and is usually the start date of the certificate for asymmetric keys, or the current timestamp for symmetric keys. Changing this field forces a new resource to be created.'
+            type: '- (Required) The type of key/certificate. Must be one of AsymmetricX509Cert or Symmetric. Changing this fields forces a new resource to be created.'
+            value: '- (Required) The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.'
+        importStatements:
+            - terraform import azuread_application_certificate.test 00000000-0000-0000-0000-000000000000/certificate/11111111-1111-1111-1111-111111111111
+    azuread_application_federated_identity_credential:
+        subCategory: Applications
+        name: azuread_application_federated_identity_credential
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "application_object_id": "${azuread_application.example.object_id}",
+                  "audiences": [
+                    "api://AzureADTokenExchange"
+                  ],
+                  "description": "Deployments for my-repo",
+                  "display_name": "my-repo-deploy",
+                  "issuer": "https://token.actions.githubusercontent.com",
+                  "subject": "repo:my-organization/my-repo:environment:prod"
+                }
+              references:
+                application_object_id: azuread_application.example.object_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+        argumentDocs:
+            application_object_id: '- (Required) The object ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.'
+            audiences: '- (Required) List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.'
+            credential_id: '- A UUID used to uniquely identify this federated identity credential.'
+            description: '- (Optional) A description for the federated identity credential.'
+            display_name: '- (Required) A unique display name for the federated identity credential. Changing this forces a new resource to be created.'
+            issuer: '- (Required) The URL of the external identity provider, which must match the issuer claim of the external token being exchanged. The combination of the values of issuer and subject must be unique on the app.'
+            subject: '- (Required) The identifier of the external software workload within the external identity provider. The combination of issuer and subject must be unique on the app.'
+        importStatements:
+            - terraform import azuread_application_federated_identity_credential.test 00000000-0000-0000-0000-000000000000/federatedIdentityCredential/11111111-1111-1111-1111-111111111111
+    azuread_application_password:
+        subCategory: Applications
+        name: azuread_application_password
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "application_object_id": "${azuread_application.example.object_id}"
+                }
+              references:
+                application_object_id: azuread_application.example.object_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "application_object_id": "${azuread_application.example.object_id}",
+                  "rotate_when_changed": {
+                    "rotation": "${time_rotating.example.id}"
+                  }
+                }
+              references:
+                application_object_id: azuread_application.example.object_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+                time_rotating.example: |-
+                    {
+                      "rotation_days": 7
+                    }
+        argumentDocs:
+            application_object_id: '- (Required) The object ID of the application for which this password should be created. Changing this field forces a new resource to be created.'
+            display_name: '- (Optional) A display name for the password. Changing this field forces a new resource to be created.'
+            end_date: '- (Optional) The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.'
+            end_date_relative: '- (Optional) A relative duration for which the password is valid until, for example 240h (10 days) or 2400h30m. Changing this field forces a new resource to be created.'
+            key_id: '- A UUID used to uniquely identify this password credential.'
+            rotate_when_changed: '- (Optional) A map of arbitrary key/value pairs that will force recreation of the password when they change, enabling password rotation based on external conditions such as a rotating timestamp. Changing this forces a new resource to be created.'
+            start_date: '- (Optional) The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn''t specified, the current date is used.  Changing this field forces a new resource to be created.'
+            value: '- The password for this application, which is generated by Azure Active Directory.'
         importStatements: []
+    azuread_application_pre_authorized:
+        subCategory: Applications
+        name: azuread_application_pre_authorized
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "application_object_id": "${azuread_application.authorizer.object_id}",
+                  "authorized_app_id": "${azuread_application.authorized.application_id}",
+                  "permission_ids": [
+                    "ced9c4c3-c273-4f0f-ac71-a20377b90f9c",
+                    "2d5e07ca-664d-4d9b-ad61-ec07fd215213"
+                  ]
+                }
+              references:
+                application_object_id: azuread_application.authorizer.object_id
+                authorized_app_id: azuread_application.authorized.application_id
+              dependencies:
+                azuread_application.authorized: |-
+                    {
+                      "display_name": "example-authorized-app"
+                    }
+                azuread_application.authorizer: |-
+                    {
+                      "api": [
+                        {
+                          "oauth2_permission_scope": [
+                            {
+                              "admin_consent_description": "Administer the application",
+                              "admin_consent_display_name": "Administer",
+                              "enabled": true,
+                              "id": "ced9c4c3-c273-4f0f-ac71-a20377b90f9c",
+                              "type": "Admin",
+                              "value": "administer"
+                            },
+                            {
+                              "admin_consent_description": "Access the application",
+                              "admin_consent_display_name": "Access",
+                              "enabled": true,
+                              "id": "2d5e07ca-664d-4d9b-ad61-ec07fd215213",
+                              "type": "User",
+                              "user_consent_description": "Access the application",
+                              "user_consent_display_name": "Access",
+                              "value": "user_impersonation"
+                            }
+                          ]
+                        }
+                      ],
+                      "display_name": "example-authorizing-app"
+                    }
+        argumentDocs:
+            application_object_id: '- (Required) The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.'
+            authorized_application_id: '- (Optional) The application ID (client ID) of the application being authorized. Changing this field forces a new resource to be created.'
+            permission_ids: '- (Required) A set of permission scope IDs required by the authorized application.'
+        importStatements:
+            - terraform import azuread_application_pre_authorized.example 00000000-0000-0000-0000-000000000000/preAuthorizedApplication/11111111-1111-1111-1111-111111111111
     azuread_claims_mapping_policy:
         subCategory: Policies
         name: azuread_claims_mapping_policy
@@ -265,13 +961,106 @@ resources:
             - name: example
               manifest: |-
                 {
-                  "display_name": "Security administrator"
+                  "template_id": "00000000-0000-0000-0000-000000000000"
                 }
+            - name: example
+              manifest: |-
+                {
+                  "display_name": "Printer administrator"
+                }
+        argumentDocs:
+            description: '- The description of the directory role.'
+            display_name: '- (Optional) The display name of the directory role to activate. Changing this forces a new resource to be created.'
+            object_id: '- The object ID of the directory role.'
+            template_id: '- (Optional) The object ID of the role template from which to activate the directory role. Changing this forces a new resource to be created.'
+        importStatements: []
+    azuread_directory_role_assignment:
+        subCategory: Directory Roles
+        name: azuread_directory_role_assignment
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "principal_object_id": "${data.azuread_user.example.object_id}",
+                  "role_id": "${azuread_directory_role.example.template_id}"
+                }
+              references:
+                principal_object_id: data.azuread_user.example.object_id
+                role_id: azuread_directory_role.example.template_id
               dependencies:
-                azuread_directory_role_member.example: |-
+                azuread_directory_role.example: |-
                     {
-                      "member_object_id": "${data.azuread_user.example.object_id}",
-                      "role_object_id": "${azuread_directory_role.example.object_id}"
+                      "display_name": "Security administrator"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "principal_object_id": "${data.azuread_user.example.object_id}",
+                  "role_id": "${azuread_custom_directory_role.example.object_id}"
+                }
+              references:
+                principal_object_id: data.azuread_user.example.object_id
+                role_id: azuread_custom_directory_role.example.object_id
+              dependencies:
+                azuread_custom_directory_role.example: |-
+                    {
+                      "display_name": "My Custom Role",
+                      "enabled": true,
+                      "permissions": [
+                        {
+                          "allowed_resource_actions": [
+                            "microsoft.directory/applications/basic/update",
+                            "microsoft.directory/applications/standard/read"
+                          ]
+                        }
+                      ],
+                      "version": "1.0"
+                    }
+            - name: test
+              manifest: |-
+                {
+                  "directory_scope_id": "${format(\"/%s\", azuread_application.example.object_id)}",
+                  "principal_object_id": "${data.azuread_user.example.object_id}",
+                  "role_id": "${azuread_directory_role.example.template_id}"
+                }
+              references:
+                principal_object_id: data.azuread_user.example.object_id
+                role_id: azuread_directory_role.example.template_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "My Application"
+                    }
+                azuread_directory_role.example: |-
+                    {
+                      "display_name": "Cloud application administrator"
+                    }
+        argumentDocs:
+            app_scope_id: '- (Optional) Identifier of the app-specific scope when the assignment scope is app-specific. Cannot be used with directory_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.'
+            directory_scope_id: '- (Optional) Identifier of the directory object representing the scope of the assignment. Cannot be used with app_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.'
+            principal_object_id: '- (Required) The object ID of the principal for you want to create a role assignment. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.'
+            role_id: '- (Required) The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.'
+        importStatements:
+            - terraform import azuread_directory_role_assignment.test ePROZI_iKE653D_d6aoLHyr-lKgHI8ZGiIdz8CLVcng-1
+    azuread_directory_role_member:
+        subCategory: Directory Roles
+        name: azuread_directory_role_member
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "member_object_id": "${data.azuread_user.example.object_id}",
+                  "role_object_id": "${azuread_directory_role.example.object_id}"
+                }
+              references:
+                member_object_id: data.azuread_user.example.object_id
+                role_object_id: azuread_directory_role.example.object_id
+              dependencies:
+                azuread_directory_role.example: |-
+                    {
+                      "display_name": "Security administrator"
                     }
         argumentDocs:
             member_object_id: '- (Required) The object ID of the principal you want to add as a member to the directory role. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.'
@@ -286,14 +1075,128 @@ resources:
             - name: example
               manifest: |-
                 {
-                  "display_name": "my_group",
+                  "display_name": "example",
+                  "owners": [
+                    "${data.azuread_client_config.current.object_id}"
+                  ],
+                  "security_enabled": true
+                }
+            - name: example
+              manifest: |-
+                {
+                  "display_name": "example",
+                  "mail_enabled": true,
+                  "mail_nickname": "ExampleGroup",
+                  "owners": [
+                    "${data.azuread_client_config.current.object_id}",
+                    "${azuread_user.group_owner.object_id}"
+                  ],
+                  "security_enabled": true,
+                  "types": [
+                    "Unified"
+                  ]
+                }
+              dependencies:
+                azuread_user.group_owner: |-
+                    {
+                      "display_name": "Group Owner",
+                      "mail_nickname": "example-group-owner",
+                      "password": "SecretP@sswd99!",
+                      "user_principal_name": "example-group-owner@hashicorp.com"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "display_name": "MyGroup",
+                  "members": [
+                    "${azuread_user.example.object_id}"
+                  ],
+                  "owners": [
+                    "${data.azuread_client_config.current.object_id}"
+                  ],
                   "security_enabled": true
                 }
               dependencies:
-                azuread_group_member.example: |-
+                azuread_user.example: |-
                     {
-                      "group_object_id": "${azuread_group.example.id}",
-                      "member_object_id": "${data.azuread_user.example.id}"
+                      "display_name": "J Doe",
+                      "owners": [
+                        "${data.azuread_client_config.current.object_id}"
+                      ],
+                      "password": "notSecure123",
+                      "user_principal_name": "jdoe@hashicorp.com"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "display_name": "MyGroup",
+                  "dynamic_membership": [
+                    {
+                      "enabled": true,
+                      "rule": "user.department -eq \"Sales\""
+                    }
+                  ],
+                  "owners": [
+                    "${data.azuread_client_config.current.object_id}"
+                  ],
+                  "security_enabled": true,
+                  "types": [
+                    "DynamicMembership"
+                  ]
+                }
+        argumentDocs:
+            administrative_unit_ids: '- (Optional) The object IDs of administrative units in which the group is a member. If specified, new groups will be created in the scope of the first administrative unit and added to the others. If empty, new groups will be created at the tenant level.'
+            assignable_to_role: '- (Optional) Indicates whether this group can be assigned to an Azure Active Directory role. Can only be true for security-enabled groups. Changing this forces a new resource to be created.'
+            auto_subscribe_new_members: '- (Optional) Indicates whether new members added to the group will be auto-subscribed to receive email notifications. Can only be set for Unified groups.'
+            behaviors: '- (Optional) A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.'
+            description: '- (Optional) The description for the group.'
+            display_name: '- (Required) The display name for the group.'
+            dynamic_membership: '- (Optional) A dynamic_membership block as documented below. Required when types contains DynamicMembership. Cannot be used with the members property.'
+            dynamic_membership.enabled: '- (Required) Whether rule processing is "On" (true) or "Paused" (false).'
+            dynamic_membership.rule: '- (Required) The rule that determines membership of this group. For more information, see official documentation on membership rules syntax.'
+            external_senders_allowed: '- (Optional) Indicates whether people external to the organization can send messages to the group. Can only be set for Unified groups.'
+            hide_from_address_lists: '- (Optional) Indicates whether the group is displayed in certain parts of the Outlook user interface: in the Address Book, in address lists for selecting message recipients, and in the Browse Groups dialog for searching groups. Can only be set for Unified groups.'
+            hide_from_outlook_clients: '- (Optional) Indicates whether the group is displayed in Outlook clients, such as Outlook for Windows and Outlook on the web. Can only be set for Unified groups.'
+            mail: '- The SMTP address for the group.'
+            mail_enabled: '- (Optional) Whether the group is a mail enabled, with a shared group mailbox. At least one of mail_enabled or security_enabled must be specified. Only Microsoft 365 groups can be mail enabled (see the types property).'
+            mail_nickname: '- (Optional) The mail alias for the group, unique in the organisation. Required for mail-enabled groups. Changing this forces a new resource to be created.'
+            members: '- (Optional) A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals. Cannot be used with the dynamic_membership block.'
+            object_id: '- The object ID of the group.'
+            onpremises_domain_name: '- The on-premises FQDN, also called dnsDomainName, synchronised from the on-premises directory when Azure AD Connect is used.'
+            onpremises_netbios_name: '- The on-premises NetBIOS name, synchronised from the on-premises directory when Azure AD Connect is used.'
+            onpremises_sam_account_name: '- The on-premises SAM account name, synchronised from the on-premises directory when Azure AD Connect is used.'
+            onpremises_security_identifier: '- The on-premises security identifier (SID), synchronised from the on-premises directory when Azure AD Connect is used.'
+            onpremises_sync_enabled: '- Whether this group is synchronised from an on-premises directory (true), no longer synchronised (false), or has never been synchronised (null).'
+            owners: '- (Optional) A set of object IDs of principals that will be granted ownership of the group. Supported object types are users or service principals. By default, the principal being used to execute Terraform is assigned as the sole owner. Groups cannot be created with no owners or have all their owners removed.'
+            preferred_language: '- The preferred language for a Microsoft 365 group, in ISO 639-1 notation.'
+            prevent_duplicate_names: '- (Optional) If true, will return an error if an existing group is found with the same name. Defaults to false.'
+            provisioning_options: '- (Optional) A set of provisioning options for a Microsoft 365 group. The only supported value is Team. See official documentation for details. Changing this forces a new resource to be created.'
+            proxy_addresses: '- List of email addresses for the group that direct to the same group mailbox.'
+            security_enabled: '- (Optional) Whether the group is a security group for controlling access to in-app resources. At least one of security_enabled or mail_enabled must be specified. A Microsoft 365 group can be security enabled and mail enabled (see the types property).'
+            theme: '- (Optional) The colour theme for a Microsoft 365 group. Possible values are Blue, Green, Orange, Pink, Purple, Red or Teal. By default, no theme is set.'
+            types: '- (Optional) A set of group types to configure for the group. Supported values are DynamicMembership, which denotes a group with dynamic membership, and Unified, which specifies a Microsoft 365 group. Required when mail_enabled is true. Changing this forces a new resource to be created.'
+            visibility: '- (Optional) The group join policy and group content visibility. Possible values are Private, Public, or Hiddenmembership. Only Microsoft 365 groups can have Hiddenmembership visibility and this value must be set when the group is created. By default, security groups will receive Private visibility and Microsoft 365 groups will receive Public visibility.'
+        importStatements:
+            - terraform import azuread_group.my_group 00000000-0000-0000-0000-000000000000
+    azuread_group_member:
+        subCategory: Groups
+        name: azuread_group_member
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "group_object_id": "${azuread_group.example.id}",
+                  "member_object_id": "${data.azuread_user.example.id}"
+                }
+              references:
+                group_object_id: azuread_group.example.id
+                member_object_id: data.azuread_user.example.id
+              dependencies:
+                azuread_group.example: |-
+                    {
+                      "display_name": "my_group",
+                      "security_enabled": true
                     }
         argumentDocs:
             group_object_id: '- (Required) The object ID of the group you want to add the member to. Changing this forces a new resource to be created.'
@@ -394,51 +1297,18 @@ resources:
         importStatements:
             - terraform import azuread_named_location.my_location 00000000-0000-0000-0000-000000000000
     azuread_service_principal:
-        subCategory: Delegated Permission Grants
+        subCategory: Service Principals
         name: azuread_service_principal
         title: ""
         examples:
-            - name: msgraph
-              manifest: |-
-                {
-                  "application_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
-                  "use_existing": true
-                }
-              references:
-                application_id: data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
-              dependencies:
-                azuread_application.example: |-
-                    {
-                      "display_name": "example",
-                      "required_resource_access": [
-                        {
-                          "resource_access": [
-                            {
-                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"openid\"]}",
-                              "type": "Scope"
-                            },
-                            {
-                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"User.Read\"]}",
-                              "type": "Scope"
-                            }
-                          ],
-                          "resource_app_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}"
-                        }
-                      ]
-                    }
-                azuread_service_principal_delegated_permission_grant.example: |-
-                    {
-                      "claim_values": [
-                        "openid",
-                        "User.Read.All"
-                      ],
-                      "resource_service_principal_object_id": "${azuread_service_principal.msgraph.object_id}",
-                      "service_principal_object_id": "${azuread_service_principal.example.object_id}"
-                    }
             - name: example
               manifest: |-
                 {
-                  "application_id": "${azuread_application.example.application_id}"
+                  "app_role_assignment_required": false,
+                  "application_id": "${azuread_application.example.application_id}",
+                  "owners": [
+                    "${data.azuread_client_config.current.object_id}"
+                  ]
                 }
               references:
                 application_id: azuread_application.example.application_id
@@ -446,30 +1316,34 @@ resources:
                 azuread_application.example: |-
                     {
                       "display_name": "example",
-                      "required_resource_access": [
-                        {
-                          "resource_access": [
-                            {
-                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"openid\"]}",
-                              "type": "Scope"
-                            },
-                            {
-                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"User.Read\"]}",
-                              "type": "Scope"
-                            }
-                          ],
-                          "resource_app_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}"
-                        }
+                      "owners": [
+                        "${data.azuread_client_config.current.object_id}"
                       ]
                     }
-                azuread_service_principal_delegated_permission_grant.example: |-
+            - name: example
+              manifest: |-
+                {
+                  "app_role_assignment_required": false,
+                  "application_id": "${azuread_application.example.application_id}",
+                  "feature_tags": [
                     {
-                      "claim_values": [
-                        "openid",
-                        "User.Read.All"
-                      ],
-                      "resource_service_principal_object_id": "${azuread_service_principal.msgraph.object_id}",
-                      "service_principal_object_id": "${azuread_service_principal.example.object_id}"
+                      "enterprise": true,
+                      "gallery": true
+                    }
+                  ],
+                  "owners": [
+                    "${data.azuread_client_config.current.object_id}"
+                  ]
+                }
+              references:
+                application_id: azuread_application.example.application_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example",
+                      "owners": [
+                        "${data.azuread_client_config.current.object_id}"
+                      ]
                     }
             - name: msgraph
               manifest: |-
@@ -479,47 +1353,11 @@ resources:
                 }
               references:
                 application_id: data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph
-              dependencies:
-                azuread_application.example: |-
-                    {
-                      "display_name": "example",
-                      "required_resource_access": [
-                        {
-                          "resource_access": [
-                            {
-                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"openid\"]}",
-                              "type": "Scope"
-                            },
-                            {
-                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"User.Read\"]}",
-                              "type": "Scope"
-                            }
-                          ],
-                          "resource_app_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}"
-                        }
-                      ]
-                    }
-                azuread_service_principal_delegated_permission_grant.example: |-
-                    {
-                      "claim_values": [
-                        "openid",
-                        "User.Read.All"
-                      ],
-                      "resource_service_principal_object_id": "${azuread_service_principal.msgraph.object_id}",
-                      "service_principal_object_id": "${azuread_service_principal.example.object_id}",
-                      "user_object_id": "${azuread_user.example.object_id}"
-                    }
-                azuread_user.example: |-
-                    {
-                      "display_name": "J. Doe",
-                      "mail_nickname": "jdoe",
-                      "password": "SecretP@sswd99!",
-                      "user_principal_name": "jdoe@hashicorp.com"
-                    }
             - name: example
               manifest: |-
                 {
-                  "application_id": "${azuread_application.example.application_id}"
+                  "application_id": "${azuread_application.example.application_id}",
+                  "use_existing": true
                 }
               references:
                 application_id: azuread_application.example.application_id
@@ -527,47 +1365,107 @@ resources:
                 azuread_application.example: |-
                     {
                       "display_name": "example",
-                      "required_resource_access": [
-                        {
-                          "resource_access": [
-                            {
-                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"openid\"]}",
-                              "type": "Scope"
-                            },
-                            {
-                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"User.Read\"]}",
-                              "type": "Scope"
-                            }
-                          ],
-                          "resource_app_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}"
-                        }
-                      ]
-                    }
-                azuread_service_principal_delegated_permission_grant.example: |-
-                    {
-                      "claim_values": [
-                        "openid",
-                        "User.Read.All"
-                      ],
-                      "resource_service_principal_object_id": "${azuread_service_principal.msgraph.object_id}",
-                      "service_principal_object_id": "${azuread_service_principal.example.object_id}",
-                      "user_object_id": "${azuread_user.example.object_id}"
-                    }
-                azuread_user.example: |-
-                    {
-                      "display_name": "J. Doe",
-                      "mail_nickname": "jdoe",
-                      "password": "SecretP@sswd99!",
-                      "user_principal_name": "jdoe@hashicorp.com"
+                      "template_id": "${data.azuread_application_template.example.template_id}"
                     }
         argumentDocs:
-            claim_values: '- (Required) - A set of claim values for delegated permission scopes which should be included in access tokens for the resource.'
-            id: '- The ID of the delegated permission grant.'
-            resource_service_principal_object_id: '- (Required) The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.'
-            service_principal_object_id: '- (Required) The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.'
-            user_object_id: '- (Optional) - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.'
+            account_enabled: '- (Optional) Whether or not the service principal account is enabled. Defaults to true.'
+            admin_consent_description: '- Delegated permission description that appears in all tenant-wide admin consent experiences, intended to be read by an administrator granting the permission on behalf of all users.'
+            admin_consent_display_name: '- Display name for the delegated permission, intended to be read by an administrator granting the permission on behalf of all users.'
+            allowed_member_types: '- Specifies whether this app role definition can be assigned to users and groups, or to other applications (that are accessing this application in a standalone scenario). Possible values are: User and Application, or both.'
+            alternative_names: '- (Optional) A set of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities.'
+            app_role_assignment_required: '- (Optional) Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application. Defaults to false.'
+            app_role_ids: '- A mapping of app role values to app role IDs, as published by the associated application, intended to be useful when referencing app roles in other resources in your configuration.'
+            app_roles: '- A list of app roles published by the associated application, as documented below. For more information official documentation.'
+            application_id: '- (Required) The application ID (client ID) of the application for which to create a service principal.'
+            application_tenant_id: '- The tenant ID where the associated application is registered.'
+            description: '- (Optional) A description of the service principal provided for internal end-users.'
+            display_name: '- The display name of the application associated with this service principal.'
+            enabled: '- Determines if the app role is enabled.'
+            feature_tags: '- (Optional) A feature_tags block as described below. Cannot be used together with the tags property.'
+            feature_tags.custom_single_sign_on: '- (Optional) Whether this service principal represents a custom SAML application. Enabling this will assign the WindowsAzureActiveDirectoryCustomSingleSignOnApplication tag. Defaults to false.'
+            feature_tags.enterprise: '- (Optional) Whether this service principal represents an Enterprise Application. Enabling this will assign the WindowsAzureActiveDirectoryIntegratedApp tag. Defaults to false.'
+            feature_tags.gallery: '- (Optional) Whether this service principal represents a gallery application. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1 tag. Defaults to false.'
+            feature_tags.hide: '- (Optional) Whether this app is invisible to users in My Apps and Office 365 Launcher. Enabling this will assign the HideApp tag. Defaults to false.'
+            feature_tags.relay_state: '- (Optional) The relative URI the service provider would redirect to after completion of the single sign-on flow.'
+            homepage_url: '- Home page or landing page of the associated application.'
+            id: '- The unique identifier of the app_role.'
+            login_url: '- (Optional) The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on.'
+            logout_url: '- The URL that will be used by Microsoft''s authorization service to log out an user using OpenId Connect front-channel, back-channel or SAML logout protocols, taken from the associated application.'
+            notes: '- (Optional) A free text field to capture information about the service principal, typically used for operational purposes.'
+            notification_email_addresses: '- (Optional) A set of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications.'
+            oauth2_permission_scope_ids: '- A mapping of OAuth2.0 permission scope values to scope IDs, as exposed by the associated application, intended to be useful when referencing permission scopes in other resources in your configuration.'
+            oauth2_permission_scopes: '- A list of OAuth 2.0 delegated permission scopes exposed by the associated application, as documented below.'
+            object_id: '- The object ID of the service principal.'
+            owners: '- (Optional) A set of object IDs of principals that will be granted ownership of the service principal. Supported object types are users or service principals. By default, no owners are assigned.'
+            preferred_single_sign_on_mode: '- (Optional) The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps. Supported values are oidc, password, saml or notSupported. Omit this property or specify a blank string to unset.'
+            redirect_uris: '- A list of URLs where user tokens are sent for sign-in with the associated application, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent for the associated application.'
+            saml_metadata_url: '- The URL where the service exposes SAML metadata for federation.'
+            saml_single_sign_on: '- (Optional) A saml_single_sign_on block as documented below.'
+            service_principal_names: '- A list of identifier URI(s), copied over from the associated application.'
+            sign_in_audience: '- The Microsoft account types that are supported for the associated application. Possible values include AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount.'
+            tags: '- (Optional) A set of tags to apply to the service principal for configuring specific behaviours of the service principal. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.'
+            tags.use_existing: '- (Optional) When true, any existing service principal linked to the same application will be automatically imported. When false, an import error will be raised for any pre-existing service principal.'
+            type: '- Identifies whether the service principal represents an application or a managed identity. Possible values include Application or ManagedIdentity.'
+            user_consent_description: '- Delegated permission description that appears in the end user consent experience, intended to be read by a user consenting on their own behalf.'
+            user_consent_display_name: '- Display name for the delegated permission that appears in the end user consent experience.'
+            value: '- The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.'
         importStatements:
-            - terraform import azuread_service_principal_delegated_permission_grant.example aaBBcDDeFG6h5JKLMN2PQrrssTTUUvWWxxxxxyyyzzz
+            - terraform import azuread_service_principal.test 00000000-0000-0000-0000-000000000000
+    azuread_service_principal_certificate:
+        subCategory: Service Principals
+        name: azuread_service_principal_certificate
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "end_date": "2021-05-01T01:02:03Z",
+                  "service_principal_id": "${azuread_service_principal.example.id}",
+                  "type": "AsymmetricX509Cert",
+                  "value": "${file(\"cert.pem\")}"
+                }
+              references:
+                service_principal_id: azuread_service_principal.example.id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "encoding": "base64",
+                  "end_date": "2021-05-01T01:02:03Z",
+                  "service_principal_id": "${azuread_service_principal.example.id}",
+                  "type": "AsymmetricX509Cert",
+                  "value": "${base64encode(file(\"cert.der\"))}"
+                }
+              references:
+                service_principal_id: azuread_service_principal.example.id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+        argumentDocs:
+            encoding: '- (Optional) Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.'
+            end_date: '- (Optional) The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.'
+            end_date_relative: '- (Optional) A relative duration for which the certificate is valid until, for example 240h (10 days) or 2400h30m. Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h". Changing this field forces a new resource to be created.'
+            key_id: '- (Optional) A UUID used to uniquely identify this certificate. If not specified a UUID will be automatically generated. Changing this field forces a new resource to be created.'
+            service_principal_id: '- (Required) The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.'
+            start_date: '- (Optional) The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn''t specified, the value is determined by Azure Active Directory and is usually the start date of the certificate for asymmetric keys, or the current timestamp for symmetric keys. Changing this field forces a new resource to be created.'
+            type: '- (Required) The type of key/certificate. Must be one of AsymmetricX509Cert or Symmetric. Changing this fields forces a new resource to be created.'
+            value: '- (Required) The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.'
+        importStatements:
+            - terraform import azuread_service_principal_certificate.test 00000000-0000-0000-0000-000000000000/certificate/11111111-1111-1111-1111-111111111111
     azuread_service_principal_claims_mapping_policy_assignment:
         subCategory: Service Principals
         name: azuread_service_principal_claims_mapping_policy_assignment
@@ -588,6 +1486,321 @@ resources:
             service_principal_id: '- (Required) The object ID of the service principal for the policy assignment.'
         importStatements:
             - terraform import azuread_service_principal_claims_mapping_policy_assignment.app 00000000-0000-0000-0000-000000000000/claimsMappingPolicy/11111111-0000-0000-0000-000000000000
+    azuread_service_principal_delegated_permission_grant:
+        subCategory: Delegated Permission Grants
+        name: azuread_service_principal_delegated_permission_grant
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "claim_values": [
+                    "openid",
+                    "User.Read.All"
+                  ],
+                  "resource_service_principal_object_id": "${azuread_service_principal.msgraph.object_id}",
+                  "service_principal_object_id": "${azuread_service_principal.example.object_id}"
+                }
+              references:
+                resource_service_principal_object_id: azuread_service_principal.msgraph.object_id
+                service_principal_object_id: azuread_service_principal.example.object_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example",
+                      "required_resource_access": [
+                        {
+                          "resource_access": [
+                            {
+                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"openid\"]}",
+                              "type": "Scope"
+                            },
+                            {
+                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"User.Read\"]}",
+                              "type": "Scope"
+                            }
+                          ],
+                          "resource_app_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}"
+                        }
+                      ]
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+                azuread_service_principal.msgraph: |-
+                    {
+                      "application_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
+                      "use_existing": true
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "claim_values": [
+                    "openid",
+                    "User.Read.All"
+                  ],
+                  "resource_service_principal_object_id": "${azuread_service_principal.msgraph.object_id}",
+                  "service_principal_object_id": "${azuread_service_principal.example.object_id}",
+                  "user_object_id": "${azuread_user.example.object_id}"
+                }
+              references:
+                resource_service_principal_object_id: azuread_service_principal.msgraph.object_id
+                service_principal_object_id: azuread_service_principal.example.object_id
+                user_object_id: azuread_user.example.object_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example",
+                      "required_resource_access": [
+                        {
+                          "resource_access": [
+                            {
+                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"openid\"]}",
+                              "type": "Scope"
+                            },
+                            {
+                              "id": "${azuread_service_principal.msgraph.oauth2_permission_scope_ids[\"User.Read\"]}",
+                              "type": "Scope"
+                            }
+                          ],
+                          "resource_app_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}"
+                        }
+                      ]
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+                azuread_service_principal.msgraph: |-
+                    {
+                      "application_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
+                      "use_existing": true
+                    }
+                azuread_user.example: |-
+                    {
+                      "display_name": "J. Doe",
+                      "mail_nickname": "jdoe",
+                      "password": "SecretP@sswd99!",
+                      "user_principal_name": "jdoe@hashicorp.com"
+                    }
+        argumentDocs:
+            claim_values: '- (Required) - A set of claim values for delegated permission scopes which should be included in access tokens for the resource.'
+            id: '- The ID of the delegated permission grant.'
+            resource_service_principal_object_id: '- (Required) The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.'
+            service_principal_object_id: '- (Required) The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.'
+            user_object_id: '- (Optional) - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.'
+        importStatements:
+            - terraform import azuread_service_principal_delegated_permission_grant.example aaBBcDDeFG6h5JKLMN2PQrrssTTUUvWWxxxxxyyyzzz
+    azuread_service_principal_password:
+        subCategory: Service Principals
+        name: azuread_service_principal_password
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "service_principal_id": "${azuread_service_principal.example.object_id}"
+                }
+              references:
+                service_principal_id: azuread_service_principal.example.object_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "rotate_when_changed": {
+                    "rotation": "${time_rotating.example.id}"
+                  },
+                  "service_principal_id": "${azuread_service_principal.example.object_id}"
+                }
+              references:
+                service_principal_id: azuread_service_principal.example.object_id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+                time_rotating.example: |-
+                    {
+                      "rotation_days": 7
+                    }
+        argumentDocs:
+            display_name: '- (Optional) A display name for the password.'
+            end_date: '- (Optional) The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.'
+            end_date_relative: '- (Optional) A relative duration for which the password is valid until, for example 240h (10 days) or 2400h30m. Changing this field forces a new resource to be created.'
+            key_id: '- A UUID used to uniquely identify this password credential.'
+            rotate_when_changed: '- (Optional) A map of arbitrary key/value pairs that will force recreation of the password when they change, enabling password rotation based on external conditions such as a rotating timestamp. Changing this forces a new resource to be created.'
+            service_principal_id: '- (Required) The object ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.'
+            start_date: '- (Optional) The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn''t specified, the current date is used.  Changing this field forces a new resource to be created.'
+            value: '- The password for this service principal, which is generated by Azure Active Directory.'
+        importStatements: []
+    azuread_service_principal_token_signing_certificate:
+        subCategory: Service Principals
+        name: azuread_service_principal_token_signing_certificate
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "service_principal_id": "${azuread_service_principal.example.id}"
+                }
+              references:
+                service_principal_id: azuread_service_principal.example.id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "display_name": "CN=example.com",
+                  "end_date": "2023-05-01T01:02:03Z",
+                  "service_principal_id": "${azuread_service_principal.example.id}"
+                }
+              references:
+                service_principal_id: azuread_service_principal.example.id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example"
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}"
+                    }
+        argumentDocs:
+            display_name: |-
+                - (Optional) Specifies a friendly name for the certificate.
+                Must start with CN=. Changing this field forces a new resource to be created.
+            end_date: '- (Optional) The end date until which the token signing certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.'
+            key_id: '- A UUID used to uniquely identify the verify certificate.'
+            service_principal_id: '- (Required) The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.'
+            start_date: '- The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).'
+            thumbprint: '- A SHA-1 generated thumbprint of the token signing certificate, which can be used to set the preferred signing certificate for a service principal.'
+            value: |-
+                - The certificate data, which is PEM encoded but does not include the
+                header -----BEGIN CERTIFICATE-----\n or the footer \n-----END CERTIFICATE-----.
+        importStatements:
+            - terraform import azuread_service_principal_token_signing_certificate.example 00000000-0000-0000-0000-000000000000/tokenSigningCertificate/11111111-1111-1111-1111-111111111111
+    azuread_synchronization_job:
+        subCategory: Synchronization
+        name: azuread_synchronization_job
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "enabled": true,
+                  "service_principal_id": "${azuread_service_principal.example.id}",
+                  "template_id": "dataBricks"
+                }
+              references:
+                service_principal_id: azuread_service_principal.example.id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example",
+                      "feature_tags": [
+                        {
+                          "enterprise": true,
+                          "gallery": true
+                        }
+                      ],
+                      "template_id": "${data.azuread_application_template.example.template_id}"
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}",
+                      "use_existing": true
+                    }
+                azuread_synchronization_secret.example: |-
+                    {
+                      "credential": [
+                        {
+                          "key": "BaseAddress",
+                          "value": "https://adb-example.azuredatabricks.net/api/2.0/preview/scim"
+                        },
+                        {
+                          "key": "SecretToken",
+                          "value": "some-token"
+                        }
+                      ],
+                      "service_principal_id": "${azuread_service_principal.example.id}"
+                    }
+        argumentDocs:
+            enabled: '- (Optional) Whether or not the provisioning job is enabled. Default state is true.'
+            id: '- An ID used to uniquely identify this synchronization job.'
+            schedule: '- A schedule list as documented below.'
+            schedule.expiration: '- Date and time when this job will expire, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).'
+            schedule.interval: '- The interval between synchronization iterations ISO8601. E.g. PT40M run every 40 minutes.'
+            schedule.state: '- State of the job.'
+            service_principal_id: '- (Required) The object ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.'
+            template_id: '- (Required) Identifier of the synchronization template this job is based on.'
+        importStatements:
+            - terraform import azuread_synchronization_job.example 00000000-0000-0000-0000-000000000000/job/dataBricks.f5532fc709734b1a90e8a1fa9fd03a82.8442fd39-2183-419c-8732-74b6ce866bd5
+    azuread_synchronization_secret:
+        subCategory: Synchronization
+        name: azuread_synchronization_secret
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "credential": [
+                    {
+                      "key": "BaseAddress",
+                      "value": "abc"
+                    },
+                    {
+                      "key": "SecretToken",
+                      "value": "some-token"
+                    }
+                  ],
+                  "service_principal_id": "${azuread_service_principal.example.id}"
+                }
+              references:
+                service_principal_id: azuread_service_principal.example.id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example",
+                      "feature_tags": [
+                        {
+                          "enterprise": true,
+                          "gallery": true
+                        }
+                      ],
+                      "template_id": "${data.azuread_application_template.example.template_id}"
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "application_id": "${azuread_application.example.application_id}",
+                      "use_existing": true
+                    }
+        argumentDocs:
+            credential: '- (Optional) One or more credential blocks as documented below.'
+            credential.key: '- (Required) The key of the secret.'
+            credential.value: '- (Required) The value of the secret.'
+            id: '- An ID used to uniquely identify this synchronization sec.'
+            service_principal_id: '- (Required) The object ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.'
+        importStatements: []
     azuread_user:
         subCategory: Users
         name: azuread_user

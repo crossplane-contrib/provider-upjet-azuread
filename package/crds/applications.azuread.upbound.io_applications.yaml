@@ -64,80 +64,118 @@ spec:
               forProvider:
                 properties:
                   api:
+                    description: An api block as documented below, which configures
+                      API related settings for this application.
                     items:
                       properties:
                         knownClientApplications:
-                          description: 'Used for bundling consent if you have a solution
-                            that contains two parts: a client app and a custom web
-                            API app'
+                          description: 'A set of application IDs (client IDs), used
+                            for bundling consent if you have a solution that contains
+                            two parts: a client app and a custom web API app. Used
+                            for bundling consent if you have a solution that contains
+                            two parts: a client app and a custom web API app'
                           items:
                             type: string
                           type: array
                         mappedClaimsEnabled:
                           description: Allows an application to use claims mapping
-                            without specifying a custom signing key
+                            without specifying a custom signing key. Defaults to false.
+                            Allows an application to use claims mapping without specifying
+                            a custom signing key
                           type: boolean
                         oauth2PermissionScope:
-                          description: One or more `oauth2_permission_scope` blocks
-                            to describe delegated permissions exposed by the web API
-                            represented by this application
+                          description: One or more oauth2_permission_scope blocks
+                            as documented below, to describe delegated permissions
+                            exposed by the web API represented by this application.
+                            One or more `oauth2_permission_scope` blocks to describe
+                            delegated permissions exposed by the web API represented
+                            by this application
                           items:
                             properties:
                               adminConsentDescription:
                                 description: Delegated permission description that
                                   appears in all tenant-wide admin consent experiences,
                                   intended to be read by an administrator granting
-                                  the permission on behalf of all users
+                                  the permission on behalf of all users. Delegated
+                                  permission description that appears in all tenant-wide
+                                  admin consent experiences, intended to be read by
+                                  an administrator granting the permission on behalf
+                                  of all users
                                 type: string
                               adminConsentDisplayName:
                                 description: Display name for the delegated permission,
                                   intended to be read by an administrator granting
-                                  the permission on behalf of all users
+                                  the permission on behalf of all users. Display name
+                                  for the delegated permission, intended to be read
+                                  by an administrator granting the permission on behalf
+                                  of all users
                                 type: string
                               enabled:
                                 description: Determines if the permission scope is
-                                  enabled
+                                  enabled. Defaults to true. Determines if the permission
+                                  scope is enabled
                                 type: boolean
                               id:
-                                description: An ID used to uniquely identify this
-                                  synchronization sec. The unique identifier of the
-                                  delegated permission
+                                description: The unique identifier of the delegated
+                                  permission. Must be a valid UUID. The unique identifier
+                                  of the delegated permission
                                 type: string
                               type:
                                 description: Whether this delegated permission should
                                   be considered safe for non-admin users to consent
                                   to on behalf of themselves, or whether an administrator
-                                  should be required for consent to the permissions
+                                  should be required for consent to the permissions.
+                                  Defaults to User. Possible values are User or Admin.
+                                  Whether this delegated permission should be considered
+                                  safe for non-admin users to consent to on behalf
+                                  of themselves, or whether an administrator should
+                                  be required for consent to the permissions
                                 type: string
                               userConsentDescription:
                                 description: Delegated permission description that
                                   appears in the end user consent experience, intended
-                                  to be read by a user consenting on their own behalf
+                                  to be read by a user consenting on their own behalf.
+                                  Delegated permission description that appears in
+                                  the end user consent experience, intended to be
+                                  read by a user consenting on their own behalf
                                 type: string
                               userConsentDisplayName:
                                 description: Display name for the delegated permission
-                                  that appears in the end user consent experience
+                                  that appears in the end user consent experience.
+                                  Display name for the delegated permission that appears
+                                  in the end user consent experience
                                 type: string
                               value:
-                                description: The value of the secret. The value that
-                                  is used for the `scp` claim in OAuth 2.0 access
-                                  tokens
+                                description: The value that is used for the scp claim
+                                  in OAuth 2.0 access tokens. The value that is used
+                                  for the `scp` claim in OAuth 2.0 access tokens
                                 type: string
                             required:
                             - id
                             type: object
                           type: array
                         requestedAccessTokenVersion:
-                          description: The access token version expected by this resource
+                          description: The access token version expected by this resource.
+                            Must be one of 1 or 2, and must be 2 when sign_in_audience
+                            is either AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount
+                            Defaults to 1. The access token version expected by this
+                            resource
                           type: number
                       type: object
                     type: array
                   appRole:
+                    description: A collection of app_role blocks as documented below.
+                      For more information see official documentation on Application
+                      Roles.
                     items:
                       properties:
                         allowedMemberTypes:
                           description: Specifies whether this app role definition
-                            can be assigned to users and groups by setting to `User`,
+                            can be assigned to users and groups by setting to User,
+                            or to other applications (that are accessing this application
+                            in a standalone scenario) by setting to Application, or
+                            to both. Specifies whether this app role definition can
+                            be assigned to users and groups by setting to `User`,
                             or to other applications (that are accessing this application
                             in a standalone scenario) by setting to `Application`,
                             or to both
@@ -147,22 +185,30 @@ spec:
                         description:
                           description: Description of the app role that appears when
                             the role is being assigned and, if the role functions
-                            as an application permissions, during the consent experiences
+                            as an application permissions, during the consent experiences.
+                            Description of the app role that appears when the role
+                            is being assigned and, if the role functions as an application
+                            permissions, during the consent experiences
                           type: string
                         displayName:
                           description: Display name for the app role that appears
-                            during app role assignment and in consent experiences
+                            during app role assignment and in consent experiences.
+                            Display name for the app role that appears during app
+                            role assignment and in consent experiences
                           type: string
                         enabled:
-                          description: Determines if the app role is enabled
+                          description: Determines if the app role is enabled. Defaults
+                            to true. Determines if the app role is enabled
                           type: boolean
                         id:
-                          description: An ID used to uniquely identify this synchronization
-                            sec. The unique identifier of the app role
+                          description: The unique identifier of the app role. Must
+                            be a valid UUID. The unique identifier of the app role
                           type: string
                         value:
-                          description: The value of the secret. The value that is
-                            used for the `roles` claim in ID tokens and OAuth 2.0
+                          description: The value that is used for the roles claim
+                            in ID tokens and OAuth 2.0 access tokens that are authenticating
+                            an assigned service or user principal. The value that
+                            is used for the `roles` claim in ID tokens and OAuth 2.0
                             access tokens that are authenticating an assigned service
                             or user principal
                           type: string
@@ -174,149 +220,218 @@ spec:
                       type: object
                     type: array
                   description:
-                    description: Description of the application as shown to end users
+                    description: A description of the application, as shown to end
+                      users. Description of the application as shown to end users
                     type: string
                   deviceOnlyAuthEnabled:
                     description: Specifies whether this application supports device
-                      authentication without a user.
+                      authentication without a user. Defaults to false. Specifies
+                      whether this application supports device authentication without
+                      a user.
                     type: boolean
                   displayName:
-                    description: The display name for the application
+                    description: The display name for the application. The display
+                      name for the application
                     type: string
                   fallbackPublicClientEnabled:
                     description: Specifies whether the application is a public client.
                       Appropriate for apps using token grant flows that don't use
-                      a redirect URI
+                      a redirect URI. Defaults to false. Specifies whether the application
+                      is a public client. Appropriate for apps using token grant flows
+                      that don't use a redirect URI
                     type: boolean
                   featureTags:
-                    description: Block of features to configure for this application
-                      using tags
+                    description: A feature_tags block as described below. Cannot be
+                      used together with the tags property. Block of features to configure
+                      for this application using tags
                     items:
                       properties:
                         customSingleSignOn:
                           description: Whether this application represents a custom
-                            SAML application for linked service principals
+                            SAML application for linked service principals. Enabling
+                            this will assign the WindowsAzureActiveDirectoryCustomSingleSignOnApplication
+                            tag. Defaults to false. Whether this application represents
+                            a custom SAML application for linked service principals
                           type: boolean
                         enterprise:
                           description: Whether this application represents an Enterprise
-                            Application for linked service principals
+                            Application for linked service principals. Enabling this
+                            will assign the WindowsAzureActiveDirectoryIntegratedApp
+                            tag. Defaults to false. Whether this application represents
+                            an Enterprise Application for linked service principals
                           type: boolean
                         gallery:
                           description: Whether this application represents a gallery
-                            application for linked service principals
+                            application for linked service principals. Enabling this
+                            will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1
+                            tag. Defaults to false. Whether this application represents
+                            a gallery application for linked service principals
                           type: boolean
                         hide:
-                          description: Whether this application is invisible to users
-                            in My Apps and Office 365 Launcher
+                          description: Whether this app is invisible to users in My
+                            Apps and Office 365 Launcher. Enabling this will assign
+                            the HideApp tag. Defaults to false. Whether this application
+                            is invisible to users in My Apps and Office 365 Launcher
                           type: boolean
                       type: object
                     type: array
                   groupMembershipClaims:
-                    description: Configures the `groups` claim issued in a user or
-                      OAuth 2.0 access token that the app expects
+                    description: Configures the groups claim issued in a user or OAuth
+                      2.0 access token that the app expects. Possible values are None,
+                      SecurityGroup, DirectoryRole, ApplicationGroup or All. Configures
+                      the `groups` claim issued in a user or OAuth 2.0 access token
+                      that the app expects
                     items:
                       type: string
                     type: array
                   identifierUris:
-                    description: The user-defined URI(s) that uniquely identify an
-                      application within its Azure AD tenant, or within a verified
-                      custom domain if the application is multi-tenant
+                    description: A set of user-defined URI(s) that uniquely identify
+                      an application within its Azure AD tenant, or within a verified
+                      custom domain if the application is multi-tenant. The user-defined
+                      URI(s) that uniquely identify an application within its Azure
+                      AD tenant, or within a verified custom domain if the application
+                      is multi-tenant
                     items:
                       type: string
                     type: array
                   logoImage:
-                    description: Base64 encoded logo image in gif, png or jpeg format
+                    description: A logo image to upload for the application, as a
+                      raw base64-encoded string. The image should be in gif, jpeg
+                      or png format. Note that once an image has been uploaded, it
+                      is not possible to remove it without replacing it with another
+                      image. Base64 encoded logo image in gif, png or jpeg format
                     type: string
                   marketingUrl:
-                    description: URL of the application's marketing page
+                    description: URL of the application's marketing page. URL of the
+                      application's marketing page
                     type: string
                   notes:
                     description: User-specified notes relevant for the management
+                      of the application. User-specified notes relevant for the management
                       of the application
                     type: string
                   oauth2PostResponseRequired:
                     description: Specifies whether, as part of OAuth 2.0 token requests,
-                      Azure AD allows POST requests, as opposed to GET requests.
+                      Azure AD allows POST requests, as opposed to GET requests. Defaults
+                      to false, which specifies that only GET requests are allowed.
+                      Specifies whether, as part of OAuth 2.0 token requests, Azure
+                      AD allows POST requests, as opposed to GET requests.
                     type: boolean
                   optionalClaims:
+                    description: An optional_claims block as documented below.
                     items:
                       properties:
                         accessToken:
+                          description: One or more access_token blocks as documented
+                            below.
                           items:
                             properties:
                               additionalProperties:
                                 description: List of additional properties of the
                                   claim. If a property exists in this list, it modifies
-                                  the behaviour of the optional claim
+                                  the behaviour of the optional claim. List of additional
+                                  properties of the claim. If a property exists in
+                                  this list, it modifies the behaviour of the optional
+                                  claim
                                 items:
                                   type: string
                                 type: array
                               essential:
                                 description: Whether the claim specified by the client
-                                  is necessary to ensure a smooth authorization experience
+                                  is necessary to ensure a smooth authorization experience.
+                                  Whether the claim specified by the client is necessary
+                                  to ensure a smooth authorization experience
                                 type: boolean
                               name:
-                                description: The name of the optional claim
+                                description: The name of the optional claim. The name
+                                  of the optional claim
                                 type: string
                               source:
-                                description: The source of the claim. If `source`
-                                  is absent, the claim is a predefined optional claim.
-                                  If `source` is `user`, the value of `name` is the
-                                  extension property from the user object
+                                description: The source of the claim. If source is
+                                  absent, the claim is a predefined optional claim.
+                                  If source is user, the value of name is the extension
+                                  property from the user object. The source of the
+                                  claim. If `source` is absent, the claim is a predefined
+                                  optional claim. If `source` is `user`, the value
+                                  of `name` is the extension property from the user
+                                  object
                                 type: string
                             required:
                             - name
                             type: object
                           type: array
                         idToken:
+                          description: One or more id_token blocks as documented below.
                           items:
                             properties:
                               additionalProperties:
                                 description: List of additional properties of the
                                   claim. If a property exists in this list, it modifies
-                                  the behaviour of the optional claim
+                                  the behaviour of the optional claim. List of additional
+                                  properties of the claim. If a property exists in
+                                  this list, it modifies the behaviour of the optional
+                                  claim
                                 items:
                                   type: string
                                 type: array
                               essential:
                                 description: Whether the claim specified by the client
-                                  is necessary to ensure a smooth authorization experience
+                                  is necessary to ensure a smooth authorization experience.
+                                  Whether the claim specified by the client is necessary
+                                  to ensure a smooth authorization experience
                                 type: boolean
                               name:
-                                description: The name of the optional claim
+                                description: The name of the optional claim. The name
+                                  of the optional claim
                                 type: string
                               source:
-                                description: The source of the claim. If `source`
-                                  is absent, the claim is a predefined optional claim.
-                                  If `source` is `user`, the value of `name` is the
-                                  extension property from the user object
+                                description: The source of the claim. If source is
+                                  absent, the claim is a predefined optional claim.
+                                  If source is user, the value of name is the extension
+                                  property from the user object. The source of the
+                                  claim. If `source` is absent, the claim is a predefined
+                                  optional claim. If `source` is `user`, the value
+                                  of `name` is the extension property from the user
+                                  object
                                 type: string
                             required:
                             - name
                             type: object
                           type: array
                         saml2Token:
+                          description: One or more saml2_token blocks as documented
+                            below.
                           items:
                             properties:
                               additionalProperties:
                                 description: List of additional properties of the
                                   claim. If a property exists in this list, it modifies
-                                  the behaviour of the optional claim
+                                  the behaviour of the optional claim. List of additional
+                                  properties of the claim. If a property exists in
+                                  this list, it modifies the behaviour of the optional
+                                  claim
                                 items:
                                   type: string
                                 type: array
                               essential:
                                 description: Whether the claim specified by the client
-                                  is necessary to ensure a smooth authorization experience
+                                  is necessary to ensure a smooth authorization experience.
+                                  Whether the claim specified by the client is necessary
+                                  to ensure a smooth authorization experience
                                 type: boolean
                               name:
-                                description: The name of the optional claim
+                                description: The name of the optional claim. The name
+                                  of the optional claim
                                 type: string
                               source:
-                                description: The source of the claim. If `source`
-                                  is absent, the claim is a predefined optional claim.
-                                  If `source` is `user`, the value of `name` is the
-                                  extension property from the user object
+                                description: The source of the claim. If source is
+                                  absent, the claim is a predefined optional claim.
+                                  If source is user, the value of name is the extension
+                                  property from the user object. The source of the
+                                  claim. If `source` is absent, the claim is a predefined
+                                  optional claim. If `source` is `user`, the value
+                                  of `name` is the extension property from the user
+                                  object
                                 type: string
                             required:
                             - name
@@ -325,41 +440,63 @@ spec:
                       type: object
                     type: array
                   owners:
-                    description: A list of object IDs of principals that will be granted
-                      ownership of the application
+                    description: A set of object IDs of principals that will be granted
+                      ownership of the application. Supported object types are users
+                      or service principals. By default, no owners are assigned. A
+                      list of object IDs of principals that will be granted ownership
+                      of the application
                     items:
                       type: string
                     type: array
                   preventDuplicateNames:
-                    description: If `true`, will return an error if an existing application
-                      is found with the same name
+                    description: If true, will return an error if an existing application
+                      is found with the same name. Defaults to false. If `true`, will
+                      return an error if an existing application is found with the
+                      same name
                     type: boolean
                   privacyStatementUrl:
-                    description: URL of the application's privacy statement
+                    description: URL of the application's privacy statement. URL of
+                      the application's privacy statement
                     type: string
                   publicClient:
+                    description: A public_client block as documented below, which
+                      configures non-web app or non-web API application settings,
+                      for example mobile or other public clients such as an installed
+                      application running on a desktop device.
                     items:
                       properties:
                         redirectUris:
-                          description: The URLs where user tokens are sent for sign-in,
-                            or the redirect URIs where OAuth 2.0 authorization codes
-                            and access tokens are sent
+                          description: A set of URLs where user tokens are sent for
+                            sign-in, or the redirect URIs where OAuth 2.0 authorization
+                            codes and access tokens are sent. Must be a valid https
+                            or ms-appx-web URL. The URLs where user tokens are sent
+                            for sign-in, or the redirect URIs where OAuth 2.0 authorization
+                            codes and access tokens are sent
                           items:
                             type: string
                           type: array
                       type: object
                     type: array
                   requiredResourceAccess:
+                    description: A collection of required_resource_access blocks as
+                      documented below.
                     items:
                       properties:
                         resourceAccess:
+                          description: A collection of resource_access blocks as documented
+                            below, describing OAuth2.0 permission scopes and app roles
+                            that the application requires from the specified resource.
                           items:
                             properties:
                               id:
-                                description: An ID used to uniquely identify this
-                                  synchronization sec.
+                                description: The unique identifier for an app role
+                                  or OAuth2 permission scope published by the resource
+                                  application.
                                 type: string
                               type:
+                                description: Specifies whether the id property references
+                                  an app role or an OAuth2 permission scope. Possible
+                                  values are Role or Scope.
                                 type: string
                             required:
                             - id
@@ -367,8 +504,9 @@ spec:
                             type: object
                           type: array
                         resourceAppId:
-                          description: An ID used to uniquely identify this synchronization
-                            sec.
+                          description: The unique identifier for the resource that
+                            the application requires access to. This should be the
+                            Application ID of the target application.
                           type: string
                       required:
                       - resourceAccess
@@ -377,13 +515,22 @@ spec:
                     type: array
                   signInAudience:
                     description: The Microsoft account types that are supported for
-                      the current application
+                      the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs,
+                      AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount.
+                      Defaults to AzureADMyOrg. The Microsoft account types that are
+                      supported for the current application
                     type: string
                   singlePageApplication:
+                    description: A single_page_application block as documented below,
+                      which configures single-page application (SPA) related settings
+                      for this application.
                     items:
                       properties:
                         redirectUris:
-                          description: The URLs where user tokens are sent for sign-in,
+                          description: A set of URLs where user tokens are sent for
+                            sign-in, or the redirect URIs where OAuth 2.0 authorization
+                            codes and access tokens are sent. Must be a valid https
+                            URL. The URLs where user tokens are sent for sign-in,
                             or the redirect URIs where OAuth 2.0 authorization codes
                             and access tokens are sent
                           items:
@@ -392,49 +539,69 @@ spec:
                       type: object
                     type: array
                   supportUrl:
-                    description: URL of the application's support page
+                    description: URL of the application's support page. URL of the
+                      application's support page
                     type: string
                   tags:
-                    description: A set of tags to apply to the application
+                    description: A set of tags to apply to the application for configuring
+                      specific behaviours of the application and linked service principals.
+                      Note that these are not provided for use by practitioners. Cannot
+                      be used together with the feature_tags block. A set of tags
+                      to apply to the application
                     items:
                       type: string
                     type: array
                   templateId:
-                    description: An ID used to uniquely identify this synchronization
-                      sec. Unique ID of the application template from which this application
-                      is created
+                    description: Unique ID for a templated application in the Azure
+                      AD App Gallery, from which to create the application. Changing
+                      this forces a new resource to be created. Unique ID of the application
+                      template from which this application is created
                     type: string
                   termsOfServiceUrl:
-                    description: URL of the application's terms of service statement
+                    description: URL of the application's terms of service statement.
+                      URL of the application's terms of service statement
                     type: string
                   web:
+                    description: A web block as documented below, which configures
+                      web related settings for this application.
                     items:
                       properties:
                         homepageUrl:
-                          description: Home page or landing page of the application
+                          description: Home page or landing page of the application.
+                            Home page or landing page of the application
                           type: string
                         implicitGrant:
+                          description: An implicit_grant block as documented above.
                           items:
                             properties:
                               accessTokenIssuanceEnabled:
                                 description: Whether this web application can request
-                                  an access token using OAuth 2.0 implicit flow
+                                  an access token using OAuth 2.0 implicit flow. Whether
+                                  this web application can request an access token
+                                  using OAuth 2.0 implicit flow
                                 type: boolean
                               idTokenIssuanceEnabled:
                                 description: Whether this web application can request
-                                  an ID token using OAuth 2.0 implicit flow
+                                  an ID token using OAuth 2.0 implicit flow. Whether
+                                  this web application can request an ID token using
+                                  OAuth 2.0 implicit flow
                                 type: boolean
                             type: object
                           type: array
                         logoutUrl:
                           description: The URL that will be used by Microsoft's authorization
                             service to sign out a user using front-channel, back-channel
-                            or SAML logout protocols
+                            or SAML logout protocols. The URL that will be used by
+                            Microsoft's authorization service to sign out a user using
+                            front-channel, back-channel or SAML logout protocols
                           type: string
                         redirectUris:
-                          description: The URLs where user tokens are sent for sign-in,
-                            or the redirect URIs where OAuth 2.0 authorization codes
-                            and access tokens are sent
+                          description: A set of URLs where user tokens are sent for
+                            sign-in, or the redirect URIs where OAuth 2.0 authorization
+                            codes and access tokens are sent. Must be a valid http
+                            URL or a URN. The URLs where user tokens are sent for
+                            sign-in, or the redirect URIs where OAuth 2.0 authorization
+                            codes and access tokens are sent
                           items:
                             type: string
                           type: array
@@ -622,33 +789,43 @@ spec:
                   appRoleIds:
                     additionalProperties:
                       type: string
-                    description: Mapping of app role names to UUIDs
+                    description: A mapping of app role values to app role IDs, intended
+                      to be useful when referencing app roles in other resources in
+                      your configuration. Mapping of app role names to UUIDs
                     type: object
                   applicationId:
-                    description: An ID used to uniquely identify this synchronization
-                      sec. The Application ID (also called Client ID)
+                    description: The Application ID (also called Client ID). The Application
+                      ID (also called Client ID)
                     type: string
                   disabledByMicrosoft:
-                    description: Whether Microsoft has disabled the registered application
+                    description: Whether Microsoft has disabled the registered application.
+                      If the application is disabled, this will be a string indicating
+                      the status/reason, e.g. DisabledDueToViolationOfServicesAgreement
+                      Whether Microsoft has disabled the registered application
                     type: string
                   id:
-                    description: An ID used to uniquely identify this synchronization
-                      sec.
+                    description: The unique identifier for an app role or OAuth2 permission
+                      scope published by the resource application.
                     type: string
                   logoUrl:
-                    description: CDN URL to the application's logo
+                    description: CDN URL to the application's logo, as uploaded with
+                      the logo_image property. CDN URL to the application's logo
                     type: string
                   oauth2PermissionScopeIds:
                     additionalProperties:
                       type: string
-                    description: Mapping of OAuth2.0 permission scope names to UUIDs
+                    description: A mapping of OAuth2.0 permission scope values to
+                      scope IDs, intended to be useful when referencing permission
+                      scopes in other resources in your configuration. Mapping of
+                      OAuth2.0 permission scope names to UUIDs
                     type: object
                   objectId:
-                    description: An ID used to uniquely identify this synchronization
-                      sec. The application's object ID
+                    description: The application's object ID. The application's object
+                      ID
                     type: string
                   publisherDomain:
-                    description: The verified publisher domain for the application
+                    description: The verified publisher domain for the application.
+                      The verified publisher domain for the application
                     type: string
                 type: object
               conditions:

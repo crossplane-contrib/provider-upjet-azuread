@@ -64,7 +64,9 @@ spec:
               forProvider:
                 properties:
                   displayName:
-                    description: The display name of the directory role
+                    description: The display name of the directory role to activate.
+                      Changing this forces a new resource to be created. The display
+                      name of the directory role
                     type: string
                 type: object
               providerConfigRef:
@@ -244,16 +246,20 @@ spec:
               atProvider:
                 properties:
                   description:
-                    description: The description of the directory role
+                    description: The description of the directory role. The description
+                      of the directory role
                     type: string
                   id:
                     type: string
                   objectId:
-                    description: The object ID of the directory role
+                    description: The object ID of the directory role. The object ID
+                      of the directory role
                     type: string
                   templateId:
-                    description: The object ID of the template associated with the
-                      directory role
+                    description: The object ID of the role template from which to
+                      activate the directory role. Changing this forces a new resource
+                      to be created. The object ID of the template associated with
+                      the directory role
                     type: string
                 type: object
               conditions:
