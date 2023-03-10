@@ -8,7 +8,9 @@ metadata:
   name: example
 spec:
   forProvider:
-    displayName: my_group
+    displayName: example
+    owners:
+    - ${data.azuread_client_config.current.object_id}
     securityEnabled: true
 
 ---

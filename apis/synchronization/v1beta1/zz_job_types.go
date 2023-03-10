@@ -14,17 +14,22 @@ import (
 )
 
 type JobObservation struct {
+
+	// An ID used to uniquely identify this synchronization job.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// A schedule list as documented below.
 	Schedule []ScheduleObservation `json:"schedule,omitempty" tf:"schedule,omitempty"`
 }
 
 type JobParameters struct {
 
+	// Whether or not the provisioning job is enabled. Default state is true.
 	// Whether or not the synchronization job is enabled
 	// +kubebuilder:validation:Optional
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// The object ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this synchronization job should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
 	// +kubebuilder:validation:Optional
@@ -39,15 +44,20 @@ type JobParameters struct {
 	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 
 	// Identifier of the synchronization template this job is based on.
+	// Identifier of the synchronization template this job is based on.
 	// +kubebuilder:validation:Required
 	TemplateID *string `json:"templateId" tf:"template_id,omitempty"`
 }
 
 type ScheduleObservation struct {
+
+	// Date and time when this job will expire, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
 	Expiration *string `json:"expiration,omitempty" tf:"expiration,omitempty"`
 
+	// The interval between synchronization iterations ISO8601. E.g. PT40M run every 40 minutes.
 	Interval *string `json:"interval,omitempty" tf:"interval,omitempty"`
 
+	// State of the job.
 	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 
@@ -68,7 +78,7 @@ type JobStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Job is the Schema for the Jobs API. <no value>
+// Job is the Schema for the Jobs API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

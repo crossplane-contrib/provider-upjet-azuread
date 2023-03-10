@@ -35,8 +35,7 @@ spec:
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: RoleAssignment is the Schema for the RoleAssignments API. <no
-          value>
+        description: RoleAssignment is the Schema for the RoleAssignments API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -66,7 +65,10 @@ spec:
                 properties:
                   appScopeId:
                     description: Identifier of the app-specific scope when the assignment
-                      scope is app-specific
+                      scope is app-specific. Cannot be used with directory_scope_id.
+                      See official documentation for example usage. Changing this
+                      forces a new resource to be created. Identifier of the app-specific
+                      scope when the assignment scope is app-specific
                     type: string
                   appScopeObjectId:
                     description: Identifier of the app-specific scope when the assignment
@@ -74,14 +76,20 @@ spec:
                     type: string
                   directoryScopeId:
                     description: Identifier of the directory object representing the
-                      scope of the assignment
+                      scope of the assignment. Cannot be used with app_scope_id. See
+                      official documentation for example usage. Changing this forces
+                      a new resource to be created. Identifier of the directory object
+                      representing the scope of the assignment
                     type: string
                   directoryScopeObjectId:
                     description: Identifier of the directory object representing the
                       scope of the assignment
                     type: string
                   principalObjectId:
-                    description: The object ID of the member principal
+                    description: The object ID of the principal for you want to create
+                      a role assignment. Supported object types are Users, Groups
+                      or Service Principals. Changing this forces a new resource to
+                      be created. The object ID of the member principal
                     type: string
                   principalObjectIdRef:
                     description: Reference to a User in users to populate principalObjectId.
@@ -157,7 +165,10 @@ spec:
                         type: object
                     type: object
                   roleId:
-                    description: The object ID of the directory role for this assignment
+                    description: The template ID (in the case of built-in roles) or
+                      object ID (in the case of custom roles) of the directory role
+                      you want to assign. Changing this forces a new resource to be
+                      created. The object ID of the directory role for this assignment
                     type: string
                   roleIdRef:
                     description: Reference to a Role to populate roleId.

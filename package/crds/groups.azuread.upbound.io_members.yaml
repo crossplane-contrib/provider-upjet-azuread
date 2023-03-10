@@ -35,7 +35,7 @@ spec:
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: Member is the Schema for the Members API. <no value>
+        description: Member is the Schema for the Members API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,7 +65,8 @@ spec:
                 properties:
                   groupObjectId:
                     description: The object ID of the group you want to add the member
-                      to
+                      to. Changing this forces a new resource to be created. The object
+                      ID of the group you want to add the member to
                     type: string
                   groupObjectIdRef:
                     description: Reference to a Group to populate groupObjectId.
@@ -142,6 +143,9 @@ spec:
                     type: object
                   memberObjectId:
                     description: The object ID of the principal you want to add as
+                      a member to the group. Supported object types are Users, Groups
+                      or Service Principals. Changing this forces a new resource to
+                      be created. The object ID of the principal you want to add as
                       a member to the group. Supported object types are Users, Groups
                       or Service Principals
                     type: string

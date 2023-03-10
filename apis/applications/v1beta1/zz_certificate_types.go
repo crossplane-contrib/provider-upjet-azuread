@@ -19,6 +19,7 @@ type CertificateObservation struct {
 
 type CertificateParameters struct {
 
+	// The object ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
 	// The object ID of the application for which this certificate should be created
 	// +crossplane:generate:reference:type=Application
 	// +kubebuilder:validation:Optional
@@ -32,30 +33,37 @@ type CertificateParameters struct {
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
 
+	// Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.
 	// Specifies the encoding used for the supplied certificate data
 	// +kubebuilder:validation:Optional
 	Encoding *string `json:"encoding,omitempty" tf:"encoding,omitempty"`
 
+	// The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If omitted, the API will decide a suitable expiry date, which is typically around 2 years from the start date. Changing this field forces a new resource to be created.
 	// The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If omitted, the API will decide a suitable expiry date, which is typically around 2 years from the start date
 	// +kubebuilder:validation:Optional
 	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
 
+	// A relative duration for which the certificate is valid until, for example 240h (10 days) or 2400h30m. Changing this field forces a new resource to be created.
 	// A relative duration for which the certificate is valid until, for example `240h` (10 days) or `2400h30m`
 	// +kubebuilder:validation:Optional
 	EndDateRelative *string `json:"endDateRelative,omitempty" tf:"end_date_relative,omitempty"`
 
+	// A UUID used to uniquely identify this certificate. If omitted, a random UUID will be automatically generated. Changing this field forces a new resource to be created.
 	// A UUID used to uniquely identify this certificate. If omitted, a random UUID will be automatically generated
 	// +kubebuilder:validation:Optional
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
+	// The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the value is determined by Azure Active Directory and is usually the start date of the certificate for asymmetric keys, or the current timestamp for symmetric keys. Changing this field forces a new resource to be created.
 	// The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date and time are use
 	// +kubebuilder:validation:Optional
 	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
 
+	// The type of key/certificate. Must be one of AsymmetricX509Cert or Symmetric. Changing this fields forces a new resource to be created.
 	// The type of key/certificate
 	// +kubebuilder:validation:Optional
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
+	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.
 	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the `encoding` argumen
 	// +kubebuilder:validation:Required
 	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
@@ -75,7 +83,7 @@ type CertificateStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Certificate is the Schema for the Certificates API. <no value>
+// Certificate is the Schema for the Certificates API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

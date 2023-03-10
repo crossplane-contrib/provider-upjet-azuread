@@ -15,20 +15,24 @@ import (
 
 type RoleObservation struct {
 
+	// The description of the directory role.
 	// The description of the directory role
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The object ID of the directory role.
 	// The object ID of the directory role
 	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
 
+	// The object ID of the role template from which to activate the directory role. Changing this forces a new resource to be created.
 	// The object ID of the template associated with the directory role
 	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`
 }
 
 type RoleParameters struct {
 
+	// The display name of the directory role to activate. Changing this forces a new resource to be created.
 	// The display name of the directory role
 	// +kubebuilder:validation:Optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`

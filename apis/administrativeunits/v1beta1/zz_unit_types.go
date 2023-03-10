@@ -16,16 +16,19 @@ import (
 type UnitObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The object ID of the administrative unit.
 	// The object ID of the administrative unit
 	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
 }
 
 type UnitParameters struct {
 
+	// The description of the administrative unit.
 	// The description for the administrative unit
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The display name of the administrative unit.
 	// The display name for the administrative unit
 	// +kubebuilder:validation:Required
 	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
@@ -34,6 +37,7 @@ type UnitParameters struct {
 	// +kubebuilder:validation:Optional
 	HiddenMembershipEnabled *bool `json:"hiddenMembershipEnabled,omitempty" tf:"hidden_membership_enabled,omitempty"`
 
+	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups.
 	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups
 	// +kubebuilder:validation:Optional
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`

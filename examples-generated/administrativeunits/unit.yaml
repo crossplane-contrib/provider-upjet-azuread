@@ -8,7 +8,9 @@ metadata:
   name: example
 spec:
   forProvider:
+    description: Just an example
     displayName: Example-AU
+    visibility: Public
 
 ---
 

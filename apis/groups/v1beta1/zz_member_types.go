@@ -19,6 +19,7 @@ type MemberObservation struct {
 
 type MemberParameters struct {
 
+	// The object ID of the group you want to add the member to. Changing this forces a new resource to be created.
 	// The object ID of the group you want to add the member to
 	// +crossplane:generate:reference:type=Group
 	// +kubebuilder:validation:Optional
@@ -32,6 +33,7 @@ type MemberParameters struct {
 	// +kubebuilder:validation:Optional
 	GroupObjectIDSelector *v1.Selector `json:"groupObjectIdSelector,omitempty" tf:"-"`
 
+	// The object ID of the principal you want to add as a member to the group. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the principal you want to add as a member to the group. Supported object types are Users, Groups or Service Principals
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
 	// +kubebuilder:validation:Optional
@@ -60,7 +62,7 @@ type MemberStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Member is the Schema for the Members API. <no value>
+// Member is the Schema for the Members API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

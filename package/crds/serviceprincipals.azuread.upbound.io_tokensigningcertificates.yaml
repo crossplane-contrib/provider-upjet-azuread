@@ -36,7 +36,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: TokenSigningCertificate is the Schema for the TokenSigningCertificates
-          API. <no value>
+          API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -66,16 +66,23 @@ spec:
               forProvider:
                 properties:
                   displayName:
-                    description: A friendly name for the certificate
+                    description: Specifies a friendly name for the certificate. Must
+                      start with CN=. Changing this field forces a new resource to
+                      be created. A friendly name for the certificate
                     type: string
                   endDate:
-                    description: The end date until which the certificate is valid,
-                      formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`).
-                      Default is 3 years from current date.
+                    description: The end date until which the token signing certificate
+                      is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
+                      Changing this field forces a new resource to be created. The
+                      end date until which the certificate is valid, formatted as
+                      an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). Default
+                      is 3 years from current date.
                     type: string
                   servicePrincipalId:
                     description: The object ID of the service principal for which
-                      this certificate should be created
+                      this certificate should be created. Changing this field forces
+                      a new resource to be created. The object ID of the service principal
+                      for which this certificate should be created
                     type: string
                   servicePrincipalIdRef:
                     description: Reference to a Principal in serviceprincipals to
@@ -334,13 +341,18 @@ spec:
                     type: string
                   keyId:
                     description: A UUID used to uniquely identify the verify certificate.
+                      A UUID used to uniquely identify the verify certificate.
                     type: string
                   startDate:
                     description: The start date from which the certificate is valid,
-                      formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`).
+                      formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
+                      The start date from which the certificate is valid, formatted
+                      as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`).
                     type: string
                   thumbprint:
-                    description: The thumbprint of the certificate.
+                    description: A SHA-1 generated thumbprint of the token signing
+                      certificate, which can be used to set the preferred signing
+                      certificate for a service principal. The thumbprint of the certificate.
                     type: string
                 type: object
               conditions:

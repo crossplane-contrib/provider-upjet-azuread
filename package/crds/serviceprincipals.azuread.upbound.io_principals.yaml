@@ -64,23 +64,31 @@ spec:
               forProvider:
                 properties:
                   accountEnabled:
-                    description: Whether or not the service principal account is enabled
+                    description: Whether or not the service principal account is enabled.
+                      Defaults to true. Whether or not the service principal account
+                      is enabled
                     type: boolean
                   alternativeNames:
-                    description: A list of alternative names, used to retrieve service
+                    description: A set of alternative names, used to retrieve service
                       principals by subscription, identify resource group and full
-                      resource ids for managed identities
+                      resource ids for managed identities. A list of alternative names,
+                      used to retrieve service principals by subscription, identify
+                      resource group and full resource ids for managed identities
                     items:
                       type: string
                     type: array
                   appRoleAssignmentRequired:
                     description: Whether this service principal requires an app role
                       assignment to a user or group before Azure AD will issue a user
-                      or access token to the application
+                      or access token to the application. Defaults to false. Whether
+                      this service principal requires an app role assignment to a
+                      user or group before Azure AD will issue a user or access token
+                      to the application
                     type: boolean
                   applicationId:
-                    description: The ID of the delegated permission grant. The application
-                      ID (client ID) of the application for which to create a service
+                    description: The application ID (client ID) of the application
+                      for which to create a service principal. The application ID
+                      (client ID) of the application for which to create a service
                       principal
                     type: string
                   applicationIdRef:
@@ -159,29 +167,41 @@ spec:
                         type: object
                     type: object
                   description:
-                    description: Description of the service principal provided for
-                      internal end-users
+                    description: A description of the service principal provided for
+                      internal end-users. Description of the service principal provided
+                      for internal end-users
                     type: string
                   featureTags:
-                    description: Block of features to configure for this service principal
-                      using tags
+                    description: A feature_tags block as described below. Cannot be
+                      used together with the tags property. Block of features to configure
+                      for this service principal using tags
                     items:
                       properties:
                         customSingleSignOn:
                           description: Whether this service principal represents a
-                            custom SAML application
+                            custom SAML application. Enabling this will assign the
+                            WindowsAzureActiveDirectoryCustomSingleSignOnApplication
+                            tag. Defaults to false. Whether this service principal
+                            represents a custom SAML application
                           type: boolean
                         enterprise:
                           description: Whether this service principal represents an
+                            Enterprise Application. Enabling this will assign the
+                            WindowsAzureActiveDirectoryIntegratedApp tag. Defaults
+                            to false. Whether this service principal represents an
                             Enterprise Application
                           type: boolean
                         gallery:
                           description: Whether this service principal represents a
-                            gallery application
+                            gallery application. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1
+                            tag. Defaults to false. Whether this service principal
+                            represents a gallery application
                           type: boolean
                         hide:
                           description: Whether this app is invisible to users in My
-                            Apps and Office 365 Launcher
+                            Apps and Office 365 Launcher. Enabling this will assign
+                            the HideApp tag. Defaults to false. Whether this app is
+                            invisible to users in My Apps and Office 365 Launcher
                           type: boolean
                       type: object
                     type: array
@@ -190,48 +210,75 @@ spec:
                       user to Azure AD to authenticate. Azure AD uses the URL to launch
                       the application from Microsoft 365 or the Azure AD My Apps.
                       When blank, Azure AD performs IdP-initiated sign-on for applications
-                      configured with SAML-based single sign-on
+                      configured with SAML-based single sign-on. The URL where the
+                      service provider redirects the user to Azure AD to authenticate.
+                      Azure AD uses the URL to launch the application from Microsoft
+                      365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated
+                      sign-on for applications configured with SAML-based single sign-on
                     type: string
                   notes:
-                    description: Free text field to capture information about the
-                      service principal, typically used for operational purposes
+                    description: A free text field to capture information about the
+                      service principal, typically used for operational purposes.
+                      Free text field to capture information about the service principal,
+                      typically used for operational purposes
                     type: string
                   notificationEmailAddresses:
-                    description: List of email addresses where Azure AD sends a notification
+                    description: A set of email addresses where Azure AD sends a notification
                       when the active certificate is near the expiration date. This
                       is only for the certificates used to sign the SAML token issued
-                      for Azure AD Gallery applications
+                      for Azure AD Gallery applications. List of email addresses where
+                      Azure AD sends a notification when the active certificate is
+                      near the expiration date. This is only for the certificates
+                      used to sign the SAML token issued for Azure AD Gallery applications
                     items:
                       type: string
                     type: array
                   owners:
-                    description: A list of object IDs of principals that will be granted
-                      ownership of the service principal
+                    description: A set of object IDs of principals that will be granted
+                      ownership of the service principal. Supported object types are
+                      users or service principals. By default, no owners are assigned.
+                      A list of object IDs of principals that will be granted ownership
+                      of the service principal
                     items:
                       type: string
                     type: array
                   preferredSingleSignOnMode:
                     description: The single sign-on mode configured for this application.
                       Azure AD uses the preferred single sign-on mode to launch the
-                      application from Microsoft 365 or the Azure AD My Apps
+                      application from Microsoft 365 or the Azure AD My Apps. Supported
+                      values are oidc, password, saml or notSupported. Omit this property
+                      or specify a blank string to unset. The single sign-on mode
+                      configured for this application. Azure AD uses the preferred
+                      single sign-on mode to launch the application from Microsoft
+                      365 or the Azure AD My Apps
                     type: string
                   samlSingleSignOn:
-                    description: Settings related to SAML single sign-on
+                    description: A saml_single_sign_on block as documented below.
+                      Settings related to SAML single sign-on
                     items:
                       properties:
                         relayState:
                           description: The relative URI the service provider would
-                            redirect to after completion of the single sign-on flow
+                            redirect to after completion of the single sign-on flow.
+                            The relative URI the service provider would redirect to
+                            after completion of the single sign-on flow
                           type: string
                       type: object
                     type: array
                   tags:
-                    description: A set of tags to apply to the service principal
+                    description: A set of tags to apply to the service principal for
+                      configuring specific behaviours of the service principal. Note
+                      that these are not provided for use by practitioners. Cannot
+                      be used together with the feature_tags block. A set of tags
+                      to apply to the service principal
                     items:
                       type: string
                     type: array
                   useExisting:
-                    description: When true, the resource will return an existing service
+                    description: When true, any existing service principal linked
+                      to the same application will be automatically imported. When
+                      false, an import error will be raised for any pre-existing service
+                      principal. When true, the resource will return an existing service
                       principal instead of failing with an error
                     type: boolean
                 type: object
@@ -414,103 +461,161 @@ spec:
                   appRoleIds:
                     additionalProperties:
                       type: string
-                    description: Mapping of app role names to UUIDs
+                    description: A mapping of app role values to app role IDs, as
+                      published by the associated application, intended to be useful
+                      when referencing app roles in other resources in your configuration.
+                      Mapping of app role names to UUIDs
                     type: object
                   appRoles:
+                    description: A list of app roles published by the associated application,
+                      as documented below. For more information official documentation.
                     items:
                       properties:
                         allowedMemberTypes:
+                          description: 'Specifies whether this app role definition
+                            can be assigned to users and groups, or to other applications
+                            (that are accessing this application in a standalone scenario).
+                            Possible values are: User and Application, or both.'
                           items:
                             type: string
                           type: array
                         description:
+                          description: A description of the service principal provided
+                            for internal end-users.
                           type: string
                         displayName:
+                          description: The display name of the application associated
+                            with this service principal.
                           type: string
                         enabled:
+                          description: Determines if the app role is enabled.
                           type: boolean
                         id:
-                          description: The ID of the delegated permission grant.
+                          description: The unique identifier of the app_role.
                           type: string
                         value:
+                          description: The value that is used for the roles claim
+                            in ID tokens and OAuth 2.0 access tokens that are authenticating
+                            an assigned service or user principal.
                           type: string
                       type: object
                     type: array
                   applicationTenantId:
-                    description: The ID of the delegated permission grant. The tenant
-                      ID where the associated application is registered
+                    description: The tenant ID where the associated application is
+                      registered. The tenant ID where the associated application is
+                      registered
                     type: string
                   displayName:
                     description: The display name of the application associated with
-                      this service principal
+                      this service principal. The display name of the application
+                      associated with this service principal
                     type: string
                   homepageUrl:
-                    description: Home page or landing page of the application
+                    description: Home page or landing page of the associated application.
+                      Home page or landing page of the application
                     type: string
                   id:
-                    description: The ID of the delegated permission grant.
+                    description: The unique identifier of the app_role.
                     type: string
                   logoutUrl:
                     description: The URL that will be used by Microsoft's authorization
+                      service to log out an user using OpenId Connect front-channel,
+                      back-channel or SAML logout protocols, taken from the associated
+                      application. The URL that will be used by Microsoft's authorization
                       service to sign out a user using front-channel, back-channel
                       or SAML logout protocols
                     type: string
                   oauth2PermissionScopeIds:
                     additionalProperties:
                       type: string
-                    description: Mapping of OAuth2.0 permission scope names to UUIDs
+                    description: A mapping of OAuth2.0 permission scope values to
+                      scope IDs, as exposed by the associated application, intended
+                      to be useful when referencing permission scopes in other resources
+                      in your configuration. Mapping of OAuth2.0 permission scope
+                      names to UUIDs
                     type: object
                   oauth2PermissionScopes:
+                    description: A list of OAuth 2.0 delegated permission scopes exposed
+                      by the associated application, as documented below.
                     items:
                       properties:
                         adminConsentDescription:
+                          description: Delegated permission description that appears
+                            in all tenant-wide admin consent experiences, intended
+                            to be read by an administrator granting the permission
+                            on behalf of all users.
                           type: string
                         adminConsentDisplayName:
+                          description: Display name for the delegated permission,
+                            intended to be read by an administrator granting the permission
+                            on behalf of all users.
                           type: string
                         enabled:
+                          description: Determines if the app role is enabled.
                           type: boolean
                         id:
-                          description: The ID of the delegated permission grant.
+                          description: The unique identifier of the app_role.
                           type: string
                         type:
+                          description: Identifies whether the service principal represents
+                            an application or a managed identity. Possible values
+                            include Application or ManagedIdentity.
                           type: string
                         userConsentDescription:
+                          description: Delegated permission description that appears
+                            in the end user consent experience, intended to be read
+                            by a user consenting on their own behalf.
                           type: string
                         userConsentDisplayName:
+                          description: Display name for the delegated permission that
+                            appears in the end user consent experience.
                           type: string
                         value:
+                          description: The value that is used for the roles claim
+                            in ID tokens and OAuth 2.0 access tokens that are authenticating
+                            an assigned service or user principal.
                           type: string
                       type: object
                     type: array
                   objectId:
-                    description: The ID of the delegated permission grant. The object
+                    description: The object ID of the service principal. The object
                       ID of the service principal
                     type: string
                   redirectUris:
-                    description: The URLs where user tokens are sent for sign-in with
-                      the associated application, or the redirect URIs where OAuth
-                      2.0 authorization codes and access tokens are sent for the associated
-                      application
+                    description: A list of URLs where user tokens are sent for sign-in
+                      with the associated application, or the redirect URIs where
+                      OAuth 2.0 authorization codes and access tokens are sent for
+                      the associated application. The URLs where user tokens are sent
+                      for sign-in with the associated application, or the redirect
+                      URIs where OAuth 2.0 authorization codes and access tokens are
+                      sent for the associated application
                     items:
                       type: string
                     type: array
                   samlMetadataUrl:
                     description: The URL where the service exposes SAML metadata for
-                      federation
+                      federation. The URL where the service exposes SAML metadata
+                      for federation
                     type: string
                   servicePrincipalNames:
                     description: A list of identifier URI(s), copied over from the
-                      associated application
+                      associated application. A list of identifier URI(s), copied
+                      over from the associated application
                     items:
                       type: string
                     type: array
                   signInAudience:
                     description: The Microsoft account types that are supported for
-                      the associated application
+                      the associated application. Possible values include AzureADMyOrg,
+                      AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount.
+                      The Microsoft account types that are supported for the associated
+                      application
                     type: string
                   type:
                     description: Identifies whether the service principal represents
-                      an application or a managed identity
+                      an application or a managed identity. Possible values include
+                      Application or ManagedIdentity. Identifies whether the service
+                      principal represents an application or a managed identity
                     type: string
                 type: object
               conditions:

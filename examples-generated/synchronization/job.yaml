@@ -1,0 +1,80 @@
+apiVersion: synchronization.azuread.upbound.io/v1beta1
+kind: Job
+metadata:
+  annotations:
+    meta.upbound.io/example-id: synchronization/v1beta1/job
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    enabled: true
+    servicePrincipalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    templateId: dataBricks
+
+---
+
+apiVersion: applications.azuread.upbound.io/v1beta1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: synchronization/v1beta1/job
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: example
+    featureTags:
+    - enterprise: true
+      gallery: true
+    templateId: ${data.azuread_application_template.example.template_id}
+
+---
+
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: synchronization/v1beta1/job
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    useExisting: true
+
+---
+
+apiVersion: synchronization.azuread.upbound.io/v1beta1
+kind: Secret
+metadata:
+  annotations:
+    meta.upbound.io/example-id: synchronization/v1beta1/job
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    credential:
+    - key: BaseAddress
+      valueSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+    - key: SecretToken
+      valueSecretRef:
+        key: example-key
+        name: example-secret
+        namespace: upbound-system
+    servicePrincipalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+

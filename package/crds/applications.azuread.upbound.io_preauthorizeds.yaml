@@ -35,7 +35,7 @@ spec:
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: PreAuthorized is the Schema for the PreAuthorizeds API. <no value>
+        description: PreAuthorized is the Schema for the PreAuthorizeds API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -64,8 +64,10 @@ spec:
               forProvider:
                 properties:
                   applicationObjectId:
-                    description: The object ID of the application to which this pre-authorized
-                      application should be added
+                    description: The object ID of the application for which permissions
+                      are being authorized. Changing this field forces a new resource
+                      to be created. The object ID of the application to which this
+                      pre-authorized application should be added
                     type: string
                   applicationObjectIdRef:
                     description: Reference to a Application to populate applicationObjectId.
@@ -217,7 +219,8 @@ spec:
                         type: object
                     type: object
                   permissionIds:
-                    description: The IDs of the permission scopes required by the
+                    description: A set of permission scope IDs required by the authorized
+                      application. The IDs of the permission scopes required by the
                       pre-authorized application
                     items:
                       type: string

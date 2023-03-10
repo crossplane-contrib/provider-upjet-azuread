@@ -35,8 +35,7 @@ spec:
     name: v1beta1
     schema:
       openAPIV3Schema:
-        description: RoleAssignment is the Schema for the RoleAssignments API. <no
-          value>
+        description: RoleAssignment is the Schema for the RoleAssignments API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -65,10 +64,16 @@ spec:
               forProvider:
                 properties:
                   appRoleId:
-                    description: The ID of the app role to be assigned
+                    description: The ID of the app role to be assigned, or the default
+                      role ID 00000000-0000-0000-0000-000000000000. Changing this
+                      forces a new resource to be created. The ID of the app role
+                      to be assigned
                     type: string
                   principalObjectId:
                     description: The object ID of the user, group or service principal
+                      to be assigned this app role. Supported object types are Users,
+                      Groups or Service Principals. Changing this forces a new resource
+                      to be created. The object ID of the user, group or service principal
                       to be assigned this app role
                     type: string
                   principalObjectIdRef:
@@ -148,7 +153,8 @@ spec:
                     type: object
                   resourceObjectId:
                     description: The object ID of the service principal representing
-                      the resource
+                      the resource. Changing this forces a new resource to be created.
+                      The object ID of the service principal representing the resource
                     type: string
                   resourceObjectIdRef:
                     description: Reference to a Principal in serviceprincipals to
@@ -408,14 +414,17 @@ spec:
                     type: string
                   principalDisplayName:
                     description: The display name of the principal to which the app
-                      role is assigned
+                      role is assigned. The display name of the principal to which
+                      the app role is assigned
                     type: string
                   principalType:
                     description: The object type of the principal to which the app
-                      role is assigned
+                      role is assigned. The object type of the principal to which
+                      the app role is assigned
                     type: string
                   resourceDisplayName:
                     description: The display name of the application representing
+                      the resource. The display name of the application representing
                       the resource
                     type: string
                 type: object
