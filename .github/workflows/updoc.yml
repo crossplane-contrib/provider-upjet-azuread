@@ -4,7 +4,7 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  publishing-docs:
-    uses: upbound/uptest/.github/workflows/updoc.yml@main
+  publish-docs:
+    uses: upbound/uptest/.github/workflows/provider-updoc.yml@main
     secrets:
       UPBOUND_CI_PROD_BUCKET_SA: ${{ secrets.UPBOUND_CI_PROD_BUCKET_SA }}
