@@ -100,8 +100,8 @@ github.com/cncf/xds/go v0.0.0-20211001041855-01bcc9b48dfe/go.mod h1:eXthEFrGJvWH
 github.com/cncf/xds/go v0.0.0-20211011173535-cb28da3451f1/go.mod h1:eXthEFrGJvWHgFFCl3hGmgk+/aYT6PnTQLykKQRLhEs=
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
-github.com/crossplane/crossplane-runtime v0.19.0-rc.0.0.20221012013934-bce61005a175 h1:qGLew6IazCwfgvY4/xh5lQiumip/WrULpQfW4duol6g=
-github.com/crossplane/crossplane-runtime v0.19.0-rc.0.0.20221012013934-bce61005a175/go.mod h1:o9ExoilV6k2M3qzSFoRVX4phuww0mLmjs1WrDTvsR4s=
+github.com/crossplane/crossplane-runtime v0.19.2 h1:9qBnhpqKN4x6apF2siaQ6PvgxqBXbGcKmgeD8mSIDO8=
+github.com/crossplane/crossplane-runtime v0.19.2/go.mod h1:OJQ1NxtQK2ZTRmvtnQPoy8LsXsARTnVydRVDQEgIuz4=
 github.com/crossplane/crossplane-tools v0.0.0-20220310165030-1f43fc12793e h1:HqLaMji3FRPwEBA5P6twPz0HbE6no0XOnByLU5O1noM=
 github.com/crossplane/crossplane-tools v0.0.0-20220310165030-1f43fc12793e/go.mod h1:xFf30hwHd5n0/a0D4ZomId8nxQTTjE0Hc1j4/rWxefc=
 github.com/dave/jennifer v1.4.1 h1:XyqG6cn5RQsTj3qlWQTKlRGAyrTcsk1kUmWdZBzRjDw=
@@ -322,10 +322,10 @@ github.com/hashicorp/terraform-plugin-log v0.7.0 h1:SDxJUyT8TwN4l5b5/VkiTIaQgY6R
 github.com/hashicorp/terraform-plugin-log v0.7.0/go.mod h1:p4R1jWBXRTvL4odmEkFfDdhUjHf9zcs/BCoNHAc7IK4=
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.0 h1:FtCLTiTcykdsURXPt/ku7fYXm3y19nbzbZcUxHx9RbI=
 github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.0/go.mod h1:80wf5oad1tW+oLnbXS4UTYmDCrl7BuN1Q+IA91X1a4Y=
-github.com/hashicorp/vault/api v1.3.1 h1:pkDkcgTh47PRjY1NEFeofqR4W/HkNUi9qIakESO2aRM=
-github.com/hashicorp/vault/api v1.3.1/go.mod h1:QeJoWxMFt+MsuWcYhmwRLwKEXrjwAFFywzhptMsTIUw=
-github.com/hashicorp/vault/sdk v0.3.0 h1:kR3dpxNkhh/wr6ycaJYqp6AFT/i2xaftbfnwZduTKEY=
-github.com/hashicorp/vault/sdk v0.3.0/go.mod h1:aZ3fNuL5VNydQk8GcLJ2TV8YCRVvyaakYkhZRoVuhj0=
+github.com/hashicorp/vault/api v1.5.0 h1:Bp6yc2bn7CWkOrVIzFT/Qurzx528bdavF3nz590eu28=
+github.com/hashicorp/vault/api v1.5.0/go.mod h1:LkMdrZnWNrFaQyYYazWVn7KshilfDidgVBq6YiTq/bM=
+github.com/hashicorp/vault/sdk v0.4.1 h1:3SaHOJY687jY1fnB61PtL0cOkKItphrbLmux7T92HBo=
+github.com/hashicorp/vault/sdk v0.4.1/go.mod h1:aZ3fNuL5VNydQk8GcLJ2TV8YCRVvyaakYkhZRoVuhj0=
 github.com/hashicorp/yamux v0.0.0-20180604194846-3520598351bb/go.mod h1:+NfK9FKeTrX5uv1uIXGdwYDTeHna2qgaIlx54MXqjAM=
 github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d h1:kJCB4vdITiW1eC1vq2e6IsrXKrZit1bv/TDYFGMp4BQ=
 github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d/go.mod h1:+NfK9FKeTrX5uv1uIXGdwYDTeHna2qgaIlx54MXqjAM=
