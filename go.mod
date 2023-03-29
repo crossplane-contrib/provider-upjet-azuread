@@ -3,7 +3,7 @@ module github.com/upbound/provider-azuread
 go 1.19
 
 require (
-	github.com/crossplane/crossplane-runtime v0.19.0-rc.0.0.20221012013934-bce61005a175
+	github.com/crossplane/crossplane-runtime v0.19.2
 	github.com/crossplane/crossplane-tools v0.0.0-20220310165030-1f43fc12793e
 	github.com/pkg/errors v0.9.1
 	github.com/upbound/upjet v0.9.0-rc.0.0.20230309200654-acc1fd691d21
@@ -71,8 +71,8 @@ require (
 	github.com/hashicorp/terraform-plugin-go v0.14.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.7.0 // indirect
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.0 // indirect
-	github.com/hashicorp/vault/api v1.3.1 // indirect
-	github.com/hashicorp/vault/sdk v0.3.0 // indirect
+	github.com/hashicorp/vault/api v1.5.0 // indirect
+	github.com/hashicorp/vault/sdk v0.4.1 // indirect
 	github.com/hashicorp/yamux v0.0.0-20181012175058-2f1d1f20f75d // indirect
 	github.com/iancoleman/strcase v0.2.0 // indirect
 	github.com/imdario/mergo v0.3.12 // indirect
