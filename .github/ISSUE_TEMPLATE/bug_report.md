@@ -1,22 +1,20 @@
 ---
 name: Bug Report
-about: Help us diagnose and fix bugs in Official Azuread Provider
-labels: bug
-title: "azuread: `Principal` CRD is not working..."
+about: Help us diagnose and fix bugs in Official AzureAD Provider
+labels: bug,needs:triage
+title: 
 ---
 <!--
-Thank you for helping to improve Official Azuread Provider!
-
+Thank you for helping to improve Official AzureAD Provider!
 Please be sure to search for open issues before raising a new one. We use issues
 for bug reports and feature requests.
 -->
 
 ### What happened?
 <!--
-Please let us know what behaviour you expected and how Official Azuread Provider diverged from
+Please let us know what behaviour you expected and how Official AzureAD Provider diverged from
 that behaviour.
 -->
-
 
 ### How can we reproduce it?
 <!--
@@ -27,16 +25,7 @@ appreciated!
 
 ### What environment did it happen in?
 
-* Universal Crossplane Version:
+* Crossplane Version:
 * Provider Version:
-
-<!--
-Include at least the version or commit of Official Azuread Provider you were running. Consider
-also including your:
-
-* Cloud provider or hardware configuration
-* Kubernetes version (use `kubectl version`)
-* Kubernetes distribution (e.g. Tectonic, GKE, OpenShift)
-* OS (e.g. from /etc/os-release)
-* Kernel (e.g. `uname -a`)
--->
+* Kubernetes Version: <!-- use `kubectl version` --> 
+* Kubernetes Distribution: <!-- EKS, AKS, GKE, OpenShift, etc. -->
