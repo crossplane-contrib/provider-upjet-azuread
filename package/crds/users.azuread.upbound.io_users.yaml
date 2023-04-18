@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -265,10 +269,22 @@ spec:
                     description: The user principal name (UPN) of the user. The user
                       principal name (UPN) of the user
                     type: string
-                required:
-                - displayName
-                - userPrincipalName
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -440,6 +456,11 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: displayName is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)
+            - message: userPrincipalName is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.userPrincipalName)
           status:
             description: UserStatus defines the observed state of User.
             properties:
@@ -447,6 +468,50 @@ spec:
                 properties:
                   aboutMe:
                     description: A freeform field for the user to describe themselves
+                    type: string
+                  accountEnabled:
+                    description: Whether or not the account should be enabled. Whether
+                      or not the account should be enabled
+                    type: boolean
+                  ageGroup:
+                    description: The age group of the user. Supported values are Adult,
+                      NotAdult and Minor. Omit this property or specify a blank string
+                      to unset. The age group of the user
+                    type: string
+                  businessPhones:
+                    description: A list of telephone numbers for the user. Only one
+                      number can be set for this property. Read-only for users synced
+                      with Azure AD Connect. The telephone numbers for the user. Only
+                      one number can be set for this property. Read-only for users
+                      synced with Azure AD Connect
+                    items:
+                      type: string
+                    type: array
+                  city:
+                    description: The city in which the user is located. The city in
+                      which the user is located
+                    type: string
+                  companyName:
+                    description: The company name which the user is associated. This
+                      property can be useful for describing the company that an external
+                      user comes from. The company name which the user is associated.
+                      This property can be useful for describing the company that
+                      an external user comes from
+                    type: string
+                  consentProvidedForMinor:
+                    description: Whether consent has been obtained for minors. Supported
+                      values are Granted, Denied and NotRequired. Omit this property
+                      or specify a blank string to unset. Whether consent has been
+                      obtained for minors
+                    type: string
+                  costCenter:
+                    description: The cost center associated with the user. The cost
+                      center associated with the user.
+                    type: string
+                  country:
+                    description: The country/region in which the user is located,
+                      e.g. US or UK. The country/region in which the user is located,
+                      e.g. `US` or `UK`
                     type: string
                   creationType:
                     description: Indicates whether the user account was created as
@@ -459,12 +524,60 @@ spec:
                       Active Directory B2C tenant (`LocalAccount`) or self-service
                       sign-up using email verification (`EmailVerified`)
                     type: string
+                  department:
+                    description: The name for the department in which the user works.
+                      The name for the department in which the user works
+                    type: string
+                  disablePasswordExpiration:
+                    description: Whether the user's password is exempt from expiring.
+                      Defaults to false. Whether the users password is exempt from
+                      expiring
+                    type: boolean
+                  disableStrongPassword:
+                    description: Whether the user is allowed weaker passwords than
+                      the default policy to be specified. Defaults to false. Whether
+                      the user is allowed weaker passwords than the default policy
+                      to be specified.
+                    type: boolean
+                  displayName:
+                    description: The name to display in the address book for the user.
+                      The name to display in the address book for the user
+                    type: string
+                  division:
+                    description: The name of the division in which the user works.
+                      The name of the division in which the user works.
+                    type: string
+                  employeeId:
+                    description: The employee identifier assigned to the user by the
+                      organisation. The employee identifier assigned to the user by
+                      the organisation
+                    type: string
+                  employeeType:
+                    description: Captures enterprise worker type. For example, Employee,
+                      Contractor, Consultant, or Vendor. Captures enterprise worker
+                      type. For example, Employee, Contractor, Consultant, or Vendor.
+                    type: string
                   externalUserState:
                     description: For an external user invited to the tenant, this
                       property represents the invited user's invitation status. Possible
                       values are PendingAcceptance or Accepted. For an external user
                       invited to the tenant, this property represents the invited
                       user's invitation status
+                    type: string
+                  faxNumber:
+                    description: The fax number of the user. The fax number of the
+                      user
+                    type: string
+                  forcePasswordChange:
+                    description: Whether the user is forced to change the password
+                      during the next sign-in. Only takes effect when also changing
+                      the password. Defaults to false. Whether the user is forced
+                      to change the password during the next sign-in. Only takes effect
+                      when also changing the password
+                    type: boolean
+                  givenName:
+                    description: The given name (first name) of the user. The given
+                      name (first name) of the user
                     type: string
                   id:
                     type: string
@@ -476,8 +589,34 @@ spec:
                     items:
                       type: string
                     type: array
+                  jobTitle:
+                    description: The user’s job title. The user’s job title
+                    type: string
+                  mail:
+                    description: The SMTP address for the user. This property cannot
+                      be unset once specified. The SMTP address for the user. Cannot
+                      be unset.
+                    type: string
+                  mailNickname:
+                    description: The mail alias for the user. Defaults to the user
+                      name part of the user principal name (UPN). The mail alias for
+                      the user. Defaults to the user name part of the user principal
+                      name (UPN)
+                    type: string
+                  managerId:
+                    description: The object ID of the user's manager. The object ID
+                      of the user's manager
+                    type: string
+                  mobilePhone:
+                    description: The primary cellular telephone number for the user.
+                      The primary cellular telephone number for the user
+                    type: string
                   objectId:
                     description: The object ID of the user. The object ID of the user
+                    type: string
+                  officeLocation:
+                    description: The office location in the user's place of business.
+                      The office location in the user's place of business
                     type: string
                   onpremisesDistinguishedName:
                     description: The on-premises distinguished name (DN) of the user,
@@ -489,6 +628,16 @@ spec:
                     description: The on-premises FQDN, also called dnsDomainName,
                       synchronised from the on-premises directory when Azure AD Connect
                       is used. The on-premise FQDN (i.e. dnsDomainName) of the user
+                    type: string
+                  onpremisesImmutableId:
+                    description: The value used to associate an on-premise Active
+                      Directory user account with their Azure AD user object. This
+                      must be specified if you are using a federated domain for the
+                      user's user_principal_name property when creating a new user
+                      account. The value used to associate an on-premise Active Directory
+                      user account with their Azure AD user object. This must be specified
+                      if you are using a federated domain for the user's `user_principal_name`
+                      property when creating a new user account
                     type: string
                   onpremisesSamAccountName:
                     description: The on-premise SAM account name of the user. The
@@ -510,6 +659,24 @@ spec:
                     description: The on-premise user principal name of the user. The
                       on-premise user principal name of the user
                     type: string
+                  otherMails:
+                    description: A list of additional email addresses for the user.
+                      Additional email addresses for the user
+                    items:
+                      type: string
+                    type: array
+                  postalCode:
+                    description: The postal code for the user's postal address. The
+                      postal code is specific to the user's country/region. In the
+                      United States of America, this attribute contains the ZIP code.
+                      The postal code for the user's postal address. The postal code
+                      is specific to the user's country/region. In the United States
+                      of America, this attribute contains the ZIP code
+                    type: string
+                  preferredLanguage:
+                    description: The user's preferred language, in ISO 639-1 notation.
+                      The user's preferred language, in ISO 639-1 notation
+                    type: string
                   proxyAddresses:
                     description: List of email addresses for the user that direct
                       to the same mailbox. Email addresses for the user that direct
@@ -517,6 +684,39 @@ spec:
                     items:
                       type: string
                     type: array
+                  showInAddressList:
+                    description: Whether or not the Outlook global address list should
+                      include this user. Defaults to true. Whether or not the Outlook
+                      global address list should include this user
+                    type: boolean
+                  state:
+                    description: The state or province in the user's address. The
+                      state or province in the user's address
+                    type: string
+                  streetAddress:
+                    description: The street address of the user's place of business.
+                      The street address of the user's place of business
+                    type: string
+                  surname:
+                    description: The user's surname (family name or last name). The
+                      user's surname (family name or last name)
+                    type: string
+                  usageLocation:
+                    description: 'The usage location of the user. Required for users
+                      that will be assigned licenses due to legal requirement to check
+                      for availability of services in countries. The usage location
+                      is a two letter country code (ISO standard 3166). Examples include:
+                      NO, JP, and GB. Cannot be reset to null once set. The usage
+                      location of the user. Required for users that will be assigned
+                      licenses due to legal requirement to check for availability
+                      of services in countries. The usage location is a two letter
+                      country code (ISO standard 3166). Examples include: `NO`, `JP`,
+                      and `GB`. Cannot be reset to null once set'
+                    type: string
+                  userPrincipalName:
+                    description: The user principal name (UPN) of the user. The user
+                      principal name (UPN) of the user
+                    type: string
                   userType:
                     description: The user type in the directory. Possible values are
                       Guest or Member. The user type in the directory. Possible values

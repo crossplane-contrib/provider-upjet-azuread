@@ -14,7 +14,16 @@ import (
 )
 
 type MemberObservation struct {
+
+	// The object ID of the administrative unit you want to add the member to. Changing this forces a new resource to be created.
+	// The object ID of the administrative unit
+	AdministrativeUnitObjectID *string `json:"administrativeUnitObjectId,omitempty" tf:"administrative_unit_object_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The object ID of the user or group you want to add as a member of the administrative unit. Changing this forces a new resource to be created.
+	// The object ID of the member
+	MemberObjectID *string `json:"memberObjectId,omitempty" tf:"member_object_id,omitempty"`
 }
 
 type MemberParameters struct {

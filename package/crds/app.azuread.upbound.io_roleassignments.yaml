@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -231,9 +235,22 @@ spec:
                             type: string
                         type: object
                     type: object
-                required:
-                - appRoleId
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -405,17 +422,33 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: appRoleId is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.appRoleId)
           status:
             description: RoleAssignmentStatus defines the observed state of RoleAssignment.
             properties:
               atProvider:
                 properties:
+                  appRoleId:
+                    description: The ID of the app role to be assigned, or the default
+                      role ID 00000000-0000-0000-0000-000000000000. Changing this
+                      forces a new resource to be created. The ID of the app role
+                      to be assigned
+                    type: string
                   id:
                     type: string
                   principalDisplayName:
                     description: The display name of the principal to which the app
                       role is assigned. The display name of the principal to which
                       the app role is assigned
+                    type: string
+                  principalObjectId:
+                    description: The object ID of the user, group or service principal
+                      to be assigned this app role. Supported object types are Users,
+                      Groups or Service Principals. Changing this forces a new resource
+                      to be created. The object ID of the user, group or service principal
+                      to be assigned this app role
                     type: string
                   principalType:
                     description: The object type of the principal to which the app
@@ -426,6 +459,11 @@ spec:
                     description: The display name of the application representing
                       the resource. The display name of the application representing
                       the resource
+                    type: string
+                  resourceObjectId:
+                    description: The object ID of the service principal representing
+                      the resource. Changing this forces a new resource to be created.
+                      The object ID of the service principal representing the resource
                     type: string
                 type: object
               conditions:

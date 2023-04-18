@@ -14,7 +14,36 @@ import (
 )
 
 type CertificateObservation struct {
+
+	// The object ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The object ID of the application for which this certificate should be created
+	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
+
+	// Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.
+	// Specifies the encoding used for the supplied certificate data
+	Encoding *string `json:"encoding,omitempty" tf:"encoding,omitempty"`
+
+	// The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If omitted, the API will decide a suitable expiry date, which is typically around 2 years from the start date. Changing this field forces a new resource to be created.
+	// The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If omitted, the API will decide a suitable expiry date, which is typically around 2 years from the start date
+	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
+
+	// A relative duration for which the certificate is valid until, for example 240h (10 days) or 2400h30m. Changing this field forces a new resource to be created.
+	// A relative duration for which the certificate is valid until, for example `240h` (10 days) or `2400h30m`
+	EndDateRelative *string `json:"endDateRelative,omitempty" tf:"end_date_relative,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A UUID used to uniquely identify this certificate. If omitted, a random UUID will be automatically generated. Changing this field forces a new resource to be created.
+	// A UUID used to uniquely identify this certificate. If omitted, a random UUID will be automatically generated
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
+
+	// The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the value is determined by Azure Active Directory and is usually the start date of the certificate for asymmetric keys, or the current timestamp for symmetric keys. Changing this field forces a new resource to be created.
+	// The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date and time are use
+	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
+
+	// The type of key/certificate. Must be one of AsymmetricX509Cert or Symmetric. Changing this fields forces a new resource to be created.
+	// The type of key/certificate
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type CertificateParameters struct {
@@ -65,7 +94,7 @@ type CertificateParameters struct {
 
 	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.
 	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the `encoding` argumen
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
@@ -93,8 +122,9 @@ type CertificateStatus struct {
 type Certificate struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              CertificateSpec   `json:"spec"`
-	Status            CertificateStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.valueSecretRef)",message="valueSecretRef is a required parameter"
+	Spec   CertificateSpec   `json:"spec"`
+	Status CertificateStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

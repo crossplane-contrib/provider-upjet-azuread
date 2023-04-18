@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -324,12 +328,22 @@ spec:
                     description: 'Specifies the state of the policy object. Possible
                       values are: enabled, disabled and enabledForReportingButNotEnforced'
                     type: string
-                required:
-                - conditions
-                - displayName
-                - grantControls
-                - state
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -501,13 +515,269 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: conditions is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.conditions)
+            - message: displayName is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)
+            - message: grantControls is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.grantControls)
+            - message: state is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.state)
           status:
             description: AccessPolicyStatus defines the observed state of AccessPolicy.
             properties:
               atProvider:
                 properties:
+                  conditions:
+                    description: A conditions block as documented below, which specifies
+                      the rules that must be met for the policy to apply.
+                    items:
+                      properties:
+                        applications:
+                          description: An applications block as documented below,
+                            which specifies applications and user actions included
+                            in and excluded from the policy.
+                          items:
+                            properties:
+                              excludedApplications:
+                                description: A list of application IDs explicitly
+                                  excluded from the policy. Can also be set to Office365.
+                                items:
+                                  type: string
+                                type: array
+                              includedApplications:
+                                description: A list of application IDs the policy
+                                  applies to, unless explicitly excluded (in excluded_applications).
+                                  Can also be set to All, None or Office365. Cannot
+                                  be specified with included_user_actions. One of
+                                  included_applications or included_user_actions must
+                                  be specified.
+                                items:
+                                  type: string
+                                type: array
+                              includedUserActions:
+                                description: A list of user actions to include. Supported
+                                  values are urn:user:registerdevice and urn:user:registersecurityinfo.
+                                  Cannot be specified with included_applications.
+                                  One of included_applications or included_user_actions
+                                  must be specified.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        clientAppTypes:
+                          description: 'A list of client application types included
+                            in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients,
+                            exchangeActiveSync, easSupported and other.'
+                          items:
+                            type: string
+                          type: array
+                        devices:
+                          description: A devices block as documented below, which
+                            describes devices to be included in and excluded from
+                            the policy. A devices block can be added to an existing
+                            policy, but removing the devices block forces a new resource
+                            to be created.
+                          items:
+                            properties:
+                              filter:
+                                description: A filter block as described below. A
+                                  filter block can be added to an existing policy,
+                                  but removing the filter block forces a new resource
+                                  to be created.
+                                items:
+                                  properties:
+                                    mode:
+                                      description: Whether to include in, or exclude
+                                        from, matching devices from the policy. Supported
+                                        values are include or exclude.
+                                      type: string
+                                    rule:
+                                      description: Condition filter to match devices.
+                                        For more information, see official documentation.
+                                      type: string
+                                  type: object
+                                type: array
+                            type: object
+                          type: array
+                        locations:
+                          description: A locations block as documented below, which
+                            specifies locations included in and excluded from the
+                            policy.
+                          items:
+                            properties:
+                              excludedLocations:
+                                description: A list of location IDs excluded from
+                                  scope of policy. Can also be set to AllTrusted.
+                                items:
+                                  type: string
+                                type: array
+                              includedLocations:
+                                description: A list of location IDs in scope of policy
+                                  unless explicitly excluded. Can also be set to All,
+                                  or AllTrusted.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        platforms:
+                          description: A platforms block as documented below, which
+                            specifies platforms included in and excluded from the
+                            policy.
+                          items:
+                            properties:
+                              excludedPlatforms:
+                                description: 'A list of platforms explicitly excluded
+                                  from the policy. Possible values are: all, android,
+                                  iOS, linux, macOS, windows, windowsPhone or unknownFutureValue.'
+                                items:
+                                  type: string
+                                type: array
+                              includedPlatforms:
+                                description: 'A list of platforms the policy applies
+                                  to, unless explicitly excluded. Possible values
+                                  are: all, android, iOS, linux, macOS, windows, windowsPhone
+                                  or unknownFutureValue.'
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                        signInRiskLevels:
+                          description: 'A list of sign-in risk levels included in
+                            the policy. Possible values are: low, medium, high, hidden,
+                            none, unknownFutureValue.'
+                          items:
+                            type: string
+                          type: array
+                        userRiskLevels:
+                          description: 'A list of user risk levels included in the
+                            policy. Possible values are: low, medium, high, hidden,
+                            none, unknownFutureValue.'
+                          items:
+                            type: string
+                          type: array
+                        users:
+                          description: A users block as documented below, which specifies
+                            users, groups, and roles included in and excluded from
+                            the policy.
+                          items:
+                            properties:
+                              excludedGroups:
+                                description: A list of group IDs excluded from scope
+                                  of policy.
+                                items:
+                                  type: string
+                                type: array
+                              excludedRoles:
+                                description: A list of role IDs excluded from scope
+                                  of policy.
+                                items:
+                                  type: string
+                                type: array
+                              excludedUsers:
+                                description: A list of user IDs excluded from scope
+                                  of policy and/or GuestsOrExternalUsers.
+                                items:
+                                  type: string
+                                type: array
+                              includedGroups:
+                                description: A list of group IDs in scope of policy
+                                  unless explicitly excluded.
+                                items:
+                                  type: string
+                                type: array
+                              includedRoles:
+                                description: A list of role IDs in scope of policy
+                                  unless explicitly excluded.
+                                items:
+                                  type: string
+                                type: array
+                              includedUsers:
+                                description: A list of user IDs in scope of policy
+                                  unless explicitly excluded, or None or All or GuestsOrExternalUsers.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
+                      type: object
+                    type: array
+                  displayName:
+                    description: The friendly name for this Conditional Access Policy.
+                    type: string
+                  grantControls:
+                    description: A grant_controls block as documented below, which
+                      specifies the grant controls that must be fulfilled to pass
+                      the policy.
+                    items:
+                      properties:
+                        builtInControls:
+                          description: 'List of built-in controls required by the
+                            policy. Possible values are: block, mfa, approvedApplication,
+                            compliantApplication, compliantDevice, domainJoinedDevice,
+                            passwordChange or unknownFutureValue.'
+                          items:
+                            type: string
+                          type: array
+                        customAuthenticationFactors:
+                          description: List of custom controls IDs required by the
+                            policy.
+                          items:
+                            type: string
+                          type: array
+                        operator:
+                          description: 'Defines the relationship of the grant controls.
+                            Possible values are: AND, OR.'
+                          type: string
+                        termsOfUse:
+                          description: List of terms of use IDs required by the policy.
+                          items:
+                            type: string
+                          type: array
+                      type: object
+                    type: array
                   id:
                     description: The ID of the Conditional Access Policy.
+                    type: string
+                  sessionControls:
+                    description: A session_controls block as documented below, which
+                      specifies the session controls that are enforced after sign-in.
+                    items:
+                      properties:
+                        applicationEnforcedRestrictionsEnabled:
+                          description: Whether or not application enforced restrictions
+                            are enabled. Defaults to false.
+                          type: boolean
+                        cloudAppSecurityPolicy:
+                          description: 'Enables cloud app security and specifies the
+                            cloud app security policy to use. Possible values are:
+                            blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.'
+                          type: string
+                        persistentBrowserMode:
+                          description: 'Session control to define whether to persist
+                            cookies or not. Possible values are: always or never.'
+                          type: string
+                        signInFrequency:
+                          description: Number of days or hours to enforce sign-in
+                            frequency. Required when sign_in_frequency_period is specified.
+                            Due to an API issue, removing this property forces a new
+                            resource to be created.
+                          type: number
+                        signInFrequencyPeriod:
+                          description: 'The time period to enforce sign-in frequency.
+                            Possible values are: hours or days. Required when sign_in_frequency_period
+                            is specified. Due to an API issue, removing this property
+                            forces a new resource to be created.'
+                          type: string
+                      type: object
+                    type: array
+                  state:
+                    description: 'Specifies the state of the policy object. Possible
+                      values are: enabled, disabled and enabledForReportingButNotEnforced'
                     type: string
                 type: object
               conditions:

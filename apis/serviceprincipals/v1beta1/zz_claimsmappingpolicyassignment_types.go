@@ -15,8 +15,16 @@ import (
 
 type ClaimsMappingPolicyAssignmentObservation struct {
 
+	// The ID of the claims mapping policy to assign.
+	// ID of the claims mapping policy to assign
+	ClaimsMappingPolicyID *string `json:"claimsMappingPolicyId,omitempty" tf:"claims_mapping_policy_id,omitempty"`
+
 	// The ID of the Claims Mapping Policy Assignment.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The object ID of the service principal for the policy assignment.
+	// Object ID of the service principal for which to assign the policy
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 }
 
 type ClaimsMappingPolicyAssignmentParameters struct {

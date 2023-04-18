@@ -54,9 +54,13 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
@@ -106,9 +110,22 @@ spec:
                       - ipRanges
                       type: object
                     type: array
-                required:
-                - displayName
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -280,14 +297,56 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: displayName is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)
           status:
             description: LocationStatus defines the observed state of Location.
             properties:
               atProvider:
                 properties:
+                  country:
+                    description: A country block as documented below, which configures
+                      a country-based named location.
+                    items:
+                      properties:
+                        countriesAndRegions:
+                          description: List of countries and/or regions in two-letter
+                            format specified by ISO 3166-2.
+                          items:
+                            type: string
+                          type: array
+                        includeUnknownCountriesAndRegions:
+                          description: Whether IP addresses that don't map to a country
+                            or region should be included in the named location. Defaults
+                            to false.
+                          type: boolean
+                      type: object
+                    type: array
+                  displayName:
+                    description: The friendly name for this named location.
+                    type: string
                   id:
                     description: The ID of the named location.
                     type: string
+                  ip:
+                    description: An ip block as documented below, which configures
+                      an IP-based named location.
+                    items:
+                      properties:
+                        ipRanges:
+                          description: List of IP address ranges in IPv4 CIDR format
+                            (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF
+                            RFC596.
+                          items:
+                            type: string
+                          type: array
+                        trusted:
+                          description: Whether the named location is trusted. Defaults
+                            to false.
+                          type: boolean
+                      type: object
+                    type: array
                 type: object
               conditions:
                 description: Conditions of the resource.

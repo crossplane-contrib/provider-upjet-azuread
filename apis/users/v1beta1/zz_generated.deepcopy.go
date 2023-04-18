@@ -81,13 +81,109 @@ func (in *UserObservation) DeepCopyInto(out *UserObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.AccountEnabled != nil {
+		in, out := &in.AccountEnabled, &out.AccountEnabled
+		*out = new(bool)
+		**out = **in
+	}
+	if in.AgeGroup != nil {
+		in, out := &in.AgeGroup, &out.AgeGroup
+		*out = new(string)
+		**out = **in
+	}
+	if in.BusinessPhones != nil {
+		in, out := &in.BusinessPhones, &out.BusinessPhones
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.City != nil {
+		in, out := &in.City, &out.City
+		*out = new(string)
+		**out = **in
+	}
+	if in.CompanyName != nil {
+		in, out := &in.CompanyName, &out.CompanyName
+		*out = new(string)
+		**out = **in
+	}
+	if in.ConsentProvidedForMinor != nil {
+		in, out := &in.ConsentProvidedForMinor, &out.ConsentProvidedForMinor
+		*out = new(string)
+		**out = **in
+	}
+	if in.CostCenter != nil {
+		in, out := &in.CostCenter, &out.CostCenter
+		*out = new(string)
+		**out = **in
+	}
+	if in.Country != nil {
+		in, out := &in.Country, &out.Country
+		*out = new(string)
+		**out = **in
+	}
 	if in.CreationType != nil {
 		in, out := &in.CreationType, &out.CreationType
 		*out = new(string)
 		**out = **in
 	}
+	if in.Department != nil {
+		in, out := &in.Department, &out.Department
+		*out = new(string)
+		**out = **in
+	}
+	if in.DisablePasswordExpiration != nil {
+		in, out := &in.DisablePasswordExpiration, &out.DisablePasswordExpiration
+		*out = new(bool)
+		**out = **in
+	}
+	if in.DisableStrongPassword != nil {
+		in, out := &in.DisableStrongPassword, &out.DisableStrongPassword
+		*out = new(bool)
+		**out = **in
+	}
+	if in.DisplayName != nil {
+		in, out := &in.DisplayName, &out.DisplayName
+		*out = new(string)
+		**out = **in
+	}
+	if in.Division != nil {
+		in, out := &in.Division, &out.Division
+		*out = new(string)
+		**out = **in
+	}
+	if in.EmployeeID != nil {
+		in, out := &in.EmployeeID, &out.EmployeeID
+		*out = new(string)
+		**out = **in
+	}
+	if in.EmployeeType != nil {
+		in, out := &in.EmployeeType, &out.EmployeeType
+		*out = new(string)
+		**out = **in
+	}
 	if in.ExternalUserState != nil {
 		in, out := &in.ExternalUserState, &out.ExternalUserState
+		*out = new(string)
+		**out = **in
+	}
+	if in.FaxNumber != nil {
+		in, out := &in.FaxNumber, &out.FaxNumber
+		*out = new(string)
+		**out = **in
+	}
+	if in.ForcePasswordChange != nil {
+		in, out := &in.ForcePasswordChange, &out.ForcePasswordChange
+		*out = new(bool)
+		**out = **in
+	}
+	if in.GivenName != nil {
+		in, out := &in.GivenName, &out.GivenName
 		*out = new(string)
 		**out = **in
 	}
@@ -107,8 +203,38 @@ func (in *UserObservation) DeepCopyInto(out *UserObservation) {
 			}
 		}
 	}
+	if in.JobTitle != nil {
+		in, out := &in.JobTitle, &out.JobTitle
+		*out = new(string)
+		**out = **in
+	}
+	if in.Mail != nil {
+		in, out := &in.Mail, &out.Mail
+		*out = new(string)
+		**out = **in
+	}
+	if in.MailNickname != nil {
+		in, out := &in.MailNickname, &out.MailNickname
+		*out = new(string)
+		**out = **in
+	}
+	if in.ManagerID != nil {
+		in, out := &in.ManagerID, &out.ManagerID
+		*out = new(string)
+		**out = **in
+	}
+	if in.MobilePhone != nil {
+		in, out := &in.MobilePhone, &out.MobilePhone
+		*out = new(string)
+		**out = **in
+	}
 	if in.ObjectID != nil {
 		in, out := &in.ObjectID, &out.ObjectID
+		*out = new(string)
+		**out = **in
+	}
+	if in.OfficeLocation != nil {
+		in, out := &in.OfficeLocation, &out.OfficeLocation
 		*out = new(string)
 		**out = **in
 	}
@@ -119,6 +245,11 @@ func (in *UserObservation) DeepCopyInto(out *UserObservation) {
 	}
 	if in.OnpremisesDomainName != nil {
 		in, out := &in.OnpremisesDomainName, &out.OnpremisesDomainName
+		*out = new(string)
+		**out = **in
+	}
+	if in.OnpremisesImmutableID != nil {
+		in, out := &in.OnpremisesImmutableID, &out.OnpremisesImmutableID
 		*out = new(string)
 		**out = **in
 	}
@@ -142,6 +273,27 @@ func (in *UserObservation) DeepCopyInto(out *UserObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.OtherMails != nil {
+		in, out := &in.OtherMails, &out.OtherMails
+		*out = make([]*string, len(*in))
+		for i := range *in {
+			if (*in)[i] != nil {
+				in, out := &(*in)[i], &(*out)[i]
+				*out = new(string)
+				**out = **in
+			}
+		}
+	}
+	if in.PostalCode != nil {
+		in, out := &in.PostalCode, &out.PostalCode
+		*out = new(string)
+		**out = **in
+	}
+	if in.PreferredLanguage != nil {
+		in, out := &in.PreferredLanguage, &out.PreferredLanguage
+		*out = new(string)
+		**out = **in
+	}
 	if in.ProxyAddresses != nil {
 		in, out := &in.ProxyAddresses, &out.ProxyAddresses
 		*out = make([]*string, len(*in))
@@ -152,6 +304,36 @@ func (in *UserObservation) DeepCopyInto(out *UserObservation) {
 				**out = **in
 			}
 		}
+	}
+	if in.ShowInAddressList != nil {
+		in, out := &in.ShowInAddressList, &out.ShowInAddressList
+		*out = new(bool)
+		**out = **in
+	}
+	if in.State != nil {
+		in, out := &in.State, &out.State
+		*out = new(string)
+		**out = **in
+	}
+	if in.StreetAddress != nil {
+		in, out := &in.StreetAddress, &out.StreetAddress
+		*out = new(string)
+		**out = **in
+	}
+	if in.Surname != nil {
+		in, out := &in.Surname, &out.Surname
+		*out = new(string)
+		**out = **in
+	}
+	if in.UsageLocation != nil {
+		in, out := &in.UsageLocation, &out.UsageLocation
+		*out = new(string)
+		**out = **in
+	}
+	if in.UserPrincipalName != nil {
+		in, out := &in.UserPrincipalName, &out.UserPrincipalName
+		*out = new(string)
+		**out = **in
 	}
 	if in.UserType != nil {
 		in, out := &in.UserType, &out.UserType

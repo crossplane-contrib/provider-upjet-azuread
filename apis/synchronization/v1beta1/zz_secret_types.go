@@ -14,6 +14,10 @@ import (
 )
 
 type CredentialObservation struct {
+
+	// The key of the secret.
+	// Name for this key-value pair.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 }
 
 type CredentialParameters struct {
@@ -31,8 +35,15 @@ type CredentialParameters struct {
 
 type SecretObservation struct {
 
+	// One or more credential blocks as documented below.
+	Credential []CredentialObservation `json:"credential,omitempty" tf:"credential,omitempty"`
+
 	// An ID used to uniquely identify this synchronization sec.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The object ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.
+	// The object ID of the service principal for which this synchronization secret should be created
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 }
 
 type SecretParameters struct {

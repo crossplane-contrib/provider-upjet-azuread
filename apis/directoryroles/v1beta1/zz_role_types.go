@@ -19,6 +19,10 @@ type RoleObservation struct {
 	// The description of the directory role
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The display name of the directory role to activate. Changing this forces a new resource to be created.
+	// The display name of the directory role
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The object ID of the directory role.

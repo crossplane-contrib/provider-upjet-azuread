@@ -14,6 +14,22 @@ import (
 )
 
 type APIObservation struct {
+
+	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
+	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
+
+	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
+	// Allows an application to use claims mapping without specifying a custom signing key
+	MappedClaimsEnabled *bool `json:"mappedClaimsEnabled,omitempty" tf:"mapped_claims_enabled,omitempty"`
+
+	// One or more oauth2_permission_scope blocks as documented below, to describe delegated permissions exposed by the web API represented by this application.
+	// One or more `oauth2_permission_scope` blocks to describe delegated permissions exposed by the web API represented by this application
+	Oauth2PermissionScope []Oauth2PermissionScopeObservation `json:"oauth2PermissionScope,omitempty" tf:"oauth2_permission_scope,omitempty"`
+
+	// The access token version expected by this resource. Must be one of 1 or 2, and must be 2 when sign_in_audience is either AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount Defaults to 1.
+	// The access token version expected by this resource
+	RequestedAccessTokenVersion *float64 `json:"requestedAccessTokenVersion,omitempty" tf:"requested_access_token_version,omitempty"`
 }
 
 type APIParameters struct {
@@ -40,6 +56,22 @@ type APIParameters struct {
 }
 
 type AccessTokenObservation struct {
+
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
+	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
+
+	// Whether the claim specified by the client is necessary to ensure a smooth authorization experience.
+	// Whether the claim specified by the client is necessary to ensure a smooth authorization experience
+	Essential *bool `json:"essential,omitempty" tf:"essential,omitempty"`
+
+	// The name of the optional claim.
+	// The name of the optional claim
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The source of the claim. If source is absent, the claim is a predefined optional claim. If source is user, the value of name is the extension property from the user object.
+	// The source of the claim. If `source` is absent, the claim is a predefined optional claim. If `source` is `user`, the value of `name` is the extension property from the user object
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 }
 
 type AccessTokenParameters struct {
@@ -66,6 +98,30 @@ type AccessTokenParameters struct {
 }
 
 type AppRoleObservation struct {
+
+	// Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
+	// Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
+	AllowedMemberTypes []*string `json:"allowedMemberTypes,omitempty" tf:"allowed_member_types,omitempty"`
+
+	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
+	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Display name for the app role that appears during app role assignment and in consent experiences.
+	// Display name for the app role that appears during app role assignment and in consent experiences
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// Determines if the app role is enabled. Defaults to true.
+	// Determines if the app role is enabled
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// The unique identifier of the app role. Must be a valid UUID.
+	// The unique identifier of the app role
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.
+	// The value that is used for the `roles` claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type AppRoleParameters struct {
@@ -103,6 +159,12 @@ type AppRoleParameters struct {
 
 type ApplicationObservation struct {
 
+	// An api block as documented below, which configures API related settings for this application.
+	API []APIObservation `json:"api,omitempty" tf:"api,omitempty"`
+
+	// A collection of app_role blocks as documented below. For more information see official documentation on Application Roles.
+	AppRole []AppRoleObservation `json:"appRole,omitempty" tf:"app_role,omitempty"`
+
 	// A mapping of app role values to app role IDs, intended to be useful when referencing app roles in other resources in your configuration.
 	// Mapping of app role names to UUIDs
 	AppRoleIds map[string]*string `json:"appRoleIds,omitempty" tf:"app_role_ids,omitempty"`
@@ -111,28 +173,119 @@ type ApplicationObservation struct {
 	// The Application ID (also called Client ID)
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
+	// A description of the application, as shown to end users.
+	// Description of the application as shown to end users
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// Specifies whether this application supports device authentication without a user. Defaults to false.
+	// Specifies whether this application supports device authentication without a user.
+	DeviceOnlyAuthEnabled *bool `json:"deviceOnlyAuthEnabled,omitempty" tf:"device_only_auth_enabled,omitempty"`
+
 	// Whether Microsoft has disabled the registered application. If the application is disabled, this will be a string indicating the status/reason, e.g. DisabledDueToViolationOfServicesAgreement
 	// Whether Microsoft has disabled the registered application
 	DisabledByMicrosoft *string `json:"disabledByMicrosoft,omitempty" tf:"disabled_by_microsoft,omitempty"`
 
+	// The display name for the application.
+	// The display name for the application
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// Specifies whether the application is a public client. Appropriate for apps using token grant flows that don't use a redirect URI. Defaults to false.
+	// Specifies whether the application is a public client. Appropriate for apps using token grant flows that don't use a redirect URI
+	FallbackPublicClientEnabled *bool `json:"fallbackPublicClientEnabled,omitempty" tf:"fallback_public_client_enabled,omitempty"`
+
+	// A feature_tags block as described below. Cannot be used together with the tags property.
+	// Block of features to configure for this application using tags
+	FeatureTags []FeatureTagsObservation `json:"featureTags,omitempty" tf:"feature_tags,omitempty"`
+
+	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
+	GroupMembershipClaims []*string `json:"groupMembershipClaims,omitempty" tf:"group_membership_claims,omitempty"`
+
 	// The unique identifier for an app role or OAuth2 permission scope published by the resource application.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant.
+	// The user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant
+	IdentifierUris []*string `json:"identifierUris,omitempty" tf:"identifier_uris,omitempty"`
+
+	// A logo image to upload for the application, as a raw base64-encoded string. The image should be in gif, jpeg or png format. Note that once an image has been uploaded, it is not possible to remove it without replacing it with another image.
+	// Base64 encoded logo image in gif, png or jpeg format
+	LogoImage *string `json:"logoImage,omitempty" tf:"logo_image,omitempty"`
 
 	// CDN URL to the application's logo, as uploaded with the logo_image property.
 	// CDN URL to the application's logo
 	LogoURL *string `json:"logoUrl,omitempty" tf:"logo_url,omitempty"`
 
+	// URL of the application's marketing page.
+	// URL of the application's marketing page
+	MarketingURL *string `json:"marketingUrl,omitempty" tf:"marketing_url,omitempty"`
+
+	// User-specified notes relevant for the management of the application.
+	// User-specified notes relevant for the management of the application
+	Notes *string `json:"notes,omitempty" tf:"notes,omitempty"`
+
 	// A mapping of OAuth2.0 permission scope values to scope IDs, intended to be useful when referencing permission scopes in other resources in your configuration.
 	// Mapping of OAuth2.0 permission scope names to UUIDs
 	Oauth2PermissionScopeIds map[string]*string `json:"oauth2PermissionScopeIds,omitempty" tf:"oauth2_permission_scope_ids,omitempty"`
+
+	// Specifies whether, as part of OAuth 2.0 token requests, Azure AD allows POST requests, as opposed to GET requests. Defaults to false, which specifies that only GET requests are allowed.
+	// Specifies whether, as part of OAuth 2.0 token requests, Azure AD allows POST requests, as opposed to GET requests.
+	Oauth2PostResponseRequired *bool `json:"oauth2PostResponseRequired,omitempty" tf:"oauth2_post_response_required,omitempty"`
 
 	// The application's object ID.
 	// The application's object ID
 	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
 
+	// An optional_claims block as documented below.
+	OptionalClaims []OptionalClaimsObservation `json:"optionalClaims,omitempty" tf:"optional_claims,omitempty"`
+
+	// A set of object IDs of principals that will be granted ownership of the application. Supported object types are users or service principals. By default, no owners are assigned.
+	// A list of object IDs of principals that will be granted ownership of the application
+	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
+
+	// If true, will return an error if an existing application is found with the same name. Defaults to false.
+	// If `true`, will return an error if an existing application is found with the same name
+	PreventDuplicateNames *bool `json:"preventDuplicateNames,omitempty" tf:"prevent_duplicate_names,omitempty"`
+
+	// URL of the application's privacy statement.
+	// URL of the application's privacy statement
+	PrivacyStatementURL *string `json:"privacyStatementUrl,omitempty" tf:"privacy_statement_url,omitempty"`
+
+	// A public_client block as documented below, which configures non-web app or non-web API application settings, for example mobile or other public clients such as an installed application running on a desktop device.
+	PublicClient []PublicClientObservation `json:"publicClient,omitempty" tf:"public_client,omitempty"`
+
 	// The verified publisher domain for the application.
 	// The verified publisher domain for the application
 	PublisherDomain *string `json:"publisherDomain,omitempty" tf:"publisher_domain,omitempty"`
+
+	// A collection of required_resource_access blocks as documented below.
+	RequiredResourceAccess []RequiredResourceAccessObservation `json:"requiredResourceAccess,omitempty" tf:"required_resource_access,omitempty"`
+
+	// The Microsoft account types that are supported for the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount. Defaults to AzureADMyOrg.
+	// The Microsoft account types that are supported for the current application
+	SignInAudience *string `json:"signInAudience,omitempty" tf:"sign_in_audience,omitempty"`
+
+	// A single_page_application block as documented below, which configures single-page application (SPA) related settings for this application.
+	SinglePageApplication []SinglePageApplicationObservation `json:"singlePageApplication,omitempty" tf:"single_page_application,omitempty"`
+
+	// URL of the application's support page.
+	// URL of the application's support page
+	SupportURL *string `json:"supportUrl,omitempty" tf:"support_url,omitempty"`
+
+	// A set of tags to apply to the application for configuring specific behaviours of the application and linked service principals. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
+	// A set of tags to apply to the application
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// Unique ID for a templated application in the Azure AD App Gallery, from which to create the application. Changing this forces a new resource to be created.
+	// Unique ID of the application template from which this application is created
+	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`
+
+	// URL of the application's terms of service statement.
+	// URL of the application's terms of service statement
+	TermsOfServiceURL *string `json:"termsOfServiceUrl,omitempty" tf:"terms_of_service_url,omitempty"`
+
+	// A web block as documented below, which configures web related settings for this application.
+	Web []WebObservation `json:"web,omitempty" tf:"web,omitempty"`
 }
 
 type ApplicationParameters struct {
@@ -157,8 +310,8 @@ type ApplicationParameters struct {
 
 	// The display name for the application.
 	// The display name for the application
-	// +kubebuilder:validation:Required
-	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// Specifies whether the application is a public client. Appropriate for apps using token grant flows that don't use a redirect URI. Defaults to false.
 	// Specifies whether the application is a public client. Appropriate for apps using token grant flows that don't use a redirect URI
@@ -262,6 +415,22 @@ type ApplicationParameters struct {
 }
 
 type FeatureTagsObservation struct {
+
+	// Whether this application represents a custom SAML application for linked service principals. Enabling this will assign the WindowsAzureActiveDirectoryCustomSingleSignOnApplication tag. Defaults to false.
+	// Whether this application represents a custom SAML application for linked service principals
+	CustomSingleSignOn *bool `json:"customSingleSignOn,omitempty" tf:"custom_single_sign_on,omitempty"`
+
+	// Whether this application represents an Enterprise Application for linked service principals. Enabling this will assign the WindowsAzureActiveDirectoryIntegratedApp tag. Defaults to false.
+	// Whether this application represents an Enterprise Application for linked service principals
+	Enterprise *bool `json:"enterprise,omitempty" tf:"enterprise,omitempty"`
+
+	// Whether this application represents a gallery application for linked service principals. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1 tag. Defaults to false.
+	// Whether this application represents a gallery application for linked service principals
+	Gallery *bool `json:"gallery,omitempty" tf:"gallery,omitempty"`
+
+	// Whether this app is invisible to users in My Apps and Office 365 Launcher. Enabling this will assign the HideApp tag. Defaults to false.
+	// Whether this application is invisible to users in My Apps and Office 365 Launcher
+	Hide *bool `json:"hide,omitempty" tf:"hide,omitempty"`
 }
 
 type FeatureTagsParameters struct {
@@ -288,6 +457,22 @@ type FeatureTagsParameters struct {
 }
 
 type IDTokenObservation struct {
+
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
+	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
+
+	// Whether the claim specified by the client is necessary to ensure a smooth authorization experience.
+	// Whether the claim specified by the client is necessary to ensure a smooth authorization experience
+	Essential *bool `json:"essential,omitempty" tf:"essential,omitempty"`
+
+	// The name of the optional claim.
+	// The name of the optional claim
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The source of the claim. If source is absent, the claim is a predefined optional claim. If source is user, the value of name is the extension property from the user object.
+	// The source of the claim. If `source` is absent, the claim is a predefined optional claim. If `source` is `user`, the value of `name` is the extension property from the user object
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 }
 
 type IDTokenParameters struct {
@@ -314,6 +499,14 @@ type IDTokenParameters struct {
 }
 
 type ImplicitGrantObservation struct {
+
+	// Whether this web application can request an access token using OAuth 2.0 implicit flow.
+	// Whether this web application can request an access token using OAuth 2.0 implicit flow
+	AccessTokenIssuanceEnabled *bool `json:"accessTokenIssuanceEnabled,omitempty" tf:"access_token_issuance_enabled,omitempty"`
+
+	// Whether this web application can request an ID token using OAuth 2.0 implicit flow.
+	// Whether this web application can request an ID token using OAuth 2.0 implicit flow
+	IDTokenIssuanceEnabled *bool `json:"idTokenIssuanceEnabled,omitempty" tf:"id_token_issuance_enabled,omitempty"`
 }
 
 type ImplicitGrantParameters struct {
@@ -330,6 +523,38 @@ type ImplicitGrantParameters struct {
 }
 
 type Oauth2PermissionScopeObservation struct {
+
+	// Delegated permission description that appears in all tenant-wide admin consent experiences, intended to be read by an administrator granting the permission on behalf of all users.
+	// Delegated permission description that appears in all tenant-wide admin consent experiences, intended to be read by an administrator granting the permission on behalf of all users
+	AdminConsentDescription *string `json:"adminConsentDescription,omitempty" tf:"admin_consent_description,omitempty"`
+
+	// Display name for the delegated permission, intended to be read by an administrator granting the permission on behalf of all users.
+	// Display name for the delegated permission, intended to be read by an administrator granting the permission on behalf of all users
+	AdminConsentDisplayName *string `json:"adminConsentDisplayName,omitempty" tf:"admin_consent_display_name,omitempty"`
+
+	// Determines if the permission scope is enabled. Defaults to true.
+	// Determines if the permission scope is enabled
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// The unique identifier of the delegated permission. Must be a valid UUID.
+	// The unique identifier of the delegated permission
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Whether this delegated permission should be considered safe for non-admin users to consent to on behalf of themselves, or whether an administrator should be required for consent to the permissions. Defaults to User. Possible values are User or Admin.
+	// Whether this delegated permission should be considered safe for non-admin users to consent to on behalf of themselves, or whether an administrator should be required for consent to the permissions
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// Delegated permission description that appears in the end user consent experience, intended to be read by a user consenting on their own behalf.
+	// Delegated permission description that appears in the end user consent experience, intended to be read by a user consenting on their own behalf
+	UserConsentDescription *string `json:"userConsentDescription,omitempty" tf:"user_consent_description,omitempty"`
+
+	// Display name for the delegated permission that appears in the end user consent experience.
+	// Display name for the delegated permission that appears in the end user consent experience
+	UserConsentDisplayName *string `json:"userConsentDisplayName,omitempty" tf:"user_consent_display_name,omitempty"`
+
+	// The value that is used for the scp claim in OAuth 2.0 access tokens.
+	// The value that is used for the `scp` claim in OAuth 2.0 access tokens
+	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type Oauth2PermissionScopeParameters struct {
@@ -376,6 +601,15 @@ type Oauth2PermissionScopeParameters struct {
 }
 
 type OptionalClaimsObservation struct {
+
+	// One or more access_token blocks as documented below.
+	AccessToken []AccessTokenObservation `json:"accessToken,omitempty" tf:"access_token,omitempty"`
+
+	// One or more id_token blocks as documented below.
+	IDToken []IDTokenObservation `json:"idToken,omitempty" tf:"id_token,omitempty"`
+
+	// One or more saml2_token blocks as documented below.
+	Saml2Token []Saml2TokenObservation `json:"saml2Token,omitempty" tf:"saml2_token,omitempty"`
 }
 
 type OptionalClaimsParameters struct {
@@ -394,6 +628,10 @@ type OptionalClaimsParameters struct {
 }
 
 type PublicClientObservation struct {
+
+	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https or ms-appx-web URL.
+	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
+	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
 type PublicClientParameters struct {
@@ -405,6 +643,12 @@ type PublicClientParameters struct {
 }
 
 type RequiredResourceAccessObservation struct {
+
+	// A collection of resource_access blocks as documented below, describing OAuth2.0 permission scopes and app roles that the application requires from the specified resource.
+	ResourceAccess []ResourceAccessObservation `json:"resourceAccess,omitempty" tf:"resource_access,omitempty"`
+
+	// The unique identifier for the resource that the application requires access to. This should be the Application ID of the target application.
+	ResourceAppID *string `json:"resourceAppId,omitempty" tf:"resource_app_id,omitempty"`
 }
 
 type RequiredResourceAccessParameters struct {
@@ -419,6 +663,12 @@ type RequiredResourceAccessParameters struct {
 }
 
 type ResourceAccessObservation struct {
+
+	// The unique identifier for an app role or OAuth2 permission scope published by the resource application.
+	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Specifies whether the id property references an app role or an OAuth2 permission scope. Possible values are Role or Scope.
+	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 }
 
 type ResourceAccessParameters struct {
@@ -433,6 +683,22 @@ type ResourceAccessParameters struct {
 }
 
 type Saml2TokenObservation struct {
+
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
+	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
+
+	// Whether the claim specified by the client is necessary to ensure a smooth authorization experience.
+	// Whether the claim specified by the client is necessary to ensure a smooth authorization experience
+	Essential *bool `json:"essential,omitempty" tf:"essential,omitempty"`
+
+	// The name of the optional claim.
+	// The name of the optional claim
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+
+	// The source of the claim. If source is absent, the claim is a predefined optional claim. If source is user, the value of name is the extension property from the user object.
+	// The source of the claim. If `source` is absent, the claim is a predefined optional claim. If `source` is `user`, the value of `name` is the extension property from the user object
+	Source *string `json:"source,omitempty" tf:"source,omitempty"`
 }
 
 type Saml2TokenParameters struct {
@@ -459,6 +725,10 @@ type Saml2TokenParameters struct {
 }
 
 type SinglePageApplicationObservation struct {
+
+	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https URL.
+	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
+	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
 type SinglePageApplicationParameters struct {
@@ -470,6 +740,21 @@ type SinglePageApplicationParameters struct {
 }
 
 type WebObservation struct {
+
+	// Home page or landing page of the application.
+	// Home page or landing page of the application
+	HomepageURL *string `json:"homepageUrl,omitempty" tf:"homepage_url,omitempty"`
+
+	// An implicit_grant block as documented above.
+	ImplicitGrant []ImplicitGrantObservation `json:"implicitGrant,omitempty" tf:"implicit_grant,omitempty"`
+
+	// The URL that will be used by Microsoft's authorization service to sign out a user using front-channel, back-channel or SAML logout protocols.
+	// The URL that will be used by Microsoft's authorization service to sign out a user using front-channel, back-channel or SAML logout protocols
+	LogoutURL *string `json:"logoutUrl,omitempty" tf:"logout_url,omitempty"`
+
+	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid http URL or a URN.
+	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
+	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
 type WebParameters struct {
@@ -518,8 +803,9 @@ type ApplicationStatus struct {
 type Application struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ApplicationSpec   `json:"spec"`
-	Status            ApplicationStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	Spec   ApplicationSpec   `json:"spec"`
+	Status ApplicationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
