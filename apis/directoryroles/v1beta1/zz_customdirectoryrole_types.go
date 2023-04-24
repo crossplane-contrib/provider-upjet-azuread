@@ -14,11 +14,36 @@ import (
 )
 
 type CustomDirectoryRoleObservation struct {
+
+	// The description of the custom directory role.
+	// The description of the custom directory role
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The display name of the custom directory role.
+	// The display name of the custom directory role
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// Indicates whether the role is enabled for assignment.
+	// Indicates whether the role is enabled for assignment
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The object ID of the custom directory role.
 	// The object ID of the directory role
 	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
+
+	// A collection of permissions blocks as documented below.
+	// List of permissions that are included in the custom directory role
+	Permissions []PermissionsObservation `json:"permissions,omitempty" tf:"permissions,omitempty"`
+
+	// Custom template identifier that is typically used if one needs an identifier to be the same across different directories. Changing this forces a new resource to be created.
+	// Custom template identifier that is typically used if one needs an identifier to be the same across different directories.
+	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`
+
+	// - The version of the role definition. This can be any arbitrary string between 1-128 characters.
+	// The version of the role definition.
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type CustomDirectoryRoleParameters struct {
@@ -30,18 +55,18 @@ type CustomDirectoryRoleParameters struct {
 
 	// The display name of the custom directory role.
 	// The display name of the custom directory role
-	// +kubebuilder:validation:Required
-	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// Indicates whether the role is enabled for assignment.
 	// Indicates whether the role is enabled for assignment
-	// +kubebuilder:validation:Required
-	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// A collection of permissions blocks as documented below.
 	// List of permissions that are included in the custom directory role
-	// +kubebuilder:validation:Required
-	Permissions []PermissionsParameters `json:"permissions" tf:"permissions,omitempty"`
+	// +kubebuilder:validation:Optional
+	Permissions []PermissionsParameters `json:"permissions,omitempty" tf:"permissions,omitempty"`
 
 	// Custom template identifier that is typically used if one needs an identifier to be the same across different directories. Changing this forces a new resource to be created.
 	// Custom template identifier that is typically used if one needs an identifier to be the same across different directories.
@@ -50,11 +75,15 @@ type CustomDirectoryRoleParameters struct {
 
 	// - The version of the role definition. This can be any arbitrary string between 1-128 characters.
 	// The version of the role definition.
-	// +kubebuilder:validation:Required
-	Version *string `json:"version" tf:"version,omitempty"`
+	// +kubebuilder:validation:Optional
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type PermissionsObservation struct {
+
+	// A set of tasks that can be performed on a resource. For more information, see the Permissions Reference documentation.
+	// Set of tasks that can be performed on a resource
+	AllowedResourceActions []*string `json:"allowedResourceActions,omitempty" tf:"allowed_resource_actions,omitempty"`
 }
 
 type PermissionsParameters struct {
@@ -89,8 +118,12 @@ type CustomDirectoryRoleStatus struct {
 type CustomDirectoryRole struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              CustomDirectoryRoleSpec   `json:"spec"`
-	Status            CustomDirectoryRoleStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.enabled)",message="enabled is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.permissions)",message="permissions is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.version)",message="version is a required parameter"
+	Spec   CustomDirectoryRoleSpec   `json:"spec"`
+	Status CustomDirectoryRoleStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

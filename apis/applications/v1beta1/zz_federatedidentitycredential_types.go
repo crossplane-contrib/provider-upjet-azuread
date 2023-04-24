@@ -15,11 +15,35 @@ import (
 
 type FederatedIdentityCredentialObservation struct {
 
+	// The object ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
+	// The object ID of the application for which this federated identity credential should be created
+	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
+
+	// List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.
+	// List of audiences that can appear in the external token. This specifies what should be accepted in the `aud` claim of incoming tokens.
+	Audiences []*string `json:"audiences,omitempty" tf:"audiences,omitempty"`
+
 	// A UUID used to uniquely identify this federated identity credential.
 	// A UUID used to uniquely identify this federated identity credential
 	CredentialID *string `json:"credentialId,omitempty" tf:"credential_id,omitempty"`
 
+	// A description for the federated identity credential.
+	// A description for the federated identity credential
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// A unique display name for the federated identity credential. Changing this forces a new resource to be created.
+	// A unique display name for the federated identity credential
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The URL of the external identity provider, which must match the issuer claim of the external token being exchanged. The combination of the values of issuer and subject must be unique on the app.
+	// The URL of the external identity provider, which must match the issuer claim of the external token being exchanged. The combination of the values of issuer and subject must be unique on the app.
+	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
+
+	// The identifier of the external software workload within the external identity provider. The combination of issuer and subject must be unique on the app.
+	// The identifier of the external software workload within the external identity provider. The combination of issuer and subject must be unique on the app.
+	Subject *string `json:"subject,omitempty" tf:"subject,omitempty"`
 }
 
 type FederatedIdentityCredentialParameters struct {
@@ -40,8 +64,8 @@ type FederatedIdentityCredentialParameters struct {
 
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the `aud` claim of incoming tokens.
-	// +kubebuilder:validation:Required
-	Audiences []*string `json:"audiences" tf:"audiences,omitempty"`
+	// +kubebuilder:validation:Optional
+	Audiences []*string `json:"audiences,omitempty" tf:"audiences,omitempty"`
 
 	// A description for the federated identity credential.
 	// A description for the federated identity credential
@@ -50,18 +74,18 @@ type FederatedIdentityCredentialParameters struct {
 
 	// A unique display name for the federated identity credential. Changing this forces a new resource to be created.
 	// A unique display name for the federated identity credential
-	// +kubebuilder:validation:Required
-	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// The URL of the external identity provider, which must match the issuer claim of the external token being exchanged. The combination of the values of issuer and subject must be unique on the app.
 	// The URL of the external identity provider, which must match the issuer claim of the external token being exchanged. The combination of the values of issuer and subject must be unique on the app.
-	// +kubebuilder:validation:Required
-	Issuer *string `json:"issuer" tf:"issuer,omitempty"`
+	// +kubebuilder:validation:Optional
+	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
 
 	// The identifier of the external software workload within the external identity provider. The combination of issuer and subject must be unique on the app.
 	// The identifier of the external software workload within the external identity provider. The combination of issuer and subject must be unique on the app.
-	// +kubebuilder:validation:Required
-	Subject *string `json:"subject" tf:"subject,omitempty"`
+	// +kubebuilder:validation:Optional
+	Subject *string `json:"subject,omitempty" tf:"subject,omitempty"`
 }
 
 // FederatedIdentityCredentialSpec defines the desired state of FederatedIdentityCredential
@@ -88,8 +112,12 @@ type FederatedIdentityCredentialStatus struct {
 type FederatedIdentityCredential struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              FederatedIdentityCredentialSpec   `json:"spec"`
-	Status            FederatedIdentityCredentialStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.audiences)",message="audiences is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.issuer)",message="issuer is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.subject)",message="subject is a required parameter"
+	Spec   FederatedIdentityCredentialSpec   `json:"spec"`
+	Status FederatedIdentityCredentialStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

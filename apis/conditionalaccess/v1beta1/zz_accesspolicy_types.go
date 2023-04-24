@@ -15,34 +15,58 @@ import (
 
 type AccessPolicyObservation struct {
 
+	// A conditions block as documented below, which specifies the rules that must be met for the policy to apply.
+	Conditions []ConditionsObservation `json:"conditions,omitempty" tf:"conditions,omitempty"`
+
+	// The friendly name for this Conditional Access Policy.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// A grant_controls block as documented below, which specifies the grant controls that must be fulfilled to pass the policy.
+	GrantControls []GrantControlsObservation `json:"grantControls,omitempty" tf:"grant_controls,omitempty"`
+
 	// The ID of the Conditional Access Policy.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A session_controls block as documented below, which specifies the session controls that are enforced after sign-in.
+	SessionControls []SessionControlsObservation `json:"sessionControls,omitempty" tf:"session_controls,omitempty"`
+
+	// Specifies the state of the policy object. Possible values are: enabled, disabled and enabledForReportingButNotEnforced
+	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 
 type AccessPolicyParameters struct {
 
 	// A conditions block as documented below, which specifies the rules that must be met for the policy to apply.
-	// +kubebuilder:validation:Required
-	Conditions []ConditionsParameters `json:"conditions" tf:"conditions,omitempty"`
+	// +kubebuilder:validation:Optional
+	Conditions []ConditionsParameters `json:"conditions,omitempty" tf:"conditions,omitempty"`
 
 	// The friendly name for this Conditional Access Policy.
-	// +kubebuilder:validation:Required
-	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// A grant_controls block as documented below, which specifies the grant controls that must be fulfilled to pass the policy.
-	// +kubebuilder:validation:Required
-	GrantControls []GrantControlsParameters `json:"grantControls" tf:"grant_controls,omitempty"`
+	// +kubebuilder:validation:Optional
+	GrantControls []GrantControlsParameters `json:"grantControls,omitempty" tf:"grant_controls,omitempty"`
 
 	// A session_controls block as documented below, which specifies the session controls that are enforced after sign-in.
 	// +kubebuilder:validation:Optional
 	SessionControls []SessionControlsParameters `json:"sessionControls,omitempty" tf:"session_controls,omitempty"`
 
 	// Specifies the state of the policy object. Possible values are: enabled, disabled and enabledForReportingButNotEnforced
-	// +kubebuilder:validation:Required
-	State *string `json:"state" tf:"state,omitempty"`
+	// +kubebuilder:validation:Optional
+	State *string `json:"state,omitempty" tf:"state,omitempty"`
 }
 
 type ApplicationsObservation struct {
+
+	// A list of application IDs explicitly excluded from the policy. Can also be set to Office365.
+	ExcludedApplications []*string `json:"excludedApplications,omitempty" tf:"excluded_applications,omitempty"`
+
+	// A list of application IDs the policy applies to, unless explicitly excluded (in excluded_applications). Can also be set to All, None or Office365. Cannot be specified with included_user_actions. One of included_applications or included_user_actions must be specified.
+	IncludedApplications []*string `json:"includedApplications,omitempty" tf:"included_applications,omitempty"`
+
+	// A list of user actions to include. Supported values are urn:user:registerdevice and urn:user:registersecurityinfo. Cannot be specified with included_applications. One of included_applications or included_user_actions must be specified.
+	IncludedUserActions []*string `json:"includedUserActions,omitempty" tf:"included_user_actions,omitempty"`
 }
 
 type ApplicationsParameters struct {
@@ -61,6 +85,30 @@ type ApplicationsParameters struct {
 }
 
 type ConditionsObservation struct {
+
+	// An applications block as documented below, which specifies applications and user actions included in and excluded from the policy.
+	Applications []ApplicationsObservation `json:"applications,omitempty" tf:"applications,omitempty"`
+
+	// A list of client application types included in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients, exchangeActiveSync, easSupported and other.
+	ClientAppTypes []*string `json:"clientAppTypes,omitempty" tf:"client_app_types,omitempty"`
+
+	// A devices block as documented below, which describes devices to be included in and excluded from the policy. A devices block can be added to an existing policy, but removing the devices block forces a new resource to be created.
+	Devices []DevicesObservation `json:"devices,omitempty" tf:"devices,omitempty"`
+
+	// A locations block as documented below, which specifies locations included in and excluded from the policy.
+	Locations []LocationsObservation `json:"locations,omitempty" tf:"locations,omitempty"`
+
+	// A platforms block as documented below, which specifies platforms included in and excluded from the policy.
+	Platforms []PlatformsObservation `json:"platforms,omitempty" tf:"platforms,omitempty"`
+
+	// A list of sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
+	SignInRiskLevels []*string `json:"signInRiskLevels,omitempty" tf:"sign_in_risk_levels,omitempty"`
+
+	// A list of user risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
+	UserRiskLevels []*string `json:"userRiskLevels,omitempty" tf:"user_risk_levels,omitempty"`
+
+	// A users block as documented below, which specifies users, groups, and roles included in and excluded from the policy.
+	Users []UsersObservation `json:"users,omitempty" tf:"users,omitempty"`
 }
 
 type ConditionsParameters struct {
@@ -99,6 +147,9 @@ type ConditionsParameters struct {
 }
 
 type DevicesObservation struct {
+
+	// A filter block as described below. A filter block can be added to an existing policy, but removing the filter block forces a new resource to be created.
+	Filter []FilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
 }
 
 type DevicesParameters struct {
@@ -109,6 +160,12 @@ type DevicesParameters struct {
 }
 
 type FilterObservation struct {
+
+	// Whether to include in, or exclude from, matching devices from the policy. Supported values are include or exclude.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// Condition filter to match devices. For more information, see official documentation.
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type FilterParameters struct {
@@ -123,6 +180,18 @@ type FilterParameters struct {
 }
 
 type GrantControlsObservation struct {
+
+	// List of built-in controls required by the policy. Possible values are: block, mfa, approvedApplication, compliantApplication, compliantDevice, domainJoinedDevice, passwordChange or unknownFutureValue.
+	BuiltInControls []*string `json:"builtInControls,omitempty" tf:"built_in_controls,omitempty"`
+
+	// List of custom controls IDs required by the policy.
+	CustomAuthenticationFactors []*string `json:"customAuthenticationFactors,omitempty" tf:"custom_authentication_factors,omitempty"`
+
+	// Defines the relationship of the grant controls. Possible values are: AND, OR.
+	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
+
+	// List of terms of use IDs required by the policy.
+	TermsOfUse []*string `json:"termsOfUse,omitempty" tf:"terms_of_use,omitempty"`
 }
 
 type GrantControlsParameters struct {
@@ -145,6 +214,12 @@ type GrantControlsParameters struct {
 }
 
 type LocationsObservation struct {
+
+	// A list of location IDs excluded from scope of policy. Can also be set to AllTrusted.
+	ExcludedLocations []*string `json:"excludedLocations,omitempty" tf:"excluded_locations,omitempty"`
+
+	// A list of location IDs in scope of policy unless explicitly excluded. Can also be set to All, or AllTrusted.
+	IncludedLocations []*string `json:"includedLocations,omitempty" tf:"included_locations,omitempty"`
 }
 
 type LocationsParameters struct {
@@ -159,6 +234,12 @@ type LocationsParameters struct {
 }
 
 type PlatformsObservation struct {
+
+	// A list of platforms explicitly excluded from the policy. Possible values are: all, android, iOS, linux, macOS, windows, windowsPhone or unknownFutureValue.
+	ExcludedPlatforms []*string `json:"excludedPlatforms,omitempty" tf:"excluded_platforms,omitempty"`
+
+	// A list of platforms the policy applies to, unless explicitly excluded. Possible values are: all, android, iOS, linux, macOS, windows, windowsPhone or unknownFutureValue.
+	IncludedPlatforms []*string `json:"includedPlatforms,omitempty" tf:"included_platforms,omitempty"`
 }
 
 type PlatformsParameters struct {
@@ -173,6 +254,21 @@ type PlatformsParameters struct {
 }
 
 type SessionControlsObservation struct {
+
+	// Whether or not application enforced restrictions are enabled. Defaults to false.
+	ApplicationEnforcedRestrictionsEnabled *bool `json:"applicationEnforcedRestrictionsEnabled,omitempty" tf:"application_enforced_restrictions_enabled,omitempty"`
+
+	// Enables cloud app security and specifies the cloud app security policy to use. Possible values are: blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.
+	CloudAppSecurityPolicy *string `json:"cloudAppSecurityPolicy,omitempty" tf:"cloud_app_security_policy,omitempty"`
+
+	// Session control to define whether to persist cookies or not. Possible values are: always or never.
+	PersistentBrowserMode *string `json:"persistentBrowserMode,omitempty" tf:"persistent_browser_mode,omitempty"`
+
+	// Number of days or hours to enforce sign-in frequency. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.
+	SignInFrequency *float64 `json:"signInFrequency,omitempty" tf:"sign_in_frequency,omitempty"`
+
+	// The time period to enforce sign-in frequency. Possible values are: hours or days. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.
+	SignInFrequencyPeriod *string `json:"signInFrequencyPeriod,omitempty" tf:"sign_in_frequency_period,omitempty"`
 }
 
 type SessionControlsParameters struct {
@@ -199,6 +295,24 @@ type SessionControlsParameters struct {
 }
 
 type UsersObservation struct {
+
+	// A list of group IDs excluded from scope of policy.
+	ExcludedGroups []*string `json:"excludedGroups,omitempty" tf:"excluded_groups,omitempty"`
+
+	// A list of role IDs excluded from scope of policy.
+	ExcludedRoles []*string `json:"excludedRoles,omitempty" tf:"excluded_roles,omitempty"`
+
+	// A list of user IDs excluded from scope of policy and/or GuestsOrExternalUsers.
+	ExcludedUsers []*string `json:"excludedUsers,omitempty" tf:"excluded_users,omitempty"`
+
+	// A list of group IDs in scope of policy unless explicitly excluded.
+	IncludedGroups []*string `json:"includedGroups,omitempty" tf:"included_groups,omitempty"`
+
+	// A list of role IDs in scope of policy unless explicitly excluded.
+	IncludedRoles []*string `json:"includedRoles,omitempty" tf:"included_roles,omitempty"`
+
+	// A list of user IDs in scope of policy unless explicitly excluded, or None or All or GuestsOrExternalUsers.
+	IncludedUsers []*string `json:"includedUsers,omitempty" tf:"included_users,omitempty"`
 }
 
 type UsersParameters struct {
@@ -252,8 +366,12 @@ type AccessPolicyStatus struct {
 type AccessPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              AccessPolicySpec   `json:"spec"`
-	Status            AccessPolicyStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.conditions)",message="conditions is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.grantControls)",message="grantControls is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.state)",message="state is a required parameter"
+	Spec   AccessPolicySpec   `json:"spec"`
+	Status AccessPolicyStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

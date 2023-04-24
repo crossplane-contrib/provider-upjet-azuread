@@ -14,6 +14,12 @@ import (
 )
 
 type CountryObservation struct {
+
+	// List of countries and/or regions in two-letter format specified by ISO 3166-2.
+	CountriesAndRegions []*string `json:"countriesAndRegions,omitempty" tf:"countries_and_regions,omitempty"`
+
+	// Whether IP addresses that don't map to a country or region should be included in the named location. Defaults to false.
+	IncludeUnknownCountriesAndRegions *bool `json:"includeUnknownCountriesAndRegions,omitempty" tf:"include_unknown_countries_and_regions,omitempty"`
 }
 
 type CountryParameters struct {
@@ -28,6 +34,12 @@ type CountryParameters struct {
 }
 
 type IPObservation struct {
+
+	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596.
+	IPRanges []*string `json:"ipRanges,omitempty" tf:"ip_ranges,omitempty"`
+
+	// Whether the named location is trusted. Defaults to false.
+	Trusted *bool `json:"trusted,omitempty" tf:"trusted,omitempty"`
 }
 
 type IPParameters struct {
@@ -43,8 +55,17 @@ type IPParameters struct {
 
 type LocationObservation struct {
 
+	// A country block as documented below, which configures a country-based named location.
+	Country []CountryObservation `json:"country,omitempty" tf:"country,omitempty"`
+
+	// The friendly name for this named location.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
 	// The ID of the named location.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// An ip block as documented below, which configures an IP-based named location.
+	IP []IPObservation `json:"ip,omitempty" tf:"ip,omitempty"`
 }
 
 type LocationParameters struct {
@@ -54,8 +75,8 @@ type LocationParameters struct {
 	Country []CountryParameters `json:"country,omitempty" tf:"country,omitempty"`
 
 	// The friendly name for this named location.
-	// +kubebuilder:validation:Required
-	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// An ip block as documented below, which configures an IP-based named location.
 	// +kubebuilder:validation:Optional
@@ -86,8 +107,9 @@ type LocationStatus struct {
 type Location struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              LocationSpec   `json:"spec"`
-	Status            LocationStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	Spec   LocationSpec   `json:"spec"`
+	Status LocationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -17,6 +17,11 @@ func (mg *ClaimsMappingPolicy) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this ClaimsMappingPolicy.
+func (mg *ClaimsMappingPolicy) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this ClaimsMappingPolicy.
 func (mg *ClaimsMappingPolicy) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -48,6 +53,11 @@ func (mg *ClaimsMappingPolicy) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this ClaimsMappingPolicy.
 func (mg *ClaimsMappingPolicy) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this ClaimsMappingPolicy.
+func (mg *ClaimsMappingPolicy) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this ClaimsMappingPolicy.

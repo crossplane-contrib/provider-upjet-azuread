@@ -44,6 +44,7 @@ func GetProvider() *ujconfig.Provider {
 			ExternalNameConfigurations(),
 		),
 		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),
+		ujconfig.WithFeaturesPackage("internal/features"),
 	)
 
 	for _, configure := range []func(provider *ujconfig.Provider){

@@ -16,13 +16,33 @@ import (
 type InvitationObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// A message block as documented below, which configures the message being sent to the invited user. If this block is omitted, no message will be sent.
+	// Customize the message sent to the invited user
+	Message []MessageObservation `json:"message,omitempty" tf:"message,omitempty"`
+
 	// The URL the user can use to redeem their invitation.
 	// The URL the user can use to redeem their invitation
 	RedeemURL *string `json:"redeemUrl,omitempty" tf:"redeem_url,omitempty"`
 
+	// The URL that the user should be redirected to once the invitation is redeemed.
+	// The URL that the user should be redirected to once the invitation is redeemed
+	RedirectURL *string `json:"redirectUrl,omitempty" tf:"redirect_url,omitempty"`
+
+	// The display name of the user being invited.
+	// The display name of the user being invited
+	UserDisplayName *string `json:"userDisplayName,omitempty" tf:"user_display_name,omitempty"`
+
+	// The email address of the user being invited.
+	// The email address of the user being invited
+	UserEmailAddress *string `json:"userEmailAddress,omitempty" tf:"user_email_address,omitempty"`
+
 	// Object ID of the invited user.
 	// Object ID of the invited user
 	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
+
+	// The user type of the user being invited. Must be one of Guest or Member. Only Global Administrators can invite users as members. Defaults to Guest.
+	// The user type of the user being invited
+	UserType *string `json:"userType,omitempty" tf:"user_type,omitempty"`
 }
 
 type InvitationParameters struct {
@@ -34,8 +54,8 @@ type InvitationParameters struct {
 
 	// The URL that the user should be redirected to once the invitation is redeemed.
 	// The URL that the user should be redirected to once the invitation is redeemed
-	// +kubebuilder:validation:Required
-	RedirectURL *string `json:"redirectUrl" tf:"redirect_url,omitempty"`
+	// +kubebuilder:validation:Optional
+	RedirectURL *string `json:"redirectUrl,omitempty" tf:"redirect_url,omitempty"`
 
 	// The display name of the user being invited.
 	// The display name of the user being invited
@@ -44,8 +64,8 @@ type InvitationParameters struct {
 
 	// The email address of the user being invited.
 	// The email address of the user being invited
-	// +kubebuilder:validation:Required
-	UserEmailAddress *string `json:"userEmailAddress" tf:"user_email_address,omitempty"`
+	// +kubebuilder:validation:Optional
+	UserEmailAddress *string `json:"userEmailAddress,omitempty" tf:"user_email_address,omitempty"`
 
 	// The user type of the user being invited. Must be one of Guest or Member. Only Global Administrators can invite users as members. Defaults to Guest.
 	// The user type of the user being invited
@@ -54,6 +74,18 @@ type InvitationParameters struct {
 }
 
 type MessageObservation struct {
+
+	// Email addresses of additional recipients the invitation message should be sent to. Only 1 additional recipient is currently supported by Azure.
+	// Email addresses of additional recipients the invitation message should be sent to
+	AdditionalRecipients []*string `json:"additionalRecipients,omitempty" tf:"additional_recipients,omitempty"`
+
+	// Customized message body you want to send if you don't want to send the default message. Cannot be specified with language.
+	// Customized message body you want to send if you don't want to send the default message
+	Body *string `json:"body,omitempty" tf:"body,omitempty"`
+
+	// The language you want to send the default message in. The value specified must be in ISO 639 format. Defaults to en-US. Cannot be specified with body.
+	// The language you want to send the default message in
+	Language *string `json:"language,omitempty" tf:"language,omitempty"`
 }
 
 type MessageParameters struct {
@@ -98,8 +130,10 @@ type InvitationStatus struct {
 type Invitation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              InvitationSpec   `json:"spec"`
-	Status            InvitationStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.redirectUrl)",message="redirectUrl is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.userEmailAddress)",message="userEmailAddress is a required parameter"
+	Spec   InvitationSpec   `json:"spec"`
+	Status InvitationStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

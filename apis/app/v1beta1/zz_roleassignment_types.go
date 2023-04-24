@@ -14,11 +14,20 @@ import (
 )
 
 type RoleAssignmentObservation struct {
+
+	// The ID of the app role to be assigned, or the default role ID 00000000-0000-0000-0000-000000000000. Changing this forces a new resource to be created.
+	// The ID of the app role to be assigned
+	AppRoleID *string `json:"appRoleId,omitempty" tf:"app_role_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// The display name of the principal to which the app role is assigned.
 	// The display name of the principal to which the app role is assigned
 	PrincipalDisplayName *string `json:"principalDisplayName,omitempty" tf:"principal_display_name,omitempty"`
+
+	// The object ID of the user, group or service principal to be assigned this app role. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
+	// The object ID of the user, group or service principal to be assigned this app role
+	PrincipalObjectID *string `json:"principalObjectId,omitempty" tf:"principal_object_id,omitempty"`
 
 	// The object type of the principal to which the app role is assigned.
 	// The object type of the principal to which the app role is assigned
@@ -27,14 +36,18 @@ type RoleAssignmentObservation struct {
 	// The display name of the application representing the resource.
 	// The display name of the application representing the resource
 	ResourceDisplayName *string `json:"resourceDisplayName,omitempty" tf:"resource_display_name,omitempty"`
+
+	// The object ID of the service principal representing the resource. Changing this forces a new resource to be created.
+	// The object ID of the service principal representing the resource
+	ResourceObjectID *string `json:"resourceObjectId,omitempty" tf:"resource_object_id,omitempty"`
 }
 
 type RoleAssignmentParameters struct {
 
 	// The ID of the app role to be assigned, or the default role ID 00000000-0000-0000-0000-000000000000. Changing this forces a new resource to be created.
 	// The ID of the app role to be assigned
-	// +kubebuilder:validation:Required
-	AppRoleID *string `json:"appRoleId" tf:"app_role_id,omitempty"`
+	// +kubebuilder:validation:Optional
+	AppRoleID *string `json:"appRoleId,omitempty" tf:"app_role_id,omitempty"`
 
 	// The object ID of the user, group or service principal to be assigned this app role. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the user, group or service principal to be assigned this app role
@@ -89,8 +102,9 @@ type RoleAssignmentStatus struct {
 type RoleAssignment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              RoleAssignmentSpec   `json:"spec"`
-	Status            RoleAssignmentStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.appRoleId)",message="appRoleId is a required parameter"
+	Spec   RoleAssignmentSpec   `json:"spec"`
+	Status RoleAssignmentStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

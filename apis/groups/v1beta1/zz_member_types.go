@@ -14,7 +14,16 @@ import (
 )
 
 type MemberObservation struct {
+
+	// The object ID of the group you want to add the member to. Changing this forces a new resource to be created.
+	// The object ID of the group you want to add the member to
+	GroupObjectID *string `json:"groupObjectId,omitempty" tf:"group_object_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The object ID of the principal you want to add as a member to the group. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
+	// The object ID of the principal you want to add as a member to the group. Supported object types are Users, Groups or Service Principals
+	MemberObjectID *string `json:"memberObjectId,omitempty" tf:"member_object_id,omitempty"`
 }
 
 type MemberParameters struct {

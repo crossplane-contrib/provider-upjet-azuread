@@ -15,11 +15,23 @@ import (
 
 type JobObservation struct {
 
+	// Whether or not the provisioning job is enabled. Default state is true.
+	// Whether or not the synchronization job is enabled
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
 	// An ID used to uniquely identify this synchronization job.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// A schedule list as documented below.
 	Schedule []ScheduleObservation `json:"schedule,omitempty" tf:"schedule,omitempty"`
+
+	// The object ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.
+	// The object ID of the service principal for which this synchronization job should be created
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
+
+	// Identifier of the synchronization template this job is based on.
+	// Identifier of the synchronization template this job is based on.
+	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`
 }
 
 type JobParameters struct {
@@ -45,8 +57,8 @@ type JobParameters struct {
 
 	// Identifier of the synchronization template this job is based on.
 	// Identifier of the synchronization template this job is based on.
-	// +kubebuilder:validation:Required
-	TemplateID *string `json:"templateId" tf:"template_id,omitempty"`
+	// +kubebuilder:validation:Optional
+	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`
 }
 
 type ScheduleObservation struct {
@@ -88,8 +100,9 @@ type JobStatus struct {
 type Job struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              JobSpec   `json:"spec"`
-	Status            JobStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.templateId)",message="templateId is a required parameter"
+	Spec   JobSpec   `json:"spec"`
+	Status JobStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

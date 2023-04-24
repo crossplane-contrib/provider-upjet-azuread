@@ -14,11 +14,36 @@ import (
 )
 
 type PasswordObservation struct {
+
+	// A display name for the password.
+	// A display name for the password
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`)
+	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
+
+	// A relative duration for which the password is valid until, for example 240h (10 days) or 2400h30m. Changing this field forces a new resource to be created.
+	// A relative duration for which the password is valid until, for example `240h` (10 days) or `2400h30m`. Changing this field forces a new resource to be created
+	EndDateRelative *string `json:"endDateRelative,omitempty" tf:"end_date_relative,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// A UUID used to uniquely identify this password credential.
 	// A UUID used to uniquely identify this password credential
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
+
+	// A map of arbitrary key/value pairs that will force recreation of the password when they change, enabling password rotation based on external conditions such as a rotating timestamp. Changing this forces a new resource to be created.
+	// Arbitrary map of values that, when changed, will trigger rotation of the password
+	RotateWhenChanged map[string]*string `json:"rotateWhenChanged,omitempty" tf:"rotate_when_changed,omitempty"`
+
+	// The object ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
+	// The object ID of the service principal for which this password should be created
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
+
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
+	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
 }
 
 type PasswordParameters struct {

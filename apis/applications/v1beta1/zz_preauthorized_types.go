@@ -14,7 +14,19 @@ import (
 )
 
 type PreAuthorizedObservation struct {
+
+	// The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+	// The object ID of the application to which this pre-authorized application should be added
+	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
+
+	// The application ID of the pre-authorized application
+	AuthorizedAppID *string `json:"authorizedAppId,omitempty" tf:"authorized_app_id,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A set of permission scope IDs required by the authorized application.
+	// The IDs of the permission scopes required by the pre-authorized application
+	PermissionIds []*string `json:"permissionIds,omitempty" tf:"permission_ids,omitempty"`
 }
 
 type PreAuthorizedParameters struct {
@@ -49,8 +61,8 @@ type PreAuthorizedParameters struct {
 
 	// A set of permission scope IDs required by the authorized application.
 	// The IDs of the permission scopes required by the pre-authorized application
-	// +kubebuilder:validation:Required
-	PermissionIds []*string `json:"permissionIds" tf:"permission_ids,omitempty"`
+	// +kubebuilder:validation:Optional
+	PermissionIds []*string `json:"permissionIds,omitempty" tf:"permission_ids,omitempty"`
 }
 
 // PreAuthorizedSpec defines the desired state of PreAuthorized
@@ -77,8 +89,9 @@ type PreAuthorizedStatus struct {
 type PreAuthorized struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              PreAuthorizedSpec   `json:"spec"`
-	Status            PreAuthorizedStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.permissionIds)",message="permissionIds is a required parameter"
+	Spec   PreAuthorizedSpec   `json:"spec"`
+	Status PreAuthorizedStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

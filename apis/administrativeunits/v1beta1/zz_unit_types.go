@@ -14,11 +14,30 @@ import (
 )
 
 type UnitObservation struct {
+
+	// The description of the administrative unit.
+	// The description for the administrative unit
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The display name of the administrative unit.
+	// The display name for the administrative unit
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// Whether the administrative unit and its members are hidden or publicly viewable in the directory
+	HiddenMembershipEnabled *bool `json:"hiddenMembershipEnabled,omitempty" tf:"hidden_membership_enabled,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups.
+	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
 	// The object ID of the administrative unit.
 	// The object ID of the administrative unit
 	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
+
+	// If `true`, will return an error if an existing administrative unit is found with the same name
+	PreventDuplicateNames *bool `json:"preventDuplicateNames,omitempty" tf:"prevent_duplicate_names,omitempty"`
 }
 
 type UnitParameters struct {
@@ -30,8 +49,8 @@ type UnitParameters struct {
 
 	// The display name of the administrative unit.
 	// The display name for the administrative unit
-	// +kubebuilder:validation:Required
-	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
 	// Whether the administrative unit and its members are hidden or publicly viewable in the directory
 	// +kubebuilder:validation:Optional
@@ -71,8 +90,9 @@ type UnitStatus struct {
 type Unit struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              UnitSpec   `json:"spec"`
-	Status            UnitStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	Spec   UnitSpec   `json:"spec"`
+	Status UnitStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

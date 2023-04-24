@@ -17,6 +17,11 @@ func (mg *PermissionGrant) GetDeletionPolicy() xpv1.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
+// GetManagementPolicy of this PermissionGrant.
+func (mg *PermissionGrant) GetManagementPolicy() xpv1.ManagementPolicy {
+	return mg.Spec.ManagementPolicy
+}
+
 // GetProviderConfigReference of this PermissionGrant.
 func (mg *PermissionGrant) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
@@ -48,6 +53,11 @@ func (mg *PermissionGrant) SetConditions(c ...xpv1.Condition) {
 // SetDeletionPolicy of this PermissionGrant.
 func (mg *PermissionGrant) SetDeletionPolicy(r xpv1.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicy of this PermissionGrant.
+func (mg *PermissionGrant) SetManagementPolicy(r xpv1.ManagementPolicy) {
+	mg.Spec.ManagementPolicy = r
 }
 
 // SetProviderConfigReference of this PermissionGrant.

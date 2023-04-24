@@ -15,16 +15,32 @@ import (
 
 type PermissionGrantObservation struct {
 
+	// - A set of claim values for delegated permission scopes which should be included in access tokens for the resource.
+	// A set of claim values for delegated permission scopes which should be included in access tokens for the resource
+	ClaimValues []*string `json:"claimValues,omitempty" tf:"claim_values,omitempty"`
+
 	// The ID of the delegated permission grant.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.
+	// The object ID of the service principal representing the resource to be accessed
+	ResourceServicePrincipalObjectID *string `json:"resourceServicePrincipalObjectId,omitempty" tf:"resource_service_principal_object_id,omitempty"`
+
+	// The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.
+	// The object ID of the service principal for which this delegated permission grant should be created
+	ServicePrincipalObjectID *string `json:"servicePrincipalObjectId,omitempty" tf:"service_principal_object_id,omitempty"`
+
+	// - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.
+	// The object ID of the user on behalf of whom the service principal is authorized to access the resource
+	UserObjectID *string `json:"userObjectId,omitempty" tf:"user_object_id,omitempty"`
 }
 
 type PermissionGrantParameters struct {
 
 	// - A set of claim values for delegated permission scopes which should be included in access tokens for the resource.
 	// A set of claim values for delegated permission scopes which should be included in access tokens for the resource
-	// +kubebuilder:validation:Required
-	ClaimValues []*string `json:"claimValues" tf:"claim_values,omitempty"`
+	// +kubebuilder:validation:Optional
+	ClaimValues []*string `json:"claimValues,omitempty" tf:"claim_values,omitempty"`
 
 	// The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.
 	// The object ID of the service principal representing the resource to be accessed
@@ -94,8 +110,9 @@ type PermissionGrantStatus struct {
 type PermissionGrant struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              PermissionGrantSpec   `json:"spec"`
-	Status            PermissionGrantStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.claimValues)",message="claimValues is a required parameter"
+	Spec   PermissionGrantSpec   `json:"spec"`
+	Status PermissionGrantStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

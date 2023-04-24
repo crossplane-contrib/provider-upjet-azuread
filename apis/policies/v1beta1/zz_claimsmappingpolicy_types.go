@@ -15,6 +15,14 @@ import (
 
 type ClaimsMappingPolicyObservation struct {
 
+	// The claims mapping policy. This is a JSON formatted string, for which the jsonencode() function can be used.
+	// A string collection containing a JSON string that defines the rules and settings for this policy
+	Definition []*string `json:"definition,omitempty" tf:"definition,omitempty"`
+
+	// The display name for this Claims Mapping Policy.
+	// Display name for this policy
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
 	// The ID of the Claims Mapping Policy.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 }
@@ -23,13 +31,13 @@ type ClaimsMappingPolicyParameters struct {
 
 	// The claims mapping policy. This is a JSON formatted string, for which the jsonencode() function can be used.
 	// A string collection containing a JSON string that defines the rules and settings for this policy
-	// +kubebuilder:validation:Required
-	Definition []*string `json:"definition" tf:"definition,omitempty"`
+	// +kubebuilder:validation:Optional
+	Definition []*string `json:"definition,omitempty" tf:"definition,omitempty"`
 
 	// The display name for this Claims Mapping Policy.
 	// Display name for this policy
-	// +kubebuilder:validation:Required
-	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 }
 
 // ClaimsMappingPolicySpec defines the desired state of ClaimsMappingPolicy
@@ -56,8 +64,10 @@ type ClaimsMappingPolicyStatus struct {
 type ClaimsMappingPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              ClaimsMappingPolicySpec   `json:"spec"`
-	Status            ClaimsMappingPolicyStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.definition)",message="definition is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	Spec   ClaimsMappingPolicySpec   `json:"spec"`
+	Status ClaimsMappingPolicyStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
