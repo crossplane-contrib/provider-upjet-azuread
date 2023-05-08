@@ -231,6 +231,11 @@ func (in *GroupObservation) DeepCopyInto(out *GroupObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.OnpremisesGroupType != nil {
+		in, out := &in.OnpremisesGroupType, &out.OnpremisesGroupType
+		*out = new(string)
+		**out = **in
+	}
 	if in.OnpremisesNetbiosName != nil {
 		in, out := &in.OnpremisesNetbiosName, &out.OnpremisesNetbiosName
 		*out = new(string)
@@ -318,6 +323,11 @@ func (in *GroupObservation) DeepCopyInto(out *GroupObservation) {
 	if in.Visibility != nil {
 		in, out := &in.Visibility, &out.Visibility
 		*out = new(string)
+		**out = **in
+	}
+	if in.WritebackEnabled != nil {
+		in, out := &in.WritebackEnabled, &out.WritebackEnabled
+		*out = new(bool)
 		**out = **in
 	}
 }
@@ -420,6 +430,11 @@ func (in *GroupParameters) DeepCopyInto(out *GroupParameters) {
 			}
 		}
 	}
+	if in.OnpremisesGroupType != nil {
+		in, out := &in.OnpremisesGroupType, &out.OnpremisesGroupType
+		*out = new(string)
+		**out = **in
+	}
 	if in.Owners != nil {
 		in, out := &in.Owners, &out.Owners
 		*out = make([]*string, len(*in))
@@ -471,6 +486,11 @@ func (in *GroupParameters) DeepCopyInto(out *GroupParameters) {
 	if in.Visibility != nil {
 		in, out := &in.Visibility, &out.Visibility
 		*out = new(string)
+		**out = **in
+	}
+	if in.WritebackEnabled != nil {
+		in, out := &in.WritebackEnabled, &out.WritebackEnabled
+		*out = new(bool)
 		**out = **in
 	}
 }

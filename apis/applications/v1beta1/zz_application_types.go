@@ -261,6 +261,10 @@ type ApplicationObservation struct {
 	// A collection of required_resource_access blocks as documented below.
 	RequiredResourceAccess []RequiredResourceAccessObservation `json:"requiredResourceAccess,omitempty" tf:"required_resource_access,omitempty"`
 
+	// References application context information from a Service or Asset Management database.
+	// References application or service contact information from a Service or Asset Management database
+	ServiceManagementReference *string `json:"serviceManagementReference,omitempty" tf:"service_management_reference,omitempty"`
+
 	// The Microsoft account types that are supported for the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount. Defaults to AzureADMyOrg.
 	// The Microsoft account types that are supported for the current application
 	SignInAudience *string `json:"signInAudience,omitempty" tf:"sign_in_audience,omitempty"`
@@ -379,6 +383,11 @@ type ApplicationParameters struct {
 	// A collection of required_resource_access blocks as documented below.
 	// +kubebuilder:validation:Optional
 	RequiredResourceAccess []RequiredResourceAccessParameters `json:"requiredResourceAccess,omitempty" tf:"required_resource_access,omitempty"`
+
+	// References application context information from a Service or Asset Management database.
+	// References application or service contact information from a Service or Asset Management database
+	// +kubebuilder:validation:Optional
+	ServiceManagementReference *string `json:"serviceManagementReference,omitempty" tf:"service_management_reference,omitempty"`
 
 	// The Microsoft account types that are supported for the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount. Defaults to AzureADMyOrg.
 	// The Microsoft account types that are supported for the current application

@@ -79,11 +79,11 @@ spec:
                     type: array
                   assignableToRole:
                     description: Indicates whether this group can be assigned to an
-                      Azure Active Directory role. Can only be true for security-enabled
-                      groups. Changing this forces a new resource to be created. Indicates
-                      whether this group can be assigned to an Azure Active Directory
-                      role. This property can only be `true` for security-enabled
-                      groups.
+                      Azure Active Directory role. Defaults to false. Can only be
+                      set to true for security-enabled groups. Changing this forces
+                      a new resource to be created. Indicates whether this group can
+                      be assigned to an Azure Active Directory role. This property
+                      can only be `true` for security-enabled groups.
                     type: boolean
                   autoSubscribeNewMembers:
                     description: Indicates whether new members added to the group
@@ -179,6 +179,13 @@ spec:
                     items:
                       type: string
                     type: array
+                  onpremisesGroupType:
+                    description: The on-premises group type that the AAD group will
+                      be written as, when writeback is enabled. Possible values are
+                      UniversalDistributionGroup, UniversalMailEnabledSecurityGroup,
+                      or UniversalSecurityGroup. Indicates the target on-premise group
+                      type the group will be written back as
+                    type: string
                   owners:
                     description: A set of object IDs of principals that will be granted
                       ownership of the group. Supported object types are users or
@@ -238,6 +245,12 @@ spec:
                       365 groups will receive Public visibility. Specifies the group
                       join policy and group content visibility
                     type: string
+                  writebackEnabled:
+                    description: Whether the group will be written back to the configured
+                      on-premises Active Directory when Azure AD Connect is used.
+                      Whether this group should be synced from Azure AD to the on-premises
+                      directory when Azure AD Connect is used
+                    type: boolean
                 type: object
               managementPolicy:
                 default: FullControl
@@ -445,11 +458,11 @@ spec:
                     type: array
                   assignableToRole:
                     description: Indicates whether this group can be assigned to an
-                      Azure Active Directory role. Can only be true for security-enabled
-                      groups. Changing this forces a new resource to be created. Indicates
-                      whether this group can be assigned to an Azure Active Directory
-                      role. This property can only be `true` for security-enabled
-                      groups.
+                      Azure Active Directory role. Defaults to false. Can only be
+                      set to true for security-enabled groups. Changing this forces
+                      a new resource to be created. Indicates whether this group can
+                      be assigned to an Azure Active Directory role. This property
+                      can only be `true` for security-enabled groups.
                     type: boolean
                   autoSubscribeNewMembers:
                     description: Indicates whether new members added to the group
@@ -558,6 +571,13 @@ spec:
                       is used. The on-premises FQDN, also called dnsDomainName, synchronized
                       from the on-premises directory when Azure AD Connect is used
                     type: string
+                  onpremisesGroupType:
+                    description: The on-premises group type that the AAD group will
+                      be written as, when writeback is enabled. Possible values are
+                      UniversalDistributionGroup, UniversalMailEnabledSecurityGroup,
+                      or UniversalSecurityGroup. Indicates the target on-premise group
+                      type the group will be written back as
+                    type: string
                   onpremisesNetbiosName:
                     description: The on-premises NetBIOS name, synchronised from the
                       on-premises directory when Azure AD Connect is used. The on-premises
@@ -654,6 +674,12 @@ spec:
                       365 groups will receive Public visibility. Specifies the group
                       join policy and group content visibility
                     type: string
+                  writebackEnabled:
+                    description: Whether the group will be written back to the configured
+                      on-premises Active Directory when Azure AD Connect is used.
+                      Whether this group should be synced from Azure AD to the on-premises
+                      directory when Azure AD Connect is used
+                    type: boolean
                 type: object
               conditions:
                 description: Conditions of the resource.
