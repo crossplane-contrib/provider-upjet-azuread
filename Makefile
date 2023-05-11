@@ -136,6 +136,11 @@ generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
 go.cachedir:
 	@go env GOCACHE
 
+go.mod.cachedir:
+	@go env GOMODCACHE
+
+.PHONY: go.mod.cachedir go.cachedir
+
 # Generate a coverage report for cobertura applying exclusions on
 # - generated file
 cobertura:
