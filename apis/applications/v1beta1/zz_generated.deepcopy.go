@@ -531,6 +531,11 @@ func (in *ApplicationObservation) DeepCopyInto(out *ApplicationObservation) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.ServiceManagementReference != nil {
+		in, out := &in.ServiceManagementReference, &out.ServiceManagementReference
+		*out = new(string)
+		**out = **in
+	}
 	if in.SignInAudience != nil {
 		in, out := &in.SignInAudience, &out.SignInAudience
 		*out = new(string)
@@ -715,6 +720,11 @@ func (in *ApplicationParameters) DeepCopyInto(out *ApplicationParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.ServiceManagementReference != nil {
+		in, out := &in.ServiceManagementReference, &out.ServiceManagementReference
+		*out = new(string)
+		**out = **in
 	}
 	if in.SignInAudience != nil {
 		in, out := &in.SignInAudience, &out.SignInAudience

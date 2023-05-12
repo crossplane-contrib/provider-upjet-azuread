@@ -517,6 +517,12 @@ spec:
                       - resourceAppId
                       type: object
                     type: array
+                  serviceManagementReference:
+                    description: References application context information from a
+                      Service or Asset Management database. References application
+                      or service contact information from a Service or Asset Management
+                      database
+                    type: string
                   signInAudience:
                     description: The Microsoft account types that are supported for
                       the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs,
@@ -1278,6 +1284,12 @@ spec:
                           type: string
                       type: object
                     type: array
+                  serviceManagementReference:
+                    description: References application context information from a
+                      Service or Asset Management database. References application
+                      or service contact information from a Service or Asset Management
+                      database
+                    type: string
                   signInAudience:
                     description: The Microsoft account types that are supported for
                       the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs,

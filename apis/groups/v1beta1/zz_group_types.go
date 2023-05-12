@@ -41,7 +41,7 @@ type GroupObservation struct {
 	// The administrative unit IDs in which the group should be. If empty, the group will be created at the tenant level.
 	AdministrativeUnitIds []*string `json:"administrativeUnitIds,omitempty" tf:"administrative_unit_ids,omitempty"`
 
-	// Indicates whether this group can be assigned to an Azure Active Directory role. Can only be true for security-enabled groups. Changing this forces a new resource to be created.
+	// Indicates whether this group can be assigned to an Azure Active Directory role. Defaults to false. Can only be set to true for security-enabled groups. Changing this forces a new resource to be created.
 	// Indicates whether this group can be assigned to an Azure Active Directory role. This property can only be `true` for security-enabled groups.
 	AssignableToRole *bool `json:"assignableToRole,omitempty" tf:"assignable_to_role,omitempty"`
 
@@ -103,6 +103,10 @@ type GroupObservation struct {
 	// The on-premises FQDN, also called dnsDomainName, synchronized from the on-premises directory when Azure AD Connect is used
 	OnpremisesDomainName *string `json:"onpremisesDomainName,omitempty" tf:"onpremises_domain_name,omitempty"`
 
+	// The on-premises group type that the AAD group will be written as, when writeback is enabled. Possible values are UniversalDistributionGroup, UniversalMailEnabledSecurityGroup, or UniversalSecurityGroup.
+	// Indicates the target on-premise group type the group will be written back as
+	OnpremisesGroupType *string `json:"onpremisesGroupType,omitempty" tf:"onpremises_group_type,omitempty"`
+
 	// The on-premises NetBIOS name, synchronised from the on-premises directory when Azure AD Connect is used.
 	// The on-premises NetBIOS name, synchronized from the on-premises directory when Azure AD Connect is used
 	OnpremisesNetbiosName *string `json:"onpremisesNetbiosName,omitempty" tf:"onpremises_netbios_name,omitempty"`
@@ -154,6 +158,10 @@ type GroupObservation struct {
 	// The group join policy and group content visibility. Possible values are Private, Public, or Hiddenmembership. Only Microsoft 365 groups can have Hiddenmembership visibility and this value must be set when the group is created. By default, security groups will receive Private visibility and Microsoft 365 groups will receive Public visibility.
 	// Specifies the group join policy and group content visibility
 	Visibility *string `json:"visibility,omitempty" tf:"visibility,omitempty"`
+
+	// Whether the group will be written back to the configured on-premises Active Directory when Azure AD Connect is used.
+	// Whether this group should be synced from Azure AD to the on-premises directory when Azure AD Connect is used
+	WritebackEnabled *bool `json:"writebackEnabled,omitempty" tf:"writeback_enabled,omitempty"`
 }
 
 type GroupParameters struct {
@@ -163,7 +171,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	AdministrativeUnitIds []*string `json:"administrativeUnitIds,omitempty" tf:"administrative_unit_ids,omitempty"`
 
-	// Indicates whether this group can be assigned to an Azure Active Directory role. Can only be true for security-enabled groups. Changing this forces a new resource to be created.
+	// Indicates whether this group can be assigned to an Azure Active Directory role. Defaults to false. Can only be set to true for security-enabled groups. Changing this forces a new resource to be created.
 	// Indicates whether this group can be assigned to an Azure Active Directory role. This property can only be `true` for security-enabled groups.
 	// +kubebuilder:validation:Optional
 	AssignableToRole *bool `json:"assignableToRole,omitempty" tf:"assignable_to_role,omitempty"`
@@ -223,6 +231,11 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
+	// The on-premises group type that the AAD group will be written as, when writeback is enabled. Possible values are UniversalDistributionGroup, UniversalMailEnabledSecurityGroup, or UniversalSecurityGroup.
+	// Indicates the target on-premise group type the group will be written back as
+	// +kubebuilder:validation:Optional
+	OnpremisesGroupType *string `json:"onpremisesGroupType,omitempty" tf:"onpremises_group_type,omitempty"`
+
 	// A set of object IDs of principals that will be granted ownership of the group. Supported object types are users or service principals. Groups cannot be created with no owners or have all their owners removed.
 	// A set of owners who own this group. Supported object types are Users or Service Principals
 	// +kubebuilder:validation:Optional
@@ -257,6 +270,11 @@ type GroupParameters struct {
 	// Specifies the group join policy and group content visibility
 	// +kubebuilder:validation:Optional
 	Visibility *string `json:"visibility,omitempty" tf:"visibility,omitempty"`
+
+	// Whether the group will be written back to the configured on-premises Active Directory when Azure AD Connect is used.
+	// Whether this group should be synced from Azure AD to the on-premises directory when Azure AD Connect is used
+	// +kubebuilder:validation:Optional
+	WritebackEnabled *bool `json:"writebackEnabled,omitempty" tf:"writeback_enabled,omitempty"`
 }
 
 // GroupSpec defines the desired state of Group

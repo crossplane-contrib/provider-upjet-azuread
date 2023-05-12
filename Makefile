@@ -8,7 +8,7 @@ export TERRAFORM_VERSION := 1.2.1
 
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/azuread
 export TERRAFORM_PROVIDER_REPO := https://github.com/hashicorp/terraform-provider-azuread
-export TERRAFORM_PROVIDER_VERSION := 2.36.0
+export TERRAFORM_PROVIDER_VERSION := 2.38.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-azuread
 export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-azuread_v$(TERRAFORM_PROVIDER_VERSION)_x5
 export TERRAFORM_DOCS_PATH := docs/resources
@@ -135,6 +135,11 @@ generate.init: $(TERRAFORM_PROVIDER_SCHEMA) pull-docs
 # its location in CI so that we cache between builds.
 go.cachedir:
 	@go env GOCACHE
+
+go.mod.cachedir:
+	@go env GOMODCACHE
+
+.PHONY: go.mod.cachedir go.cachedir
 
 # Generate a coverage report for cobertura applying exclusions on
 # - generated file
