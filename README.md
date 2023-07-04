@@ -1,4 +1,4 @@
-# Official Azuread Provider
+# Official AzureAD Provider
 
 <div align="center">
 
@@ -15,7 +15,7 @@ generation tools and exposes XRM-conformant managed resources for
 
 Follow the quick start guide [here](https://marketplace.upbound.io/providers/upbound/provider-azuread/latest/docs/quickstart).
 
-You can find a detailed API reference with all CRDs and examples [here](https://marketplace.upbound.io/providers/upbound/provider-azuread/latest/crds).
+You can find a detailed API reference for all the managed resources with examples in the [Upbound Marketplace](https://marketplace.upbound.io/providers/upbound/provider-azuread/latest/managed-resources).
 
 ## Contributing
 
