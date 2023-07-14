@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: provider-azuread
+  description: "Official Azuread Provider for Crossplane by Upbound"
+  links:
+    - url: https://marketplace.upbound.io/providers/upbound/provider-azuread/latest/docs/quickstart
+      title: Provider azuread Quickstart
+  annotations:
+    github.com/project-slug: upbound/provider-azuread
+spec:
+  type: service
+  lifecycle: production
+  owner: team:extensions
