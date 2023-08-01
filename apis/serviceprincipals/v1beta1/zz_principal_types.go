@@ -13,6 +13,9 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type AppRolesInitParameters struct {
+}
+
 type AppRolesObservation struct {
 
 	// Specifies whether this app role definition can be assigned to users and groups, or to other applications (that are accessing this application in a standalone scenario). Possible values are: User and Application, or both.
@@ -35,6 +38,25 @@ type AppRolesObservation struct {
 }
 
 type AppRolesParameters struct {
+}
+
+type FeatureTagsInitParameters struct {
+
+	// Whether this service principal represents a custom SAML application. Enabling this will assign the WindowsAzureActiveDirectoryCustomSingleSignOnApplication tag. Defaults to false.
+	// Whether this service principal represents a custom SAML application
+	CustomSingleSignOn *bool `json:"customSingleSignOn,omitempty" tf:"custom_single_sign_on,omitempty"`
+
+	// Whether this service principal represents an Enterprise Application. Enabling this will assign the WindowsAzureActiveDirectoryIntegratedApp tag. Defaults to false.
+	// Whether this service principal represents an Enterprise Application
+	Enterprise *bool `json:"enterprise,omitempty" tf:"enterprise,omitempty"`
+
+	// Whether this service principal represents a gallery application. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1 tag. Defaults to false.
+	// Whether this service principal represents a gallery application
+	Gallery *bool `json:"gallery,omitempty" tf:"gallery,omitempty"`
+
+	// Whether this app is invisible to users in My Apps and Office 365 Launcher. Enabling this will assign the HideApp tag. Defaults to false.
+	// Whether this app is invisible to users in My Apps and Office 365 Launcher
+	Hide *bool `json:"hide,omitempty" tf:"hide,omitempty"`
 }
 
 type FeatureTagsObservation struct {
@@ -79,6 +101,9 @@ type FeatureTagsParameters struct {
 	Hide *bool `json:"hide,omitempty" tf:"hide,omitempty"`
 }
 
+type Oauth2PermissionScopesInitParameters struct {
+}
+
 type Oauth2PermissionScopesObservation struct {
 
 	// Delegated permission description that appears in all tenant-wide admin consent experiences, intended to be read by an administrator granting the permission on behalf of all users.
@@ -107,6 +132,61 @@ type Oauth2PermissionScopesObservation struct {
 }
 
 type Oauth2PermissionScopesParameters struct {
+}
+
+type PrincipalInitParameters struct {
+
+	// Whether or not the service principal account is enabled. Defaults to true.
+	// Whether or not the service principal account is enabled
+	AccountEnabled *bool `json:"accountEnabled,omitempty" tf:"account_enabled,omitempty"`
+
+	// A set of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities.
+	// A list of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities
+	AlternativeNames []*string `json:"alternativeNames,omitempty" tf:"alternative_names,omitempty"`
+
+	// Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application. Defaults to false.
+	// Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application
+	AppRoleAssignmentRequired *bool `json:"appRoleAssignmentRequired,omitempty" tf:"app_role_assignment_required,omitempty"`
+
+	// A description of the service principal provided for internal end-users.
+	// Description of the service principal provided for internal end-users
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// A feature_tags block as described below. Cannot be used together with the tags property.
+	// Block of features to configure for this service principal using tags
+	FeatureTags []FeatureTagsInitParameters `json:"featureTags,omitempty" tf:"feature_tags,omitempty"`
+
+	// The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on.
+	// The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on
+	LoginURL *string `json:"loginUrl,omitempty" tf:"login_url,omitempty"`
+
+	// A free text field to capture information about the service principal, typically used for operational purposes.
+	// Free text field to capture information about the service principal, typically used for operational purposes
+	Notes *string `json:"notes,omitempty" tf:"notes,omitempty"`
+
+	// A set of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications.
+	// List of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications
+	NotificationEmailAddresses []*string `json:"notificationEmailAddresses,omitempty" tf:"notification_email_addresses,omitempty"`
+
+	// A set of object IDs of principals that will be granted ownership of the service principal. Supported object types are users or service principals. By default, no owners are assigned.
+	// A list of object IDs of principals that will be granted ownership of the service principal
+	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
+
+	// The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps. Supported values are oidc, password, saml or notSupported. Omit this property or specify a blank string to unset.
+	// The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps
+	PreferredSingleSignOnMode *string `json:"preferredSingleSignOnMode,omitempty" tf:"preferred_single_sign_on_mode,omitempty"`
+
+	// A saml_single_sign_on block as documented below.
+	// Settings related to SAML single sign-on
+	SAMLSingleSignOn []SAMLSingleSignOnInitParameters `json:"samlSingleSignOn,omitempty" tf:"saml_single_sign_on,omitempty"`
+
+	// A set of tags to apply to the service principal for configuring specific behaviours of the service principal. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
+	// A set of tags to apply to the service principal
+	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
+
+	// When true, any existing service principal linked to the same application will be automatically imported. When false, an import error will be raised for any pre-existing service principal.
+	// When true, the resource will return an existing service principal instead of failing with an error
+	UseExisting *bool `json:"useExisting,omitempty" tf:"use_existing,omitempty"`
 }
 
 type PrincipalObservation struct {
@@ -308,6 +388,13 @@ type PrincipalParameters struct {
 	UseExisting *bool `json:"useExisting,omitempty" tf:"use_existing,omitempty"`
 }
 
+type SAMLSingleSignOnInitParameters struct {
+
+	// The relative URI the service provider would redirect to after completion of the single sign-on flow.
+	// The relative URI the service provider would redirect to after completion of the single sign-on flow
+	RelayState *string `json:"relayState,omitempty" tf:"relay_state,omitempty"`
+}
+
 type SAMLSingleSignOnObservation struct {
 
 	// The relative URI the service provider would redirect to after completion of the single sign-on flow.
@@ -327,6 +414,18 @@ type SAMLSingleSignOnParameters struct {
 type PrincipalSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     PrincipalParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider PrincipalInitParameters `json:"initProvider,omitempty"`
 }
 
 // PrincipalStatus defines the observed state of Principal.

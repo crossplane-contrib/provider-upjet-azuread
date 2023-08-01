@@ -13,6 +13,29 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type InvitationInitParameters struct {
+
+	// A message block as documented below, which configures the message being sent to the invited user. If this block is omitted, no message will be sent.
+	// Customize the message sent to the invited user
+	Message []MessageInitParameters `json:"message,omitempty" tf:"message,omitempty"`
+
+	// The URL that the user should be redirected to once the invitation is redeemed.
+	// The URL that the user should be redirected to once the invitation is redeemed
+	RedirectURL *string `json:"redirectUrl,omitempty" tf:"redirect_url,omitempty"`
+
+	// The display name of the user being invited.
+	// The display name of the user being invited
+	UserDisplayName *string `json:"userDisplayName,omitempty" tf:"user_display_name,omitempty"`
+
+	// The email address of the user being invited.
+	// The email address of the user being invited
+	UserEmailAddress *string `json:"userEmailAddress,omitempty" tf:"user_email_address,omitempty"`
+
+	// The user type of the user being invited. Must be one of Guest or Member. Only Global Administrators can invite users as members. Defaults to Guest.
+	// The user type of the user being invited
+	UserType *string `json:"userType,omitempty" tf:"user_type,omitempty"`
+}
+
 type InvitationObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -73,6 +96,21 @@ type InvitationParameters struct {
 	UserType *string `json:"userType,omitempty" tf:"user_type,omitempty"`
 }
 
+type MessageInitParameters struct {
+
+	// Email addresses of additional recipients the invitation message should be sent to. Only 1 additional recipient is currently supported by Azure.
+	// Email addresses of additional recipients the invitation message should be sent to
+	AdditionalRecipients []*string `json:"additionalRecipients,omitempty" tf:"additional_recipients,omitempty"`
+
+	// Customized message body you want to send if you don't want to send the default message. Cannot be specified with language.
+	// Customized message body you want to send if you don't want to send the default message
+	Body *string `json:"body,omitempty" tf:"body,omitempty"`
+
+	// The language you want to send the default message in. The value specified must be in ISO 639 format. Defaults to en-US. Cannot be specified with body.
+	// The language you want to send the default message in
+	Language *string `json:"language,omitempty" tf:"language,omitempty"`
+}
+
 type MessageObservation struct {
 
 	// Email addresses of additional recipients the invitation message should be sent to. Only 1 additional recipient is currently supported by Azure.
@@ -110,6 +148,18 @@ type MessageParameters struct {
 type InvitationSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     InvitationParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider InvitationInitParameters `json:"initProvider,omitempty"`
 }
 
 // InvitationStatus defines the observed state of Invitation.
@@ -130,8 +180,8 @@ type InvitationStatus struct {
 type Invitation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.redirectUrl)",message="redirectUrl is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.userEmailAddress)",message="userEmailAddress is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.redirectUrl) || has(self.initProvider.redirectUrl)",message="redirectUrl is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.userEmailAddress) || has(self.initProvider.userEmailAddress)",message="userEmailAddress is a required parameter"
 	Spec   InvitationSpec   `json:"spec"`
 	Status InvitationStatus `json:"status,omitempty"`
 }

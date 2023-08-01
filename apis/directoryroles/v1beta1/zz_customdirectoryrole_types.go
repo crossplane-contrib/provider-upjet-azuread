@@ -13,6 +13,33 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type CustomDirectoryRoleInitParameters struct {
+
+	// The description of the custom directory role.
+	// The description of the custom directory role
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The display name of the custom directory role.
+	// The display name of the custom directory role
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// Indicates whether the role is enabled for assignment.
+	// Indicates whether the role is enabled for assignment
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// A collection of permissions blocks as documented below.
+	// List of permissions that are included in the custom directory role
+	Permissions []PermissionsInitParameters `json:"permissions,omitempty" tf:"permissions,omitempty"`
+
+	// Custom template identifier that is typically used if one needs an identifier to be the same across different directories. Changing this forces a new resource to be created.
+	// Custom template identifier that is typically used if one needs an identifier to be the same across different directories.
+	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`
+
+	// - The version of the role definition. This can be any arbitrary string between 1-128 characters.
+	// The version of the role definition.
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
+}
+
 type CustomDirectoryRoleObservation struct {
 
 	// The description of the custom directory role.
@@ -79,6 +106,13 @@ type CustomDirectoryRoleParameters struct {
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
+type PermissionsInitParameters struct {
+
+	// A set of tasks that can be performed on a resource. For more information, see the Permissions Reference documentation.
+	// Set of tasks that can be performed on a resource
+	AllowedResourceActions []*string `json:"allowedResourceActions,omitempty" tf:"allowed_resource_actions,omitempty"`
+}
+
 type PermissionsObservation struct {
 
 	// A set of tasks that can be performed on a resource. For more information, see the Permissions Reference documentation.
@@ -90,14 +124,26 @@ type PermissionsParameters struct {
 
 	// A set of tasks that can be performed on a resource. For more information, see the Permissions Reference documentation.
 	// Set of tasks that can be performed on a resource
-	// +kubebuilder:validation:Required
-	AllowedResourceActions []*string `json:"allowedResourceActions" tf:"allowed_resource_actions,omitempty"`
+	// +kubebuilder:validation:Optional
+	AllowedResourceActions []*string `json:"allowedResourceActions,omitempty" tf:"allowed_resource_actions,omitempty"`
 }
 
 // CustomDirectoryRoleSpec defines the desired state of CustomDirectoryRole
 type CustomDirectoryRoleSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     CustomDirectoryRoleParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider CustomDirectoryRoleInitParameters `json:"initProvider,omitempty"`
 }
 
 // CustomDirectoryRoleStatus defines the observed state of CustomDirectoryRole.
@@ -118,10 +164,10 @@ type CustomDirectoryRoleStatus struct {
 type CustomDirectoryRole struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.enabled)",message="enabled is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.permissions)",message="permissions is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.version)",message="version is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || has(self.initProvider.displayName)",message="displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.enabled) || has(self.initProvider.enabled)",message="enabled is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.permissions) || has(self.initProvider.permissions)",message="permissions is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.version) || has(self.initProvider.version)",message="version is a required parameter"
 	Spec   CustomDirectoryRoleSpec   `json:"spec"`
 	Status CustomDirectoryRoleStatus `json:"status,omitempty"`
 }

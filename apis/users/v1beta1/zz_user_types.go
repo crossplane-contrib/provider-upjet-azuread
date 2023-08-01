@@ -13,6 +13,145 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type UserInitParameters struct {
+
+	// Whether or not the account should be enabled.
+	// Whether or not the account should be enabled
+	AccountEnabled *bool `json:"accountEnabled,omitempty" tf:"account_enabled,omitempty"`
+
+	// The age group of the user. Supported values are Adult, NotAdult and Minor. Omit this property or specify a blank string to unset.
+	// The age group of the user
+	AgeGroup *string `json:"ageGroup,omitempty" tf:"age_group,omitempty"`
+
+	// A list of telephone numbers for the user. Only one number can be set for this property. Read-only for users synced with Azure AD Connect.
+	// The telephone numbers for the user. Only one number can be set for this property. Read-only for users synced with Azure AD Connect
+	BusinessPhones []*string `json:"businessPhones,omitempty" tf:"business_phones,omitempty"`
+
+	// The city in which the user is located.
+	// The city in which the user is located
+	City *string `json:"city,omitempty" tf:"city,omitempty"`
+
+	// The company name which the user is associated. This property can be useful for describing the company that an external user comes from.
+	// The company name which the user is associated. This property can be useful for describing the company that an external user comes from
+	CompanyName *string `json:"companyName,omitempty" tf:"company_name,omitempty"`
+
+	// Whether consent has been obtained for minors. Supported values are Granted, Denied and NotRequired. Omit this property or specify a blank string to unset.
+	// Whether consent has been obtained for minors
+	ConsentProvidedForMinor *string `json:"consentProvidedForMinor,omitempty" tf:"consent_provided_for_minor,omitempty"`
+
+	// The cost center associated with the user.
+	// The cost center associated with the user.
+	CostCenter *string `json:"costCenter,omitempty" tf:"cost_center,omitempty"`
+
+	// The country/region in which the user is located, e.g. US or UK.
+	// The country/region in which the user is located, e.g. `US` or `UK`
+	Country *string `json:"country,omitempty" tf:"country,omitempty"`
+
+	// The name for the department in which the user works.
+	// The name for the department in which the user works
+	Department *string `json:"department,omitempty" tf:"department,omitempty"`
+
+	// Whether the user's password is exempt from expiring. Defaults to false.
+	// Whether the users password is exempt from expiring
+	DisablePasswordExpiration *bool `json:"disablePasswordExpiration,omitempty" tf:"disable_password_expiration,omitempty"`
+
+	// Whether the user is allowed weaker passwords than the default policy to be specified. Defaults to false.
+	// Whether the user is allowed weaker passwords than the default policy to be specified.
+	DisableStrongPassword *bool `json:"disableStrongPassword,omitempty" tf:"disable_strong_password,omitempty"`
+
+	// The name to display in the address book for the user.
+	// The name to display in the address book for the user
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// The name of the division in which the user works.
+	// The name of the division in which the user works.
+	Division *string `json:"division,omitempty" tf:"division,omitempty"`
+
+	// The employee identifier assigned to the user by the organisation.
+	// The employee identifier assigned to the user by the organisation
+	EmployeeID *string `json:"employeeId,omitempty" tf:"employee_id,omitempty"`
+
+	// Captures enterprise worker type. For example, Employee, Contractor, Consultant, or Vendor.
+	// Captures enterprise worker type. For example, Employee, Contractor, Consultant, or Vendor.
+	EmployeeType *string `json:"employeeType,omitempty" tf:"employee_type,omitempty"`
+
+	// The fax number of the user.
+	// The fax number of the user
+	FaxNumber *string `json:"faxNumber,omitempty" tf:"fax_number,omitempty"`
+
+	// Whether the user is forced to change the password during the next sign-in. Only takes effect when also changing the password. Defaults to false.
+	// Whether the user is forced to change the password during the next sign-in. Only takes effect when also changing the password
+	ForcePasswordChange *bool `json:"forcePasswordChange,omitempty" tf:"force_password_change,omitempty"`
+
+	// The given name (first name) of the user.
+	// The given name (first name) of the user
+	GivenName *string `json:"givenName,omitempty" tf:"given_name,omitempty"`
+
+	// The user’s job title.
+	// The user’s job title
+	JobTitle *string `json:"jobTitle,omitempty" tf:"job_title,omitempty"`
+
+	// The SMTP address for the user. This property cannot be unset once specified.
+	// The SMTP address for the user. Cannot be unset.
+	Mail *string `json:"mail,omitempty" tf:"mail,omitempty"`
+
+	// The mail alias for the user. Defaults to the user name part of the user principal name (UPN).
+	// The mail alias for the user. Defaults to the user name part of the user principal name (UPN)
+	MailNickname *string `json:"mailNickname,omitempty" tf:"mail_nickname,omitempty"`
+
+	// The object ID of the user's manager.
+	// The object ID of the user's manager
+	ManagerID *string `json:"managerId,omitempty" tf:"manager_id,omitempty"`
+
+	// The primary cellular telephone number for the user.
+	// The primary cellular telephone number for the user
+	MobilePhone *string `json:"mobilePhone,omitempty" tf:"mobile_phone,omitempty"`
+
+	// The office location in the user's place of business.
+	// The office location in the user's place of business
+	OfficeLocation *string `json:"officeLocation,omitempty" tf:"office_location,omitempty"`
+
+	// The value used to associate an on-premise Active Directory user account with their Azure AD user object. This must be specified if you are using a federated domain for the user's user_principal_name property when creating a new user account.
+	// The value used to associate an on-premise Active Directory user account with their Azure AD user object. This must be specified if you are using a federated domain for the user's `user_principal_name` property when creating a new user account
+	OnpremisesImmutableID *string `json:"onpremisesImmutableId,omitempty" tf:"onpremises_immutable_id,omitempty"`
+
+	// A list of additional email addresses for the user.
+	// Additional email addresses for the user
+	OtherMails []*string `json:"otherMails,omitempty" tf:"other_mails,omitempty"`
+
+	// The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code.
+	// The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code
+	PostalCode *string `json:"postalCode,omitempty" tf:"postal_code,omitempty"`
+
+	// The user's preferred language, in ISO 639-1 notation.
+	// The user's preferred language, in ISO 639-1 notation
+	PreferredLanguage *string `json:"preferredLanguage,omitempty" tf:"preferred_language,omitempty"`
+
+	// Whether or not the Outlook global address list should include this user. Defaults to true.
+	// Whether or not the Outlook global address list should include this user
+	ShowInAddressList *bool `json:"showInAddressList,omitempty" tf:"show_in_address_list,omitempty"`
+
+	// The state or province in the user's address.
+	// The state or province in the user's address
+	State *string `json:"state,omitempty" tf:"state,omitempty"`
+
+	// The street address of the user's place of business.
+	// The street address of the user's place of business
+	StreetAddress *string `json:"streetAddress,omitempty" tf:"street_address,omitempty"`
+
+	// The user's surname (family name or last name).
+	// The user's surname (family name or last name)
+	Surname *string `json:"surname,omitempty" tf:"surname,omitempty"`
+
+	// The usage location of the user. Required for users that will be assigned licenses due to legal requirement to check for availability of services in countries. The usage location is a two letter country code (ISO standard 3166). Examples include: NO, JP, and GB. Cannot be reset to null once set.
+	// The usage location of the user. Required for users that will be assigned licenses due to legal requirement to check for availability of services in countries. The usage location is a two letter country code (ISO standard 3166). Examples include: `NO`, `JP`, and `GB`. Cannot be reset to null once set
+	UsageLocation *string `json:"usageLocation,omitempty" tf:"usage_location,omitempty"`
+
+	// The user principal name (UPN) of the user.
+	// The user principal name (UPN) of the user
+	UserPrincipalName *string `json:"userPrincipalName,omitempty" tf:"user_principal_name,omitempty"`
+}
+
 type UserObservation struct {
 
 	// A freeform field for the user to describe themselves
@@ -387,6 +526,18 @@ type UserParameters struct {
 type UserSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     UserParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider UserInitParameters `json:"initProvider,omitempty"`
 }
 
 // UserStatus defines the observed state of User.
@@ -407,8 +558,8 @@ type UserStatus struct {
 type User struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.userPrincipalName)",message="userPrincipalName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || has(self.initProvider.displayName)",message="displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.userPrincipalName) || has(self.initProvider.userPrincipalName)",message="userPrincipalName is a required parameter"
 	Spec   UserSpec   `json:"spec"`
 	Status UserStatus `json:"status,omitempty"`
 }

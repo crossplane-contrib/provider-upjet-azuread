@@ -13,6 +13,15 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type CountryInitParameters struct {
+
+	// List of countries and/or regions in two-letter format specified by ISO 3166-2.
+	CountriesAndRegions []*string `json:"countriesAndRegions,omitempty" tf:"countries_and_regions,omitempty"`
+
+	// Whether IP addresses that don't map to a country or region should be included in the named location. Defaults to false.
+	IncludeUnknownCountriesAndRegions *bool `json:"includeUnknownCountriesAndRegions,omitempty" tf:"include_unknown_countries_and_regions,omitempty"`
+}
+
 type CountryObservation struct {
 
 	// List of countries and/or regions in two-letter format specified by ISO 3166-2.
@@ -25,12 +34,21 @@ type CountryObservation struct {
 type CountryParameters struct {
 
 	// List of countries and/or regions in two-letter format specified by ISO 3166-2.
-	// +kubebuilder:validation:Required
-	CountriesAndRegions []*string `json:"countriesAndRegions" tf:"countries_and_regions,omitempty"`
+	// +kubebuilder:validation:Optional
+	CountriesAndRegions []*string `json:"countriesAndRegions,omitempty" tf:"countries_and_regions,omitempty"`
 
 	// Whether IP addresses that don't map to a country or region should be included in the named location. Defaults to false.
 	// +kubebuilder:validation:Optional
 	IncludeUnknownCountriesAndRegions *bool `json:"includeUnknownCountriesAndRegions,omitempty" tf:"include_unknown_countries_and_regions,omitempty"`
+}
+
+type IPInitParameters struct {
+
+	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596.
+	IPRanges []*string `json:"ipRanges,omitempty" tf:"ip_ranges,omitempty"`
+
+	// Whether the named location is trusted. Defaults to false.
+	Trusted *bool `json:"trusted,omitempty" tf:"trusted,omitempty"`
 }
 
 type IPObservation struct {
@@ -45,12 +63,24 @@ type IPObservation struct {
 type IPParameters struct {
 
 	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596.
-	// +kubebuilder:validation:Required
-	IPRanges []*string `json:"ipRanges" tf:"ip_ranges,omitempty"`
+	// +kubebuilder:validation:Optional
+	IPRanges []*string `json:"ipRanges,omitempty" tf:"ip_ranges,omitempty"`
 
 	// Whether the named location is trusted. Defaults to false.
 	// +kubebuilder:validation:Optional
 	Trusted *bool `json:"trusted,omitempty" tf:"trusted,omitempty"`
+}
+
+type LocationInitParameters struct {
+
+	// A country block as documented below, which configures a country-based named location.
+	Country []CountryInitParameters `json:"country,omitempty" tf:"country,omitempty"`
+
+	// The friendly name for this named location.
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// An ip block as documented below, which configures an IP-based named location.
+	IP []IPInitParameters `json:"ip,omitempty" tf:"ip,omitempty"`
 }
 
 type LocationObservation struct {
@@ -87,6 +117,18 @@ type LocationParameters struct {
 type LocationSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     LocationParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider LocationInitParameters `json:"initProvider,omitempty"`
 }
 
 // LocationStatus defines the observed state of Location.
@@ -107,7 +149,7 @@ type LocationStatus struct {
 type Location struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || has(self.initProvider.displayName)",message="displayName is a required parameter"
 	Spec   LocationSpec   `json:"spec"`
 	Status LocationStatus `json:"status,omitempty"`
 }

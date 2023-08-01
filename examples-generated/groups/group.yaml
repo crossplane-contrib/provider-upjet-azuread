@@ -12,6 +12,3 @@ spec:
     owners:
     - ${data.azuread_client_config.current.object_id}
     securityEnabled: true
-
----
-

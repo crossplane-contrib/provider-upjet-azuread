@@ -13,6 +13,29 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type PasswordInitParameters struct {
+
+	// A display name for the password.
+	// A display name for the password
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`)
+	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
+
+	// A relative duration for which the password is valid until, for example 240h (10 days) or 2400h30m. Changing this field forces a new resource to be created.
+	// A relative duration for which the password is valid until, for example `240h` (10 days) or `2400h30m`. Changing this field forces a new resource to be created
+	EndDateRelative *string `json:"endDateRelative,omitempty" tf:"end_date_relative,omitempty"`
+
+	// A map of arbitrary key/value pairs that will force recreation of the password when they change, enabling password rotation based on external conditions such as a rotating timestamp. Changing this forces a new resource to be created.
+	// Arbitrary map of values that, when changed, will trigger rotation of the password
+	RotateWhenChanged map[string]*string `json:"rotateWhenChanged,omitempty" tf:"rotate_when_changed,omitempty"`
+
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
+	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
+}
+
 type PasswordObservation struct {
 
 	// A display name for the password.
@@ -92,6 +115,18 @@ type PasswordParameters struct {
 type PasswordSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     PasswordParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider PasswordInitParameters `json:"initProvider,omitempty"`
 }
 
 // PasswordStatus defines the observed state of Password.

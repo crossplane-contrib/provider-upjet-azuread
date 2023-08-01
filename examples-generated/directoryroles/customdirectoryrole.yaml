@@ -23,6 +23,3 @@ spec:
       - microsoft.directory/groups/create
       - microsoft.directory/groups/delete
     version: "1.0"
-
----
-

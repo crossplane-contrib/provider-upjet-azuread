@@ -47,6 +47,3 @@ spec:
     applicationIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
-
----
-

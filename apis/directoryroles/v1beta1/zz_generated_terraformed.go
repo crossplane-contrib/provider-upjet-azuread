@@ -69,6 +69,16 @@ func (tr *CustomDirectoryRole) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this CustomDirectoryRole
+func (tr *CustomDirectoryRole) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this CustomDirectoryRole using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *CustomDirectoryRole) LateInitialize(attrs []byte) (bool, error) {
@@ -143,6 +153,16 @@ func (tr *Role) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this Role
+func (tr *Role) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this Role using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *Role) LateInitialize(attrs []byte) (bool, error) {
@@ -215,6 +235,16 @@ func (tr *RoleAssignment) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// GetInitParameters of this RoleAssignment
+func (tr *RoleAssignment) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this RoleAssignment using its observed tfState.

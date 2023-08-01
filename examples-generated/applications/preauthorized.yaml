@@ -61,6 +61,3 @@ spec:
         userConsentDisplayName: Access
         value: user_impersonation
     displayName: example-authorizing-app
-
----
-

@@ -13,6 +13,27 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type UnitInitParameters struct {
+
+	// The description of the administrative unit.
+	// The description for the administrative unit
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The display name of the administrative unit.
+	// The display name for the administrative unit
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// Whether the administrative unit and its members are hidden or publicly viewable in the directory
+	HiddenMembershipEnabled *bool `json:"hiddenMembershipEnabled,omitempty" tf:"hidden_membership_enabled,omitempty"`
+
+	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups.
+	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// If `true`, will return an error if an existing administrative unit is found with the same name
+	PreventDuplicateNames *bool `json:"preventDuplicateNames,omitempty" tf:"prevent_duplicate_names,omitempty"`
+}
+
 type UnitObservation struct {
 
 	// The description of the administrative unit.
@@ -70,6 +91,18 @@ type UnitParameters struct {
 type UnitSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     UnitParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider UnitInitParameters `json:"initProvider,omitempty"`
 }
 
 // UnitStatus defines the observed state of Unit.
@@ -90,7 +123,7 @@ type UnitStatus struct {
 type Unit struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || has(self.initProvider.displayName)",message="displayName is a required parameter"
 	Spec   UnitSpec   `json:"spec"`
 	Status UnitStatus `json:"status,omitempty"`
 }

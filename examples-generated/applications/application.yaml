@@ -87,6 +87,3 @@ spec:
       logoutUrl: https://app.example.net/logout
       redirectUris:
       - https://app.example.net/account
-
----
-

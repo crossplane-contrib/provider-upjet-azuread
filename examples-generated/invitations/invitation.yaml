@@ -10,6 +10,3 @@ spec:
   forProvider:
     redirectUrl: https://portal.azure.com
     userEmailAddress: jdoe@hashicorp.com
-
----
-

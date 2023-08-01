@@ -69,6 +69,16 @@ func (tr *Principal) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this Principal
+func (tr *Principal) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this Principal using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *Principal) LateInitialize(attrs []byte) (bool, error) {
@@ -142,6 +152,16 @@ func (tr *Certificate) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// GetInitParameters of this Certificate
+func (tr *Certificate) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this Certificate using its observed tfState.
@@ -218,6 +238,16 @@ func (tr *ClaimsMappingPolicyAssignment) SetParameters(params map[string]any) er
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this ClaimsMappingPolicyAssignment
+func (tr *ClaimsMappingPolicyAssignment) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this ClaimsMappingPolicyAssignment using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *ClaimsMappingPolicyAssignment) LateInitialize(attrs []byte) (bool, error) {
@@ -292,6 +322,16 @@ func (tr *Password) SetParameters(params map[string]any) error {
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
 }
 
+// GetInitParameters of this Password
+func (tr *Password) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
+}
+
 // LateInitialize this Password using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *Password) LateInitialize(attrs []byte) (bool, error) {
@@ -364,6 +404,16 @@ func (tr *TokenSigningCertificate) SetParameters(params map[string]any) error {
 		return err
 	}
 	return json.TFParser.Unmarshal(p, &tr.Spec.ForProvider)
+}
+
+// GetInitParameters of this TokenSigningCertificate
+func (tr *TokenSigningCertificate) GetInitParameters() (map[string]any, error) {
+	p, err := json.TFParser.Marshal(tr.Spec.InitProvider)
+	if err != nil {
+		return nil, err
+	}
+	base := map[string]any{}
+	return base, json.TFParser.Unmarshal(p, &base)
 }
 
 // LateInitialize this TokenSigningCertificate using its observed tfState.

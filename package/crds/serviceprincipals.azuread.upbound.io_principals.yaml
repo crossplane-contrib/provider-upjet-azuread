@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.11.3
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.12.1
   name: principals.serviceprincipals.azuread.upbound.io
 spec:
   group: serviceprincipals.azuread.upbound.io
@@ -57,7 +56,7 @@ spec:
                 description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
                   or "Orphan" the external resource. This field is planned to be deprecated
-                  in favor of the ManagementPolicy field in a future release. Currently,
+                  in favor of the ManagementPolicies field in a future release. Currently,
                   both could be set independently and non-default values would be
                   honored if the feature flag is enabled. See the design doc for more
                   information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
@@ -286,21 +285,183 @@ spec:
                       principal instead of failing with an error
                     type: boolean
                 type: object
-              managementPolicy:
-                default: FullControl
+              initProvider:
+                description: THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. InitProvider
+                  holds the same fields as ForProvider, with the exception of Identifier
+                  and other resource reference fields. The fields that are in InitProvider
+                  are merged into ForProvider when the resource is created. The same
+                  fields are also added to the terraform ignore_changes hook, to avoid
+                  updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after
+                  creation, for example because of an external controller is managing
+                  them, like an autoscaler.
+                properties:
+                  accountEnabled:
+                    description: Whether or not the service principal account is enabled.
+                      Defaults to true. Whether or not the service principal account
+                      is enabled
+                    type: boolean
+                  alternativeNames:
+                    description: A set of alternative names, used to retrieve service
+                      principals by subscription, identify resource group and full
+                      resource ids for managed identities. A list of alternative names,
+                      used to retrieve service principals by subscription, identify
+                      resource group and full resource ids for managed identities
+                    items:
+                      type: string
+                    type: array
+                  appRoleAssignmentRequired:
+                    description: Whether this service principal requires an app role
+                      assignment to a user or group before Azure AD will issue a user
+                      or access token to the application. Defaults to false. Whether
+                      this service principal requires an app role assignment to a
+                      user or group before Azure AD will issue a user or access token
+                      to the application
+                    type: boolean
+                  description:
+                    description: A description of the service principal provided for
+                      internal end-users. Description of the service principal provided
+                      for internal end-users
+                    type: string
+                  featureTags:
+                    description: A feature_tags block as described below. Cannot be
+                      used together with the tags property. Block of features to configure
+                      for this service principal using tags
+                    items:
+                      properties:
+                        customSingleSignOn:
+                          description: Whether this service principal represents a
+                            custom SAML application. Enabling this will assign the
+                            WindowsAzureActiveDirectoryCustomSingleSignOnApplication
+                            tag. Defaults to false. Whether this service principal
+                            represents a custom SAML application
+                          type: boolean
+                        enterprise:
+                          description: Whether this service principal represents an
+                            Enterprise Application. Enabling this will assign the
+                            WindowsAzureActiveDirectoryIntegratedApp tag. Defaults
+                            to false. Whether this service principal represents an
+                            Enterprise Application
+                          type: boolean
+                        gallery:
+                          description: Whether this service principal represents a
+                            gallery application. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1
+                            tag. Defaults to false. Whether this service principal
+                            represents a gallery application
+                          type: boolean
+                        hide:
+                          description: Whether this app is invisible to users in My
+                            Apps and Office 365 Launcher. Enabling this will assign
+                            the HideApp tag. Defaults to false. Whether this app is
+                            invisible to users in My Apps and Office 365 Launcher
+                          type: boolean
+                      type: object
+                    type: array
+                  loginUrl:
+                    description: The URL where the service provider redirects the
+                      user to Azure AD to authenticate. Azure AD uses the URL to launch
+                      the application from Microsoft 365 or the Azure AD My Apps.
+                      When blank, Azure AD performs IdP-initiated sign-on for applications
+                      configured with SAML-based single sign-on. The URL where the
+                      service provider redirects the user to Azure AD to authenticate.
+                      Azure AD uses the URL to launch the application from Microsoft
+                      365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated
+                      sign-on for applications configured with SAML-based single sign-on
+                    type: string
+                  notes:
+                    description: A free text field to capture information about the
+                      service principal, typically used for operational purposes.
+                      Free text field to capture information about the service principal,
+                      typically used for operational purposes
+                    type: string
+                  notificationEmailAddresses:
+                    description: A set of email addresses where Azure AD sends a notification
+                      when the active certificate is near the expiration date. This
+                      is only for the certificates used to sign the SAML token issued
+                      for Azure AD Gallery applications. List of email addresses where
+                      Azure AD sends a notification when the active certificate is
+                      near the expiration date. This is only for the certificates
+                      used to sign the SAML token issued for Azure AD Gallery applications
+                    items:
+                      type: string
+                    type: array
+                  owners:
+                    description: A set of object IDs of principals that will be granted
+                      ownership of the service principal. Supported object types are
+                      users or service principals. By default, no owners are assigned.
+                      A list of object IDs of principals that will be granted ownership
+                      of the service principal
+                    items:
+                      type: string
+                    type: array
+                  preferredSingleSignOnMode:
+                    description: The single sign-on mode configured for this application.
+                      Azure AD uses the preferred single sign-on mode to launch the
+                      application from Microsoft 365 or the Azure AD My Apps. Supported
+                      values are oidc, password, saml or notSupported. Omit this property
+                      or specify a blank string to unset. The single sign-on mode
+                      configured for this application. Azure AD uses the preferred
+                      single sign-on mode to launch the application from Microsoft
+                      365 or the Azure AD My Apps
+                    type: string
+                  samlSingleSignOn:
+                    description: A saml_single_sign_on block as documented below.
+                      Settings related to SAML single sign-on
+                    items:
+                      properties:
+                        relayState:
+                          description: The relative URI the service provider would
+                            redirect to after completion of the single sign-on flow.
+                            The relative URI the service provider would redirect to
+                            after completion of the single sign-on flow
+                          type: string
+                      type: object
+                    type: array
+                  tags:
+                    description: A set of tags to apply to the service principal for
+                      configuring specific behaviours of the service principal. Note
+                      that these are not provided for use by practitioners. Cannot
+                      be used together with the feature_tags block. A set of tags
+                      to apply to the service principal
+                    items:
+                      type: string
+                    type: array
+                  useExisting:
+                    description: When true, any existing service principal linked
+                      to the same application will be automatically imported. When
+                      false, an import error will be raised for any pre-existing service
+                      principal. When true, the resource will return an existing service
+                      principal instead of failing with an error
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
                 description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
                   It is not honored unless the relevant Crossplane feature flag is
-                  enabled, and may be changed or removed without notice. ManagementPolicy
-                  specifies the level of control Crossplane has over the managed external
-                  resource. This field is planned to replace the DeletionPolicy field
-                  in a future release. Currently, both could be set independently
-                  and non-default values would be honored if the feature flag is enabled.
-                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
-                enum:
-                - FullControl
-                - ObserveOnly
-                - OrphanOnDelete
-                type: string
+                  enabled, and may be changed or removed without notice. ManagementPolicies
+                  specify the array of actions Crossplane is allowed to take on the
+                  managed and external resources. This field is planned to replace
+                  the DeletionPolicy field in a future release. Currently, both could
+                  be set independently and non-default values would be honored if
+                  the feature flag is enabled. If both are custom, the DeletionPolicy
+                  field will be ignored. See the design doc for more information:
+                  https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md'
+                items:
+                  description: A ManagementAction represents an action that the Crossplane
+                    controllers can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
               providerConfigRef:
                 default:
                   name: default

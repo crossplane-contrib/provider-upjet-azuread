@@ -13,6 +13,13 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type PreAuthorizedInitParameters struct {
+
+	// A set of permission scope IDs required by the authorized application.
+	// The IDs of the permission scopes required by the pre-authorized application
+	PermissionIds []*string `json:"permissionIds,omitempty" tf:"permission_ids,omitempty"`
+}
+
 type PreAuthorizedObservation struct {
 
 	// The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
@@ -69,6 +76,18 @@ type PreAuthorizedParameters struct {
 type PreAuthorizedSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     PreAuthorizedParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider PreAuthorizedInitParameters `json:"initProvider,omitempty"`
 }
 
 // PreAuthorizedStatus defines the observed state of PreAuthorized.
@@ -89,7 +108,7 @@ type PreAuthorizedStatus struct {
 type PreAuthorized struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.permissionIds)",message="permissionIds is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.permissionIds) || has(self.initProvider.permissionIds)",message="permissionIds is a required parameter"
 	Spec   PreAuthorizedSpec   `json:"spec"`
 	Status PreAuthorizedStatus `json:"status,omitempty"`
 }
