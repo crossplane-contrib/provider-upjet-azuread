@@ -13,6 +13,23 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type RoleAssignmentInitParameters struct {
+
+	// Identifier of the app-specific scope when the assignment scope is app-specific. Cannot be used with directory_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
+	// Identifier of the app-specific scope when the assignment scope is app-specific
+	AppScopeID *string `json:"appScopeId,omitempty" tf:"app_scope_id,omitempty"`
+
+	// Identifier of the app-specific scope when the assignment scope is app-specific
+	AppScopeObjectID *string `json:"appScopeObjectId,omitempty" tf:"app_scope_object_id,omitempty"`
+
+	// Identifier of the directory object representing the scope of the assignment. Cannot be used with app_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
+	// Identifier of the directory object representing the scope of the assignment
+	DirectoryScopeID *string `json:"directoryScopeId,omitempty" tf:"directory_scope_id,omitempty"`
+
+	// Identifier of the directory object representing the scope of the assignment
+	DirectoryScopeObjectID *string `json:"directoryScopeObjectId,omitempty" tf:"directory_scope_object_id,omitempty"`
+}
+
 type RoleAssignmentObservation struct {
 
 	// Identifier of the app-specific scope when the assignment scope is app-specific. Cannot be used with directory_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
@@ -94,6 +111,18 @@ type RoleAssignmentParameters struct {
 type RoleAssignmentSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     RoleAssignmentParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider RoleAssignmentInitParameters `json:"initProvider,omitempty"`
 }
 
 // RoleAssignmentStatus defines the observed state of RoleAssignment.

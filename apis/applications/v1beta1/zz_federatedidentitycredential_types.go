@@ -13,6 +13,29 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type FederatedIdentityCredentialInitParameters struct {
+
+	// List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.
+	// List of audiences that can appear in the external token. This specifies what should be accepted in the `aud` claim of incoming tokens.
+	Audiences []*string `json:"audiences,omitempty" tf:"audiences,omitempty"`
+
+	// A description for the federated identity credential.
+	// A description for the federated identity credential
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// A unique display name for the federated identity credential. Changing this forces a new resource to be created.
+	// A unique display name for the federated identity credential
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// The URL of the external identity provider, which must match the issuer claim of the external token being exchanged. The combination of the values of issuer and subject must be unique on the app.
+	// The URL of the external identity provider, which must match the issuer claim of the external token being exchanged. The combination of the values of issuer and subject must be unique on the app.
+	Issuer *string `json:"issuer,omitempty" tf:"issuer,omitempty"`
+
+	// The identifier of the external software workload within the external identity provider. The combination of issuer and subject must be unique on the app.
+	// The identifier of the external software workload within the external identity provider. The combination of issuer and subject must be unique on the app.
+	Subject *string `json:"subject,omitempty" tf:"subject,omitempty"`
+}
+
 type FederatedIdentityCredentialObservation struct {
 
 	// The object ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
@@ -92,6 +115,18 @@ type FederatedIdentityCredentialParameters struct {
 type FederatedIdentityCredentialSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     FederatedIdentityCredentialParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider FederatedIdentityCredentialInitParameters `json:"initProvider,omitempty"`
 }
 
 // FederatedIdentityCredentialStatus defines the observed state of FederatedIdentityCredential.
@@ -112,10 +147,10 @@ type FederatedIdentityCredentialStatus struct {
 type FederatedIdentityCredential struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.audiences)",message="audiences is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.issuer)",message="issuer is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.subject)",message="subject is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.audiences) || has(self.initProvider.audiences)",message="audiences is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || has(self.initProvider.displayName)",message="displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.issuer) || has(self.initProvider.issuer)",message="issuer is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.subject) || has(self.initProvider.subject)",message="subject is a required parameter"
 	Spec   FederatedIdentityCredentialSpec   `json:"spec"`
 	Status FederatedIdentityCredentialStatus `json:"status,omitempty"`
 }

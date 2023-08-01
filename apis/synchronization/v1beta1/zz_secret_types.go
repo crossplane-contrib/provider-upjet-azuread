@@ -13,6 +13,13 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type CredentialInitParameters struct {
+
+	// The key of the secret.
+	// Name for this key-value pair.
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+}
+
 type CredentialObservation struct {
 
 	// The key of the secret.
@@ -24,13 +31,19 @@ type CredentialParameters struct {
 
 	// The key of the secret.
 	// Name for this key-value pair.
-	// +kubebuilder:validation:Required
-	Key *string `json:"key" tf:"key,omitempty"`
+	// +kubebuilder:validation:Optional
+	Key *string `json:"key,omitempty" tf:"key,omitempty"`
 
 	// The value of the secret.
 	// Value for this key-value pair.
 	// +kubebuilder:validation:Required
 	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
+}
+
+type SecretInitParameters struct {
+
+	// One or more credential blocks as documented below.
+	Credential []CredentialInitParameters `json:"credential,omitempty" tf:"credential,omitempty"`
 }
 
 type SecretObservation struct {
@@ -71,6 +84,18 @@ type SecretParameters struct {
 type SecretSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     SecretParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider SecretInitParameters `json:"initProvider,omitempty"`
 }
 
 // SecretStatus defines the observed state of Secret.

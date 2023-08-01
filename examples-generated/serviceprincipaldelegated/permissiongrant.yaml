@@ -71,6 +71,3 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: azuread_application_published_app_ids
     useExisting: true
-
----
-

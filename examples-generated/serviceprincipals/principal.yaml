@@ -30,6 +30,3 @@ spec:
     displayName: example
     owners:
     - ${data.azuread_client_config.current.object_id}
-
----
-

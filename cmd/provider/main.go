@@ -20,6 +20,8 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/upbound/upjet/pkg/controller/handler"
+
 	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/pkg/certificates"
 	xpcontroller "github.com/crossplane/crossplane-runtime/pkg/controller"
@@ -92,6 +94,7 @@ func main() {
 	kingpin.FatalIfError(err, "Cannot create controller manager")
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Azuread APIs to scheme")
 
+	eventHandler := handler.NewEventHandler()
 	// if the native Terraform provider plugin's path is not configured via
 	// the env. variable TERRAFORM_NATIVE_PROVIDER_PATH or
 	// the `--terraform-native-provider-path` command-line option,
@@ -100,7 +103,8 @@ func main() {
 	// This removes some complexity for setting up development environments.
 	var scheduler terraform.ProviderScheduler = terraform.NewNoOpProviderScheduler()
 	if len(*nativeProviderPath) != 0 {
-		scheduler = terraform.NewSharedProviderScheduler(log, *pluginProcessTTL, terraform.WithNativeProviderPath(*nativeProviderPath), terraform.WithNativeProviderName("registry.terraform.io/"+*nativeProviderSource))
+		scheduler = terraform.NewSharedProviderScheduler(log, *pluginProcessTTL,
+			terraform.WithSharedProviderOptions(terraform.WithNativeProviderPath(*nativeProviderPath), terraform.WithNativeProviderName("registry.terraform.io/"+*nativeProviderSource)))
 	}
 
 	o := tjcontroller.Options{
@@ -114,9 +118,15 @@ func main() {
 		Provider: config.GetProvider(),
 		// use the following WorkspaceStoreOption to enable the shared gRPC mode
 		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
-		WorkspaceStore: terraform.NewWorkspaceStore(log, terraform.WithProcessReportInterval(*pollInterval)),
-		SetupFn:        clients.TerraformSetupBuilder(*terraformVersion, *nativeProviderSource, *providerVersion, scheduler),
+		SetupFn:      clients.TerraformSetupBuilder(*terraformVersion, *nativeProviderSource, *providerVersion, scheduler),
+		EventHandler: eventHandler,
 	}
+
+	if *enableManagementPolicies {
+		o.Features.Enable(features.EnableAlphaManagementPolicies)
+		log.Info("Alpha feature enabled", "flag", features.EnableAlphaManagementPolicies)
+	}
+	o.WorkspaceStore = terraform.NewWorkspaceStore(log, terraform.WithDisableInit(len(*nativeProviderPath) != 0), terraform.WithProcessReportInterval(*pollInterval), terraform.WithFeatures(o.Features))
 
 	if *enableExternalSecretStores {
 		o.SecretStoreConfigGVK = &v1alpha1.StoreConfigGroupVersionKind

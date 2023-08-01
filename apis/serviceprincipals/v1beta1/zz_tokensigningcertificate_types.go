@@ -13,6 +13,18 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type TokenSigningCertificateInitParameters struct {
+
+	// Specifies a friendly name for the certificate.
+	// Must start with CN=. Changing this field forces a new resource to be created.
+	// A friendly name for the certificate
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// The end date until which the token signing certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
+	// The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). Default is 3 years from current date.
+	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
+}
+
 type TokenSigningCertificateObservation struct {
 
 	// Specifies a friendly name for the certificate.
@@ -75,6 +87,18 @@ type TokenSigningCertificateParameters struct {
 type TokenSigningCertificateSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     TokenSigningCertificateParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider TokenSigningCertificateInitParameters `json:"initProvider,omitempty"`
 }
 
 // TokenSigningCertificateStatus defines the observed state of TokenSigningCertificate.

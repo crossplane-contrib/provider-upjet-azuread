@@ -49,6 +49,3 @@ spec:
       signInFrequency: 10
       signInFrequencyPeriod: hours
     state: disabled
-
----
-

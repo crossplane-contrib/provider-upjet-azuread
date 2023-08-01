@@ -13,6 +13,16 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 )
 
+type DynamicMembershipInitParameters struct {
+
+	// Whether rule processing is "On" (true) or "Paused" (false).
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+
+	// The rule that determines membership of this group. For more information, see official documentation on membership rules syntax.
+	// Rule to determine members for a dynamic group. Required when `group_types` contains 'DynamicMembership'
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
 type DynamicMembershipObservation struct {
 
 	// Whether rule processing is "On" (true) or "Paused" (false).
@@ -26,13 +36,104 @@ type DynamicMembershipObservation struct {
 type DynamicMembershipParameters struct {
 
 	// Whether rule processing is "On" (true) or "Paused" (false).
-	// +kubebuilder:validation:Required
-	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
+	// +kubebuilder:validation:Optional
+	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
 	// The rule that determines membership of this group. For more information, see official documentation on membership rules syntax.
 	// Rule to determine members for a dynamic group. Required when `group_types` contains 'DynamicMembership'
-	// +kubebuilder:validation:Required
-	Rule *string `json:"rule" tf:"rule,omitempty"`
+	// +kubebuilder:validation:Optional
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type GroupInitParameters struct {
+
+	// The object IDs of administrative units in which the group is a member. If specified, new groups will be created in the scope of the first administrative unit and added to the others. If empty, new groups will be created at the tenant level.
+	// The administrative unit IDs in which the group should be. If empty, the group will be created at the tenant level.
+	AdministrativeUnitIds []*string `json:"administrativeUnitIds,omitempty" tf:"administrative_unit_ids,omitempty"`
+
+	// Indicates whether this group can be assigned to an Azure Active Directory role. Defaults to false. Can only be set to true for security-enabled groups. Changing this forces a new resource to be created.
+	// Indicates whether this group can be assigned to an Azure Active Directory role. This property can only be `true` for security-enabled groups.
+	AssignableToRole *bool `json:"assignableToRole,omitempty" tf:"assignable_to_role,omitempty"`
+
+	// Indicates whether new members added to the group will be auto-subscribed to receive email notifications. Can only be set for Unified groups.
+	// Indicates whether new members added to the group will be auto-subscribed to receive email notifications.
+	AutoSubscribeNewMembers *bool `json:"autoSubscribeNewMembers,omitempty" tf:"auto_subscribe_new_members,omitempty"`
+
+	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
+	// The group behaviours for a Microsoft 365 group
+	Behaviors []*string `json:"behaviors,omitempty" tf:"behaviors,omitempty"`
+
+	// The description for the group.
+	// The description for the group
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The display name for the group.
+	// The display name for the group
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// A dynamic_membership block as documented below. Required when types contains DynamicMembership. Cannot be used with the members property.
+	// An optional block to configure dynamic membership for the group. Cannot be used with `members`
+	DynamicMembership []DynamicMembershipInitParameters `json:"dynamicMembership,omitempty" tf:"dynamic_membership,omitempty"`
+
+	// Indicates whether people external to the organization can send messages to the group. Can only be set for Unified groups.
+	// Indicates whether people external to the organization can send messages to the group.
+	ExternalSendersAllowed *bool `json:"externalSendersAllowed,omitempty" tf:"external_senders_allowed,omitempty"`
+
+	// Indicates whether the group is displayed in certain parts of the Outlook user interface: in the Address Book, in address lists for selecting message recipients, and in the Browse Groups dialog for searching groups. Can only be set for Unified groups.
+	// Indicates whether the group is displayed in certain parts of the Outlook user interface: in the Address Book, in address lists for selecting message recipients, and in the Browse Groups dialog for searching groups.
+	HideFromAddressLists *bool `json:"hideFromAddressLists,omitempty" tf:"hide_from_address_lists,omitempty"`
+
+	// Indicates whether the group is displayed in Outlook clients, such as Outlook for Windows and Outlook on the web. Can only be set for Unified groups.
+	// Indicates whether the group is displayed in Outlook clients, such as Outlook for Windows and Outlook on the web.
+	HideFromOutlookClients *bool `json:"hideFromOutlookClients,omitempty" tf:"hide_from_outlook_clients,omitempty"`
+
+	// Whether the group is a mail enabled, with a shared group mailbox. At least one of mail_enabled or security_enabled must be specified. Only Microsoft 365 groups can be mail enabled (see the types property).
+	// Whether the group is a mail enabled, with a shared group mailbox. At least one of `mail_enabled` or `security_enabled` must be specified. A group can be mail enabled _and_ security enabled
+	MailEnabled *bool `json:"mailEnabled,omitempty" tf:"mail_enabled,omitempty"`
+
+	// The mail alias for the group, unique in the organisation. Required for mail-enabled groups. Changing this forces a new resource to be created.
+	// The mail alias for the group, unique in the organisation
+	MailNickname *string `json:"mailNickname,omitempty" tf:"mail_nickname,omitempty"`
+
+	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals. Cannot be used with the dynamic_membership block.
+	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// The on-premises group type that the AAD group will be written as, when writeback is enabled. Possible values are UniversalDistributionGroup, UniversalMailEnabledSecurityGroup, or UniversalSecurityGroup.
+	// Indicates the target on-premise group type the group will be written back as
+	OnpremisesGroupType *string `json:"onpremisesGroupType,omitempty" tf:"onpremises_group_type,omitempty"`
+
+	// A set of object IDs of principals that will be granted ownership of the group. Supported object types are users or service principals. Groups cannot be created with no owners or have all their owners removed.
+	// A set of owners who own this group. Supported object types are Users or Service Principals
+	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
+
+	// If true, will return an error if an existing group is found with the same name. Defaults to false.
+	// If `true`, will return an error if an existing group is found with the same name
+	PreventDuplicateNames *bool `json:"preventDuplicateNames,omitempty" tf:"prevent_duplicate_names,omitempty"`
+
+	// A set of provisioning options for a Microsoft 365 group. The only supported value is Team. See official documentation for details. Changing this forces a new resource to be created.
+	// The group provisioning options for a Microsoft 365 group
+	ProvisioningOptions []*string `json:"provisioningOptions,omitempty" tf:"provisioning_options,omitempty"`
+
+	// Whether the group is a security group for controlling access to in-app resources. At least one of security_enabled or mail_enabled must be specified. A Microsoft 365 group can be security enabled and mail enabled (see the types property).
+	// Whether the group is a security group for controlling access to in-app resources. At least one of `security_enabled` or `mail_enabled` must be specified. A group can be security enabled _and_ mail enabled
+	SecurityEnabled *bool `json:"securityEnabled,omitempty" tf:"security_enabled,omitempty"`
+
+	// The colour theme for a Microsoft 365 group. Possible values are Blue, Green, Orange, Pink, Purple, Red or Teal. By default, no theme is set.
+	// The colour theme for a Microsoft 365 group
+	Theme *string `json:"theme,omitempty" tf:"theme,omitempty"`
+
+	// A set of group types to configure for the group. Supported values are DynamicMembership, which denotes a group with dynamic membership, and Unified, which specifies a Microsoft 365 group. Required when mail_enabled is true. Changing this forces a new resource to be created.
+	// A set of group types to configure for the group. `Unified` specifies a Microsoft 365 group. Required when `mail_enabled` is true
+	Types []*string `json:"types,omitempty" tf:"types,omitempty"`
+
+	// The group join policy and group content visibility. Possible values are Private, Public, or Hiddenmembership. Only Microsoft 365 groups can have Hiddenmembership visibility and this value must be set when the group is created. By default, security groups will receive Private visibility and Microsoft 365 groups will receive Public visibility.
+	// Specifies the group join policy and group content visibility
+	Visibility *string `json:"visibility,omitempty" tf:"visibility,omitempty"`
+
+	// Whether the group will be written back to the configured on-premises Active Directory when Azure AD Connect is used.
+	// Whether this group should be synced from Azure AD to the on-premises directory when Azure AD Connect is used
+	WritebackEnabled *bool `json:"writebackEnabled,omitempty" tf:"writeback_enabled,omitempty"`
 }
 
 type GroupObservation struct {
@@ -281,6 +382,18 @@ type GroupParameters struct {
 type GroupSpec struct {
 	v1.ResourceSpec `json:",inline"`
 	ForProvider     GroupParameters `json:"forProvider"`
+	// THIS IS AN ALPHA FIELD. Do not use it in production. It is not honored
+	// unless the relevant Crossplane feature flag is enabled, and may be
+	// changed or removed without notice.
+	// InitProvider holds the same fields as ForProvider, with the exception
+	// of Identifier and other resource reference fields. The fields that are
+	// in InitProvider are merged into ForProvider when the resource is created.
+	// The same fields are also added to the terraform ignore_changes hook, to
+	// avoid updating them after creation. This is useful for fields that are
+	// required on creation, but we do not desire to update them after creation,
+	// for example because of an external controller is managing them, like an
+	// autoscaler.
+	InitProvider GroupInitParameters `json:"initProvider,omitempty"`
 }
 
 // GroupStatus defines the observed state of Group.
@@ -301,7 +414,7 @@ type GroupStatus struct {
 type Group struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.displayName)",message="displayName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || has(self.initProvider.displayName)",message="displayName is a required parameter"
 	Spec   GroupSpec   `json:"spec"`
 	Status GroupStatus `json:"status,omitempty"`
 }
