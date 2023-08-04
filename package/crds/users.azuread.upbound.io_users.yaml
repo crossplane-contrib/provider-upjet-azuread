@@ -106,9 +106,9 @@ spec:
                       center associated with the user.
                     type: string
                   country:
-                    description: The country/region in which the user is located,
-                      e.g. US or UK. The country/region in which the user is located,
-                      e.g. `US` or `UK`
+                    description: 'The country/region in which the user is located.
+                      Examples include: NO, JP, and GB. The country/region in which
+                      the user is located, e.g. `US` or `UK`'
                     type: string
                   department:
                     description: The name for the department in which the user works.
@@ -322,9 +322,9 @@ spec:
                       center associated with the user.
                     type: string
                   country:
-                    description: The country/region in which the user is located,
-                      e.g. US or UK. The country/region in which the user is located,
-                      e.g. `US` or `UK`
+                    description: 'The country/region in which the user is located.
+                      Examples include: NO, JP, and GB. The country/region in which
+                      the user is located, e.g. `US` or `UK`'
                     type: string
                   department:
                     description: The name for the department in which the user works.
@@ -716,9 +716,9 @@ spec:
                       center associated with the user.
                     type: string
                   country:
-                    description: The country/region in which the user is located,
-                      e.g. US or UK. The country/region in which the user is located,
-                      e.g. `US` or `UK`
+                    description: 'The country/region in which the user is located.
+                      Examples include: NO, JP, and GB. The country/region in which
+                      the user is located, e.g. `US` or `UK`'
                     type: string
                   creationType:
                     description: Indicates whether the user account was created as

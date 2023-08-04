@@ -111,6 +111,29 @@ spec:
                           items:
                             type: string
                           type: array
+                        clientApplications:
+                          description: An client_applications block as documented
+                            below, which specifies service principals included in
+                            and excluded from the policy.
+                          items:
+                            properties:
+                              excludedServicePrincipals:
+                                description: A list of service principal IDs explicitly
+                                  excluded in the policy.
+                                items:
+                                  type: string
+                                type: array
+                              includedServicePrincipals:
+                                description: A list of service principal IDs explicitly
+                                  included in the policy. Can be set to ServicePrincipalsInMyTenant
+                                  to include all service principals. This is mandatory
+                                  value when at least one excluded_service_principals
+                                  is set.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
                         devices:
                           description: A devices block as documented below, which
                             describes devices to be included in and excluded from
@@ -183,10 +206,17 @@ spec:
                                 type: array
                             type: object
                           type: array
+                        servicePrincipalRiskLevels:
+                          description: 'A list of service principal sign-in risk levels
+                            included in the policy. Possible values are: low, medium,
+                            high, none, unknownFutureValue.'
+                          items:
+                            type: string
+                          type: array
                         signInRiskLevels:
-                          description: 'A list of sign-in risk levels included in
-                            the policy. Possible values are: low, medium, high, hidden,
-                            none, unknownFutureValue.'
+                          description: 'A list of user sign-in risk levels included
+                            in the policy. Possible values are: low, medium, high,
+                            hidden, none, unknownFutureValue.'
                           items:
                             type: string
                           type: array
@@ -291,6 +321,9 @@ spec:
                             cloud app security policy to use. Possible values are:
                             blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.'
                           type: string
+                        disableResilienceDefaults:
+                          description: Disables resilience defaults. Defaults to false.
+                          type: boolean
                         persistentBrowserMode:
                           description: 'Session control to define whether to persist
                             cookies or not. Possible values are: always or never.'
@@ -372,6 +405,29 @@ spec:
                           items:
                             type: string
                           type: array
+                        clientApplications:
+                          description: An client_applications block as documented
+                            below, which specifies service principals included in
+                            and excluded from the policy.
+                          items:
+                            properties:
+                              excludedServicePrincipals:
+                                description: A list of service principal IDs explicitly
+                                  excluded in the policy.
+                                items:
+                                  type: string
+                                type: array
+                              includedServicePrincipals:
+                                description: A list of service principal IDs explicitly
+                                  included in the policy. Can be set to ServicePrincipalsInMyTenant
+                                  to include all service principals. This is mandatory
+                                  value when at least one excluded_service_principals
+                                  is set.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          type: array
                         devices:
                           description: A devices block as documented below, which
                             describes devices to be included in and excluded from
@@ -444,10 +500,17 @@ spec:
                                 type: array
                             type: object
                           type: array
+                        servicePrincipalRiskLevels:
+                          description: 'A list of service principal sign-in risk levels
+                            included in the policy. Possible values are: low, medium,
+                            high, none, unknownFutureValue.'
+                          items:
+                            type: string
+                          type: array
                         signInRiskLevels:
-                          description: 'A list of sign-in risk levels included in
-                            the policy. Possible values are: low, medium, high, hidden,
-                            none, unknownFutureValue.'
+                          description: 'A list of user sign-in risk levels included
+                            in the policy. Possible values are: low, medium, high,
+                            hidden, none, unknownFutureValue.'
                           items:
                             type: string
                           type: array
@@ -552,6 +615,9 @@ spec:
                             cloud app security policy to use. Possible values are:
                             blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.'
                           type: string
+                        disableResilienceDefaults:
+                          description: Disables resilience defaults. Defaults to false.
+                          type: boolean
                         persistentBrowserMode:
                           description: 'Session control to define whether to persist
                             cookies or not. Possible values are: always or never.'
@@ -781,10 +847,6 @@ spec:
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
                 || has(self.initProvider.displayName)'
-            - message: grantControls is a required parameter
-              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
-                || ''Update'' in self.managementPolicies) || has(self.forProvider.grantControls)
-                || has(self.initProvider.grantControls)'
             - message: state is a required parameter
               rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
                 || ''Update'' in self.managementPolicies) || has(self.forProvider.state)
@@ -838,6 +900,29 @@ spec:
                             exchangeActiveSync, easSupported and other.'
                           items:
                             type: string
+                          type: array
+                        clientApplications:
+                          description: An client_applications block as documented
+                            below, which specifies service principals included in
+                            and excluded from the policy.
+                          items:
+                            properties:
+                              excludedServicePrincipals:
+                                description: A list of service principal IDs explicitly
+                                  excluded in the policy.
+                                items:
+                                  type: string
+                                type: array
+                              includedServicePrincipals:
+                                description: A list of service principal IDs explicitly
+                                  included in the policy. Can be set to ServicePrincipalsInMyTenant
+                                  to include all service principals. This is mandatory
+                                  value when at least one excluded_service_principals
+                                  is set.
+                                items:
+                                  type: string
+                                type: array
+                            type: object
                           type: array
                         devices:
                           description: A devices block as documented below, which
@@ -911,10 +996,17 @@ spec:
                                 type: array
                             type: object
                           type: array
+                        servicePrincipalRiskLevels:
+                          description: 'A list of service principal sign-in risk levels
+                            included in the policy. Possible values are: low, medium,
+                            high, none, unknownFutureValue.'
+                          items:
+                            type: string
+                          type: array
                         signInRiskLevels:
-                          description: 'A list of sign-in risk levels included in
-                            the policy. Possible values are: low, medium, high, hidden,
-                            none, unknownFutureValue.'
+                          description: 'A list of user sign-in risk levels included
+                            in the policy. Possible values are: low, medium, high,
+                            hidden, none, unknownFutureValue.'
                           items:
                             type: string
                           type: array
@@ -1022,6 +1114,9 @@ spec:
                             cloud app security policy to use. Possible values are:
                             blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.'
                           type: string
+                        disableResilienceDefaults:
+                          description: Disables resilience defaults. Defaults to false.
+                          type: boolean
                         persistentBrowserMode:
                           description: 'Session control to define whether to persist
                             cookies or not. Possible values are: always or never.'
