@@ -43,7 +43,7 @@ type UserInitParameters struct {
 	// The cost center associated with the user.
 	CostCenter *string `json:"costCenter,omitempty" tf:"cost_center,omitempty"`
 
-	// The country/region in which the user is located, e.g. US or UK.
+	// The country/region in which the user is located. Examples include: NO, JP, and GB.
 	// The country/region in which the user is located, e.g. `US` or `UK`
 	Country *string `json:"country,omitempty" tf:"country,omitempty"`
 
@@ -185,7 +185,7 @@ type UserObservation struct {
 	// The cost center associated with the user.
 	CostCenter *string `json:"costCenter,omitempty" tf:"cost_center,omitempty"`
 
-	// The country/region in which the user is located, e.g. US or UK.
+	// The country/region in which the user is located. Examples include: NO, JP, and GB.
 	// The country/region in which the user is located, e.g. `US` or `UK`
 	Country *string `json:"country,omitempty" tf:"country,omitempty"`
 
@@ -381,7 +381,7 @@ type UserParameters struct {
 	// +kubebuilder:validation:Optional
 	CostCenter *string `json:"costCenter,omitempty" tf:"cost_center,omitempty"`
 
-	// The country/region in which the user is located, e.g. US or UK.
+	// The country/region in which the user is located. Examples include: NO, JP, and GB.
 	// The country/region in which the user is located, e.g. `US` or `UK`
 	// +kubebuilder:validation:Optional
 	Country *string `json:"country,omitempty" tf:"country,omitempty"`

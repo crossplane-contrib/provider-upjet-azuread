@@ -46,6 +46,7 @@ spec:
     sessionControls:
     - applicationEnforcedRestrictionsEnabled: true
       cloudAppSecurityPolicy: monitorOnly
+      disableResilienceDefaults: false
       signInFrequency: 10
       signInFrequencyPeriod: hours
     state: disabled

@@ -114,6 +114,35 @@ type ApplicationsParameters struct {
 	IncludedUserActions []*string `json:"includedUserActions,omitempty" tf:"included_user_actions,omitempty"`
 }
 
+type ClientApplicationsInitParameters struct {
+
+	// A list of service principal IDs explicitly excluded in the policy.
+	ExcludedServicePrincipals []*string `json:"excludedServicePrincipals,omitempty" tf:"excluded_service_principals,omitempty"`
+
+	// A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.
+	IncludedServicePrincipals []*string `json:"includedServicePrincipals,omitempty" tf:"included_service_principals,omitempty"`
+}
+
+type ClientApplicationsObservation struct {
+
+	// A list of service principal IDs explicitly excluded in the policy.
+	ExcludedServicePrincipals []*string `json:"excludedServicePrincipals,omitempty" tf:"excluded_service_principals,omitempty"`
+
+	// A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.
+	IncludedServicePrincipals []*string `json:"includedServicePrincipals,omitempty" tf:"included_service_principals,omitempty"`
+}
+
+type ClientApplicationsParameters struct {
+
+	// A list of service principal IDs explicitly excluded in the policy.
+	// +kubebuilder:validation:Optional
+	ExcludedServicePrincipals []*string `json:"excludedServicePrincipals,omitempty" tf:"excluded_service_principals,omitempty"`
+
+	// A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.
+	// +kubebuilder:validation:Optional
+	IncludedServicePrincipals []*string `json:"includedServicePrincipals,omitempty" tf:"included_service_principals,omitempty"`
+}
+
 type ConditionsInitParameters struct {
 
 	// An applications block as documented below, which specifies applications and user actions included in and excluded from the policy.
@@ -121,6 +150,9 @@ type ConditionsInitParameters struct {
 
 	// A list of client application types included in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients, exchangeActiveSync, easSupported and other.
 	ClientAppTypes []*string `json:"clientAppTypes,omitempty" tf:"client_app_types,omitempty"`
+
+	// An client_applications block as documented below, which specifies service principals included in and excluded from the policy.
+	ClientApplications []ClientApplicationsInitParameters `json:"clientApplications,omitempty" tf:"client_applications,omitempty"`
 
 	// A devices block as documented below, which describes devices to be included in and excluded from the policy. A devices block can be added to an existing policy, but removing the devices block forces a new resource to be created.
 	Devices []DevicesInitParameters `json:"devices,omitempty" tf:"devices,omitempty"`
@@ -131,7 +163,10 @@ type ConditionsInitParameters struct {
 	// A platforms block as documented below, which specifies platforms included in and excluded from the policy.
 	Platforms []PlatformsInitParameters `json:"platforms,omitempty" tf:"platforms,omitempty"`
 
-	// A list of sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
+	// A list of service principal sign-in risk levels included in the policy. Possible values are: low, medium, high, none, unknownFutureValue.
+	ServicePrincipalRiskLevels []*string `json:"servicePrincipalRiskLevels,omitempty" tf:"service_principal_risk_levels,omitempty"`
+
+	// A list of user sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
 	SignInRiskLevels []*string `json:"signInRiskLevels,omitempty" tf:"sign_in_risk_levels,omitempty"`
 
 	// A list of user risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
@@ -149,6 +184,9 @@ type ConditionsObservation struct {
 	// A list of client application types included in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients, exchangeActiveSync, easSupported and other.
 	ClientAppTypes []*string `json:"clientAppTypes,omitempty" tf:"client_app_types,omitempty"`
 
+	// An client_applications block as documented below, which specifies service principals included in and excluded from the policy.
+	ClientApplications []ClientApplicationsObservation `json:"clientApplications,omitempty" tf:"client_applications,omitempty"`
+
 	// A devices block as documented below, which describes devices to be included in and excluded from the policy. A devices block can be added to an existing policy, but removing the devices block forces a new resource to be created.
 	Devices []DevicesObservation `json:"devices,omitempty" tf:"devices,omitempty"`
 
@@ -158,7 +196,10 @@ type ConditionsObservation struct {
 	// A platforms block as documented below, which specifies platforms included in and excluded from the policy.
 	Platforms []PlatformsObservation `json:"platforms,omitempty" tf:"platforms,omitempty"`
 
-	// A list of sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
+	// A list of service principal sign-in risk levels included in the policy. Possible values are: low, medium, high, none, unknownFutureValue.
+	ServicePrincipalRiskLevels []*string `json:"servicePrincipalRiskLevels,omitempty" tf:"service_principal_risk_levels,omitempty"`
+
+	// A list of user sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
 	SignInRiskLevels []*string `json:"signInRiskLevels,omitempty" tf:"sign_in_risk_levels,omitempty"`
 
 	// A list of user risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
@@ -178,6 +219,10 @@ type ConditionsParameters struct {
 	// +kubebuilder:validation:Optional
 	ClientAppTypes []*string `json:"clientAppTypes,omitempty" tf:"client_app_types,omitempty"`
 
+	// An client_applications block as documented below, which specifies service principals included in and excluded from the policy.
+	// +kubebuilder:validation:Optional
+	ClientApplications []ClientApplicationsParameters `json:"clientApplications,omitempty" tf:"client_applications,omitempty"`
+
 	// A devices block as documented below, which describes devices to be included in and excluded from the policy. A devices block can be added to an existing policy, but removing the devices block forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	Devices []DevicesParameters `json:"devices,omitempty" tf:"devices,omitempty"`
@@ -190,7 +235,11 @@ type ConditionsParameters struct {
 	// +kubebuilder:validation:Optional
 	Platforms []PlatformsParameters `json:"platforms,omitempty" tf:"platforms,omitempty"`
 
-	// A list of sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
+	// A list of service principal sign-in risk levels included in the policy. Possible values are: low, medium, high, none, unknownFutureValue.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalRiskLevels []*string `json:"servicePrincipalRiskLevels,omitempty" tf:"service_principal_risk_levels,omitempty"`
+
+	// A list of user sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.
 	// +kubebuilder:validation:Optional
 	SignInRiskLevels []*string `json:"signInRiskLevels,omitempty" tf:"sign_in_risk_levels,omitempty"`
 
@@ -366,6 +415,9 @@ type SessionControlsInitParameters struct {
 	// Enables cloud app security and specifies the cloud app security policy to use. Possible values are: blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.
 	CloudAppSecurityPolicy *string `json:"cloudAppSecurityPolicy,omitempty" tf:"cloud_app_security_policy,omitempty"`
 
+	// Disables resilience defaults. Defaults to false.
+	DisableResilienceDefaults *bool `json:"disableResilienceDefaults,omitempty" tf:"disable_resilience_defaults,omitempty"`
+
 	// Session control to define whether to persist cookies or not. Possible values are: always or never.
 	PersistentBrowserMode *string `json:"persistentBrowserMode,omitempty" tf:"persistent_browser_mode,omitempty"`
 
@@ -383,6 +435,9 @@ type SessionControlsObservation struct {
 
 	// Enables cloud app security and specifies the cloud app security policy to use. Possible values are: blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.
 	CloudAppSecurityPolicy *string `json:"cloudAppSecurityPolicy,omitempty" tf:"cloud_app_security_policy,omitempty"`
+
+	// Disables resilience defaults. Defaults to false.
+	DisableResilienceDefaults *bool `json:"disableResilienceDefaults,omitempty" tf:"disable_resilience_defaults,omitempty"`
 
 	// Session control to define whether to persist cookies or not. Possible values are: always or never.
 	PersistentBrowserMode *string `json:"persistentBrowserMode,omitempty" tf:"persistent_browser_mode,omitempty"`
@@ -403,6 +458,10 @@ type SessionControlsParameters struct {
 	// Enables cloud app security and specifies the cloud app security policy to use. Possible values are: blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.
 	// +kubebuilder:validation:Optional
 	CloudAppSecurityPolicy *string `json:"cloudAppSecurityPolicy,omitempty" tf:"cloud_app_security_policy,omitempty"`
+
+	// Disables resilience defaults. Defaults to false.
+	// +kubebuilder:validation:Optional
+	DisableResilienceDefaults *bool `json:"disableResilienceDefaults,omitempty" tf:"disable_resilience_defaults,omitempty"`
 
 	// Session control to define whether to persist cookies or not. Possible values are: always or never.
 	// +kubebuilder:validation:Optional
@@ -524,7 +583,6 @@ type AccessPolicy struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.conditions) || has(self.initProvider.conditions)",message="conditions is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || has(self.initProvider.displayName)",message="displayName is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.grantControls) || has(self.initProvider.grantControls)",message="grantControls is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.state) || has(self.initProvider.state)",message="state is a required parameter"
 	Spec   AccessPolicySpec   `json:"spec"`
 	Status AccessPolicyStatus `json:"status,omitempty"`

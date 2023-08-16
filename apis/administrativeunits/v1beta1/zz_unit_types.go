@@ -23,6 +23,7 @@ type UnitInitParameters struct {
 	// The display name for the administrative unit
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	// Whether the administrative unit and its members are hidden or publicly viewable in the directory.
 	// Whether the administrative unit and its members are hidden or publicly viewable in the directory
 	HiddenMembershipEnabled *bool `json:"hiddenMembershipEnabled,omitempty" tf:"hidden_membership_enabled,omitempty"`
 
@@ -44,6 +45,7 @@ type UnitObservation struct {
 	// The display name for the administrative unit
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	// Whether the administrative unit and its members are hidden or publicly viewable in the directory.
 	// Whether the administrative unit and its members are hidden or publicly viewable in the directory
 	HiddenMembershipEnabled *bool `json:"hiddenMembershipEnabled,omitempty" tf:"hidden_membership_enabled,omitempty"`
 
@@ -73,6 +75,7 @@ type UnitParameters struct {
 	// +kubebuilder:validation:Optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
+	// Whether the administrative unit and its members are hidden or publicly viewable in the directory.
 	// Whether the administrative unit and its members are hidden or publicly viewable in the directory
 	// +kubebuilder:validation:Optional
 	HiddenMembershipEnabled *bool `json:"hiddenMembershipEnabled,omitempty" tf:"hidden_membership_enabled,omitempty"`

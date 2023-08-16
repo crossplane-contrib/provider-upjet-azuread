@@ -95,7 +95,7 @@ resources:
             assignment_review_settings.duration_in_days: (Number) How many days each occurrence of the access review series will run.
             assignment_review_settings.enabled: (Optional) Whether to enable assignment review.
             assignment_review_settings.review_frequency: (Optional) This will determine how often the access review campaign runs, valid values are weekly, monthly, quarterly, halfyearly, or annual.
-            assignment_review_settings.review_type: (Optional) Self review or specific reviewers. Valid values are Self, or Reviewers.
+            assignment_review_settings.review_type: (Optional) Self-review or specific reviewers. Valid values are Manager, Reviewers, or Self.
             assignment_review_settings.reviewer: (Optional) One or more reviewer blocks to specify the users who will be reviewers (when review_type is Reviewers), as documented below.
             assignment_review_settings.reviewer.backup: (Optional) For a user in an approval stage, this property indicates whether the user is a backup approver.
             assignment_review_settings.reviewer.object_id: (Optional) The ID of the subject.
@@ -261,14 +261,14 @@ resources:
                 {
                   "description": "Just an example",
                   "display_name": "Example-AU",
-                  "visibility": "Public"
+                  "hidden_membership_enabled": false
                 }
         argumentDocs:
             description: '- (Optional) The description of the administrative unit.'
             display_name: '- (Required) The display name of the administrative unit.'
+            hidden_membership_enabled: '- (Optional) Whether the administrative unit and its members are hidden or publicly viewable in the directory.'
             members: '- (Optional) A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups.'
             object_id: '- The object ID of the administrative unit.'
-            visibility: '- (Optional) Whether the administrative unit and its members are hidden or publicly viewable in the directory. Must be one of: Hiddenmembership or Public. Defaults to Public.'
         importStatements:
             - terraform import azuread_administrative_unit.example 00000000-0000-0000-0000-000000000000
     azuread_administrative_unit_member:
@@ -1147,33 +1147,127 @@ resources:
                     {
                       "application_enforced_restrictions_enabled": true,
                       "cloud_app_security_policy": "monitorOnly",
+                      "disable_resilience_defaults": false,
                       "sign_in_frequency": 10,
                       "sign_in_frequency_period": "hours"
                     }
                   ],
                   "state": "disabled"
                 }
+            - name: example
+              manifest: |-
+                {
+                  "conditions": [
+                    {
+                      "applications": [
+                        {
+                          "included_applications": [
+                            "All"
+                          ]
+                        }
+                      ],
+                      "client_app_types": [
+                        "all"
+                      ],
+                      "client_applications": [
+                        {
+                          "excluded_service_principals": [],
+                          "included_service_principals": [
+                            "${data.azuread_client_config.current.object_id}"
+                          ]
+                        }
+                      ],
+                      "users": [
+                        {
+                          "included_users": [
+                            "None"
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "display_name": "example policy",
+                  "grant_controls": [
+                    {
+                      "built_in_controls": [
+                        "block"
+                      ],
+                      "operator": "OR"
+                    }
+                  ],
+                  "state": "disabled"
+                }
+            - name: example
+              manifest: |-
+                {
+                  "conditions": [
+                    {
+                      "applications": [
+                        {
+                          "included_applications": [
+                            "All"
+                          ]
+                        }
+                      ],
+                      "client_app_types": [
+                        "all"
+                      ],
+                      "client_applications": [
+                        {
+                          "excluded_service_principals": [
+                            "${data.azuread_client_config.current.object_id}"
+                          ],
+                          "included_service_principals": [
+                            "ServicePrincipalsInMyTenant"
+                          ]
+                        }
+                      ],
+                      "users": [
+                        {
+                          "included_users": [
+                            "None"
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "display_name": "example policy",
+                  "grant_controls": [
+                    {
+                      "built_in_controls": [
+                        "block"
+                      ],
+                      "operator": "OR"
+                    }
+                  ],
+                  "state": "disabled"
+                }
         argumentDocs:
+            client_applications.excluded_service_principals: '- (Optional) A list of service principal IDs explicitly excluded in the policy.'
+            client_applications.included_service_principals: '- (Optional) A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.'
             conditions: '- (Required) A conditions block as documented below, which specifies the rules that must be met for the policy to apply.'
             conditions.applications: '- (Required) An applications block as documented below, which specifies applications and user actions included in and excluded from the policy.'
             conditions.applications.excluded_applications: '- (Optional) A list of application IDs explicitly excluded from the policy. Can also be set to Office365.'
             conditions.applications.included_applications: '- (Optional) A list of application IDs the policy applies to, unless explicitly excluded (in excluded_applications). Can also be set to All, None or Office365. Cannot be specified with included_user_actions. One of included_applications or included_user_actions must be specified.'
             conditions.applications.included_user_actions: '- (Optional) A list of user actions to include. Supported values are urn:user:registerdevice and urn:user:registersecurityinfo. Cannot be specified with included_applications. One of included_applications or included_user_actions must be specified.'
             conditions.client_app_types: '- (Required) A list of client application types included in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients, exchangeActiveSync, easSupported and other.'
+            conditions.client_applications: '- (Optional) An client_applications block as documented below, which specifies service principals included in and excluded from the policy.'
             conditions.devices: '- (Optional) A devices block as documented below, which describes devices to be included in and excluded from the policy. A devices block can be added to an existing policy, but removing the devices block forces a new resource to be created.'
-            conditions.locations: '- (Required) A locations block as documented below, which specifies locations included in and excluded from the policy.'
-            conditions.platforms: '- (Required) A platforms block as documented below, which specifies platforms included in and excluded from the policy.'
-            conditions.sign_in_risk_levels: '- (Optional) A list of sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.'
+            conditions.locations: '- (Optional) A locations block as documented below, which specifies locations included in and excluded from the policy.'
+            conditions.platforms: '- (Optional) A platforms block as documented below, which specifies platforms included in and excluded from the policy.'
+            conditions.service_principal_risk_levels: '- (Optional) A list of service principal sign-in risk levels included in the policy. Possible values are: low, medium, high, none, unknownFutureValue.'
+            conditions.sign_in_risk_levels: '- (Optional) A list of user sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.'
             conditions.user_risk_levels: '- (Optional) A list of user risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.'
             conditions.users: '- (Required) A users block as documented below, which specifies users, groups, and roles included in and excluded from the policy.'
             devices.filter: '- (Optional) A filter block as described below. A filter block can be added to an existing policy, but removing the filter block forces a new resource to be created.'
             devices.filter.mode: '- (Required) Whether to include in, or exclude from, matching devices from the policy. Supported values are include or exclude.'
             devices.filter.rule: '- (Required) Condition filter to match devices. For more information, see official documentation.'
             display_name: '- (Required) The friendly name for this Conditional Access Policy.'
-            grant_controls: '- (Required) A grant_controls block as documented below, which specifies the grant controls that must be fulfilled to pass the policy.'
+            grant_controls: '- (Optional) A grant_controls block as documented below, which specifies the grant controls that must be fulfilled to pass the policy.'
             grant_controls.built_in_controls: '- (Required) List of built-in controls required by the policy. Possible values are: block, mfa, approvedApplication, compliantApplication, compliantDevice, domainJoinedDevice, passwordChange or unknownFutureValue.'
             grant_controls.custom_authentication_factors: '- (Optional) List of custom controls IDs required by the policy.'
             grant_controls.operator: '- (Required) Defines the relationship of the grant controls. Possible values are: AND, OR.'
+            grant_controls.state: '- (Required) Specifies the state of the policy object. Possible values are: enabled, disabled and enabledForReportingButNotEnforced'
             grant_controls.terms_of_use: '- (Optional) List of terms of use IDs required by the policy.'
             id: '- The ID of the Conditional Access Policy.'
             locations.excluded_locations: '- (Optional) A list of location IDs excluded from scope of policy. Can also be set to AllTrusted.'
@@ -1183,10 +1277,10 @@ resources:
             session_controls: '- (Optional) A session_controls block as documented below, which specifies the session controls that are enforced after sign-in.'
             session_controls.application_enforced_restrictions_enabled: '- (Optional) Whether or not application enforced restrictions are enabled. Defaults to false.'
             session_controls.cloud_app_security_policy: '- (Optional) Enables cloud app security and specifies the cloud app security policy to use. Possible values are: blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.'
+            session_controls.disable_resilience_defaults: '- (Optional) Disables resilience defaults. Defaults to false.'
             session_controls.persistent_browser_mode: '- (Optional) Session control to define whether to persist cookies or not. Possible values are: always or never.'
             session_controls.sign_in_frequency: '- (Optional) Number of days or hours to enforce sign-in frequency. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.'
             session_controls.sign_in_frequency_period: '- (Optional) The time period to enforce sign-in frequency. Possible values are: hours or days. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.'
-            state: '- (Required) Specifies the state of the policy object. Possible values are: enabled, disabled and enabledForReportingButNotEnforced'
             users.excluded_groups: '- (Optional) A list of group IDs excluded from scope of policy.'
             users.excluded_roles: '- (Optional) A list of role IDs excluded from scope of policy.'
             users.excluded_users: '- (Optional) A list of user IDs excluded from scope of policy and/or GuestsOrExternalUsers.'
@@ -2107,7 +2201,7 @@ resources:
             company_name: '- (Optional) The company name which the user is associated. This property can be useful for describing the company that an external user comes from.'
             consent_provided_for_minor: '- (Optional) Whether consent has been obtained for minors. Supported values are Granted, Denied and NotRequired. Omit this property or specify a blank string to unset.'
             cost_center: '- (Optional) The cost center associated with the user.'
-            country: '- (Optional) The country/region in which the user is located, e.g. US or UK.'
+            country: '- (Optional) The country/region in which the user is located. Examples include: NO, JP, and GB.'
             creation_type: '- Indicates whether the user account was created as a regular school or work account (null), an external account (Invitation), a local account for an Azure Active Directory B2C tenant (LocalAccount) or self-service sign-up using email verification (EmailVerified).'
             department: '- (Optional) The name for the department in which the user works.'
             disable_password_expiration: '- (Optional) Whether the user''s password is exempt from expiring. Defaults to false.'

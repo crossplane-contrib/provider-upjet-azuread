@@ -8,7 +8,7 @@ export TERRAFORM_VERSION := 1.2.1
 
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/azuread
 export TERRAFORM_PROVIDER_REPO := https://github.com/hashicorp/terraform-provider-azuread
-export TERRAFORM_PROVIDER_VERSION := 2.39.0
+export TERRAFORM_PROVIDER_VERSION := 2.41.0
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-azuread
 export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-azuread_v$(TERRAFORM_PROVIDER_VERSION)_x5
 export TERRAFORM_DOCS_PATH := docs/resources
