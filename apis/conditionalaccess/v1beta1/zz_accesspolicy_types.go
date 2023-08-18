@@ -213,11 +213,11 @@ type ConditionsParameters struct {
 
 	// An applications block as documented below, which specifies applications and user actions included in and excluded from the policy.
 	// +kubebuilder:validation:Optional
-	Applications []ApplicationsParameters `json:"applications,omitempty" tf:"applications,omitempty"`
+	Applications []ApplicationsParameters `json:"applications" tf:"applications,omitempty"`
 
 	// A list of client application types included in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients, exchangeActiveSync, easSupported and other.
 	// +kubebuilder:validation:Optional
-	ClientAppTypes []*string `json:"clientAppTypes,omitempty" tf:"client_app_types,omitempty"`
+	ClientAppTypes []*string `json:"clientAppTypes" tf:"client_app_types,omitempty"`
 
 	// An client_applications block as documented below, which specifies service principals included in and excluded from the policy.
 	// +kubebuilder:validation:Optional
@@ -249,7 +249,7 @@ type ConditionsParameters struct {
 
 	// A users block as documented below, which specifies users, groups, and roles included in and excluded from the policy.
 	// +kubebuilder:validation:Optional
-	Users []UsersParameters `json:"users,omitempty" tf:"users,omitempty"`
+	Users []UsersParameters `json:"users" tf:"users,omitempty"`
 }
 
 type DevicesInitParameters struct {
@@ -293,11 +293,11 @@ type FilterParameters struct {
 
 	// Whether to include in, or exclude from, matching devices from the policy. Supported values are include or exclude.
 	// +kubebuilder:validation:Optional
-	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+	Mode *string `json:"mode" tf:"mode,omitempty"`
 
 	// Condition filter to match devices. For more information, see official documentation.
 	// +kubebuilder:validation:Optional
-	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+	Rule *string `json:"rule" tf:"rule,omitempty"`
 }
 
 type GrantControlsInitParameters struct {
@@ -334,7 +334,7 @@ type GrantControlsParameters struct {
 
 	// List of built-in controls required by the policy. Possible values are: block, mfa, approvedApplication, compliantApplication, compliantDevice, domainJoinedDevice, passwordChange or unknownFutureValue.
 	// +kubebuilder:validation:Optional
-	BuiltInControls []*string `json:"builtInControls,omitempty" tf:"built_in_controls,omitempty"`
+	BuiltInControls []*string `json:"builtInControls" tf:"built_in_controls,omitempty"`
 
 	// List of custom controls IDs required by the policy.
 	// +kubebuilder:validation:Optional
@@ -342,7 +342,7 @@ type GrantControlsParameters struct {
 
 	// Defines the relationship of the grant controls. Possible values are: AND, OR.
 	// +kubebuilder:validation:Optional
-	Operator *string `json:"operator,omitempty" tf:"operator,omitempty"`
+	Operator *string `json:"operator" tf:"operator,omitempty"`
 
 	// List of terms of use IDs required by the policy.
 	// +kubebuilder:validation:Optional
@@ -375,7 +375,7 @@ type LocationsParameters struct {
 
 	// A list of location IDs in scope of policy unless explicitly excluded. Can also be set to All, or AllTrusted.
 	// +kubebuilder:validation:Optional
-	IncludedLocations []*string `json:"includedLocations,omitempty" tf:"included_locations,omitempty"`
+	IncludedLocations []*string `json:"includedLocations" tf:"included_locations,omitempty"`
 }
 
 type PlatformsInitParameters struct {
@@ -404,7 +404,7 @@ type PlatformsParameters struct {
 
 	// A list of platforms the policy applies to, unless explicitly excluded. Possible values are: all, android, iOS, linux, macOS, windows, windowsPhone or unknownFutureValue.
 	// +kubebuilder:validation:Optional
-	IncludedPlatforms []*string `json:"includedPlatforms,omitempty" tf:"included_platforms,omitempty"`
+	IncludedPlatforms []*string `json:"includedPlatforms" tf:"included_platforms,omitempty"`
 }
 
 type SessionControlsInitParameters struct {

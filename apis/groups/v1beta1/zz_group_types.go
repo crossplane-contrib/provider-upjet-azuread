@@ -37,12 +37,12 @@ type DynamicMembershipParameters struct {
 
 	// Whether rule processing is "On" (true) or "Paused" (false).
 	// +kubebuilder:validation:Optional
-	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
+	Enabled *bool `json:"enabled" tf:"enabled,omitempty"`
 
 	// The rule that determines membership of this group. For more information, see official documentation on membership rules syntax.
 	// Rule to determine members for a dynamic group. Required when `group_types` contains 'DynamicMembership'
 	// +kubebuilder:validation:Optional
-	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+	Rule *string `json:"rule" tf:"rule,omitempty"`
 }
 
 type GroupInitParameters struct {

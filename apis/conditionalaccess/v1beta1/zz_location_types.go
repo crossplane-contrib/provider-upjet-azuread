@@ -35,7 +35,7 @@ type CountryParameters struct {
 
 	// List of countries and/or regions in two-letter format specified by ISO 3166-2.
 	// +kubebuilder:validation:Optional
-	CountriesAndRegions []*string `json:"countriesAndRegions,omitempty" tf:"countries_and_regions,omitempty"`
+	CountriesAndRegions []*string `json:"countriesAndRegions" tf:"countries_and_regions,omitempty"`
 
 	// Whether IP addresses that don't map to a country or region should be included in the named location. Defaults to false.
 	// +kubebuilder:validation:Optional
@@ -64,7 +64,7 @@ type IPParameters struct {
 
 	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596.
 	// +kubebuilder:validation:Optional
-	IPRanges []*string `json:"ipRanges,omitempty" tf:"ip_ranges,omitempty"`
+	IPRanges []*string `json:"ipRanges" tf:"ip_ranges,omitempty"`
 
 	// Whether the named location is trusted. Defaults to false.
 	// +kubebuilder:validation:Optional

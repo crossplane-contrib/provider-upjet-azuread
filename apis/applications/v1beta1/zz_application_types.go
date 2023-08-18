@@ -127,7 +127,7 @@ type AccessTokenParameters struct {
 	// The name of the optional claim.
 	// The name of the optional claim
 	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+	Name *string `json:"name" tf:"name,omitempty"`
 
 	// The source of the claim. If source is absent, the claim is a predefined optional claim. If source is user, the value of name is the extension property from the user object.
 	// The source of the claim. If `source` is absent, the claim is a predefined optional claim. If `source` is `user`, the value of `name` is the extension property from the user object
@@ -194,17 +194,17 @@ type AppRoleParameters struct {
 	// Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
 	// Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
 	// +kubebuilder:validation:Optional
-	AllowedMemberTypes []*string `json:"allowedMemberTypes,omitempty" tf:"allowed_member_types,omitempty"`
+	AllowedMemberTypes []*string `json:"allowedMemberTypes" tf:"allowed_member_types,omitempty"`
 
 	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
 	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
 	// +kubebuilder:validation:Optional
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+	Description *string `json:"description" tf:"description,omitempty"`
 
 	// Display name for the app role that appears during app role assignment and in consent experiences.
 	// Display name for the app role that appears during app role assignment and in consent experiences
 	// +kubebuilder:validation:Optional
-	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
 
 	// Determines if the app role is enabled. Defaults to true.
 	// Determines if the app role is enabled
@@ -214,7 +214,7 @@ type AppRoleParameters struct {
 	// The unique identifier of the app role. Must be a valid UUID.
 	// The unique identifier of the app role
 	// +kubebuilder:validation:Optional
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+	ID *string `json:"id" tf:"id,omitempty"`
 
 	// The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.
 	// The value that is used for the `roles` claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal
@@ -706,7 +706,7 @@ type IDTokenParameters struct {
 	// The name of the optional claim.
 	// The name of the optional claim
 	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+	Name *string `json:"name" tf:"name,omitempty"`
 
 	// The source of the claim. If source is absent, the claim is a predefined optional claim. If source is user, the value of name is the extension property from the user object.
 	// The source of the claim. If `source` is absent, the claim is a predefined optional claim. If `source` is `user`, the value of `name` is the extension property from the user object
@@ -839,7 +839,7 @@ type Oauth2PermissionScopeParameters struct {
 	// The unique identifier of the delegated permission. Must be a valid UUID.
 	// The unique identifier of the delegated permission
 	// +kubebuilder:validation:Optional
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+	ID *string `json:"id" tf:"id,omitempty"`
 
 	// Whether this delegated permission should be considered safe for non-admin users to consent to on behalf of themselves, or whether an administrator should be required for consent to the permissions. Defaults to User. Possible values are User or Admin.
 	// Whether this delegated permission should be considered safe for non-admin users to consent to on behalf of themselves, or whether an administrator should be required for consent to the permissions
@@ -945,11 +945,11 @@ type RequiredResourceAccessParameters struct {
 
 	// A collection of resource_access blocks as documented below, describing OAuth2.0 permission scopes and app roles that the application requires from the specified resource.
 	// +kubebuilder:validation:Optional
-	ResourceAccess []ResourceAccessParameters `json:"resourceAccess,omitempty" tf:"resource_access,omitempty"`
+	ResourceAccess []ResourceAccessParameters `json:"resourceAccess" tf:"resource_access,omitempty"`
 
 	// The unique identifier for the resource that the application requires access to. This should be the Application ID of the target application.
 	// +kubebuilder:validation:Optional
-	ResourceAppID *string `json:"resourceAppId,omitempty" tf:"resource_app_id,omitempty"`
+	ResourceAppID *string `json:"resourceAppId" tf:"resource_app_id,omitempty"`
 }
 
 type ResourceAccessInitParameters struct {
@@ -974,11 +974,11 @@ type ResourceAccessParameters struct {
 
 	// The unique identifier for an app role or OAuth2 permission scope published by the resource application.
 	// +kubebuilder:validation:Optional
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+	ID *string `json:"id" tf:"id,omitempty"`
 
 	// Specifies whether the id property references an app role or an OAuth2 permission scope. Possible values are Role or Scope.
 	// +kubebuilder:validation:Optional
-	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+	Type *string `json:"type" tf:"type,omitempty"`
 }
 
 type Saml2TokenInitParameters struct {
@@ -1034,7 +1034,7 @@ type Saml2TokenParameters struct {
 	// The name of the optional claim.
 	// The name of the optional claim
 	// +kubebuilder:validation:Optional
-	Name *string `json:"name,omitempty" tf:"name,omitempty"`
+	Name *string `json:"name" tf:"name,omitempty"`
 
 	// The source of the claim. If source is absent, the claim is a predefined optional claim. If source is user, the value of name is the extension property from the user object.
 	// The source of the claim. If `source` is absent, the claim is a predefined optional claim. If `source` is `user`, the value of `name` is the extension property from the user object

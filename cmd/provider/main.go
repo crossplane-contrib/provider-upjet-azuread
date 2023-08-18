@@ -20,8 +20,6 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/upbound/upjet/pkg/controller/handler"
-
 	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/pkg/certificates"
 	xpcontroller "github.com/crossplane/crossplane-runtime/pkg/controller"
@@ -94,7 +92,6 @@ func main() {
 	kingpin.FatalIfError(err, "Cannot create controller manager")
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Azuread APIs to scheme")
 
-	eventHandler := handler.NewEventHandler()
 	// if the native Terraform provider plugin's path is not configured via
 	// the env. variable TERRAFORM_NATIVE_PROVIDER_PATH or
 	// the `--terraform-native-provider-path` command-line option,
@@ -118,8 +115,7 @@ func main() {
 		Provider: config.GetProvider(),
 		// use the following WorkspaceStoreOption to enable the shared gRPC mode
 		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
-		SetupFn:      clients.TerraformSetupBuilder(*terraformVersion, *nativeProviderSource, *providerVersion, scheduler),
-		EventHandler: eventHandler,
+		SetupFn: clients.TerraformSetupBuilder(*terraformVersion, *nativeProviderSource, *providerVersion, scheduler),
 	}
 
 	if *enableManagementPolicies {

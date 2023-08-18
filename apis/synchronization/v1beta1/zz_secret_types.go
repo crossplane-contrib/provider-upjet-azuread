@@ -32,7 +32,7 @@ type CredentialParameters struct {
 	// The key of the secret.
 	// Name for this key-value pair.
 	// +kubebuilder:validation:Optional
-	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+	Key *string `json:"key" tf:"key,omitempty"`
 
 	// The value of the secret.
 	// Value for this key-value pair.
