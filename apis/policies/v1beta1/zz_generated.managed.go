@@ -27,14 +27,6 @@ func (mg *ClaimsMappingPolicy) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-/*
-GetProviderReference of this ClaimsMappingPolicy.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ClaimsMappingPolicy) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
 // GetPublishConnectionDetailsTo of this ClaimsMappingPolicy.
 func (mg *ClaimsMappingPolicy) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
@@ -63,14 +55,6 @@ func (mg *ClaimsMappingPolicy) SetManagementPolicies(r xpv1.ManagementPolicies) 
 // SetProviderConfigReference of this ClaimsMappingPolicy.
 func (mg *ClaimsMappingPolicy) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ClaimsMappingPolicy.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ClaimsMappingPolicy) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ClaimsMappingPolicy.

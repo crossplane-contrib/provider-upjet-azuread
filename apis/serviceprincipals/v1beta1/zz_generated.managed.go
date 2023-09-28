@@ -27,14 +27,6 @@ func (mg *Certificate) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-/*
-GetProviderReference of this Certificate.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *Certificate) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
 // GetPublishConnectionDetailsTo of this Certificate.
 func (mg *Certificate) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
@@ -63,14 +55,6 @@ func (mg *Certificate) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this Certificate.
 func (mg *Certificate) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this Certificate.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *Certificate) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this Certificate.
@@ -103,14 +87,6 @@ func (mg *ClaimsMappingPolicyAssignment) GetProviderConfigReference() *xpv1.Refe
 	return mg.Spec.ProviderConfigReference
 }
 
-/*
-GetProviderReference of this ClaimsMappingPolicyAssignment.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *ClaimsMappingPolicyAssignment) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
 // GetPublishConnectionDetailsTo of this ClaimsMappingPolicyAssignment.
 func (mg *ClaimsMappingPolicyAssignment) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
@@ -139,14 +115,6 @@ func (mg *ClaimsMappingPolicyAssignment) SetManagementPolicies(r xpv1.Management
 // SetProviderConfigReference of this ClaimsMappingPolicyAssignment.
 func (mg *ClaimsMappingPolicyAssignment) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this ClaimsMappingPolicyAssignment.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *ClaimsMappingPolicyAssignment) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this ClaimsMappingPolicyAssignment.
@@ -179,14 +147,6 @@ func (mg *Password) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-/*
-GetProviderReference of this Password.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *Password) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
 // GetPublishConnectionDetailsTo of this Password.
 func (mg *Password) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
@@ -215,14 +175,6 @@ func (mg *Password) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this Password.
 func (mg *Password) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this Password.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *Password) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this Password.
@@ -255,14 +207,6 @@ func (mg *Principal) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-/*
-GetProviderReference of this Principal.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *Principal) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
 // GetPublishConnectionDetailsTo of this Principal.
 func (mg *Principal) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
@@ -291,14 +235,6 @@ func (mg *Principal) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this Principal.
 func (mg *Principal) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this Principal.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *Principal) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this Principal.
@@ -331,14 +267,6 @@ func (mg *TokenSigningCertificate) GetProviderConfigReference() *xpv1.Reference 
 	return mg.Spec.ProviderConfigReference
 }
 
-/*
-GetProviderReference of this TokenSigningCertificate.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *TokenSigningCertificate) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
 // GetPublishConnectionDetailsTo of this TokenSigningCertificate.
 func (mg *TokenSigningCertificate) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
@@ -367,14 +295,6 @@ func (mg *TokenSigningCertificate) SetManagementPolicies(r xpv1.ManagementPolici
 // SetProviderConfigReference of this TokenSigningCertificate.
 func (mg *TokenSigningCertificate) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this TokenSigningCertificate.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *TokenSigningCertificate) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this TokenSigningCertificate.

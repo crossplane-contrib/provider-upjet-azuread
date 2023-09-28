@@ -180,8 +180,8 @@ type InvitationStatus struct {
 type Invitation struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.redirectUrl) || has(self.initProvider.redirectUrl)",message="redirectUrl is a required parameter"
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.userEmailAddress) || has(self.initProvider.userEmailAddress)",message="userEmailAddress is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.redirectUrl) || (has(self.initProvider) && has(self.initProvider.redirectUrl))",message="spec.forProvider.redirectUrl is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.userEmailAddress) || (has(self.initProvider) && has(self.initProvider.userEmailAddress))",message="spec.forProvider.userEmailAddress is a required parameter"
 	Spec   InvitationSpec   `json:"spec"`
 	Status InvitationStatus `json:"status,omitempty"`
 }

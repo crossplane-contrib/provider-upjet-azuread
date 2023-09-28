@@ -27,14 +27,6 @@ func (mg *RoleAssignment) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-/*
-GetProviderReference of this RoleAssignment.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *RoleAssignment) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
 // GetPublishConnectionDetailsTo of this RoleAssignment.
 func (mg *RoleAssignment) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
@@ -63,14 +55,6 @@ func (mg *RoleAssignment) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this RoleAssignment.
 func (mg *RoleAssignment) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this RoleAssignment.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *RoleAssignment) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this RoleAssignment.
