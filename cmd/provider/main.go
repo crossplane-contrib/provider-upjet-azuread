@@ -16,6 +16,7 @@ package main
 
 import (
 	"context"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"time"
@@ -34,6 +35,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	"github.com/upbound/provider-azuread/apis"
@@ -75,16 +77,20 @@ func main() {
 		ctrl.SetLogger(zl)
 	}
 
+	// currently, we configure the jitter to be the 5% of the poll interval
+	pollJitter := time.Duration(float64(*pollInterval) * 0.05)
 	log.Debug("Starting", "sync-period", syncPeriod.String(),
-		"poll-interval", pollInterval.String(), "max-reconcile-rate", *maxReconcileRate)
+		"poll-interval", pollInterval.String(), "poll-jitter", pollJitter, "max-reconcile-rate", *maxReconcileRate)
 
 	cfg, err := ctrl.GetConfig()
 	kingpin.FatalIfError(err, "Cannot get API server rest config")
 
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
-		LeaderElection:             *leaderElection,
-		LeaderElectionID:           "crossplane-leader-election-provider-azuread",
-		SyncPeriod:                 syncPeriod,
+		LeaderElection:   *leaderElection,
+		LeaderElectionID: "crossplane-leader-election-provider-azuread",
+		Cache: cache.Options{
+			SyncPeriod: syncPeriod,
+		},
 		LeaderElectionResourceLock: resourcelock.LeasesResourceLock,
 		LeaseDuration:              func() *time.Duration { d := 60 * time.Second; return &d }(),
 		RenewDeadline:              func() *time.Duration { d := 50 * time.Second; return &d }(),
@@ -115,7 +121,8 @@ func main() {
 		Provider: config.GetProvider(),
 		// use the following WorkspaceStoreOption to enable the shared gRPC mode
 		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
-		SetupFn: clients.TerraformSetupBuilder(*terraformVersion, *nativeProviderSource, *providerVersion, scheduler),
+		SetupFn:    clients.TerraformSetupBuilder(*terraformVersion, *nativeProviderSource, *providerVersion, scheduler),
+		PollJitter: pollJitter,
 	}
 
 	if *enableManagementPolicies {
@@ -157,6 +164,7 @@ func main() {
 		log.Info("Alpha feature enabled", "flag", features.EnableAlphaManagementPolicies)
 	}
 
+	rand.Seed(time.Now().UnixNano())
 	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Azuread controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }

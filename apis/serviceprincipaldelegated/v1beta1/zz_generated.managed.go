@@ -27,14 +27,6 @@ func (mg *PermissionGrant) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
-/*
-GetProviderReference of this PermissionGrant.
-Deprecated: Use GetProviderConfigReference.
-*/
-func (mg *PermissionGrant) GetProviderReference() *xpv1.Reference {
-	return mg.Spec.ProviderReference
-}
-
 // GetPublishConnectionDetailsTo of this PermissionGrant.
 func (mg *PermissionGrant) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
 	return mg.Spec.PublishConnectionDetailsTo
@@ -63,14 +55,6 @@ func (mg *PermissionGrant) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this PermissionGrant.
 func (mg *PermissionGrant) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-/*
-SetProviderReference of this PermissionGrant.
-Deprecated: Use SetProviderConfigReference.
-*/
-func (mg *PermissionGrant) SetProviderReference(r *xpv1.Reference) {
-	mg.Spec.ProviderReference = r
 }
 
 // SetPublishConnectionDetailsTo of this PermissionGrant.
