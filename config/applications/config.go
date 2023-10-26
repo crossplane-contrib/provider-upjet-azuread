@@ -1,6 +1,6 @@
 package applications
 
-import "github.com/upbound/upjet/pkg/config"
+import "github.com/crossplane/upjet/pkg/config"
 
 const group = "applications"
 
@@ -47,7 +47,7 @@ func Configure(p *config.Provider) {
 		}
 		r.References["authorized_app_id"] = config.Reference{
 			Type:      "Application",
-			Extractor: `github.com/upbound/upjet/pkg/resource.ExtractParamPath("application_id",true)`,
+			Extractor: `github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)`,
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"

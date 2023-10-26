@@ -8,8 +8,8 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	ujconfig "github.com/upbound/upjet/pkg/config"
-	"github.com/upbound/upjet/pkg/registry/reference"
+	ujconfig "github.com/crossplane/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/registry/reference"
 
 	"github.com/upbound/provider-azuread/config/administrativeunits"
 	"github.com/upbound/provider-azuread/config/app"

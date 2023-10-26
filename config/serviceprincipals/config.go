@@ -1,6 +1,6 @@
 package serviceprincipals
 
-import "github.com/upbound/upjet/pkg/config"
+import "github.com/crossplane/upjet/pkg/config"
 
 const group = "serviceprincipals"
 
@@ -9,7 +9,7 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("azuread_service_principal", func(r *config.Resource) {
 		r.References["application_id"] = config.Reference{
 			Type:      "github.com/upbound/provider-azuread/apis/applications/v1beta1.Application",
-			Extractor: `github.com/upbound/upjet/pkg/resource.ExtractParamPath("application_id",true)`,
+			Extractor: `github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)`,
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"

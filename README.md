@@ -7,7 +7,7 @@
 </div>
 
 Provider Azuread is a [Crossplane](https://crossplane.io/) provider that
-is built using [Upjet](https://github.com/upbound/upjet) code
+is built using [Upjet](https://github.com/crossplane/upjet) code
 generation tools and exposes XRM-conformant managed resources for
 [Microsoft Azure Active Directory](https://azure.microsoft.com/en-us/products/active-directory/).
 
@@ -19,13 +19,13 @@ You can find a detailed API reference for all the managed resources with example
 
 ## Contributing
 
-For the general contribution guide, see [Upjet Contribution Guide](https://github.com/upbound/upjet/blob/main/CONTRIBUTING.md)
+For the general contribution guide, see [Upjet Contribution Guide](https://github.com/crossplane/upjet/blob/main/CONTRIBUTING.md)
 
-If you'd like to learn how to use Upjet, see [Usage Guide](https://github.com/upbound/upjet/tree/main/docs).
+If you'd like to learn how to use Upjet, see [Usage Guide](https://github.com/crossplane/upjet/tree/main/docs).
 
 ### Add a New Resource
 
-Follow the guide [here](https://github.com/upbound/upjet/blob/main/docs/add-new-resource-short.md).
+Follow the guide [here](https://github.com/crossplane/upjet/blob/v0.10.0/docs/add-new-resource-short.md).
 
 ## Report a Bug
 
