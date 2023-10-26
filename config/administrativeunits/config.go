@@ -1,6 +1,6 @@
 package administrativeunits
 
-import "github.com/upbound/upjet/pkg/config"
+import "github.com/crossplane/upjet/pkg/config"
 
 const group = "administrativeunits"
 

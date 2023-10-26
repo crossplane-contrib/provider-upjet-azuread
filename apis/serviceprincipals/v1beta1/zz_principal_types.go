@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -325,7 +329,7 @@ type PrincipalParameters struct {
 	// The application ID (client ID) of the application for which to create a service principal.
 	// The application ID (client ID) of the application for which to create a service principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
-	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("application_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 

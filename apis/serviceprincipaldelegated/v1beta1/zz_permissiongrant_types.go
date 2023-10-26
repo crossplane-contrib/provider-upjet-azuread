@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -80,7 +84,7 @@ type PermissionGrantParameters struct {
 	// - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.
 	// The object ID of the user on behalf of whom the service principal is authorized to access the resource
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("object_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	UserObjectID *string `json:"userObjectId,omitempty" tf:"user_object_id,omitempty"`
 

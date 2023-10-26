@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 /*
 Copyright 2022 Upbound Inc.
 */
@@ -54,7 +58,7 @@ type PreAuthorizedParameters struct {
 
 	// The application ID of the pre-authorized application
 	// +crossplane:generate:reference:type=Application
-	// +crossplane:generate:reference:extractor=github.com/upbound/upjet/pkg/resource.ExtractParamPath("application_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
 	// +kubebuilder:validation:Optional
 	AuthorizedAppID *string `json:"authorizedAppId,omitempty" tf:"authorized_app_id,omitempty"`
 
