@@ -16,7 +16,6 @@ package main
 
 import (
 	"context"
-	"math/rand"
 	"os"
 	"path/filepath"
 	"time"
@@ -110,6 +109,9 @@ func main() {
 			terraform.WithSharedProviderOptions(terraform.WithNativeProviderPath(*nativeProviderPath), terraform.WithNativeProviderName("registry.terraform.io/"+*nativeProviderSource)))
 	}
 
+	ctx := context.Background()
+	provider, err := config.GetProvider(ctx, false)
+	kingpin.FatalIfError(err, "Cannot initialize the provider configuration")
 	o := tjcontroller.Options{
 		Options: xpcontroller.Options{
 			Logger:                  log,
@@ -118,11 +120,12 @@ func main() {
 			MaxConcurrentReconciles: *maxReconcileRate,
 			Features:                &feature.Flags{},
 		},
-		Provider: config.GetProvider(),
+		Provider: provider,
 		// use the following WorkspaceStoreOption to enable the shared gRPC mode
 		// terraform.WithProviderRunner(terraform.NewSharedProvider(log, os.Getenv("TERRAFORM_NATIVE_PROVIDER_PATH"), terraform.WithNativeProviderArgs("-debuggable")))
-		SetupFn:    clients.TerraformSetupBuilder(*terraformVersion, *nativeProviderSource, *providerVersion, scheduler),
-		PollJitter: pollJitter,
+		SetupFn:               clients.TerraformSetupBuilder(*terraformVersion, *nativeProviderSource, *providerVersion, provider.TerraformProvider, scheduler),
+		PollJitter:            pollJitter,
+		OperationTrackerStore: tjcontroller.NewOperationStore(log),
 	}
 
 	if *enableManagementPolicies {
@@ -145,7 +148,7 @@ func main() {
 		}
 
 		// Ensure default store config exists.
-		kingpin.FatalIfError(resource.Ignore(kerrors.IsAlreadyExists, mgr.GetClient().Create(context.Background(), &v1alpha1.StoreConfig{
+		kingpin.FatalIfError(resource.Ignore(kerrors.IsAlreadyExists, mgr.GetClient().Create(ctx, &v1alpha1.StoreConfig{
 			ObjectMeta: metav1.ObjectMeta{
 				Name: "default",
 			},
@@ -159,7 +162,6 @@ func main() {
 		})), "cannot create default store config")
 	}
 
-	rand.Seed(time.Now().UnixNano())
 	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Azuread controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
