@@ -146,11 +146,26 @@ type PrincipalInitParameters struct {
 
 	// A set of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities.
 	// A list of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities
+	// +listType=set
 	AlternativeNames []*string `json:"alternativeNames,omitempty" tf:"alternative_names,omitempty"`
 
 	// Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application. Defaults to false.
 	// Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application
 	AppRoleAssignmentRequired *bool `json:"appRoleAssignmentRequired,omitempty" tf:"app_role_assignment_required,omitempty"`
+
+	// The application ID (client ID) of the application for which to create a service principal.
+	// The application ID (client ID) of the application for which to create a service principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// A description of the service principal provided for internal end-users.
 	// Description of the service principal provided for internal end-users
@@ -170,10 +185,12 @@ type PrincipalInitParameters struct {
 
 	// A set of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications.
 	// List of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications
+	// +listType=set
 	NotificationEmailAddresses []*string `json:"notificationEmailAddresses,omitempty" tf:"notification_email_addresses,omitempty"`
 
 	// A set of object IDs of principals that will be granted ownership of the service principal. Supported object types are users or service principals. By default, no owners are assigned.
 	// A list of object IDs of principals that will be granted ownership of the service principal
+	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
 
 	// The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps. Supported values are oidc, password, saml or notSupported. Omit this property or specify a blank string to unset.
@@ -186,6 +203,7 @@ type PrincipalInitParameters struct {
 
 	// A set of tags to apply to the service principal for configuring specific behaviours of the service principal. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
 	// A set of tags to apply to the service principal
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// When true, any existing service principal linked to the same application will be automatically imported. When false, an import error will be raised for any pre-existing service principal.
@@ -201,6 +219,7 @@ type PrincipalObservation struct {
 
 	// A set of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities.
 	// A list of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities
+	// +listType=set
 	AlternativeNames []*string `json:"alternativeNames,omitempty" tf:"alternative_names,omitempty"`
 
 	// Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application. Defaults to false.
@@ -209,6 +228,7 @@ type PrincipalObservation struct {
 
 	// A mapping of app role values to app role IDs, as published by the associated application, intended to be useful when referencing app roles in other resources in your configuration.
 	// Mapping of app role names to UUIDs
+	// +mapType=granular
 	AppRoleIds map[string]*string `json:"appRoleIds,omitempty" tf:"app_role_ids,omitempty"`
 
 	// A list of app roles published by the associated application, as documented below. For more information official documentation.
@@ -255,10 +275,12 @@ type PrincipalObservation struct {
 
 	// A set of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications.
 	// List of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications
+	// +listType=set
 	NotificationEmailAddresses []*string `json:"notificationEmailAddresses,omitempty" tf:"notification_email_addresses,omitempty"`
 
 	// A mapping of OAuth2.0 permission scope values to scope IDs, as exposed by the associated application, intended to be useful when referencing permission scopes in other resources in your configuration.
 	// Mapping of OAuth2.0 permission scope names to UUIDs
+	// +mapType=granular
 	Oauth2PermissionScopeIds map[string]*string `json:"oauth2PermissionScopeIds,omitempty" tf:"oauth2_permission_scope_ids,omitempty"`
 
 	// A list of OAuth 2.0 delegated permission scopes exposed by the associated application, as documented below.
@@ -270,6 +292,7 @@ type PrincipalObservation struct {
 
 	// A set of object IDs of principals that will be granted ownership of the service principal. Supported object types are users or service principals. By default, no owners are assigned.
 	// A list of object IDs of principals that will be granted ownership of the service principal
+	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
 
 	// The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps. Supported values are oidc, password, saml or notSupported. Omit this property or specify a blank string to unset.
@@ -298,6 +321,7 @@ type PrincipalObservation struct {
 
 	// A set of tags to apply to the service principal for configuring specific behaviours of the service principal. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
 	// A set of tags to apply to the service principal
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Identifies whether the service principal represents an application or a managed identity. Possible values include Application or ManagedIdentity.
@@ -319,6 +343,7 @@ type PrincipalParameters struct {
 	// A set of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities.
 	// A list of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AlternativeNames []*string `json:"alternativeNames,omitempty" tf:"alternative_names,omitempty"`
 
 	// Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application. Defaults to false.
@@ -364,11 +389,13 @@ type PrincipalParameters struct {
 	// A set of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications.
 	// List of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	NotificationEmailAddresses []*string `json:"notificationEmailAddresses,omitempty" tf:"notification_email_addresses,omitempty"`
 
 	// A set of object IDs of principals that will be granted ownership of the service principal. Supported object types are users or service principals. By default, no owners are assigned.
 	// A list of object IDs of principals that will be granted ownership of the service principal
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
 
 	// The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps. Supported values are oidc, password, saml or notSupported. Omit this property or specify a blank string to unset.
@@ -384,6 +411,7 @@ type PrincipalParameters struct {
 	// A set of tags to apply to the service principal for configuring specific behaviours of the service principal. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
 	// A set of tags to apply to the service principal
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// When true, any existing service principal linked to the same application will be automatically imported. When false, an import error will be raised for any pre-existing service principal.

@@ -27,6 +27,19 @@ type TokenSigningCertificateInitParameters struct {
 	// The end date until which the token signing certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
 	// The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). Default is 3 years from current date.
 	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
+
+	// The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The object ID of the service principal for which this certificate should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
+
+	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+
+	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 }
 
 type TokenSigningCertificateObservation struct {

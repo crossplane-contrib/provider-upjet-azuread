@@ -21,6 +21,7 @@ type APIInitParameters struct {
 
 	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
+	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
@@ -40,6 +41,7 @@ type APIObservation struct {
 
 	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
+	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
@@ -60,6 +62,7 @@ type APIParameters struct {
 	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
@@ -143,6 +146,7 @@ type AppRoleInitParameters struct {
 
 	// Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
 	// Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
+	// +listType=set
 	AllowedMemberTypes []*string `json:"allowedMemberTypes,omitempty" tf:"allowed_member_types,omitempty"`
 
 	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
@@ -170,6 +174,7 @@ type AppRoleObservation struct {
 
 	// Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
 	// Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
+	// +listType=set
 	AllowedMemberTypes []*string `json:"allowedMemberTypes,omitempty" tf:"allowed_member_types,omitempty"`
 
 	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
@@ -198,6 +203,7 @@ type AppRoleParameters struct {
 	// Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
 	// Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AllowedMemberTypes []*string `json:"allowedMemberTypes" tf:"allowed_member_types,omitempty"`
 
 	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
@@ -256,10 +262,12 @@ type ApplicationInitParameters struct {
 
 	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
 	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
+	// +listType=set
 	GroupMembershipClaims []*string `json:"groupMembershipClaims,omitempty" tf:"group_membership_claims,omitempty"`
 
 	// A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant.
 	// The user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant
+	// +listType=set
 	IdentifierUris []*string `json:"identifierUris,omitempty" tf:"identifier_uris,omitempty"`
 
 	// A logo image to upload for the application, as a raw base64-encoded string. The image should be in gif, jpeg or png format. Note that once an image has been uploaded, it is not possible to remove it without replacing it with another image.
@@ -283,6 +291,7 @@ type ApplicationInitParameters struct {
 
 	// A set of object IDs of principals that will be granted ownership of the application. Supported object types are users or service principals. By default, no owners are assigned.
 	// A list of object IDs of principals that will be granted ownership of the application
+	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
 
 	// If true, will return an error if an existing application is found with the same name. Defaults to false.
@@ -316,6 +325,7 @@ type ApplicationInitParameters struct {
 
 	// A set of tags to apply to the application for configuring specific behaviours of the application and linked service principals. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
 	// A set of tags to apply to the application
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Unique ID for a templated application in the Azure AD App Gallery, from which to create the application. Changing this forces a new resource to be created.
@@ -340,6 +350,7 @@ type ApplicationObservation struct {
 
 	// A mapping of app role values to app role IDs, intended to be useful when referencing app roles in other resources in your configuration.
 	// Mapping of app role names to UUIDs
+	// +mapType=granular
 	AppRoleIds map[string]*string `json:"appRoleIds,omitempty" tf:"app_role_ids,omitempty"`
 
 	// The Application ID (also called Client ID).
@@ -372,6 +383,7 @@ type ApplicationObservation struct {
 
 	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
 	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
+	// +listType=set
 	GroupMembershipClaims []*string `json:"groupMembershipClaims,omitempty" tf:"group_membership_claims,omitempty"`
 
 	// The unique identifier for an app role or OAuth2 permission scope published by the resource application.
@@ -379,6 +391,7 @@ type ApplicationObservation struct {
 
 	// A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant.
 	// The user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant
+	// +listType=set
 	IdentifierUris []*string `json:"identifierUris,omitempty" tf:"identifier_uris,omitempty"`
 
 	// A logo image to upload for the application, as a raw base64-encoded string. The image should be in gif, jpeg or png format. Note that once an image has been uploaded, it is not possible to remove it without replacing it with another image.
@@ -399,6 +412,7 @@ type ApplicationObservation struct {
 
 	// A mapping of OAuth2.0 permission scope values to scope IDs, intended to be useful when referencing permission scopes in other resources in your configuration.
 	// Mapping of OAuth2.0 permission scope names to UUIDs
+	// +mapType=granular
 	Oauth2PermissionScopeIds map[string]*string `json:"oauth2PermissionScopeIds,omitempty" tf:"oauth2_permission_scope_ids,omitempty"`
 
 	// Specifies whether, as part of OAuth 2.0 token requests, Azure AD allows POST requests, as opposed to GET requests. Defaults to false, which specifies that only GET requests are allowed.
@@ -414,6 +428,7 @@ type ApplicationObservation struct {
 
 	// A set of object IDs of principals that will be granted ownership of the application. Supported object types are users or service principals. By default, no owners are assigned.
 	// A list of object IDs of principals that will be granted ownership of the application
+	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
 
 	// If true, will return an error if an existing application is found with the same name. Defaults to false.
@@ -451,6 +466,7 @@ type ApplicationObservation struct {
 
 	// A set of tags to apply to the application for configuring specific behaviours of the application and linked service principals. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
 	// A set of tags to apply to the application
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Unique ID for a templated application in the Azure AD App Gallery, from which to create the application. Changing this forces a new resource to be created.
@@ -503,11 +519,13 @@ type ApplicationParameters struct {
 	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
 	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	GroupMembershipClaims []*string `json:"groupMembershipClaims,omitempty" tf:"group_membership_claims,omitempty"`
 
 	// A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant.
 	// The user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	IdentifierUris []*string `json:"identifierUris,omitempty" tf:"identifier_uris,omitempty"`
 
 	// A logo image to upload for the application, as a raw base64-encoded string. The image should be in gif, jpeg or png format. Note that once an image has been uploaded, it is not possible to remove it without replacing it with another image.
@@ -537,6 +555,7 @@ type ApplicationParameters struct {
 	// A set of object IDs of principals that will be granted ownership of the application. Supported object types are users or service principals. By default, no owners are assigned.
 	// A list of object IDs of principals that will be granted ownership of the application
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
 
 	// If true, will return an error if an existing application is found with the same name. Defaults to false.
@@ -579,6 +598,7 @@ type ApplicationParameters struct {
 	// A set of tags to apply to the application for configuring specific behaviours of the application and linked service principals. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
 	// A set of tags to apply to the application
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Tags []*string `json:"tags,omitempty" tf:"tags,omitempty"`
 
 	// Unique ID for a templated application in the Azure AD App Gallery, from which to create the application. Changing this forces a new resource to be created.
@@ -909,6 +929,7 @@ type PublicClientInitParameters struct {
 
 	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https or ms-appx-web URL.
 	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
+	// +listType=set
 	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
@@ -916,6 +937,7 @@ type PublicClientObservation struct {
 
 	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https or ms-appx-web URL.
 	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
+	// +listType=set
 	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
@@ -924,6 +946,7 @@ type PublicClientParameters struct {
 	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https or ms-appx-web URL.
 	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
@@ -1050,6 +1073,7 @@ type SinglePageApplicationInitParameters struct {
 
 	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https URL.
 	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
+	// +listType=set
 	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
@@ -1057,6 +1081,7 @@ type SinglePageApplicationObservation struct {
 
 	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https URL.
 	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
+	// +listType=set
 	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
@@ -1065,6 +1090,7 @@ type SinglePageApplicationParameters struct {
 	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https URL.
 	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
@@ -1083,6 +1109,7 @@ type WebInitParameters struct {
 
 	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid http URL or a URN.
 	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
+	// +listType=set
 	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
@@ -1101,6 +1128,7 @@ type WebObservation struct {
 
 	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid http URL or a URN.
 	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
+	// +listType=set
 	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 
@@ -1123,6 +1151,7 @@ type WebParameters struct {
 	// A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid http URL or a URN.
 	// The URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	RedirectUris []*string `json:"redirectUris,omitempty" tf:"redirect_uris,omitempty"`
 }
 

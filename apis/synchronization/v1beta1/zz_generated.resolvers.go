@@ -36,6 +36,22 @@ func (mg *Job) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mg.Spec.ForProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServicePrincipalIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServicePrincipalID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServicePrincipalIDRef,
+		Selector:     mg.Spec.InitProvider.ServicePrincipalIDSelector,
+		To: reference.To{
+			List:    &v1beta1.PrincipalList{},
+			Managed: &v1beta1.Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServicePrincipalID")
+	}
+	mg.Spec.InitProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServicePrincipalIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -61,6 +77,22 @@ func (mg *Secret) ResolveReferences(ctx context.Context, c client.Reader) error 
 	}
 	mg.Spec.ForProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServicePrincipalIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServicePrincipalID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServicePrincipalIDRef,
+		Selector:     mg.Spec.InitProvider.ServicePrincipalIDSelector,
+		To: reference.To{
+			List:    &v1beta1.PrincipalList{},
+			Managed: &v1beta1.Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServicePrincipalID")
+	}
+	mg.Spec.InitProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServicePrincipalIDRef = rsp.ResolvedReference
 
 	return nil
 }

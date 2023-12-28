@@ -38,6 +38,22 @@ func (mg *Certificate) ResolveReferences(ctx context.Context, c client.Reader) e
 	mg.Spec.ForProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServicePrincipalIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServicePrincipalID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServicePrincipalIDRef,
+		Selector:     mg.Spec.InitProvider.ServicePrincipalIDSelector,
+		To: reference.To{
+			List:    &PrincipalList{},
+			Managed: &Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServicePrincipalID")
+	}
+	mg.Spec.InitProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServicePrincipalIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -80,6 +96,38 @@ func (mg *ClaimsMappingPolicyAssignment) ResolveReferences(ctx context.Context, 
 	mg.Spec.ForProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServicePrincipalIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClaimsMappingPolicyID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ClaimsMappingPolicyIDRef,
+		Selector:     mg.Spec.InitProvider.ClaimsMappingPolicyIDSelector,
+		To: reference.To{
+			List:    &v1beta1.ClaimsMappingPolicyList{},
+			Managed: &v1beta1.ClaimsMappingPolicy{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClaimsMappingPolicyID")
+	}
+	mg.Spec.InitProvider.ClaimsMappingPolicyID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClaimsMappingPolicyIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServicePrincipalID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServicePrincipalIDRef,
+		Selector:     mg.Spec.InitProvider.ServicePrincipalIDSelector,
+		To: reference.To{
+			List:    &PrincipalList{},
+			Managed: &Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServicePrincipalID")
+	}
+	mg.Spec.InitProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServicePrincipalIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -105,6 +153,22 @@ func (mg *Password) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServicePrincipalIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServicePrincipalID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServicePrincipalIDRef,
+		Selector:     mg.Spec.InitProvider.ServicePrincipalIDSelector,
+		To: reference.To{
+			List:    &PrincipalList{},
+			Managed: &Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServicePrincipalID")
+	}
+	mg.Spec.InitProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServicePrincipalIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -132,6 +196,22 @@ func (mg *Principal) ResolveReferences(ctx context.Context, c client.Reader) err
 	mg.Spec.ForProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ApplicationIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
+		Extract:      resource.ExtractParamPath("application_id", true),
+		Reference:    mg.Spec.InitProvider.ApplicationIDRef,
+		Selector:     mg.Spec.InitProvider.ApplicationIDSelector,
+		To: reference.To{
+			List:    &v1beta11.ApplicationList{},
+			Managed: &v1beta11.Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationID")
+	}
+	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -157,6 +237,22 @@ func (mg *TokenSigningCertificate) ResolveReferences(ctx context.Context, c clie
 	}
 	mg.Spec.ForProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ServicePrincipalIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServicePrincipalID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServicePrincipalIDRef,
+		Selector:     mg.Spec.InitProvider.ServicePrincipalIDSelector,
+		To: reference.To{
+			List:    &PrincipalList{},
+			Managed: &Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServicePrincipalID")
+	}
+	mg.Spec.InitProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServicePrincipalIDRef = rsp.ResolvedReference
 
 	return nil
 }

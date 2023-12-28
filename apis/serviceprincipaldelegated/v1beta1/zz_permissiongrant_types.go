@@ -21,13 +21,55 @@ type PermissionGrantInitParameters struct {
 
 	// - A set of claim values for delegated permission scopes which should be included in access tokens for the resource.
 	// A set of claim values for delegated permission scopes which should be included in access tokens for the resource
+	// +listType=set
 	ClaimValues []*string `json:"claimValues,omitempty" tf:"claim_values,omitempty"`
+
+	// The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.
+	// The object ID of the service principal representing the resource to be accessed
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
+	ResourceServicePrincipalObjectID *string `json:"resourceServicePrincipalObjectId,omitempty" tf:"resource_service_principal_object_id,omitempty"`
+
+	// Reference to a Principal in serviceprincipals to populate resourceServicePrincipalObjectId.
+	// +kubebuilder:validation:Optional
+	ResourceServicePrincipalObjectIDRef *v1.Reference `json:"resourceServicePrincipalObjectIdRef,omitempty" tf:"-"`
+
+	// Selector for a Principal in serviceprincipals to populate resourceServicePrincipalObjectId.
+	// +kubebuilder:validation:Optional
+	ResourceServicePrincipalObjectIDSelector *v1.Selector `json:"resourceServicePrincipalObjectIdSelector,omitempty" tf:"-"`
+
+	// The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.
+	// The object ID of the service principal for which this delegated permission grant should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
+	ServicePrincipalObjectID *string `json:"servicePrincipalObjectId,omitempty" tf:"service_principal_object_id,omitempty"`
+
+	// Reference to a Principal in serviceprincipals to populate servicePrincipalObjectId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalObjectIDRef *v1.Reference `json:"servicePrincipalObjectIdRef,omitempty" tf:"-"`
+
+	// Selector for a Principal in serviceprincipals to populate servicePrincipalObjectId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalObjectIDSelector *v1.Selector `json:"servicePrincipalObjectIdSelector,omitempty" tf:"-"`
+
+	// - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.
+	// The object ID of the user on behalf of whom the service principal is authorized to access the resource
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
+	UserObjectID *string `json:"userObjectId,omitempty" tf:"user_object_id,omitempty"`
+
+	// Reference to a User in users to populate userObjectId.
+	// +kubebuilder:validation:Optional
+	UserObjectIDRef *v1.Reference `json:"userObjectIdRef,omitempty" tf:"-"`
+
+	// Selector for a User in users to populate userObjectId.
+	// +kubebuilder:validation:Optional
+	UserObjectIDSelector *v1.Selector `json:"userObjectIdSelector,omitempty" tf:"-"`
 }
 
 type PermissionGrantObservation struct {
 
 	// - A set of claim values for delegated permission scopes which should be included in access tokens for the resource.
 	// A set of claim values for delegated permission scopes which should be included in access tokens for the resource
+	// +listType=set
 	ClaimValues []*string `json:"claimValues,omitempty" tf:"claim_values,omitempty"`
 
 	// The ID of the delegated permission grant.
@@ -51,6 +93,7 @@ type PermissionGrantParameters struct {
 	// - A set of claim values for delegated permission scopes which should be included in access tokens for the resource.
 	// A set of claim values for delegated permission scopes which should be included in access tokens for the resource
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ClaimValues []*string `json:"claimValues,omitempty" tf:"claim_values,omitempty"`
 
 	// The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.

@@ -35,6 +35,19 @@ type CertificateInitParameters struct {
 	// A UUID used to uniquely identify this certificate. If not specified a UUID will be automatically generated
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
+	// The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The object ID of the service principal for which this certificate should be created
+	// +crossplane:generate:reference:type=Principal
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
+
+	// Reference to a Principal to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+
+	// Selector for a Principal to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+
 	// The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the value is determined by Azure Active Directory and is usually the start date of the certificate for asymmetric keys, or the current timestamp for symmetric keys. Changing this field forces a new resource to be created.
 	// The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
 	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`

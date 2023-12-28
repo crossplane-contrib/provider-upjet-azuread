@@ -80,6 +80,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                         mappedClaimsEnabled:
                           description: Allows an application to use claims mapping
                             without specifying a custom signing key. Defaults to false.
@@ -183,6 +184,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                         description:
                           description: Description of the app role that appears when
                             the role is being assigned and, if the role functions
@@ -280,6 +282,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   identifierUris:
                     description: A set of user-defined URI(s) that uniquely identify
                       an application within its Azure AD tenant, or within a verified
@@ -290,6 +293,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   logoImage:
                     description: A logo image to upload for the application, as a
                       raw base64-encoded string. The image should be in gif, jpeg
@@ -438,6 +442,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preventDuplicateNames:
                     description: If true, will return an error if an existing application
                       is found with the same name. Defaults to false. If `true`, will
@@ -465,6 +470,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                       type: object
                     type: array
                   requiredResourceAccess:
@@ -526,6 +532,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                       type: object
                     type: array
                   supportUrl:
@@ -541,6 +548,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   templateId:
                     description: Unique ID for a templated application in the Azure
                       AD App Gallery, from which to create the application. Changing
@@ -595,6 +603,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                       type: object
                     type: array
                 type: object
@@ -624,6 +633,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                         mappedClaimsEnabled:
                           description: Allows an application to use claims mapping
                             without specifying a custom signing key. Defaults to false.
@@ -727,6 +737,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                         description:
                           description: Description of the app role that appears when
                             the role is being assigned and, if the role functions
@@ -824,6 +835,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   identifierUris:
                     description: A set of user-defined URI(s) that uniquely identify
                       an application within its Azure AD tenant, or within a verified
@@ -834,6 +846,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   logoImage:
                     description: A logo image to upload for the application, as a
                       raw base64-encoded string. The image should be in gif, jpeg
@@ -982,6 +995,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preventDuplicateNames:
                     description: If true, will return an error if an existing application
                       is found with the same name. Defaults to false. If `true`, will
@@ -1009,6 +1023,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                       type: object
                     type: array
                   requiredResourceAccess:
@@ -1070,6 +1085,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                       type: object
                     type: array
                   supportUrl:
@@ -1085,6 +1101,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   templateId:
                     description: Unique ID for a templated application in the Azure
                       AD App Gallery, from which to create the application. Changing
@@ -1139,6 +1156,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                       type: object
                     type: array
                 type: object
@@ -1326,6 +1344,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                         mappedClaimsEnabled:
                           description: Allows an application to use claims mapping
                             without specifying a custom signing key. Defaults to false.
@@ -1429,6 +1448,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                         description:
                           description: Description of the app role that appears when
                             the role is being assigned and, if the role functions
@@ -1468,6 +1488,7 @@ spec:
                       to be useful when referencing app roles in other resources in
                       your configuration. Mapping of app role names to UUIDs
                     type: object
+                    x-kubernetes-map-type: granular
                   applicationId:
                     description: The Application ID (also called Client ID). The Application
                       ID (also called Client ID)
@@ -1543,6 +1564,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   id:
                     description: The unique identifier for an app role or OAuth2 permission
                       scope published by the resource application.
@@ -1557,6 +1579,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   logoImage:
                     description: A logo image to upload for the application, as a
                       raw base64-encoded string. The image should be in gif, jpeg
@@ -1585,6 +1608,7 @@ spec:
                       scopes in other resources in your configuration. Mapping of
                       OAuth2.0 permission scope names to UUIDs
                     type: object
+                    x-kubernetes-map-type: granular
                   oauth2PostResponseRequired:
                     description: Specifies whether, as part of OAuth 2.0 token requests,
                       Azure AD allows POST requests, as opposed to GET requests. Defaults
@@ -1721,6 +1745,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preventDuplicateNames:
                     description: If true, will return an error if an existing application
                       is found with the same name. Defaults to false. If `true`, will
@@ -1748,6 +1773,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                       type: object
                     type: array
                   publisherDomain:
@@ -1813,6 +1839,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                       type: object
                     type: array
                   supportUrl:
@@ -1828,6 +1855,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   templateId:
                     description: Unique ID for a templated application in the Azure
                       AD App Gallery, from which to create the application. Changing
@@ -1882,6 +1910,7 @@ spec:
                           items:
                             type: string
                           type: array
+                          x-kubernetes-list-type: set
                       type: object
                     type: array
                 type: object

@@ -53,6 +53,7 @@ type GroupInitParameters struct {
 
 	// The object IDs of administrative units in which the group is a member. If specified, new groups will be created in the scope of the first administrative unit and added to the others. If empty, new groups will be created at the tenant level.
 	// The administrative unit IDs in which the group should be. If empty, the group will be created at the tenant level.
+	// +listType=set
 	AdministrativeUnitIds []*string `json:"administrativeUnitIds,omitempty" tf:"administrative_unit_ids,omitempty"`
 
 	// Indicates whether this group can be assigned to an Azure Active Directory role. Defaults to false. Can only be set to true for security-enabled groups. Changing this forces a new resource to be created.
@@ -65,6 +66,7 @@ type GroupInitParameters struct {
 
 	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
 	// The group behaviours for a Microsoft 365 group
+	// +listType=set
 	Behaviors []*string `json:"behaviors,omitempty" tf:"behaviors,omitempty"`
 
 	// The description for the group.
@@ -101,6 +103,7 @@ type GroupInitParameters struct {
 
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals. Cannot be used with the dynamic_membership block.
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals
+	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
 	// The on-premises group type that the AAD group will be written as, when writeback is enabled. Possible values are UniversalDistributionGroup, UniversalMailEnabledSecurityGroup, or UniversalSecurityGroup.
@@ -109,6 +112,7 @@ type GroupInitParameters struct {
 
 	// A set of object IDs of principals that will be granted ownership of the group. Supported object types are users or service principals. Groups cannot be created with no owners or have all their owners removed.
 	// A set of owners who own this group. Supported object types are Users or Service Principals
+	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
 
 	// If true, will return an error if an existing group is found with the same name. Defaults to false.
@@ -117,6 +121,7 @@ type GroupInitParameters struct {
 
 	// A set of provisioning options for a Microsoft 365 group. The only supported value is Team. See official documentation for details. Changing this forces a new resource to be created.
 	// The group provisioning options for a Microsoft 365 group
+	// +listType=set
 	ProvisioningOptions []*string `json:"provisioningOptions,omitempty" tf:"provisioning_options,omitempty"`
 
 	// Whether the group is a security group for controlling access to in-app resources. At least one of security_enabled or mail_enabled must be specified. A Microsoft 365 group can be security enabled and mail enabled (see the types property).
@@ -129,6 +134,7 @@ type GroupInitParameters struct {
 
 	// A set of group types to configure for the group. Supported values are DynamicMembership, which denotes a group with dynamic membership, and Unified, which specifies a Microsoft 365 group. Required when mail_enabled is true. Changing this forces a new resource to be created.
 	// A set of group types to configure for the group. `Unified` specifies a Microsoft 365 group. Required when `mail_enabled` is true
+	// +listType=set
 	Types []*string `json:"types,omitempty" tf:"types,omitempty"`
 
 	// The group join policy and group content visibility. Possible values are Private, Public, or Hiddenmembership. Only Microsoft 365 groups can have Hiddenmembership visibility and this value must be set when the group is created. By default, security groups will receive Private visibility and Microsoft 365 groups will receive Public visibility.
@@ -144,6 +150,7 @@ type GroupObservation struct {
 
 	// The object IDs of administrative units in which the group is a member. If specified, new groups will be created in the scope of the first administrative unit and added to the others. If empty, new groups will be created at the tenant level.
 	// The administrative unit IDs in which the group should be. If empty, the group will be created at the tenant level.
+	// +listType=set
 	AdministrativeUnitIds []*string `json:"administrativeUnitIds,omitempty" tf:"administrative_unit_ids,omitempty"`
 
 	// Indicates whether this group can be assigned to an Azure Active Directory role. Defaults to false. Can only be set to true for security-enabled groups. Changing this forces a new resource to be created.
@@ -156,6 +163,7 @@ type GroupObservation struct {
 
 	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
 	// The group behaviours for a Microsoft 365 group
+	// +listType=set
 	Behaviors []*string `json:"behaviors,omitempty" tf:"behaviors,omitempty"`
 
 	// The description for the group.
@@ -198,6 +206,7 @@ type GroupObservation struct {
 
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals. Cannot be used with the dynamic_membership block.
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals
+	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
 	// The object ID of the group.
@@ -230,6 +239,7 @@ type GroupObservation struct {
 
 	// A set of object IDs of principals that will be granted ownership of the group. Supported object types are users or service principals. Groups cannot be created with no owners or have all their owners removed.
 	// A set of owners who own this group. Supported object types are Users or Service Principals
+	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
 
 	// The preferred language for a Microsoft 365 group, in ISO 639-1 notation.
@@ -242,6 +252,7 @@ type GroupObservation struct {
 
 	// A set of provisioning options for a Microsoft 365 group. The only supported value is Team. See official documentation for details. Changing this forces a new resource to be created.
 	// The group provisioning options for a Microsoft 365 group
+	// +listType=set
 	ProvisioningOptions []*string `json:"provisioningOptions,omitempty" tf:"provisioning_options,omitempty"`
 
 	// List of email addresses for the group that direct to the same group mailbox.
@@ -258,6 +269,7 @@ type GroupObservation struct {
 
 	// A set of group types to configure for the group. Supported values are DynamicMembership, which denotes a group with dynamic membership, and Unified, which specifies a Microsoft 365 group. Required when mail_enabled is true. Changing this forces a new resource to be created.
 	// A set of group types to configure for the group. `Unified` specifies a Microsoft 365 group. Required when `mail_enabled` is true
+	// +listType=set
 	Types []*string `json:"types,omitempty" tf:"types,omitempty"`
 
 	// The group join policy and group content visibility. Possible values are Private, Public, or Hiddenmembership. Only Microsoft 365 groups can have Hiddenmembership visibility and this value must be set when the group is created. By default, security groups will receive Private visibility and Microsoft 365 groups will receive Public visibility.
@@ -274,6 +286,7 @@ type GroupParameters struct {
 	// The object IDs of administrative units in which the group is a member. If specified, new groups will be created in the scope of the first administrative unit and added to the others. If empty, new groups will be created at the tenant level.
 	// The administrative unit IDs in which the group should be. If empty, the group will be created at the tenant level.
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AdministrativeUnitIds []*string `json:"administrativeUnitIds,omitempty" tf:"administrative_unit_ids,omitempty"`
 
 	// Indicates whether this group can be assigned to an Azure Active Directory role. Defaults to false. Can only be set to true for security-enabled groups. Changing this forces a new resource to be created.
@@ -289,6 +302,7 @@ type GroupParameters struct {
 	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
 	// The group behaviours for a Microsoft 365 group
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Behaviors []*string `json:"behaviors,omitempty" tf:"behaviors,omitempty"`
 
 	// The description for the group.
@@ -334,6 +348,7 @@ type GroupParameters struct {
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals. Cannot be used with the dynamic_membership block.
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
 	// The on-premises group type that the AAD group will be written as, when writeback is enabled. Possible values are UniversalDistributionGroup, UniversalMailEnabledSecurityGroup, or UniversalSecurityGroup.
@@ -344,6 +359,7 @@ type GroupParameters struct {
 	// A set of object IDs of principals that will be granted ownership of the group. Supported object types are users or service principals. Groups cannot be created with no owners or have all their owners removed.
 	// A set of owners who own this group. Supported object types are Users or Service Principals
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
 
 	// If true, will return an error if an existing group is found with the same name. Defaults to false.
@@ -354,6 +370,7 @@ type GroupParameters struct {
 	// A set of provisioning options for a Microsoft 365 group. The only supported value is Team. See official documentation for details. Changing this forces a new resource to be created.
 	// The group provisioning options for a Microsoft 365 group
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	ProvisioningOptions []*string `json:"provisioningOptions,omitempty" tf:"provisioning_options,omitempty"`
 
 	// Whether the group is a security group for controlling access to in-app resources. At least one of security_enabled or mail_enabled must be specified. A Microsoft 365 group can be security enabled and mail enabled (see the types property).
@@ -369,6 +386,7 @@ type GroupParameters struct {
 	// A set of group types to configure for the group. Supported values are DynamicMembership, which denotes a group with dynamic membership, and Unified, which specifies a Microsoft 365 group. Required when mail_enabled is true. Changing this forces a new resource to be created.
 	// A set of group types to configure for the group. `Unified` specifies a Microsoft 365 group. Required when `mail_enabled` is true
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Types []*string `json:"types,omitempty" tf:"types,omitempty"`
 
 	// The group join policy and group content visibility. Possible values are Private, Public, or Hiddenmembership. Only Microsoft 365 groups can have Hiddenmembership visibility and this value must be set when the group is created. By default, security groups will receive Private visibility and Microsoft 365 groups will receive Public visibility.

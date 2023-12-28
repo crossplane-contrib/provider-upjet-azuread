@@ -33,6 +33,7 @@ type UnitInitParameters struct {
 
 	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups.
 	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups
+	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
 	// If `true`, will return an error if an existing administrative unit is found with the same name
@@ -57,6 +58,7 @@ type UnitObservation struct {
 
 	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups.
 	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups
+	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
 	// The object ID of the administrative unit.
@@ -87,6 +89,7 @@ type UnitParameters struct {
 	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups.
 	// A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
 
 	// If `true`, will return an error if an existing administrative unit is found with the same name

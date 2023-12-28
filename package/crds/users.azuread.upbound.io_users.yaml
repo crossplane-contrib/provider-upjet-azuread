@@ -200,6 +200,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   passwordSecretRef:
                     description: The password for the user. The password must satisfy
                       minimum requirements as specified by the password policy. The
@@ -415,6 +416,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   postalCode:
                     description: The postal code for the user's postal address. The
                       postal code is specific to the user's country/region. In the
@@ -834,6 +836,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   postalCode:
                     description: The postal code for the user's postal address. The
                       postal code is specific to the user's country/region. In the

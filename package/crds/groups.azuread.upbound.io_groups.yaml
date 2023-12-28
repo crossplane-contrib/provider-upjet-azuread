@@ -76,6 +76,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   assignableToRole:
                     description: Indicates whether this group can be assigned to an
                       Azure Active Directory role. Defaults to false. Can only be
@@ -100,6 +101,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   description:
                     description: The description for the group. The description for
                       the group
@@ -175,6 +177,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   onpremisesGroupType:
                     description: The on-premises group type that the AAD group will
                       be written as, when writeback is enabled. Possible values are
@@ -191,6 +194,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preventDuplicateNames:
                     description: If true, will return an error if an existing group
                       is found with the same name. Defaults to false. If `true`, will
@@ -205,6 +209,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   securityEnabled:
                     description: Whether the group is a security group for controlling
                       access to in-app resources. At least one of security_enabled
@@ -232,6 +237,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   visibility:
                     description: The group join policy and group content visibility.
                       Possible values are Private, Public, or Hiddenmembership. Only
@@ -270,6 +276,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   assignableToRole:
                     description: Indicates whether this group can be assigned to an
                       Azure Active Directory role. Defaults to false. Can only be
@@ -294,6 +301,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   description:
                     description: The description for the group. The description for
                       the group
@@ -369,6 +377,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   onpremisesGroupType:
                     description: The on-premises group type that the AAD group will
                       be written as, when writeback is enabled. Possible values are
@@ -385,6 +394,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preventDuplicateNames:
                     description: If true, will return an error if an existing group
                       is found with the same name. Defaults to false. If `true`, will
@@ -399,6 +409,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   securityEnabled:
                     description: Whether the group is a security group for controlling
                       access to in-app resources. At least one of security_enabled
@@ -426,6 +437,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   visibility:
                     description: The group join policy and group content visibility.
                       Possible values are Private, Public, or Hiddenmembership. Only
@@ -622,6 +634,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   assignableToRole:
                     description: Indicates whether this group can be assigned to an
                       Azure Active Directory role. Defaults to false. Can only be
@@ -646,6 +659,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   description:
                     description: The description for the group. The description for
                       the group
@@ -727,6 +741,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   objectId:
                     description: The object ID of the group. The object ID of the
                       group
@@ -778,6 +793,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preferredLanguage:
                     description: The preferred language for a Microsoft 365 group,
                       in ISO 639-1 notation. The preferred language for a Microsoft
@@ -797,6 +813,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   proxyAddresses:
                     description: List of email addresses for the group that direct
                       to the same group mailbox. Email addresses for the group that
@@ -831,6 +848,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   visibility:
                     description: The group join policy and group content visibility.
                       Possible values are Private, Public, or Hiddenmembership. Only

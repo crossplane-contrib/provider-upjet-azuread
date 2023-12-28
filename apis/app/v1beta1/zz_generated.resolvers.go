@@ -52,5 +52,37 @@ func (mg *RoleAssignment) ResolveReferences(ctx context.Context, c client.Reader
 	mg.Spec.ForProvider.ResourceObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ResourceObjectIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrincipalObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.PrincipalObjectIDRef,
+		Selector:     mg.Spec.InitProvider.PrincipalObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta1.PrincipalList{},
+			Managed: &v1beta1.Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.PrincipalObjectID")
+	}
+	mg.Spec.InitProvider.PrincipalObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PrincipalObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ResourceObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ResourceObjectIDRef,
+		Selector:     mg.Spec.InitProvider.ResourceObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta1.PrincipalList{},
+			Managed: &v1beta1.Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ResourceObjectID")
+	}
+	mg.Spec.InitProvider.ResourceObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ResourceObjectIDRef = rsp.ResolvedReference
+
 	return nil
 }

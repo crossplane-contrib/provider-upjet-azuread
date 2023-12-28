@@ -89,6 +89,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preventDuplicateNames:
                     description: If `true`, will return an error if an existing administrative
                       unit is found with the same name
@@ -129,6 +130,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preventDuplicateNames:
                     description: If `true`, will return an error if an existing administrative
                       unit is found with the same name
@@ -329,6 +331,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   objectId:
                     description: The object ID of the administrative unit. The object
                       ID of the administrative unit
