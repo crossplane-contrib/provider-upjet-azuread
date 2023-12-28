@@ -70,5 +70,53 @@ func (mg *PermissionGrant) ResolveReferences(ctx context.Context, c client.Reade
 	mg.Spec.ForProvider.UserObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.UserObjectIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ResourceServicePrincipalObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ResourceServicePrincipalObjectIDRef,
+		Selector:     mg.Spec.InitProvider.ResourceServicePrincipalObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta1.PrincipalList{},
+			Managed: &v1beta1.Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ResourceServicePrincipalObjectID")
+	}
+	mg.Spec.InitProvider.ResourceServicePrincipalObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ResourceServicePrincipalObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServicePrincipalObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ServicePrincipalObjectIDRef,
+		Selector:     mg.Spec.InitProvider.ServicePrincipalObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta1.PrincipalList{},
+			Managed: &v1beta1.Principal{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ServicePrincipalObjectID")
+	}
+	mg.Spec.InitProvider.ServicePrincipalObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ServicePrincipalObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.UserObjectID),
+		Extract:      resource.ExtractParamPath("object_id", true),
+		Reference:    mg.Spec.InitProvider.UserObjectIDRef,
+		Selector:     mg.Spec.InitProvider.UserObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta11.UserList{},
+			Managed: &v1beta11.User{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.UserObjectID")
+	}
+	mg.Spec.InitProvider.UserObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.UserObjectIDRef = rsp.ResolvedReference
+
 	return nil
 }

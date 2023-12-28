@@ -121,6 +121,7 @@ type UserInitParameters struct {
 
 	// A list of additional email addresses for the user.
 	// Additional email addresses for the user
+	// +listType=set
 	OtherMails []*string `json:"otherMails,omitempty" tf:"other_mails,omitempty"`
 
 	// The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code.
@@ -305,6 +306,7 @@ type UserObservation struct {
 
 	// A list of additional email addresses for the user.
 	// Additional email addresses for the user
+	// +listType=set
 	OtherMails []*string `json:"otherMails,omitempty" tf:"other_mails,omitempty"`
 
 	// The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code.
@@ -478,6 +480,7 @@ type UserParameters struct {
 	// A list of additional email addresses for the user.
 	// Additional email addresses for the user
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	OtherMails []*string `json:"otherMails,omitempty" tf:"other_mails,omitempty"`
 
 	// The password for the user. The password must satisfy minimum requirements as specified by the password policy. The maximum length is 256 characters. This property is required when creating a new user.

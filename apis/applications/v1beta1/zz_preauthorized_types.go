@@ -19,8 +19,35 @@ import (
 
 type PreAuthorizedInitParameters struct {
 
+	// The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+	// The object ID of the application to which this pre-authorized application should be added
+	// +crossplane:generate:reference:type=Application
+	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
+
+	// Reference to a Application to populate applicationObjectId.
+	// +kubebuilder:validation:Optional
+	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application to populate applicationObjectId.
+	// +kubebuilder:validation:Optional
+	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
+
+	// The application ID of the pre-authorized application
+	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
+	AuthorizedAppID *string `json:"authorizedAppId,omitempty" tf:"authorized_app_id,omitempty"`
+
+	// Reference to a Application to populate authorizedAppId.
+	// +kubebuilder:validation:Optional
+	AuthorizedAppIDRef *v1.Reference `json:"authorizedAppIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application to populate authorizedAppId.
+	// +kubebuilder:validation:Optional
+	AuthorizedAppIDSelector *v1.Selector `json:"authorizedAppIdSelector,omitempty" tf:"-"`
+
 	// A set of permission scope IDs required by the authorized application.
 	// The IDs of the permission scopes required by the pre-authorized application
+	// +listType=set
 	PermissionIds []*string `json:"permissionIds,omitempty" tf:"permission_ids,omitempty"`
 }
 
@@ -37,6 +64,7 @@ type PreAuthorizedObservation struct {
 
 	// A set of permission scope IDs required by the authorized application.
 	// The IDs of the permission scopes required by the pre-authorized application
+	// +listType=set
 	PermissionIds []*string `json:"permissionIds,omitempty" tf:"permission_ids,omitempty"`
 }
 
@@ -73,6 +101,7 @@ type PreAuthorizedParameters struct {
 	// A set of permission scope IDs required by the authorized application.
 	// The IDs of the permission scopes required by the pre-authorized application
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	PermissionIds []*string `json:"permissionIds,omitempty" tf:"permission_ids,omitempty"`
 }
 

@@ -19,6 +19,19 @@ import (
 
 type FederatedIdentityCredentialInitParameters struct {
 
+	// The object ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
+	// The object ID of the application for which this federated identity credential should be created
+	// +crossplane:generate:reference:type=Application
+	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
+
+	// Reference to a Application to populate applicationObjectId.
+	// +kubebuilder:validation:Optional
+	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application to populate applicationObjectId.
+	// +kubebuilder:validation:Optional
+	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
+
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the `aud` claim of incoming tokens.
 	Audiences []*string `json:"audiences,omitempty" tf:"audiences,omitempty"`

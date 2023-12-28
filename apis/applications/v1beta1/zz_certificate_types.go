@@ -19,6 +19,19 @@ import (
 
 type CertificateInitParameters struct {
 
+	// The object ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The object ID of the application for which this certificate should be created
+	// +crossplane:generate:reference:type=Application
+	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
+
+	// Reference to a Application to populate applicationObjectId.
+	// +kubebuilder:validation:Optional
+	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application to populate applicationObjectId.
+	// +kubebuilder:validation:Optional
+	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
+
 	// Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.
 	// Specifies the encoding used for the supplied certificate data
 	Encoding *string `json:"encoding,omitempty" tf:"encoding,omitempty"`

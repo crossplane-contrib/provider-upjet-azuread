@@ -80,6 +80,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   appRoleAssignmentRequired:
                     description: Whether this service principal requires an app role
                       assignment to a user or group before Azure AD will issue a user
@@ -236,6 +237,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   owners:
                     description: A set of object IDs of principals that will be granted
                       ownership of the service principal. Supported object types are
@@ -245,6 +247,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preferredSingleSignOnMode:
                     description: The single sign-on mode configured for this application.
                       Azure AD uses the preferred single sign-on mode to launch the
@@ -277,6 +280,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   useExisting:
                     description: When true, any existing service principal linked
                       to the same application will be automatically imported. When
@@ -311,6 +315,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   appRoleAssignmentRequired:
                     description: Whether this service principal requires an app role
                       assignment to a user or group before Azure AD will issue a user
@@ -319,6 +324,87 @@ spec:
                       user or group before Azure AD will issue a user or access token
                       to the application
                     type: boolean
+                  applicationId:
+                    description: The application ID (client ID) of the application
+                      for which to create a service principal. The application ID
+                      (client ID) of the application for which to create a service
+                      principal
+                    type: string
+                  applicationIdRef:
+                    description: Reference to a Application in applications to populate
+                      applicationId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  applicationIdSelector:
+                    description: Selector for a Application in applications to populate
+                      applicationId.
+                    properties:
+                      matchControllerRef:
+                        description: MatchControllerRef ensures an object with the
+                          same controller reference as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: Resolution specifies whether resolution of
+                              this reference is required. The default is 'Required',
+                              which means the reconcile will fail if the reference
+                              cannot be resolved. 'Optional' means this reference
+                              will be a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: Resolve specifies when this reference should
+                              be resolved. The default is 'IfNotPresent', which will
+                              attempt to resolve the reference only when the corresponding
+                              field is not present. Use 'Always' to resolve the reference
+                              on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
                   description:
                     description: A description of the service principal provided for
                       internal end-users. Description of the service principal provided
@@ -386,6 +472,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   owners:
                     description: A set of object IDs of principals that will be granted
                       ownership of the service principal. Supported object types are
@@ -395,6 +482,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preferredSingleSignOnMode:
                     description: The single sign-on mode configured for this application.
                       Azure AD uses the preferred single sign-on mode to launch the
@@ -427,6 +515,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   useExisting:
                     description: When true, any existing service principal linked
                       to the same application will be automatically imported. When
@@ -614,6 +703,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   appRoleAssignmentRequired:
                     description: Whether this service principal requires an app role
                       assignment to a user or group before Azure AD will issue a user
@@ -630,6 +720,7 @@ spec:
                       when referencing app roles in other resources in your configuration.
                       Mapping of app role names to UUIDs
                     type: object
+                    x-kubernetes-map-type: granular
                   appRoles:
                     description: A list of app roles published by the associated application,
                       as documented below. For more information official documentation.
@@ -762,6 +853,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   oauth2PermissionScopeIds:
                     additionalProperties:
                       type: string
@@ -771,6 +863,7 @@ spec:
                       in your configuration. Mapping of OAuth2.0 permission scope
                       names to UUIDs
                     type: object
+                    x-kubernetes-map-type: granular
                   oauth2PermissionScopes:
                     description: A list of OAuth 2.0 delegated permission scopes exposed
                       by the associated application, as documented below.
@@ -827,6 +920,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   preferredSingleSignOnMode:
                     description: The single sign-on mode configured for this application.
                       Azure AD uses the preferred single sign-on mode to launch the
@@ -889,6 +983,7 @@ spec:
                     items:
                       type: string
                     type: array
+                    x-kubernetes-list-type: set
                   type:
                     description: Identifies whether the service principal represents
                       an application or a managed identity. Possible values include

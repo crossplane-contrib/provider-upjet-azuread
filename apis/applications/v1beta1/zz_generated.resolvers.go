@@ -36,6 +36,22 @@ func (mg *Certificate) ResolveReferences(ctx context.Context, c client.Reader) e
 	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ApplicationObjectIDRef,
+		Selector:     mg.Spec.InitProvider.ApplicationObjectIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationObjectID")
+	}
+	mg.Spec.InitProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ApplicationObjectIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -62,6 +78,22 @@ func (mg *FederatedIdentityCredential) ResolveReferences(ctx context.Context, c 
 	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ApplicationObjectIDRef,
+		Selector:     mg.Spec.InitProvider.ApplicationObjectIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationObjectID")
+	}
+	mg.Spec.InitProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ApplicationObjectIDRef = rsp.ResolvedReference
+
 	return nil
 }
 
@@ -87,6 +119,22 @@ func (mg *Password) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ApplicationObjectIDRef,
+		Selector:     mg.Spec.InitProvider.ApplicationObjectIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationObjectID")
+	}
+	mg.Spec.InitProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ApplicationObjectIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -129,6 +177,38 @@ func (mg *PreAuthorized) ResolveReferences(ctx context.Context, c client.Reader)
 	}
 	mg.Spec.ForProvider.AuthorizedAppID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.AuthorizedAppIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.ApplicationObjectIDRef,
+		Selector:     mg.Spec.InitProvider.ApplicationObjectIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationObjectID")
+	}
+	mg.Spec.InitProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ApplicationObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AuthorizedAppID),
+		Extract:      resource.ExtractParamPath("application_id", true),
+		Reference:    mg.Spec.InitProvider.AuthorizedAppIDRef,
+		Selector:     mg.Spec.InitProvider.AuthorizedAppIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AuthorizedAppID")
+	}
+	mg.Spec.InitProvider.AuthorizedAppID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AuthorizedAppIDRef = rsp.ResolvedReference
 
 	return nil
 }

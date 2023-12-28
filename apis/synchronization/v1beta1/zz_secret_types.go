@@ -48,6 +48,19 @@ type SecretInitParameters struct {
 
 	// One or more credential blocks as documented below.
 	Credential []CredentialInitParameters `json:"credential,omitempty" tf:"credential,omitempty"`
+
+	// The object ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.
+	// The object ID of the service principal for which this synchronization secret should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
+
+	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+
+	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 }
 
 type SecretObservation struct {

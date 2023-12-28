@@ -114,6 +114,7 @@ type PermissionsInitParameters struct {
 
 	// A set of tasks that can be performed on a resource. For more information, see the Permissions Reference documentation.
 	// Set of tasks that can be performed on a resource
+	// +listType=set
 	AllowedResourceActions []*string `json:"allowedResourceActions,omitempty" tf:"allowed_resource_actions,omitempty"`
 }
 
@@ -121,6 +122,7 @@ type PermissionsObservation struct {
 
 	// A set of tasks that can be performed on a resource. For more information, see the Permissions Reference documentation.
 	// Set of tasks that can be performed on a resource
+	// +listType=set
 	AllowedResourceActions []*string `json:"allowedResourceActions,omitempty" tf:"allowed_resource_actions,omitempty"`
 }
 
@@ -129,6 +131,7 @@ type PermissionsParameters struct {
 	// A set of tasks that can be performed on a resource. For more information, see the Permissions Reference documentation.
 	// Set of tasks that can be performed on a resource
 	// +kubebuilder:validation:Optional
+	// +listType=set
 	AllowedResourceActions []*string `json:"allowedResourceActions" tf:"allowed_resource_actions,omitempty"`
 }
 

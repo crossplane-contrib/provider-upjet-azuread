@@ -109,6 +109,21 @@ func (in *JobInitParameters) DeepCopyInto(out *JobInitParameters) {
 		*out = new(bool)
 		**out = **in
 	}
+	if in.ServicePrincipalID != nil {
+		in, out := &in.ServicePrincipalID, &out.ServicePrincipalID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ServicePrincipalIDRef != nil {
+		in, out := &in.ServicePrincipalIDRef, &out.ServicePrincipalIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServicePrincipalIDSelector != nil {
+		in, out := &in.ServicePrincipalIDSelector, &out.ServicePrincipalIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.TemplateID != nil {
 		in, out := &in.TemplateID, &out.TemplateID
 		*out = new(string)
@@ -371,6 +386,21 @@ func (in *SecretInitParameters) DeepCopyInto(out *SecretInitParameters) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.ServicePrincipalID != nil {
+		in, out := &in.ServicePrincipalID, &out.ServicePrincipalID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ServicePrincipalIDRef != nil {
+		in, out := &in.ServicePrincipalIDRef, &out.ServicePrincipalIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ServicePrincipalIDSelector != nil {
+		in, out := &in.ServicePrincipalIDSelector, &out.ServicePrincipalIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

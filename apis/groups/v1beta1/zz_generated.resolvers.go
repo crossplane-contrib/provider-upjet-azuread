@@ -52,5 +52,37 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 	mg.Spec.ForProvider.MemberObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.MemberObjectIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.GroupObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.GroupObjectIDRef,
+		Selector:     mg.Spec.InitProvider.GroupObjectIDSelector,
+		To: reference.To{
+			List:    &GroupList{},
+			Managed: &Group{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.GroupObjectID")
+	}
+	mg.Spec.InitProvider.GroupObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.GroupObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.MemberObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.MemberObjectIDRef,
+		Selector:     mg.Spec.InitProvider.MemberObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta1.UserList{},
+			Managed: &v1beta1.User{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.MemberObjectID")
+	}
+	mg.Spec.InitProvider.MemberObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.MemberObjectIDRef = rsp.ResolvedReference
+
 	return nil
 }

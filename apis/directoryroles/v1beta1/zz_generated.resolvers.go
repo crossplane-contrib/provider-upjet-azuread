@@ -53,5 +53,37 @@ func (mg *RoleAssignment) ResolveReferences(ctx context.Context, c client.Reader
 	mg.Spec.ForProvider.RoleID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RoleIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrincipalObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.PrincipalObjectIDRef,
+		Selector:     mg.Spec.InitProvider.PrincipalObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta1.UserList{},
+			Managed: &v1beta1.User{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.PrincipalObjectID")
+	}
+	mg.Spec.InitProvider.PrincipalObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PrincipalObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RoleID),
+		Extract:      resource.ExtractParamPath("template_id", true),
+		Reference:    mg.Spec.InitProvider.RoleIDRef,
+		Selector:     mg.Spec.InitProvider.RoleIDSelector,
+		To: reference.To{
+			List:    &RoleList{},
+			Managed: &Role{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.RoleID")
+	}
+	mg.Spec.InitProvider.RoleID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.RoleIDRef = rsp.ResolvedReference
+
 	return nil
 }

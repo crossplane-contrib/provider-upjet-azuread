@@ -33,7 +33,21 @@ type PasswordInitParameters struct {
 
 	// A map of arbitrary key/value pairs that will force recreation of the password when they change, enabling password rotation based on external conditions such as a rotating timestamp. Changing this forces a new resource to be created.
 	// Arbitrary map of values that, when changed, will trigger rotation of the password
+	// +mapType=granular
 	RotateWhenChanged map[string]*string `json:"rotateWhenChanged,omitempty" tf:"rotate_when_changed,omitempty"`
+
+	// The object ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
+	// The object ID of the service principal for which this password should be created
+	// +crossplane:generate:reference:type=Principal
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
+
+	// Reference to a Principal to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+
+	// Selector for a Principal to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 
 	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
 	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
@@ -62,6 +76,7 @@ type PasswordObservation struct {
 
 	// A map of arbitrary key/value pairs that will force recreation of the password when they change, enabling password rotation based on external conditions such as a rotating timestamp. Changing this forces a new resource to be created.
 	// Arbitrary map of values that, when changed, will trigger rotation of the password
+	// +mapType=granular
 	RotateWhenChanged map[string]*string `json:"rotateWhenChanged,omitempty" tf:"rotate_when_changed,omitempty"`
 
 	// The object ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
@@ -93,6 +108,7 @@ type PasswordParameters struct {
 	// A map of arbitrary key/value pairs that will force recreation of the password when they change, enabling password rotation based on external conditions such as a rotating timestamp. Changing this forces a new resource to be created.
 	// Arbitrary map of values that, when changed, will trigger rotation of the password
 	// +kubebuilder:validation:Optional
+	// +mapType=granular
 	RotateWhenChanged map[string]*string `json:"rotateWhenChanged,omitempty" tf:"rotate_when_changed,omitempty"`
 
 	// The object ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.

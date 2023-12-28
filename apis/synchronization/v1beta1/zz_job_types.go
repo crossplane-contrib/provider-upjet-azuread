@@ -23,6 +23,19 @@ type JobInitParameters struct {
 	// Whether or not the synchronization job is enabled
 	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
 
+	// The object ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.
+	// The object ID of the service principal for which this synchronization job should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal
+	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
+
+	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+
+	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
+	// +kubebuilder:validation:Optional
+	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+
 	// Identifier of the synchronization template this job is based on.
 	// Identifier of the synchronization template this job is based on.
 	TemplateID *string `json:"templateId,omitempty" tf:"template_id,omitempty"`

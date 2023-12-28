@@ -35,5 +35,21 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 	mg.Spec.ForProvider.AdministrativeUnitObjectID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.AdministrativeUnitObjectIDRef = rsp.ResolvedReference
 
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AdministrativeUnitObjectID),
+		Extract:      reference.ExternalName(),
+		Reference:    mg.Spec.InitProvider.AdministrativeUnitObjectIDRef,
+		Selector:     mg.Spec.InitProvider.AdministrativeUnitObjectIDSelector,
+		To: reference.To{
+			List:    &UnitList{},
+			Managed: &Unit{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AdministrativeUnitObjectID")
+	}
+	mg.Spec.InitProvider.AdministrativeUnitObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AdministrativeUnitObjectIDRef = rsp.ResolvedReference
+
 	return nil
 }
