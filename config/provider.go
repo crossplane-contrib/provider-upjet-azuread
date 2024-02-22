@@ -78,7 +78,7 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
 		ujconfig.WithIncludeList(resourceList(cliReconciledExternalNameConfigs)),
-		ujconfig.WithNoForkIncludeList(resourceList(noForkExternalNameConfigs)),
+		ujconfig.WithTerraformPluginSDKIncludeList(resourceList(terraformPluginSDKExternalNameConfigs)),
 		ujconfig.WithDefaultResourceOptions(
 			resourceConfigurator(),
 		),
