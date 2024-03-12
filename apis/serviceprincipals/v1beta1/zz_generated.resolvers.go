@@ -197,6 +197,22 @@ func (mg *Principal) ResolveReferences(ctx context.Context, c client.Reader) err
 	mg.Spec.ForProvider.ApplicationIDRef = rsp.ResolvedReference
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClientID),
+		Extract:      resource.ExtractParamPath("client_id", true),
+		Reference:    mg.Spec.ForProvider.ClientIDRef,
+		Selector:     mg.Spec.ForProvider.ClientIDSelector,
+		To: reference.To{
+			List:    &v1beta11.ApplicationList{},
+			Managed: &v1beta11.Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ClientID")
+	}
+	mg.Spec.ForProvider.ClientID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ClientIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
 		Extract:      resource.ExtractParamPath("application_id", true),
 		Reference:    mg.Spec.InitProvider.ApplicationIDRef,
@@ -211,6 +227,22 @@ func (mg *Principal) ResolveReferences(ctx context.Context, c client.Reader) err
 	}
 	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClientID),
+		Extract:      resource.ExtractParamPath("client_id", true),
+		Reference:    mg.Spec.InitProvider.ClientIDRef,
+		Selector:     mg.Spec.InitProvider.ClientIDSelector,
+		To: reference.To{
+			List:    &v1beta11.ApplicationList{},
+			Managed: &v1beta11.Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ClientID")
+	}
+	mg.Spec.InitProvider.ClientID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ClientIDRef = rsp.ResolvedReference
 
 	return nil
 }

@@ -149,7 +149,7 @@ type PrincipalInitParameters struct {
 	// Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application
 	AppRoleAssignmentRequired *bool `json:"appRoleAssignmentRequired,omitempty" tf:"app_role_assignment_required,omitempty"`
 
-	// The application ID (client ID) of the application for which to create a service principal.
+	// The unique identifier of the app_role.
 	// The application ID (client ID) of the application for which to create a service principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
@@ -162,6 +162,20 @@ type PrincipalInitParameters struct {
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
+	// The client ID of the application for which to create a service principal.
+	// The client ID of the application for which to create a service principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("client_id",true)
+	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
+
+	// Reference to a Application in applications to populate clientId.
+	// +kubebuilder:validation:Optional
+	ClientIDRef *v1.Reference `json:"clientIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate clientId.
+	// +kubebuilder:validation:Optional
+	ClientIDSelector *v1.Selector `json:"clientIdSelector,omitempty" tf:"-"`
 
 	// A description of the service principal provided for internal end-users.
 	// Description of the service principal provided for internal end-users
@@ -230,13 +244,17 @@ type PrincipalObservation struct {
 	// A list of app roles published by the associated application, as documented below. For more information official documentation.
 	AppRoles []AppRolesObservation `json:"appRoles,omitempty" tf:"app_roles,omitempty"`
 
-	// The application ID (client ID) of the application for which to create a service principal.
+	// The unique identifier of the app_role.
 	// The application ID (client ID) of the application for which to create a service principal
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
 	// The tenant ID where the associated application is registered.
 	// The tenant ID where the associated application is registered
 	ApplicationTenantID *string `json:"applicationTenantId,omitempty" tf:"application_tenant_id,omitempty"`
+
+	// The client ID of the application for which to create a service principal.
+	// The client ID of the application for which to create a service principal
+	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
 	// A description of the service principal provided for internal end-users.
 	// Description of the service principal provided for internal end-users
@@ -347,7 +365,7 @@ type PrincipalParameters struct {
 	// +kubebuilder:validation:Optional
 	AppRoleAssignmentRequired *bool `json:"appRoleAssignmentRequired,omitempty" tf:"app_role_assignment_required,omitempty"`
 
-	// The application ID (client ID) of the application for which to create a service principal.
+	// The unique identifier of the app_role.
 	// The application ID (client ID) of the application for which to create a service principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
@@ -361,6 +379,21 @@ type PrincipalParameters struct {
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
+	// The client ID of the application for which to create a service principal.
+	// The client ID of the application for which to create a service principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("client_id",true)
+	// +kubebuilder:validation:Optional
+	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
+
+	// Reference to a Application in applications to populate clientId.
+	// +kubebuilder:validation:Optional
+	ClientIDRef *v1.Reference `json:"clientIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate clientId.
+	// +kubebuilder:validation:Optional
+	ClientIDSelector *v1.Selector `json:"clientIdSelector,omitempty" tf:"-"`
 
 	// A description of the service principal provided for internal end-users.
 	// Description of the service principal provided for internal end-users
@@ -466,8 +499,8 @@ type PrincipalStatus struct {
 // +kubebuilder:storageversion
 
 // Principal is the Schema for the Principals API.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}

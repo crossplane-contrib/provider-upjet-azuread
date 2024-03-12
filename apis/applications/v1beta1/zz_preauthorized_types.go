@@ -15,7 +15,20 @@ import (
 
 type PreAuthorizedInitParameters struct {
 
-	// The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+	// The resource ID of the application to which this pre-authorized application should be added
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
 	// The object ID of the application to which this pre-authorized application should be added
 	// +crossplane:generate:reference:type=Application
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
@@ -41,6 +54,10 @@ type PreAuthorizedInitParameters struct {
 	// +kubebuilder:validation:Optional
 	AuthorizedAppIDSelector *v1.Selector `json:"authorizedAppIdSelector,omitempty" tf:"-"`
 
+	// The client ID of the application being authorized. Changing this field forces a new resource to be created.
+	// The client ID of the pre-authorized application
+	AuthorizedClientID *string `json:"authorizedClientId,omitempty" tf:"authorized_client_id,omitempty"`
+
 	// A set of permission scope IDs required by the authorized application.
 	// The IDs of the permission scopes required by the pre-authorized application
 	// +listType=set
@@ -49,12 +66,19 @@ type PreAuthorizedInitParameters struct {
 
 type PreAuthorizedObservation struct {
 
-	// The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+	// The resource ID of the application to which this pre-authorized application should be added
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
 	// The object ID of the application to which this pre-authorized application should be added
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
 	// The application ID of the pre-authorized application
 	AuthorizedAppID *string `json:"authorizedAppId,omitempty" tf:"authorized_app_id,omitempty"`
+
+	// The client ID of the application being authorized. Changing this field forces a new resource to be created.
+	// The client ID of the pre-authorized application
+	AuthorizedClientID *string `json:"authorizedClientId,omitempty" tf:"authorized_client_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -66,7 +90,21 @@ type PreAuthorizedObservation struct {
 
 type PreAuthorizedParameters struct {
 
-	// The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+	// The resource ID of the application to which this pre-authorized application should be added
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
 	// The object ID of the application to which this pre-authorized application should be added
 	// +crossplane:generate:reference:type=Application
 	// +kubebuilder:validation:Optional
@@ -93,6 +131,11 @@ type PreAuthorizedParameters struct {
 	// Selector for a Application to populate authorizedAppId.
 	// +kubebuilder:validation:Optional
 	AuthorizedAppIDSelector *v1.Selector `json:"authorizedAppIdSelector,omitempty" tf:"-"`
+
+	// The client ID of the application being authorized. Changing this field forces a new resource to be created.
+	// The client ID of the pre-authorized application
+	// +kubebuilder:validation:Optional
+	AuthorizedClientID *string `json:"authorizedClientId,omitempty" tf:"authorized_client_id,omitempty"`
 
 	// A set of permission scope IDs required by the authorized application.
 	// The IDs of the permission scopes required by the pre-authorized application
@@ -129,8 +172,8 @@ type PreAuthorizedStatus struct {
 // +kubebuilder:storageversion
 
 // PreAuthorized is the Schema for the PreAuthorizeds API.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}

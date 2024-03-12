@@ -79,7 +79,7 @@ type APIParameters struct {
 
 type AccessTokenInitParameters struct {
 
-	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim. Possible values are: cloud_displayname, dns_domain_and_sam_account_name, emit_as_roles, include_externally_authenticated_upn_without_hash, include_externally_authenticated_upn, max_size_limit, netbios_domain_and_sam_account_name, on_premise_security_identifier, sam_account_name, and use_guid.
 	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
 	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
@@ -98,7 +98,7 @@ type AccessTokenInitParameters struct {
 
 type AccessTokenObservation struct {
 
-	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim. Possible values are: cloud_displayname, dns_domain_and_sam_account_name, emit_as_roles, include_externally_authenticated_upn_without_hash, include_externally_authenticated_upn, max_size_limit, netbios_domain_and_sam_account_name, on_premise_security_identifier, sam_account_name, and use_guid.
 	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
 	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
@@ -117,7 +117,7 @@ type AccessTokenObservation struct {
 
 type AccessTokenParameters struct {
 
-	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim. Possible values are: cloud_displayname, dns_domain_and_sam_account_name, emit_as_roles, include_externally_authenticated_upn_without_hash, include_externally_authenticated_upn, max_size_limit, netbios_domain_and_sam_account_name, on_premise_security_identifier, sam_account_name, and use_guid.
 	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
 	// +kubebuilder:validation:Optional
 	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
@@ -349,9 +349,12 @@ type ApplicationObservation struct {
 	// +mapType=granular
 	AppRoleIds map[string]*string `json:"appRoleIds,omitempty" tf:"app_role_ids,omitempty"`
 
-	// The Application ID (also called Client ID).
 	// The Application ID (also called Client ID)
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// The Client ID for the application.
+	// The Client ID (also called Application ID)
+	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
 	// A description of the application, as shown to end users.
 	// Description of the application as shown to end users
@@ -382,7 +385,6 @@ type ApplicationObservation struct {
 	// +listType=set
 	GroupMembershipClaims []*string `json:"groupMembershipClaims,omitempty" tf:"group_membership_claims,omitempty"`
 
-	// The unique identifier for an app role or OAuth2 permission scope published by the resource application.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
 	// A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant.
@@ -675,7 +677,7 @@ type FeatureTagsParameters struct {
 
 type IDTokenInitParameters struct {
 
-	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim. Possible values are: cloud_displayname, dns_domain_and_sam_account_name, emit_as_roles, include_externally_authenticated_upn_without_hash, include_externally_authenticated_upn, max_size_limit, netbios_domain_and_sam_account_name, on_premise_security_identifier, sam_account_name, and use_guid.
 	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
 	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
@@ -694,7 +696,7 @@ type IDTokenInitParameters struct {
 
 type IDTokenObservation struct {
 
-	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim. Possible values are: cloud_displayname, dns_domain_and_sam_account_name, emit_as_roles, include_externally_authenticated_upn_without_hash, include_externally_authenticated_upn, max_size_limit, netbios_domain_and_sam_account_name, on_premise_security_identifier, sam_account_name, and use_guid.
 	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
 	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
@@ -713,7 +715,7 @@ type IDTokenObservation struct {
 
 type IDTokenParameters struct {
 
-	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim. Possible values are: cloud_displayname, dns_domain_and_sam_account_name, emit_as_roles, include_externally_authenticated_upn_without_hash, include_externally_authenticated_upn, max_size_limit, netbios_domain_and_sam_account_name, on_premise_security_identifier, sam_account_name, and use_guid.
 	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
 	// +kubebuilder:validation:Optional
 	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
@@ -1006,7 +1008,7 @@ type ResourceAccessParameters struct {
 
 type Saml2TokenInitParameters struct {
 
-	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim. Possible values are: cloud_displayname, dns_domain_and_sam_account_name, emit_as_roles, include_externally_authenticated_upn_without_hash, include_externally_authenticated_upn, max_size_limit, netbios_domain_and_sam_account_name, on_premise_security_identifier, sam_account_name, and use_guid.
 	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
 	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
@@ -1025,7 +1027,7 @@ type Saml2TokenInitParameters struct {
 
 type Saml2TokenObservation struct {
 
-	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim. Possible values are: cloud_displayname, dns_domain_and_sam_account_name, emit_as_roles, include_externally_authenticated_upn_without_hash, include_externally_authenticated_upn, max_size_limit, netbios_domain_and_sam_account_name, on_premise_security_identifier, sam_account_name, and use_guid.
 	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
 	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
 
@@ -1044,7 +1046,7 @@ type Saml2TokenObservation struct {
 
 type Saml2TokenParameters struct {
 
-	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim.
+	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim. Possible values are: cloud_displayname, dns_domain_and_sam_account_name, emit_as_roles, include_externally_authenticated_upn_without_hash, include_externally_authenticated_upn, max_size_limit, netbios_domain_and_sam_account_name, on_premise_security_identifier, sam_account_name, and use_guid.
 	// List of additional properties of the claim. If a property exists in this list, it modifies the behaviour of the optional claim
 	// +kubebuilder:validation:Optional
 	AdditionalProperties []*string `json:"additionalProperties,omitempty" tf:"additional_properties,omitempty"`
@@ -1179,8 +1181,8 @@ type ApplicationStatus struct {
 // +kubebuilder:storageversion
 
 // Application is the Schema for the Applications API.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}

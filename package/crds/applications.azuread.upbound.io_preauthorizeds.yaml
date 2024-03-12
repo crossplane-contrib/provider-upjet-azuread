@@ -19,11 +19,11 @@ spec:
   scope: Cluster
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.conditions[?(@.type=='Ready')].status
-      name: READY
-      type: string
     - jsonPath: .status.conditions[?(@.type=='Synced')].status
       name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
       type: string
     - jsonPath: .metadata.annotations.crossplane\.io/external-name
       name: EXTERNAL-NAME
@@ -72,10 +72,90 @@ spec:
                 type: string
               forProvider:
                 properties:
-                  applicationObjectId:
+                  applicationId:
                     description: |-
-                      The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
-                      The object ID of the application to which this pre-authorized application should be added
+                      The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+                      The resource ID of the application to which this pre-authorized application should be added
+                    type: string
+                  applicationIdRef:
+                    description: Reference to a Application in applications to populate
+                      applicationId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  applicationIdSelector:
+                    description: Selector for a Application in applications to populate
+                      applicationId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  applicationObjectId:
+                    description: The object ID of the application to which this pre-authorized
+                      application should be added
                     type: string
                   applicationObjectIdRef:
                     description: Reference to a Application to populate applicationObjectId.
@@ -228,6 +308,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  authorizedClientId:
+                    description: |-
+                      The client ID of the application being authorized. Changing this field forces a new resource to be created.
+                      The client ID of the pre-authorized application
+                    type: string
                   permissionIds:
                     description: |-
                       A set of permission scope IDs required by the authorized application.
@@ -250,10 +335,90 @@ spec:
                   for example because of an external controller is managing them, like an
                   autoscaler.
                 properties:
-                  applicationObjectId:
+                  applicationId:
                     description: |-
-                      The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
-                      The object ID of the application to which this pre-authorized application should be added
+                      The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+                      The resource ID of the application to which this pre-authorized application should be added
+                    type: string
+                  applicationIdRef:
+                    description: Reference to a Application in applications to populate
+                      applicationId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  applicationIdSelector:
+                    description: Selector for a Application in applications to populate
+                      applicationId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  applicationObjectId:
+                    description: The object ID of the application to which this pre-authorized
+                      application should be added
                     type: string
                   applicationObjectIdRef:
                     description: Reference to a Application to populate applicationObjectId.
@@ -406,6 +571,11 @@ spec:
                             type: string
                         type: object
                     type: object
+                  authorizedClientId:
+                    description: |-
+                      The client ID of the application being authorized. Changing this field forces a new resource to be created.
+                      The client ID of the pre-authorized application
+                    type: string
                   permissionIds:
                     description: |-
                       A set of permission scope IDs required by the authorized application.
@@ -592,13 +762,22 @@ spec:
             properties:
               atProvider:
                 properties:
-                  applicationObjectId:
+                  applicationId:
                     description: |-
-                      The object ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
-                      The object ID of the application to which this pre-authorized application should be added
+                      The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
+                      The resource ID of the application to which this pre-authorized application should be added
+                    type: string
+                  applicationObjectId:
+                    description: The object ID of the application to which this pre-authorized
+                      application should be added
                     type: string
                   authorizedAppId:
                     description: The application ID of the pre-authorized application
+                    type: string
+                  authorizedClientId:
+                    description: |-
+                      The client ID of the application being authorized. Changing this field forces a new resource to be created.
+                      The client ID of the pre-authorized application
                     type: string
                   id:
                     type: string

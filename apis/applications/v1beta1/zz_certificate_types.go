@@ -15,7 +15,20 @@ import (
 
 type CertificateInitParameters struct {
 
-	// The object ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this certificate should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
 	// The object ID of the application for which this certificate should be created
 	// +crossplane:generate:reference:type=Application
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
@@ -55,7 +68,10 @@ type CertificateInitParameters struct {
 
 type CertificateObservation struct {
 
-	// The object ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this certificate should be created
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
 	// The object ID of the application for which this certificate should be created
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
@@ -88,7 +104,21 @@ type CertificateObservation struct {
 
 type CertificateParameters struct {
 
-	// The object ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this certificate should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	// +kubebuilder:validation:Optional
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+
 	// The object ID of the application for which this certificate should be created
 	// +crossplane:generate:reference:type=Application
 	// +kubebuilder:validation:Optional
@@ -133,7 +163,7 @@ type CertificateParameters struct {
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
 
 	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.
-	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the `encoding` argumen
+	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the `encoding` argument
 	// +kubebuilder:validation:Optional
 	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
@@ -166,8 +196,8 @@ type CertificateStatus struct {
 // +kubebuilder:storageversion
 
 // Certificate is the Schema for the Certificates API.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}

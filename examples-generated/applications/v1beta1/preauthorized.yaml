@@ -8,29 +8,13 @@ metadata:
   name: example
 spec:
   forProvider:
-    applicationObjectIdSelector:
+    applicationIdSelector:
       matchLabels:
         testing.upbound.io/example-name: authorizer
-    authorizedAppIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: authorized
+    authorizedClientId: ${azuread_application_registration.authorized.client_id}
     permissionIds:
-    - ced9c4c3-c273-4f0f-ac71-a20377b90f9c
-    - 2d5e07ca-664d-4d9b-ad61-ec07fd215213
-
----
-
-apiVersion: applications.azuread.upbound.io/v1beta1
-kind: Application
-metadata:
-  annotations:
-    meta.upbound.io/example-id: applications/v1beta1/preauthorized
-  labels:
-    testing.upbound.io/example-name: authorized
-  name: authorized
-spec:
-  forProvider:
-    displayName: example-authorized-app
+    - 00000000-0000-0000-0000-000000000000
+    - 11111111-1111-1111-1111-111111111111
 
 ---
 
@@ -49,13 +33,13 @@ spec:
       - adminConsentDescription: Administer the application
         adminConsentDisplayName: Administer
         enabled: true
-        id: ced9c4c3-c273-4f0f-ac71-a20377b90f9c
+        id: 00000000-0000-0000-0000-000000000000
         type: Admin
         value: administer
       - adminConsentDescription: Access the application
         adminConsentDisplayName: Access
         enabled: true
-        id: 2d5e07ca-664d-4d9b-ad61-ec07fd215213
+        id: 11111111-1111-1111-1111-111111111111
         type: User
         userConsentDescription: Access the application
         userConsentDisplayName: Access

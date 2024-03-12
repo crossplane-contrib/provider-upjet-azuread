@@ -1126,6 +1126,21 @@ func (in *PrincipalInitParameters) DeepCopyInto(out *PrincipalInitParameters) {
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
+	if in.ClientID != nil {
+		in, out := &in.ClientID, &out.ClientID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClientIDRef != nil {
+		in, out := &in.ClientIDRef, &out.ClientIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClientIDSelector != nil {
+		in, out := &in.ClientIDSelector, &out.ClientIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Description != nil {
 		in, out := &in.Description, &out.Description
 		*out = new(string)
@@ -1296,6 +1311,11 @@ func (in *PrincipalObservation) DeepCopyInto(out *PrincipalObservation) {
 	}
 	if in.ApplicationTenantID != nil {
 		in, out := &in.ApplicationTenantID, &out.ApplicationTenantID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClientID != nil {
+		in, out := &in.ClientID, &out.ClientID
 		*out = new(string)
 		**out = **in
 	}
@@ -1504,6 +1524,21 @@ func (in *PrincipalParameters) DeepCopyInto(out *PrincipalParameters) {
 	}
 	if in.ApplicationIDSelector != nil {
 		in, out := &in.ApplicationIDSelector, &out.ApplicationIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClientID != nil {
+		in, out := &in.ClientID, &out.ClientID
+		*out = new(string)
+		**out = **in
+	}
+	if in.ClientIDRef != nil {
+		in, out := &in.ClientIDRef, &out.ClientIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.ClientIDSelector != nil {
+		in, out := &in.ClientIDSelector, &out.ClientIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
