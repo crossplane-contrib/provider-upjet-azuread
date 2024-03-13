@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -euox pipefail
 
+# SPDX-FileCopyrightText: 2023 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
 read -r -p "Lower case provider name (ex. github): " PROVIDER_NAME_LOWER
 read -r -p "Normal case provider name (ex. GitHub): " PROVIDER_NAME_NORMAL
 read -r -p "Organization (ex. upbound, my-org-name): " ORGANIZATION_NAME
