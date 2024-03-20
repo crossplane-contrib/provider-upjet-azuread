@@ -15,7 +15,10 @@ import (
 
 type FederatedIdentityCredentialInitParameters struct {
 
-	// The object ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this federated identity credential should be created
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
 	// The object ID of the application for which this federated identity credential should be created
 	// +crossplane:generate:reference:type=Application
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
@@ -51,7 +54,10 @@ type FederatedIdentityCredentialInitParameters struct {
 
 type FederatedIdentityCredentialObservation struct {
 
-	// The object ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this federated identity credential should be created
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
 	// The object ID of the application for which this federated identity credential should be created
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
@@ -84,7 +90,11 @@ type FederatedIdentityCredentialObservation struct {
 
 type FederatedIdentityCredentialParameters struct {
 
-	// The object ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
+	// The resource ID of the application for which this federated identity credential should be created
+	// +kubebuilder:validation:Optional
+	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
 	// The object ID of the application for which this federated identity credential should be created
 	// +crossplane:generate:reference:type=Application
 	// +kubebuilder:validation:Optional
@@ -152,8 +162,8 @@ type FederatedIdentityCredentialStatus struct {
 // +kubebuilder:storageversion
 
 // FederatedIdentityCredential is the Schema for the FederatedIdentityCredentials API.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}

@@ -4,13 +4,15 @@
 
 module github.com/upbound/provider-azuread
 
-go 1.21
+go 1.21.3
+
+toolchain go1.21.8
 
 require (
 	dario.cat/mergo v1.0.0
 	github.com/crossplane/crossplane-runtime v1.15.1
 	github.com/crossplane/crossplane-tools v0.0.0-20230925130601-628280f8bf79
-	github.com/crossplane/upjet v1.1.5
+	github.com/crossplane/upjet v1.3.0-rc.0.0.20240319124750-50919febc5ab
 	github.com/hashicorp/terraform-json v0.17.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.30.0
 	github.com/hashicorp/terraform-provider-azuread v1.6.1-0.20230727144955-0adfe586f500
@@ -56,15 +58,15 @@ require (
 	github.com/google/gofuzz v1.2.0 // indirect
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
-	github.com/hashicorp/go-azure-helpers v0.56.0 // indirect
-	github.com/hashicorp/go-azure-sdk v0.20230511.1094507 // indirect
+	github.com/hashicorp/go-azure-helpers v0.62.0 // indirect
+	github.com/hashicorp/go-azure-sdk v0.20231018.1171511 // indirect
 	github.com/hashicorp/go-checkpoint v0.5.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-cty v1.4.1-0.20200414143053-d3edf31b6320 // indirect
 	github.com/hashicorp/go-hclog v1.5.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hashicorp/go-plugin v1.5.1 // indirect
-	github.com/hashicorp/go-retryablehttp v0.7.2 // indirect
+	github.com/hashicorp/go-retryablehttp v0.7.4 // indirect
 	github.com/hashicorp/go-uuid v1.0.3 // indirect
 	github.com/hashicorp/go-version v1.6.0 // indirect
 	github.com/hashicorp/hc-install v0.6.1 // indirect
@@ -74,16 +76,17 @@ require (
 	github.com/hashicorp/terraform-plugin-framework v1.4.1 // indirect
 	github.com/hashicorp/terraform-plugin-go v0.19.0 // indirect
 	github.com/hashicorp/terraform-plugin-log v0.9.0 // indirect
+	github.com/hashicorp/terraform-plugin-testing v1.5.1 // indirect
 	github.com/hashicorp/terraform-registry-address v0.2.2 // indirect
 	github.com/hashicorp/terraform-svchost v0.1.1 // indirect
-	github.com/hashicorp/yamux v0.0.0-20211028200310-0bc27b27de87 // indirect
+	github.com/hashicorp/yamux v0.1.1 // indirect
 	github.com/iancoleman/strcase v0.2.0 // indirect
 	github.com/imdario/mergo v0.3.16 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
-	github.com/manicminer/hamilton v0.63.0 // indirect
+	github.com/manicminer/hamilton v0.65.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/matttproud/golang_protobuf_extensions/v2 v2.0.0 // indirect
@@ -107,8 +110,8 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tmccombs/hcl2json v0.3.3 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
-	github.com/vmihailenco/msgpack/v4 v4.3.12 // indirect
-	github.com/vmihailenco/tagparser v0.1.2 // indirect
+	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect
+	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/yuin/goldmark v1.5.3 // indirect
 	github.com/zclconf/go-cty v1.14.1 // indirect
 	github.com/zclconf/go-cty-yaml v1.0.3 // indirect
@@ -144,14 +147,6 @@ require (
 	software.sslmate.com/src/go-pkcs12 v0.2.0 // indirect
 )
 
-replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20231122090232-7e2fcc6d8d67
+replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20240311141618-ce1f46c21020
 
-replace golang.org/x/exp => golang.org/x/exp v0.0.0-20231006140011-7918f672742d
-
-replace github.com/hashicorp/terraform-json => github.com/hashicorp/terraform-json v0.16.0
-
-replace github.com/hashicorp/terraform-plugin-sdk/v2 => github.com/hashicorp/terraform-plugin-sdk/v2 v2.26.1
-
-replace github.com/hashicorp/terraform-plugin-go => github.com/hashicorp/terraform-plugin-go v0.14.3
-
-replace github.com/hashicorp/terraform-plugin-framework => github.com/hashicorp/terraform-plugin-framework v1.2.0
+replace github.com/hashicorp/terraform-plugin-sdk/v2 => github.com/hashicorp/terraform-plugin-sdk/v2 v2.29.0

@@ -19,11 +19,11 @@ spec:
   scope: Cluster
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.conditions[?(@.type=='Ready')].status
-      name: READY
-      type: string
     - jsonPath: .status.conditions[?(@.type=='Synced')].status
       name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
       type: string
     - jsonPath: .metadata.annotations.crossplane\.io/external-name
       name: EXTERNAL-NAME
@@ -149,10 +149,7 @@ spec:
                           items:
                             properties:
                               filter:
-                                description: A filter block as described below. A
-                                  filter block can be added to an existing policy,
-                                  but removing the filter block forces a new resource
-                                  to be created.
+                                description: A filter block as described below.
                                 items:
                                   properties:
                                     mode:
@@ -245,6 +242,42 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              excludedGuestsOrExternalUsers:
+                                description: A guests_or_external_users block as documented
+                                  below, which specifies internal guests and external
+                                  users excluded from scope of policy.
+                                items:
+                                  properties:
+                                    externalTenants:
+                                      description: An external_tenants block as documented
+                                        below, which specifies external tenants in
+                                        a policy scope.
+                                      items:
+                                        properties:
+                                          members:
+                                            description: A list tenant IDs. Can only
+                                              be specified if membership_kind is enumerated.
+                                            items:
+                                              type: string
+                                            type: array
+                                          membershipKind:
+                                            description: 'The external tenant membership
+                                              kind. Possible values are: all, enumerated,
+                                              unknownFutureValue.'
+                                            type: string
+                                        type: object
+                                      type: array
+                                    guestOrExternalUserTypes:
+                                      description: 'A list of guest or external user
+                                        types. Possible values are: b2bCollaborationGuest,
+                                        b2bCollaborationMember, b2bDirectConnectUser,
+                                        internalGuest, none, otherExternalUser, serviceProvider,
+                                        unknownFutureValue.'
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
                               excludedRoles:
                                 description: A list of role IDs excluded from scope
                                   of policy.
@@ -262,6 +295,42 @@ spec:
                                   unless explicitly excluded.
                                 items:
                                   type: string
+                                type: array
+                              includedGuestsOrExternalUsers:
+                                description: A guests_or_external_users block as documented
+                                  below, which specifies internal guests and external
+                                  users in scope of policy.
+                                items:
+                                  properties:
+                                    externalTenants:
+                                      description: An external_tenants block as documented
+                                        below, which specifies external tenants in
+                                        a policy scope.
+                                      items:
+                                        properties:
+                                          members:
+                                            description: A list tenant IDs. Can only
+                                              be specified if membership_kind is enumerated.
+                                            items:
+                                              type: string
+                                            type: array
+                                          membershipKind:
+                                            description: 'The external tenant membership
+                                              kind. Possible values are: all, enumerated,
+                                              unknownFutureValue.'
+                                            type: string
+                                        type: object
+                                      type: array
+                                    guestOrExternalUserTypes:
+                                      description: 'A list of guest or external user
+                                        types. Possible values are: b2bCollaborationGuest,
+                                        b2bCollaborationMember, b2bDirectConnectUser,
+                                        internalGuest, none, otherExternalUser, serviceProvider,
+                                        unknownFutureValue.'
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
                                 type: array
                               includedRoles:
                                 description: A list of role IDs in scope of policy
@@ -288,6 +357,10 @@ spec:
                       the policy.
                     items:
                       properties:
+                        authenticationStrengthPolicyId:
+                          description: ID of an Authentication Strength Policy to
+                            use in this policy.
+                          type: string
                         builtInControls:
                           description: 'List of built-in controls required by the
                             policy. Possible values are: block, mfa, approvedApplication,
@@ -319,8 +392,8 @@ spec:
                     items:
                       properties:
                         applicationEnforcedRestrictionsEnabled:
-                          description: Whether or not application enforced restrictions
-                            are enabled. Defaults to false.
+                          description: Whether application enforced restrictions are
+                            enabled. Defaults to false.
                           type: boolean
                         cloudAppSecurityPolicy:
                           description: 'Enables cloud app security and specifies the
@@ -332,19 +405,26 @@ spec:
                           type: boolean
                         persistentBrowserMode:
                           description: 'Session control to define whether to persist
-                            cookies or not. Possible values are: always or never.'
+                            cookies. Possible values are: always or never.'
                           type: string
                         signInFrequency:
                           description: Number of days or hours to enforce sign-in
                             frequency. Required when sign_in_frequency_period is specified.
-                            Due to an API issue, removing this property forces a new
-                            resource to be created.
                           type: number
+                        signInFrequencyAuthenticationType:
+                          description: 'Authentication type for enforcing sign-in
+                            frequency. Possible values are: primaryAndSecondaryAuthentication
+                            or secondaryAuthentication. Defaults to primaryAndSecondaryAuthentication.'
+                          type: string
+                        signInFrequencyInterval:
+                          description: 'The interval to apply to sign-in frequency
+                            control. Possible values are: timeBased or everyTime.
+                            Defaults to timeBased.'
+                          type: string
                         signInFrequencyPeriod:
                           description: 'The time period to enforce sign-in frequency.
                             Possible values are: hours or days. Required when sign_in_frequency_period
-                            is specified. Due to an API issue, removing this property
-                            forces a new resource to be created.'
+                            is specified.'
                           type: string
                       type: object
                     type: array
@@ -443,10 +523,7 @@ spec:
                           items:
                             properties:
                               filter:
-                                description: A filter block as described below. A
-                                  filter block can be added to an existing policy,
-                                  but removing the filter block forces a new resource
-                                  to be created.
+                                description: A filter block as described below.
                                 items:
                                   properties:
                                     mode:
@@ -539,6 +616,42 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              excludedGuestsOrExternalUsers:
+                                description: A guests_or_external_users block as documented
+                                  below, which specifies internal guests and external
+                                  users excluded from scope of policy.
+                                items:
+                                  properties:
+                                    externalTenants:
+                                      description: An external_tenants block as documented
+                                        below, which specifies external tenants in
+                                        a policy scope.
+                                      items:
+                                        properties:
+                                          members:
+                                            description: A list tenant IDs. Can only
+                                              be specified if membership_kind is enumerated.
+                                            items:
+                                              type: string
+                                            type: array
+                                          membershipKind:
+                                            description: 'The external tenant membership
+                                              kind. Possible values are: all, enumerated,
+                                              unknownFutureValue.'
+                                            type: string
+                                        type: object
+                                      type: array
+                                    guestOrExternalUserTypes:
+                                      description: 'A list of guest or external user
+                                        types. Possible values are: b2bCollaborationGuest,
+                                        b2bCollaborationMember, b2bDirectConnectUser,
+                                        internalGuest, none, otherExternalUser, serviceProvider,
+                                        unknownFutureValue.'
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
                               excludedRoles:
                                 description: A list of role IDs excluded from scope
                                   of policy.
@@ -556,6 +669,42 @@ spec:
                                   unless explicitly excluded.
                                 items:
                                   type: string
+                                type: array
+                              includedGuestsOrExternalUsers:
+                                description: A guests_or_external_users block as documented
+                                  below, which specifies internal guests and external
+                                  users in scope of policy.
+                                items:
+                                  properties:
+                                    externalTenants:
+                                      description: An external_tenants block as documented
+                                        below, which specifies external tenants in
+                                        a policy scope.
+                                      items:
+                                        properties:
+                                          members:
+                                            description: A list tenant IDs. Can only
+                                              be specified if membership_kind is enumerated.
+                                            items:
+                                              type: string
+                                            type: array
+                                          membershipKind:
+                                            description: 'The external tenant membership
+                                              kind. Possible values are: all, enumerated,
+                                              unknownFutureValue.'
+                                            type: string
+                                        type: object
+                                      type: array
+                                    guestOrExternalUserTypes:
+                                      description: 'A list of guest or external user
+                                        types. Possible values are: b2bCollaborationGuest,
+                                        b2bCollaborationMember, b2bDirectConnectUser,
+                                        internalGuest, none, otherExternalUser, serviceProvider,
+                                        unknownFutureValue.'
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
                                 type: array
                               includedRoles:
                                 description: A list of role IDs in scope of policy
@@ -582,6 +731,10 @@ spec:
                       the policy.
                     items:
                       properties:
+                        authenticationStrengthPolicyId:
+                          description: ID of an Authentication Strength Policy to
+                            use in this policy.
+                          type: string
                         builtInControls:
                           description: 'List of built-in controls required by the
                             policy. Possible values are: block, mfa, approvedApplication,
@@ -613,8 +766,8 @@ spec:
                     items:
                       properties:
                         applicationEnforcedRestrictionsEnabled:
-                          description: Whether or not application enforced restrictions
-                            are enabled. Defaults to false.
+                          description: Whether application enforced restrictions are
+                            enabled. Defaults to false.
                           type: boolean
                         cloudAppSecurityPolicy:
                           description: 'Enables cloud app security and specifies the
@@ -626,19 +779,26 @@ spec:
                           type: boolean
                         persistentBrowserMode:
                           description: 'Session control to define whether to persist
-                            cookies or not. Possible values are: always or never.'
+                            cookies. Possible values are: always or never.'
                           type: string
                         signInFrequency:
                           description: Number of days or hours to enforce sign-in
                             frequency. Required when sign_in_frequency_period is specified.
-                            Due to an API issue, removing this property forces a new
-                            resource to be created.
                           type: number
+                        signInFrequencyAuthenticationType:
+                          description: 'Authentication type for enforcing sign-in
+                            frequency. Possible values are: primaryAndSecondaryAuthentication
+                            or secondaryAuthentication. Defaults to primaryAndSecondaryAuthentication.'
+                          type: string
+                        signInFrequencyInterval:
+                          description: 'The interval to apply to sign-in frequency
+                            control. Possible values are: timeBased or everyTime.
+                            Defaults to timeBased.'
+                          type: string
                         signInFrequencyPeriod:
                           description: 'The time period to enforce sign-in frequency.
                             Possible values are: hours or days. Required when sign_in_frequency_period
-                            is specified. Due to an API issue, removing this property
-                            forces a new resource to be created.'
+                            is specified.'
                           type: string
                       type: object
                     type: array
@@ -909,10 +1069,7 @@ spec:
                           items:
                             properties:
                               filter:
-                                description: A filter block as described below. A
-                                  filter block can be added to an existing policy,
-                                  but removing the filter block forces a new resource
-                                  to be created.
+                                description: A filter block as described below.
                                 items:
                                   properties:
                                     mode:
@@ -1005,6 +1162,42 @@ spec:
                                 items:
                                   type: string
                                 type: array
+                              excludedGuestsOrExternalUsers:
+                                description: A guests_or_external_users block as documented
+                                  below, which specifies internal guests and external
+                                  users excluded from scope of policy.
+                                items:
+                                  properties:
+                                    externalTenants:
+                                      description: An external_tenants block as documented
+                                        below, which specifies external tenants in
+                                        a policy scope.
+                                      items:
+                                        properties:
+                                          members:
+                                            description: A list tenant IDs. Can only
+                                              be specified if membership_kind is enumerated.
+                                            items:
+                                              type: string
+                                            type: array
+                                          membershipKind:
+                                            description: 'The external tenant membership
+                                              kind. Possible values are: all, enumerated,
+                                              unknownFutureValue.'
+                                            type: string
+                                        type: object
+                                      type: array
+                                    guestOrExternalUserTypes:
+                                      description: 'A list of guest or external user
+                                        types. Possible values are: b2bCollaborationGuest,
+                                        b2bCollaborationMember, b2bDirectConnectUser,
+                                        internalGuest, none, otherExternalUser, serviceProvider,
+                                        unknownFutureValue.'
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
+                                type: array
                               excludedRoles:
                                 description: A list of role IDs excluded from scope
                                   of policy.
@@ -1022,6 +1215,42 @@ spec:
                                   unless explicitly excluded.
                                 items:
                                   type: string
+                                type: array
+                              includedGuestsOrExternalUsers:
+                                description: A guests_or_external_users block as documented
+                                  below, which specifies internal guests and external
+                                  users in scope of policy.
+                                items:
+                                  properties:
+                                    externalTenants:
+                                      description: An external_tenants block as documented
+                                        below, which specifies external tenants in
+                                        a policy scope.
+                                      items:
+                                        properties:
+                                          members:
+                                            description: A list tenant IDs. Can only
+                                              be specified if membership_kind is enumerated.
+                                            items:
+                                              type: string
+                                            type: array
+                                          membershipKind:
+                                            description: 'The external tenant membership
+                                              kind. Possible values are: all, enumerated,
+                                              unknownFutureValue.'
+                                            type: string
+                                        type: object
+                                      type: array
+                                    guestOrExternalUserTypes:
+                                      description: 'A list of guest or external user
+                                        types. Possible values are: b2bCollaborationGuest,
+                                        b2bCollaborationMember, b2bDirectConnectUser,
+                                        internalGuest, none, otherExternalUser, serviceProvider,
+                                        unknownFutureValue.'
+                                      items:
+                                        type: string
+                                      type: array
+                                  type: object
                                 type: array
                               includedRoles:
                                 description: A list of role IDs in scope of policy
@@ -1048,6 +1277,10 @@ spec:
                       the policy.
                     items:
                       properties:
+                        authenticationStrengthPolicyId:
+                          description: ID of an Authentication Strength Policy to
+                            use in this policy.
+                          type: string
                         builtInControls:
                           description: 'List of built-in controls required by the
                             policy. Possible values are: block, mfa, approvedApplication,
@@ -1082,8 +1315,8 @@ spec:
                     items:
                       properties:
                         applicationEnforcedRestrictionsEnabled:
-                          description: Whether or not application enforced restrictions
-                            are enabled. Defaults to false.
+                          description: Whether application enforced restrictions are
+                            enabled. Defaults to false.
                           type: boolean
                         cloudAppSecurityPolicy:
                           description: 'Enables cloud app security and specifies the
@@ -1095,19 +1328,26 @@ spec:
                           type: boolean
                         persistentBrowserMode:
                           description: 'Session control to define whether to persist
-                            cookies or not. Possible values are: always or never.'
+                            cookies. Possible values are: always or never.'
                           type: string
                         signInFrequency:
                           description: Number of days or hours to enforce sign-in
                             frequency. Required when sign_in_frequency_period is specified.
-                            Due to an API issue, removing this property forces a new
-                            resource to be created.
                           type: number
+                        signInFrequencyAuthenticationType:
+                          description: 'Authentication type for enforcing sign-in
+                            frequency. Possible values are: primaryAndSecondaryAuthentication
+                            or secondaryAuthentication. Defaults to primaryAndSecondaryAuthentication.'
+                          type: string
+                        signInFrequencyInterval:
+                          description: 'The interval to apply to sign-in frequency
+                            control. Possible values are: timeBased or everyTime.
+                            Defaults to timeBased.'
+                          type: string
                         signInFrequencyPeriod:
                           description: 'The time period to enforce sign-in frequency.
                             Possible values are: hours or days. Required when sign_in_frequency_period
-                            is specified. Due to an API issue, removing this property
-                            forces a new resource to be created.'
+                            is specified.'
                           type: string
                       type: object
                     type: array

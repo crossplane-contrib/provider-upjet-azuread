@@ -254,21 +254,79 @@ type ConditionsParameters struct {
 
 type DevicesInitParameters struct {
 
-	// A filter block as described below. A filter block can be added to an existing policy, but removing the filter block forces a new resource to be created.
+	// A filter block as described below.
 	Filter []FilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
 }
 
 type DevicesObservation struct {
 
-	// A filter block as described below. A filter block can be added to an existing policy, but removing the filter block forces a new resource to be created.
+	// A filter block as described below.
 	Filter []FilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
 }
 
 type DevicesParameters struct {
 
-	// A filter block as described below. A filter block can be added to an existing policy, but removing the filter block forces a new resource to be created.
+	// A filter block as described below.
 	// +kubebuilder:validation:Optional
 	Filter []FilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+}
+
+type ExcludedGuestsOrExternalUsersInitParameters struct {
+
+	// An external_tenants block as documented below, which specifies external tenants in a policy scope.
+	ExternalTenants []ExternalTenantsInitParameters `json:"externalTenants,omitempty" tf:"external_tenants,omitempty"`
+
+	// A list of guest or external user types. Possible values are: b2bCollaborationGuest, b2bCollaborationMember, b2bDirectConnectUser, internalGuest, none, otherExternalUser, serviceProvider, unknownFutureValue.
+	GuestOrExternalUserTypes []*string `json:"guestOrExternalUserTypes,omitempty" tf:"guest_or_external_user_types,omitempty"`
+}
+
+type ExcludedGuestsOrExternalUsersObservation struct {
+
+	// An external_tenants block as documented below, which specifies external tenants in a policy scope.
+	ExternalTenants []ExternalTenantsObservation `json:"externalTenants,omitempty" tf:"external_tenants,omitempty"`
+
+	// A list of guest or external user types. Possible values are: b2bCollaborationGuest, b2bCollaborationMember, b2bDirectConnectUser, internalGuest, none, otherExternalUser, serviceProvider, unknownFutureValue.
+	GuestOrExternalUserTypes []*string `json:"guestOrExternalUserTypes,omitempty" tf:"guest_or_external_user_types,omitempty"`
+}
+
+type ExcludedGuestsOrExternalUsersParameters struct {
+
+	// An external_tenants block as documented below, which specifies external tenants in a policy scope.
+	// +kubebuilder:validation:Optional
+	ExternalTenants []ExternalTenantsParameters `json:"externalTenants,omitempty" tf:"external_tenants,omitempty"`
+
+	// A list of guest or external user types. Possible values are: b2bCollaborationGuest, b2bCollaborationMember, b2bDirectConnectUser, internalGuest, none, otherExternalUser, serviceProvider, unknownFutureValue.
+	// +kubebuilder:validation:Optional
+	GuestOrExternalUserTypes []*string `json:"guestOrExternalUserTypes" tf:"guest_or_external_user_types,omitempty"`
+}
+
+type ExternalTenantsInitParameters struct {
+
+	// A list tenant IDs. Can only be specified if membership_kind is enumerated.
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// The external tenant membership kind. Possible values are: all, enumerated, unknownFutureValue.
+	MembershipKind *string `json:"membershipKind,omitempty" tf:"membership_kind,omitempty"`
+}
+
+type ExternalTenantsObservation struct {
+
+	// A list tenant IDs. Can only be specified if membership_kind is enumerated.
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// The external tenant membership kind. Possible values are: all, enumerated, unknownFutureValue.
+	MembershipKind *string `json:"membershipKind,omitempty" tf:"membership_kind,omitempty"`
+}
+
+type ExternalTenantsParameters struct {
+
+	// A list tenant IDs. Can only be specified if membership_kind is enumerated.
+	// +kubebuilder:validation:Optional
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// The external tenant membership kind. Possible values are: all, enumerated, unknownFutureValue.
+	// +kubebuilder:validation:Optional
+	MembershipKind *string `json:"membershipKind" tf:"membership_kind,omitempty"`
 }
 
 type FilterInitParameters struct {
@@ -302,6 +360,9 @@ type FilterParameters struct {
 
 type GrantControlsInitParameters struct {
 
+	// ID of an Authentication Strength Policy to use in this policy.
+	AuthenticationStrengthPolicyID *string `json:"authenticationStrengthPolicyId,omitempty" tf:"authentication_strength_policy_id,omitempty"`
+
 	// List of built-in controls required by the policy. Possible values are: block, mfa, approvedApplication, compliantApplication, compliantDevice, domainJoinedDevice, passwordChange or unknownFutureValue.
 	BuiltInControls []*string `json:"builtInControls,omitempty" tf:"built_in_controls,omitempty"`
 
@@ -316,6 +377,9 @@ type GrantControlsInitParameters struct {
 }
 
 type GrantControlsObservation struct {
+
+	// ID of an Authentication Strength Policy to use in this policy.
+	AuthenticationStrengthPolicyID *string `json:"authenticationStrengthPolicyId,omitempty" tf:"authentication_strength_policy_id,omitempty"`
 
 	// List of built-in controls required by the policy. Possible values are: block, mfa, approvedApplication, compliantApplication, compliantDevice, domainJoinedDevice, passwordChange or unknownFutureValue.
 	BuiltInControls []*string `json:"builtInControls,omitempty" tf:"built_in_controls,omitempty"`
@@ -332,9 +396,13 @@ type GrantControlsObservation struct {
 
 type GrantControlsParameters struct {
 
+	// ID of an Authentication Strength Policy to use in this policy.
+	// +kubebuilder:validation:Optional
+	AuthenticationStrengthPolicyID *string `json:"authenticationStrengthPolicyId,omitempty" tf:"authentication_strength_policy_id,omitempty"`
+
 	// List of built-in controls required by the policy. Possible values are: block, mfa, approvedApplication, compliantApplication, compliantDevice, domainJoinedDevice, passwordChange or unknownFutureValue.
 	// +kubebuilder:validation:Optional
-	BuiltInControls []*string `json:"builtInControls" tf:"built_in_controls,omitempty"`
+	BuiltInControls []*string `json:"builtInControls,omitempty" tf:"built_in_controls,omitempty"`
 
 	// List of custom controls IDs required by the policy.
 	// +kubebuilder:validation:Optional
@@ -347,6 +415,64 @@ type GrantControlsParameters struct {
 	// List of terms of use IDs required by the policy.
 	// +kubebuilder:validation:Optional
 	TermsOfUse []*string `json:"termsOfUse,omitempty" tf:"terms_of_use,omitempty"`
+}
+
+type IncludedGuestsOrExternalUsersExternalTenantsInitParameters struct {
+
+	// A list tenant IDs. Can only be specified if membership_kind is enumerated.
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// The external tenant membership kind. Possible values are: all, enumerated, unknownFutureValue.
+	MembershipKind *string `json:"membershipKind,omitempty" tf:"membership_kind,omitempty"`
+}
+
+type IncludedGuestsOrExternalUsersExternalTenantsObservation struct {
+
+	// A list tenant IDs. Can only be specified if membership_kind is enumerated.
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// The external tenant membership kind. Possible values are: all, enumerated, unknownFutureValue.
+	MembershipKind *string `json:"membershipKind,omitempty" tf:"membership_kind,omitempty"`
+}
+
+type IncludedGuestsOrExternalUsersExternalTenantsParameters struct {
+
+	// A list tenant IDs. Can only be specified if membership_kind is enumerated.
+	// +kubebuilder:validation:Optional
+	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// The external tenant membership kind. Possible values are: all, enumerated, unknownFutureValue.
+	// +kubebuilder:validation:Optional
+	MembershipKind *string `json:"membershipKind" tf:"membership_kind,omitempty"`
+}
+
+type IncludedGuestsOrExternalUsersInitParameters struct {
+
+	// An external_tenants block as documented below, which specifies external tenants in a policy scope.
+	ExternalTenants []IncludedGuestsOrExternalUsersExternalTenantsInitParameters `json:"externalTenants,omitempty" tf:"external_tenants,omitempty"`
+
+	// A list of guest or external user types. Possible values are: b2bCollaborationGuest, b2bCollaborationMember, b2bDirectConnectUser, internalGuest, none, otherExternalUser, serviceProvider, unknownFutureValue.
+	GuestOrExternalUserTypes []*string `json:"guestOrExternalUserTypes,omitempty" tf:"guest_or_external_user_types,omitempty"`
+}
+
+type IncludedGuestsOrExternalUsersObservation struct {
+
+	// An external_tenants block as documented below, which specifies external tenants in a policy scope.
+	ExternalTenants []IncludedGuestsOrExternalUsersExternalTenantsObservation `json:"externalTenants,omitempty" tf:"external_tenants,omitempty"`
+
+	// A list of guest or external user types. Possible values are: b2bCollaborationGuest, b2bCollaborationMember, b2bDirectConnectUser, internalGuest, none, otherExternalUser, serviceProvider, unknownFutureValue.
+	GuestOrExternalUserTypes []*string `json:"guestOrExternalUserTypes,omitempty" tf:"guest_or_external_user_types,omitempty"`
+}
+
+type IncludedGuestsOrExternalUsersParameters struct {
+
+	// An external_tenants block as documented below, which specifies external tenants in a policy scope.
+	// +kubebuilder:validation:Optional
+	ExternalTenants []IncludedGuestsOrExternalUsersExternalTenantsParameters `json:"externalTenants,omitempty" tf:"external_tenants,omitempty"`
+
+	// A list of guest or external user types. Possible values are: b2bCollaborationGuest, b2bCollaborationMember, b2bDirectConnectUser, internalGuest, none, otherExternalUser, serviceProvider, unknownFutureValue.
+	// +kubebuilder:validation:Optional
+	GuestOrExternalUserTypes []*string `json:"guestOrExternalUserTypes" tf:"guest_or_external_user_types,omitempty"`
 }
 
 type LocationsInitParameters struct {
@@ -409,7 +535,7 @@ type PlatformsParameters struct {
 
 type SessionControlsInitParameters struct {
 
-	// Whether or not application enforced restrictions are enabled. Defaults to false.
+	// Whether application enforced restrictions are enabled. Defaults to false.
 	ApplicationEnforcedRestrictionsEnabled *bool `json:"applicationEnforcedRestrictionsEnabled,omitempty" tf:"application_enforced_restrictions_enabled,omitempty"`
 
 	// Enables cloud app security and specifies the cloud app security policy to use. Possible values are: blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.
@@ -418,19 +544,25 @@ type SessionControlsInitParameters struct {
 	// Disables resilience defaults. Defaults to false.
 	DisableResilienceDefaults *bool `json:"disableResilienceDefaults,omitempty" tf:"disable_resilience_defaults,omitempty"`
 
-	// Session control to define whether to persist cookies or not. Possible values are: always or never.
+	// Session control to define whether to persist cookies. Possible values are: always or never.
 	PersistentBrowserMode *string `json:"persistentBrowserMode,omitempty" tf:"persistent_browser_mode,omitempty"`
 
-	// Number of days or hours to enforce sign-in frequency. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.
+	// Number of days or hours to enforce sign-in frequency. Required when sign_in_frequency_period is specified.
 	SignInFrequency *float64 `json:"signInFrequency,omitempty" tf:"sign_in_frequency,omitempty"`
 
-	// The time period to enforce sign-in frequency. Possible values are: hours or days. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.
+	// Authentication type for enforcing sign-in frequency. Possible values are: primaryAndSecondaryAuthentication or secondaryAuthentication. Defaults to primaryAndSecondaryAuthentication.
+	SignInFrequencyAuthenticationType *string `json:"signInFrequencyAuthenticationType,omitempty" tf:"sign_in_frequency_authentication_type,omitempty"`
+
+	// The interval to apply to sign-in frequency control. Possible values are: timeBased or everyTime. Defaults to timeBased.
+	SignInFrequencyInterval *string `json:"signInFrequencyInterval,omitempty" tf:"sign_in_frequency_interval,omitempty"`
+
+	// The time period to enforce sign-in frequency. Possible values are: hours or days. Required when sign_in_frequency_period is specified.
 	SignInFrequencyPeriod *string `json:"signInFrequencyPeriod,omitempty" tf:"sign_in_frequency_period,omitempty"`
 }
 
 type SessionControlsObservation struct {
 
-	// Whether or not application enforced restrictions are enabled. Defaults to false.
+	// Whether application enforced restrictions are enabled. Defaults to false.
 	ApplicationEnforcedRestrictionsEnabled *bool `json:"applicationEnforcedRestrictionsEnabled,omitempty" tf:"application_enforced_restrictions_enabled,omitempty"`
 
 	// Enables cloud app security and specifies the cloud app security policy to use. Possible values are: blockDownloads, mcasConfigured, monitorOnly or unknownFutureValue.
@@ -439,19 +571,25 @@ type SessionControlsObservation struct {
 	// Disables resilience defaults. Defaults to false.
 	DisableResilienceDefaults *bool `json:"disableResilienceDefaults,omitempty" tf:"disable_resilience_defaults,omitempty"`
 
-	// Session control to define whether to persist cookies or not. Possible values are: always or never.
+	// Session control to define whether to persist cookies. Possible values are: always or never.
 	PersistentBrowserMode *string `json:"persistentBrowserMode,omitempty" tf:"persistent_browser_mode,omitempty"`
 
-	// Number of days or hours to enforce sign-in frequency. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.
+	// Number of days or hours to enforce sign-in frequency. Required when sign_in_frequency_period is specified.
 	SignInFrequency *float64 `json:"signInFrequency,omitempty" tf:"sign_in_frequency,omitempty"`
 
-	// The time period to enforce sign-in frequency. Possible values are: hours or days. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.
+	// Authentication type for enforcing sign-in frequency. Possible values are: primaryAndSecondaryAuthentication or secondaryAuthentication. Defaults to primaryAndSecondaryAuthentication.
+	SignInFrequencyAuthenticationType *string `json:"signInFrequencyAuthenticationType,omitempty" tf:"sign_in_frequency_authentication_type,omitempty"`
+
+	// The interval to apply to sign-in frequency control. Possible values are: timeBased or everyTime. Defaults to timeBased.
+	SignInFrequencyInterval *string `json:"signInFrequencyInterval,omitempty" tf:"sign_in_frequency_interval,omitempty"`
+
+	// The time period to enforce sign-in frequency. Possible values are: hours or days. Required when sign_in_frequency_period is specified.
 	SignInFrequencyPeriod *string `json:"signInFrequencyPeriod,omitempty" tf:"sign_in_frequency_period,omitempty"`
 }
 
 type SessionControlsParameters struct {
 
-	// Whether or not application enforced restrictions are enabled. Defaults to false.
+	// Whether application enforced restrictions are enabled. Defaults to false.
 	// +kubebuilder:validation:Optional
 	ApplicationEnforcedRestrictionsEnabled *bool `json:"applicationEnforcedRestrictionsEnabled,omitempty" tf:"application_enforced_restrictions_enabled,omitempty"`
 
@@ -463,15 +601,23 @@ type SessionControlsParameters struct {
 	// +kubebuilder:validation:Optional
 	DisableResilienceDefaults *bool `json:"disableResilienceDefaults,omitempty" tf:"disable_resilience_defaults,omitempty"`
 
-	// Session control to define whether to persist cookies or not. Possible values are: always or never.
+	// Session control to define whether to persist cookies. Possible values are: always or never.
 	// +kubebuilder:validation:Optional
 	PersistentBrowserMode *string `json:"persistentBrowserMode,omitempty" tf:"persistent_browser_mode,omitempty"`
 
-	// Number of days or hours to enforce sign-in frequency. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.
+	// Number of days or hours to enforce sign-in frequency. Required when sign_in_frequency_period is specified.
 	// +kubebuilder:validation:Optional
 	SignInFrequency *float64 `json:"signInFrequency,omitempty" tf:"sign_in_frequency,omitempty"`
 
-	// The time period to enforce sign-in frequency. Possible values are: hours or days. Required when sign_in_frequency_period is specified. Due to an API issue, removing this property forces a new resource to be created.
+	// Authentication type for enforcing sign-in frequency. Possible values are: primaryAndSecondaryAuthentication or secondaryAuthentication. Defaults to primaryAndSecondaryAuthentication.
+	// +kubebuilder:validation:Optional
+	SignInFrequencyAuthenticationType *string `json:"signInFrequencyAuthenticationType,omitempty" tf:"sign_in_frequency_authentication_type,omitempty"`
+
+	// The interval to apply to sign-in frequency control. Possible values are: timeBased or everyTime. Defaults to timeBased.
+	// +kubebuilder:validation:Optional
+	SignInFrequencyInterval *string `json:"signInFrequencyInterval,omitempty" tf:"sign_in_frequency_interval,omitempty"`
+
+	// The time period to enforce sign-in frequency. Possible values are: hours or days. Required when sign_in_frequency_period is specified.
 	// +kubebuilder:validation:Optional
 	SignInFrequencyPeriod *string `json:"signInFrequencyPeriod,omitempty" tf:"sign_in_frequency_period,omitempty"`
 }
@@ -481,6 +627,9 @@ type UsersInitParameters struct {
 	// A list of group IDs excluded from scope of policy.
 	ExcludedGroups []*string `json:"excludedGroups,omitempty" tf:"excluded_groups,omitempty"`
 
+	// A guests_or_external_users block as documented below, which specifies internal guests and external users excluded from scope of policy.
+	ExcludedGuestsOrExternalUsers []ExcludedGuestsOrExternalUsersInitParameters `json:"excludedGuestsOrExternalUsers,omitempty" tf:"excluded_guests_or_external_users,omitempty"`
+
 	// A list of role IDs excluded from scope of policy.
 	ExcludedRoles []*string `json:"excludedRoles,omitempty" tf:"excluded_roles,omitempty"`
 
@@ -489,6 +638,9 @@ type UsersInitParameters struct {
 
 	// A list of group IDs in scope of policy unless explicitly excluded.
 	IncludedGroups []*string `json:"includedGroups,omitempty" tf:"included_groups,omitempty"`
+
+	// A guests_or_external_users block as documented below, which specifies internal guests and external users in scope of policy.
+	IncludedGuestsOrExternalUsers []IncludedGuestsOrExternalUsersInitParameters `json:"includedGuestsOrExternalUsers,omitempty" tf:"included_guests_or_external_users,omitempty"`
 
 	// A list of role IDs in scope of policy unless explicitly excluded.
 	IncludedRoles []*string `json:"includedRoles,omitempty" tf:"included_roles,omitempty"`
@@ -502,6 +654,9 @@ type UsersObservation struct {
 	// A list of group IDs excluded from scope of policy.
 	ExcludedGroups []*string `json:"excludedGroups,omitempty" tf:"excluded_groups,omitempty"`
 
+	// A guests_or_external_users block as documented below, which specifies internal guests and external users excluded from scope of policy.
+	ExcludedGuestsOrExternalUsers []ExcludedGuestsOrExternalUsersObservation `json:"excludedGuestsOrExternalUsers,omitempty" tf:"excluded_guests_or_external_users,omitempty"`
+
 	// A list of role IDs excluded from scope of policy.
 	ExcludedRoles []*string `json:"excludedRoles,omitempty" tf:"excluded_roles,omitempty"`
 
@@ -510,6 +665,9 @@ type UsersObservation struct {
 
 	// A list of group IDs in scope of policy unless explicitly excluded.
 	IncludedGroups []*string `json:"includedGroups,omitempty" tf:"included_groups,omitempty"`
+
+	// A guests_or_external_users block as documented below, which specifies internal guests and external users in scope of policy.
+	IncludedGuestsOrExternalUsers []IncludedGuestsOrExternalUsersObservation `json:"includedGuestsOrExternalUsers,omitempty" tf:"included_guests_or_external_users,omitempty"`
 
 	// A list of role IDs in scope of policy unless explicitly excluded.
 	IncludedRoles []*string `json:"includedRoles,omitempty" tf:"included_roles,omitempty"`
@@ -524,6 +682,10 @@ type UsersParameters struct {
 	// +kubebuilder:validation:Optional
 	ExcludedGroups []*string `json:"excludedGroups,omitempty" tf:"excluded_groups,omitempty"`
 
+	// A guests_or_external_users block as documented below, which specifies internal guests and external users excluded from scope of policy.
+	// +kubebuilder:validation:Optional
+	ExcludedGuestsOrExternalUsers []ExcludedGuestsOrExternalUsersParameters `json:"excludedGuestsOrExternalUsers,omitempty" tf:"excluded_guests_or_external_users,omitempty"`
+
 	// A list of role IDs excluded from scope of policy.
 	// +kubebuilder:validation:Optional
 	ExcludedRoles []*string `json:"excludedRoles,omitempty" tf:"excluded_roles,omitempty"`
@@ -535,6 +697,10 @@ type UsersParameters struct {
 	// A list of group IDs in scope of policy unless explicitly excluded.
 	// +kubebuilder:validation:Optional
 	IncludedGroups []*string `json:"includedGroups,omitempty" tf:"included_groups,omitempty"`
+
+	// A guests_or_external_users block as documented below, which specifies internal guests and external users in scope of policy.
+	// +kubebuilder:validation:Optional
+	IncludedGuestsOrExternalUsers []IncludedGuestsOrExternalUsersParameters `json:"includedGuestsOrExternalUsers,omitempty" tf:"included_guests_or_external_users,omitempty"`
 
 	// A list of role IDs in scope of policy unless explicitly excluded.
 	// +kubebuilder:validation:Optional
@@ -573,8 +739,8 @@ type AccessPolicyStatus struct {
 // +kubebuilder:storageversion
 
 // AccessPolicy is the Schema for the AccessPolicys API.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}

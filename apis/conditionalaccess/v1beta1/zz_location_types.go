@@ -44,7 +44,7 @@ type CountryParameters struct {
 
 type IPInitParameters struct {
 
-	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596.
+	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596. Each CIDR prefix must be /8 or larger.
 	IPRanges []*string `json:"ipRanges,omitempty" tf:"ip_ranges,omitempty"`
 
 	// Whether the named location is trusted. Defaults to false.
@@ -53,7 +53,7 @@ type IPInitParameters struct {
 
 type IPObservation struct {
 
-	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596.
+	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596. Each CIDR prefix must be /8 or larger.
 	IPRanges []*string `json:"ipRanges,omitempty" tf:"ip_ranges,omitempty"`
 
 	// Whether the named location is trusted. Defaults to false.
@@ -62,7 +62,7 @@ type IPObservation struct {
 
 type IPParameters struct {
 
-	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596.
+	// List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596. Each CIDR prefix must be /8 or larger.
 	// +kubebuilder:validation:Optional
 	IPRanges []*string `json:"ipRanges" tf:"ip_ranges,omitempty"`
 
@@ -141,8 +141,8 @@ type LocationStatus struct {
 // +kubebuilder:storageversion
 
 // Location is the Schema for the Locations API.
-// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
+// +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
 // +kubebuilder:printcolumn:name="AGE",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,azuread}

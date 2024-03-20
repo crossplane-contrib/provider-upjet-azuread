@@ -19,11 +19,11 @@ spec:
   scope: Cluster
   versions:
   - additionalPrinterColumns:
-    - jsonPath: .status.conditions[?(@.type=='Ready')].status
-      name: READY
-      type: string
     - jsonPath: .status.conditions[?(@.type=='Synced')].status
       name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
       type: string
     - jsonPath: .metadata.annotations.crossplane\.io/external-name
       name: EXTERNAL-NAME
@@ -101,7 +101,7 @@ spec:
                         ipRanges:
                           description: List of IP address ranges in IPv4 CIDR format
                             (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF
-                            RFC596.
+                            RFC596. Each CIDR prefix must be /8 or larger.
                           items:
                             type: string
                           type: array
@@ -154,7 +154,7 @@ spec:
                         ipRanges:
                           description: List of IP address ranges in IPv4 CIDR format
                             (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF
-                            RFC596.
+                            RFC596. Each CIDR prefix must be /8 or larger.
                           items:
                             type: string
                           type: array
@@ -374,7 +374,7 @@ spec:
                         ipRanges:
                           description: List of IP address ranges in IPv4 CIDR format
                             (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF
-                            RFC596.
+                            RFC596. Each CIDR prefix must be /8 or larger.
                           items:
                             type: string
                           type: array
