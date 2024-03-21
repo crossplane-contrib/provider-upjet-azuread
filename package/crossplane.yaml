@@ -4,7 +4,7 @@ metadata:
   name: provider-azuread
   annotations:
     meta.crossplane.io/maintainer: Upbound <support@upbound.io>
-    meta.crossplane.io/source: github.com/upbound/provider-azuread
+    meta.crossplane.io/source: github.com/crossplane-contrib/provider-upjet-azuread
     meta.crossplane.io/description: |
       Upbound's official Crossplane provider to manage Microsoft Azure Active Directory
       resources in Kubernetes.
