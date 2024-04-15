@@ -85,6 +85,7 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithTerraformProvider(p),
+		ujconfig.WithSchemaTraversers(&ujconfig.SingletonListEmbedder{}),
 	)
 
 	for _, configure := range []func(provider *ujconfig.Provider){
