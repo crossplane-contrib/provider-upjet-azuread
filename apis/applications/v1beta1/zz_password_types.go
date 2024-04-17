@@ -20,14 +20,14 @@ type PasswordInitParameters struct {
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
 	// The object ID of the application for which this password should be created
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
-	// Reference to a Application to populate applicationObjectId.
+	// Reference to a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Application to populate applicationObjectId.
+	// Selector for a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
 
@@ -98,15 +98,15 @@ type PasswordParameters struct {
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
 	// The object ID of the application for which this password should be created
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +kubebuilder:validation:Optional
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
-	// Reference to a Application to populate applicationObjectId.
+	// Reference to a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Application to populate applicationObjectId.
+	// Selector for a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
 

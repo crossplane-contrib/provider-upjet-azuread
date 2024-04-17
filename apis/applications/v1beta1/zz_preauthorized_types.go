@@ -17,7 +17,7 @@ type PreAuthorizedInitParameters struct {
 
 	// The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
 	// The resource ID of the application to which this pre-authorized application should be added
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
@@ -30,27 +30,27 @@ type PreAuthorizedInitParameters struct {
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the application to which this pre-authorized application should be added
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
-	// Reference to a Application to populate applicationObjectId.
+	// Reference to a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Application to populate applicationObjectId.
+	// Selector for a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
 
 	// The application ID of the pre-authorized application
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
 	AuthorizedAppID *string `json:"authorizedAppId,omitempty" tf:"authorized_app_id,omitempty"`
 
-	// Reference to a Application to populate authorizedAppId.
+	// Reference to a Application in applications to populate authorizedAppId.
 	// +kubebuilder:validation:Optional
 	AuthorizedAppIDRef *v1.Reference `json:"authorizedAppIdRef,omitempty" tf:"-"`
 
-	// Selector for a Application to populate authorizedAppId.
+	// Selector for a Application in applications to populate authorizedAppId.
 	// +kubebuilder:validation:Optional
 	AuthorizedAppIDSelector *v1.Selector `json:"authorizedAppIdSelector,omitempty" tf:"-"`
 
@@ -92,7 +92,7 @@ type PreAuthorizedParameters struct {
 
 	// The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
 	// The resource ID of the application to which this pre-authorized application should be added
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
@@ -106,29 +106,29 @@ type PreAuthorizedParameters struct {
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the application to which this pre-authorized application should be added
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +kubebuilder:validation:Optional
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
-	// Reference to a Application to populate applicationObjectId.
+	// Reference to a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Application to populate applicationObjectId.
+	// Selector for a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
 
 	// The application ID of the pre-authorized application
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
 	// +kubebuilder:validation:Optional
 	AuthorizedAppID *string `json:"authorizedAppId,omitempty" tf:"authorized_app_id,omitempty"`
 
-	// Reference to a Application to populate authorizedAppId.
+	// Reference to a Application in applications to populate authorizedAppId.
 	// +kubebuilder:validation:Optional
 	AuthorizedAppIDRef *v1.Reference `json:"authorizedAppIdRef,omitempty" tf:"-"`
 
-	// Selector for a Application to populate authorizedAppId.
+	// Selector for a Application in applications to populate authorizedAppId.
 	// +kubebuilder:validation:Optional
 	AuthorizedAppIDSelector *v1.Selector `json:"authorizedAppIdSelector,omitempty" tf:"-"`
 

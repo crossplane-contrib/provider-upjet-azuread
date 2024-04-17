@@ -1,8 +1,8 @@
-apiVersion: groups.azuread.upbound.io/v1beta1
+apiVersion: groups.azuread.upbound.io/v1beta2
 kind: Group
 metadata:
   annotations:
-    meta.upbound.io/example-id: groups/v1beta1/group
+    meta.upbound.io/example-id: groups/v1beta2/group
   labels:
     testing.upbound.io/example-name: example
   name: example

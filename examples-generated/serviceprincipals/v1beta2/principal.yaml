@@ -1,8 +1,8 @@
-apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta2
 kind: Principal
 metadata:
   annotations:
-    meta.upbound.io/example-id: serviceprincipals/v1beta1/principal
+    meta.upbound.io/example-id: serviceprincipals/v1beta2/principal
   labels:
     testing.upbound.io/example-name: example
   name: example
@@ -17,11 +17,11 @@ spec:
 
 ---
 
-apiVersion: applications.azuread.upbound.io/v1beta1
+apiVersion: applications.azuread.upbound.io/v1beta2
 kind: Application
 metadata:
   annotations:
-    meta.upbound.io/example-id: serviceprincipals/v1beta1/principal
+    meta.upbound.io/example-id: serviceprincipals/v1beta2/principal
   labels:
     testing.upbound.io/example-name: example
   name: example

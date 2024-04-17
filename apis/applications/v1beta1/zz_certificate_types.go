@@ -17,7 +17,7 @@ type CertificateInitParameters struct {
 
 	// The resource ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this certificate should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
@@ -30,14 +30,14 @@ type CertificateInitParameters struct {
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the application for which this certificate should be created
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
-	// Reference to a Application to populate applicationObjectId.
+	// Reference to a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Application to populate applicationObjectId.
+	// Selector for a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
 
@@ -106,7 +106,7 @@ type CertificateParameters struct {
 
 	// The resource ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this certificate should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
@@ -120,15 +120,15 @@ type CertificateParameters struct {
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the application for which this certificate should be created
-	// +crossplane:generate:reference:type=Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +kubebuilder:validation:Optional
 	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
-	// Reference to a Application to populate applicationObjectId.
+	// Reference to a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Application to populate applicationObjectId.
+	// Selector for a Application in applications to populate applicationObjectId.
 	// +kubebuilder:validation:Optional
 	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
 

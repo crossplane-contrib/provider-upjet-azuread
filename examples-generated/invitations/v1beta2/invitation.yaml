@@ -1,8 +1,8 @@
-apiVersion: invitations.azuread.upbound.io/v1beta1
+apiVersion: invitations.azuread.upbound.io/v1beta2
 kind: Invitation
 metadata:
   annotations:
-    meta.upbound.io/example-id: invitations/v1beta1/invitation
+    meta.upbound.io/example-id: invitations/v1beta2/invitation
   labels:
     testing.upbound.io/example-name: example
   name: example

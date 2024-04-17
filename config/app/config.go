@@ -10,10 +10,10 @@ import "github.com/crossplane/upjet/pkg/config"
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("azuread_app_role_assignment", func(r *config.Resource) {
 		r.References["principal_object_id"] = config.Reference{
-			Type: "github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal",
+			TerraformName: "azuread_service_principal",
 		}
 		r.References["resource_object_id"] = config.Reference{
-			Type: "github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1.Principal",
+			TerraformName: "azuread_service_principal",
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"

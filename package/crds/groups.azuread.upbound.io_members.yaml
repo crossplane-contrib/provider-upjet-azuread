@@ -78,7 +78,7 @@ spec:
                       The object ID of the group you want to add the member to
                     type: string
                   groupObjectIdRef:
-                    description: Reference to a Group to populate groupObjectId.
+                    description: Reference to a Group in groups to populate groupObjectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -112,7 +112,7 @@ spec:
                     - name
                     type: object
                   groupObjectIdSelector:
-                    description: Selector for a Group to populate groupObjectId.
+                    description: Selector for a Group in groups to populate groupObjectId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -250,7 +250,7 @@ spec:
                       The object ID of the group you want to add the member to
                     type: string
                   groupObjectIdRef:
-                    description: Reference to a Group to populate groupObjectId.
+                    description: Reference to a Group in groups to populate groupObjectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -284,7 +284,7 @@ spec:
                     - name
                     type: object
                   groupObjectIdSelector:
-                    description: Selector for a Group to populate groupObjectId.
+                    description: Selector for a Group in groups to populate groupObjectId.
                     properties:
                       matchControllerRef:
                         description: |-

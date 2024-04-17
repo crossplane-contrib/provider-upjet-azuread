@@ -18,7 +18,7 @@ spec:
 
 ---
 
-apiVersion: applications.azuread.upbound.io/v1beta1
+apiVersion: applications.azuread.upbound.io/v1beta2
 kind: Application
 metadata:
   annotations:
@@ -39,7 +39,7 @@ spec:
 
 ---
 
-apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta2
 kind: Principal
 metadata:
   annotations:
@@ -55,7 +55,7 @@ spec:
 
 ---
 
-apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta2
 kind: Principal
 metadata:
   annotations:

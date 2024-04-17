@@ -88,6 +88,7 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 		ujconfig.WithSchemaTraversers(&ujconfig.SingletonListEmbedder{}),
 	)
 
+	bumpVersionsWithEmbeddedLists(pc)
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		invitations.Configure,
@@ -121,4 +122,15 @@ func resourceList(t map[string]ujconfig.ExternalName) []string {
 		i++
 	}
 	return l
+}
+
+func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
+	for _, r := range pc.Resources {
+		// nothing to do if no singleton list has been converted to
+		// an embedded object
+		if len(r.ListConversionPaths()) == 0 {
+			continue
+		}
+		r.Version = "v1beta2"
+	}
 }

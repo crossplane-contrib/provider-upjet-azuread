@@ -1,8 +1,8 @@
-apiVersion: applications.azuread.upbound.io/v1beta1
+apiVersion: applications.azuread.upbound.io/v1beta2
 kind: Application
 metadata:
   annotations:
-    meta.upbound.io/example-id: applications/v1beta1/application
+    meta.upbound.io/example-id: applications/v1beta2/application
   labels:
     testing.upbound.io/example-name: example
   name: example

@@ -44,15 +44,15 @@ type RoleAssignmentInitParameters struct {
 
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this assignment
-	// +crossplane:generate:reference:type=Role
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/directoryroles/v1beta1.Role
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 
-	// Reference to a Role to populate roleId.
+	// Reference to a Role in directoryroles to populate roleId.
 	// +kubebuilder:validation:Optional
 	RoleIDRef *v1.Reference `json:"roleIdRef,omitempty" tf:"-"`
 
-	// Selector for a Role to populate roleId.
+	// Selector for a Role in directoryroles to populate roleId.
 	// +kubebuilder:validation:Optional
 	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
 }
@@ -120,16 +120,16 @@ type RoleAssignmentParameters struct {
 
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this assignment
-	// +crossplane:generate:reference:type=Role
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/directoryroles/v1beta1.Role
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)
 	// +kubebuilder:validation:Optional
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 
-	// Reference to a Role to populate roleId.
+	// Reference to a Role in directoryroles to populate roleId.
 	// +kubebuilder:validation:Optional
 	RoleIDRef *v1.Reference `json:"roleIdRef,omitempty" tf:"-"`
 
-	// Selector for a Role to populate roleId.
+	// Selector for a Role in directoryroles to populate roleId.
 	// +kubebuilder:validation:Optional
 	RoleIDSelector *v1.Selector `json:"roleIdSelector,omitempty" tf:"-"`
 }

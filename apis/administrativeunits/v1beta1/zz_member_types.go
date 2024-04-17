@@ -17,14 +17,14 @@ type MemberInitParameters struct {
 
 	// The object ID of the administrative unit you want to add the member to. Changing this forces a new resource to be created.
 	// The object ID of the administrative unit
-	// +crossplane:generate:reference:type=Unit
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/administrativeunits/v1beta1.Unit
 	AdministrativeUnitObjectID *string `json:"administrativeUnitObjectId,omitempty" tf:"administrative_unit_object_id,omitempty"`
 
-	// Reference to a Unit to populate administrativeUnitObjectId.
+	// Reference to a Unit in administrativeunits to populate administrativeUnitObjectId.
 	// +kubebuilder:validation:Optional
 	AdministrativeUnitObjectIDRef *v1.Reference `json:"administrativeUnitObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Unit to populate administrativeUnitObjectId.
+	// Selector for a Unit in administrativeunits to populate administrativeUnitObjectId.
 	// +kubebuilder:validation:Optional
 	AdministrativeUnitObjectIDSelector *v1.Selector `json:"administrativeUnitObjectIdSelector,omitempty" tf:"-"`
 
@@ -50,15 +50,15 @@ type MemberParameters struct {
 
 	// The object ID of the administrative unit you want to add the member to. Changing this forces a new resource to be created.
 	// The object ID of the administrative unit
-	// +crossplane:generate:reference:type=Unit
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/administrativeunits/v1beta1.Unit
 	// +kubebuilder:validation:Optional
 	AdministrativeUnitObjectID *string `json:"administrativeUnitObjectId,omitempty" tf:"administrative_unit_object_id,omitempty"`
 
-	// Reference to a Unit to populate administrativeUnitObjectId.
+	// Reference to a Unit in administrativeunits to populate administrativeUnitObjectId.
 	// +kubebuilder:validation:Optional
 	AdministrativeUnitObjectIDRef *v1.Reference `json:"administrativeUnitObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Unit to populate administrativeUnitObjectId.
+	// Selector for a Unit in administrativeunits to populate administrativeUnitObjectId.
 	// +kubebuilder:validation:Optional
 	AdministrativeUnitObjectIDSelector *v1.Selector `json:"administrativeUnitObjectIdSelector,omitempty" tf:"-"`
 

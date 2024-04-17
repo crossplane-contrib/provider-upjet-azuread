@@ -175,7 +175,8 @@ spec:
                       The object ID of the directory role for this assignment
                     type: string
                   roleIdRef:
-                    description: Reference to a Role to populate roleId.
+                    description: Reference to a Role in directoryroles to populate
+                      roleId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -209,7 +210,8 @@ spec:
                     - name
                     type: object
                   roleIdSelector:
-                    description: Selector for a Role to populate roleId.
+                    description: Selector for a Role in directoryroles to populate
+                      roleId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -365,7 +367,8 @@ spec:
                       The object ID of the directory role for this assignment
                     type: string
                   roleIdRef:
-                    description: Reference to a Role to populate roleId.
+                    description: Reference to a Role in directoryroles to populate
+                      roleId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -399,7 +402,8 @@ spec:
                     - name
                     type: object
                   roleIdSelector:
-                    description: Selector for a Role to populate roleId.
+                    description: Selector for a Role in directoryroles to populate
+                      roleId.
                     properties:
                       matchControllerRef:
                         description: |-
