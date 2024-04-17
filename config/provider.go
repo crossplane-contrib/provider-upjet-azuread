@@ -132,5 +132,8 @@ func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
 			continue
 		}
 		r.Version = "v1beta2"
+		// we would like to set the storage version to v1beta1 to facilitate
+		// downgrades.
+		r.MarkStorageVersion = false
 	}
 }
