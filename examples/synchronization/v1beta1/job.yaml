@@ -3,10 +3,27 @@
 # SPDX-License-Identifier: CC0-1.0
 
 apiVersion: synchronization.azuread.upbound.io/v1beta1
+kind: Job
+metadata:
+  annotations:
+    meta.upbound.io/example-id: synchronization/v1beta1/job
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    templateId: dataBricks
+    enabled: true
+    servicePrincipalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+---
+apiVersion: synchronization.azuread.upbound.io/v1beta1
 kind: Secret
 metadata:
   annotations:
-    meta.upbound.io/example-id: synchronization/v1beta1/secret
+    meta.upbound.io/example-id: synchronization/v1beta1/job
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-secret.sh
   labels:
     testing.upbound.io/example-name: example
   name: example
@@ -34,15 +51,14 @@ metadata:
   namespace: upbound-system
 type: Opaque
 stringData: 
-  BaseAddress: abc
+  BaseAddress: https://adb-example.azuredatabricks.net/api/2.0/preview/scim
   SecretToken: some-token
 ---
 apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
 kind: Principal
 metadata:
   annotations:
-    meta.upbound.io/example-id: synchronization/v1beta1/secret
-    uptest.upbound.io/pre-delete-hook: testhooks/delete-secret.sh
+    meta.upbound.io/example-id: synchronization/v1beta1/job
   labels:
     testing.upbound.io/example-name: example
   name: example
@@ -57,7 +73,7 @@ apiVersion: applications.azuread.upbound.io/v1beta1
 kind: Application
 metadata:
   annotations:
-    meta.upbound.io/example-id: synchronization/v1beta1/secret
+    meta.upbound.io/example-id: synchronization/v1beta1/job
   labels:
     testing.upbound.io/example-name: example
   name: example
@@ -69,3 +85,5 @@ spec:
     featureTags:
       - enterprise: true
         gallery: true
+
+ 

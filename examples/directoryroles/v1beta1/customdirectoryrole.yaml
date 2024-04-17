@@ -22,7 +22,6 @@ spec:
       - microsoft.directory/applications/standard/read
     - allowedResourceActions:
       - microsoft.directory/groups/allProperties/read
-      - microsoft.directory/groups/allProperties/read
       - microsoft.directory/groups/basic/update
       - microsoft.directory/groups/create
       - microsoft.directory/groups/delete

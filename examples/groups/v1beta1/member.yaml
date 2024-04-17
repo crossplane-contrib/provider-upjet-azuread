@@ -23,7 +23,7 @@ apiVersion: groups.azuread.upbound.io/v1beta1
 kind: Group
 metadata:
   annotations:
-    uptest.upbound.io/pre-delete-hook: testhooks/delete-member.sh
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-member.sh
     meta.upbound.io/example-id: groups/v1beta1/member
   labels:
     testing.upbound.io/example-name: example
