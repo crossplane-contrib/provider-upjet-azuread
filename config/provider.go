@@ -6,6 +6,9 @@ package config
 
 import (
 	"context"
+
+	"github.com/crossplane/upjet/pkg/config/conversion"
+
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
@@ -128,12 +131,15 @@ func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
 	for _, r := range pc.Resources {
 		// nothing to do if no singleton list has been converted to
 		// an embedded object
-		if len(r.TFListConversionPaths()) == 0 {
+		crdPaths := r.CRDListConversionPaths()
+		if len(crdPaths) == 0 {
 			continue
 		}
 		r.Version = "v1beta2"
 		// we would like to set the storage version to v1beta1 to facilitate
 		// downgrades.
 		r.MarkStorageVersion = false
+		r.Conversions = append(r.Conversions, conversion.NewSingletonListConversion("v1beta1", "v1beta2", crdPaths, conversion.ToEmbeddedObject),
+			conversion.NewSingletonListConversion("v1beta2", "v1beta1", crdPaths, conversion.ToSingletonList))
 	}
 }
