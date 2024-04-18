@@ -128,7 +128,7 @@ func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
 	for _, r := range pc.Resources {
 		// nothing to do if no singleton list has been converted to
 		// an embedded object
-		if len(r.ListConversionPaths()) == 0 {
+		if len(r.TFListConversionPaths()) == 0 {
 			continue
 		}
 		r.Version = "v1beta2"
