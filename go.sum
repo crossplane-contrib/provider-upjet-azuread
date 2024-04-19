@@ -1178,8 +1178,8 @@ github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcU
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/tmccombs/hcl2json v0.3.3 h1:+DLNYqpWE0CsOQiEZu+OZm5ZBImake3wtITYxQ8uLFQ=
 github.com/tmccombs/hcl2json v0.3.3/go.mod h1:Y2chtz2x9bAeRTvSibVRVgbLJhLJXKlUeIvjeVdnm4w=
-github.com/ulucinar/upbound-upjet v0.0.0-20240418133731-017f4f25377e h1:xV3g1Az0ibHJLPSHlc4m88De0DBYG28EFQpjhzm+mQE=
-github.com/ulucinar/upbound-upjet v0.0.0-20240418133731-017f4f25377e/go.mod h1:0bHLtnejZ9bDeyXuBb9MSOQLvKo3+aoTeUBO8N0dGSA=
+github.com/ulucinar/upbound-upjet v0.0.0-20240419053705-66007071bfaa h1:igwpWGAwx/39QS/ALZDa7/8rHn1YaWYmpT5rNZoarJA=
+github.com/ulucinar/upbound-upjet v0.0.0-20240419053705-66007071bfaa/go.mod h1:0bHLtnejZ9bDeyXuBb9MSOQLvKo3+aoTeUBO8N0dGSA=
 github.com/upbound/terraform-provider-azuread v0.0.0-20240311141618-ce1f46c21020 h1:BP26QEhnXcWxbJpbOT+e4bP+c9FTvqhGbtnkwXerOhA=
 github.com/upbound/terraform-provider-azuread v0.0.0-20240311141618-ce1f46c21020/go.mod h1:iVryf2s08Hi6HLHh4W40fudtInXuK5Y1cWVOM/3szT8=
 github.com/vmihailenco/msgpack v3.3.3+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=

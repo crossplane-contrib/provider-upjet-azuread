@@ -138,8 +138,11 @@ func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
 		r.Version = "v1beta2"
 		// we would like to set the storage version to v1beta1 to facilitate
 		// downgrades.
-		r.MarkStorageVersion = false
-		r.Conversions = append(r.Conversions, conversion.NewSingletonListConversion("v1beta1", "v1beta2", crdPaths, conversion.ToEmbeddedObject),
-			conversion.NewSingletonListConversion("v1beta2", "v1beta1", crdPaths, conversion.ToSingletonList))
+		r.SetCRDStorageVersion("v1beta1")
+		r.Conversions = []conversion.Conversion{
+			conversion.NewIdentityConversionExpandPaths("v1beta1", "v1beta2", []string{"spec.forProvider", "spec.initProvider", "status.atProvider"}, crdPaths...),
+			conversion.NewIdentityConversionExpandPaths("v1beta2", "v1beta1", []string{"spec.forProvider", "spec.initProvider", "status.atProvider"}, crdPaths...),
+			conversion.NewSingletonListConversion("v1beta1", "v1beta2", crdPaths, conversion.ToEmbeddedObject),
+			conversion.NewSingletonListConversion("v1beta2", "v1beta1", crdPaths, conversion.ToSingletonList)}
 	}
 }

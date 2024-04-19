@@ -23,6 +23,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/crossplane/crossplane-runtime/pkg/statemetrics"
 	tjcontroller "github.com/crossplane/upjet/pkg/controller"
+	"github.com/crossplane/upjet/pkg/controller/conversion"
 	"gopkg.in/alecthomas/kingpin.v2"
 	kerrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -31,6 +32,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/cache"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
+	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
 	"github.com/upbound/provider-azuread/apis"
 	"github.com/upbound/provider-azuread/apis/v1alpha1"
@@ -38,6 +40,13 @@ import (
 	"github.com/upbound/provider-azuread/internal/clients"
 	"github.com/upbound/provider-azuread/internal/controller"
 	"github.com/upbound/provider-azuread/internal/features"
+)
+
+const (
+	webhookTLSCertDirEnvVar = "WEBHOOK_TLS_CERT_DIR"
+	tlsServerCertDirEnvVar  = "TLS_SERVER_CERTS_DIR"
+	certsDirEnvVar          = "CERTS_DIR"
+	tlsServerCertDir        = "/tls/server"
 )
 
 func main() {
@@ -67,6 +76,14 @@ func main() {
 		enableExternalSecretStores = app.Flag("enable-external-secret-stores", "Enable support for ExternalSecretStores.").Default("false").Envar("ENABLE_EXTERNAL_SECRET_STORES").Bool()
 		essTLSCertsPath            = app.Flag("ess-tls-cert-dir", "Path of ESS TLS certificates.").Envar("ESS_TLS_CERTS_DIR").String()
 		enableManagementPolicies   = app.Flag("enable-management-policies", "Enable support for Management Policies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
+
+		certsDirSet = false
+		// we record whether the command-line option "--certs-dir" was supplied
+		// in the registered PreAction for the flag.
+		certsDir = app.Flag("certs-dir", "The directory that contains the server key and certificate.").Default(tlsServerCertDir).Envar(certsDirEnvVar).PreAction(func(_ *kingpin.ParseContext) error {
+			certsDirSet = true
+			return nil
+		}).String()
 	)
 
 	kingpin.MustParse(app.Parse(os.Args[1:]))
@@ -90,12 +107,38 @@ func main() {
 	cfg, err := ctrl.GetConfig()
 	kingpin.FatalIfError(err, "Cannot get API server rest config")
 
+	// Get the TLS certs directory from the environment variables set by
+	// Crossplane if they're available.
+	// In older XP versions we used WEBHOOK_TLS_CERT_DIR, in newer versions
+	// we use TLS_SERVER_CERTS_DIR. If an explicit certs dir is not supplied
+	// via the command-line options, then these environment variables are used
+	// instead.
+	if !certsDirSet {
+		// backwards-compatibility concerns
+		xpCertsDir := os.Getenv(certsDirEnvVar)
+		if xpCertsDir == "" {
+			xpCertsDir = os.Getenv(tlsServerCertDirEnvVar)
+		}
+		if xpCertsDir == "" {
+			xpCertsDir = os.Getenv(webhookTLSCertDirEnvVar)
+		}
+		// we probably don't need this condition but just to be on the
+		// safe side, if we are missing any kingpin machinery details...
+		if xpCertsDir != "" {
+			*certsDir = xpCertsDir
+		}
+	}
+
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
 		LeaderElection:   *leaderElection,
 		LeaderElectionID: "crossplane-leader-election-provider-azuread",
 		Cache: cache.Options{
 			SyncPeriod: syncPeriod,
 		},
+		WebhookServer: webhook.NewServer(
+			webhook.Options{
+				CertDir: *certsDir,
+			}),
 		LeaderElectionResourceLock: resourcelock.LeasesResourceLock,
 		LeaseDuration:              func() *time.Duration { d := 60 * time.Second; return &d }(),
 		RenewDeadline:              func() *time.Duration { d := 50 * time.Second; return &d }(),
@@ -129,6 +172,7 @@ func main() {
 		SetupFn:               clients.TerraformSetupBuilder(provider.TerraformProvider),
 		PollJitter:            pollJitter,
 		OperationTrackerStore: tjcontroller.NewOperationStore(logr),
+		StartWebhooks:         *certsDir != "",
 	}
 
 	if *enableManagementPolicies {
@@ -164,6 +208,7 @@ func main() {
 		})), "cannot create default store config")
 	}
 
+	kingpin.FatalIfError(conversion.RegisterConversions(o.Provider), "Cannot initialize the webhook conversion registry")
 	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Azuread controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
