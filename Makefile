@@ -185,7 +185,7 @@ CROSSPLANE_NAMESPACE = upbound-system
 # - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
 uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
 	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --setup-script=cluster/test/setup.sh || $(FAIL)
+	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --setup-script=cluster/test/setup.sh || $(FAIL)
 	@$(OK) running automated tests
 
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
