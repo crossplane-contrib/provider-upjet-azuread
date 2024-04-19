@@ -12,7 +12,7 @@ require (
 	dario.cat/mergo v1.0.0
 	github.com/crossplane/crossplane-runtime v1.16.0-rc.1.0.20240424114634-8641eb2ba384
 	github.com/crossplane/crossplane-tools v0.0.0-20230925130601-628280f8bf79
-	github.com/crossplane/upjet v1.3.0
+	github.com/crossplane/upjet v1.4.0-rc.0.0.20240508134714-03a207b6416a
 	github.com/hashicorp/terraform-json v0.17.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.30.0
 	github.com/hashicorp/terraform-provider-azuread v1.6.1-0.20230727144955-0adfe586f500
@@ -151,5 +151,3 @@ require (
 replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20240311141618-ce1f46c21020
 
 replace github.com/hashicorp/terraform-plugin-sdk/v2 => github.com/hashicorp/terraform-plugin-sdk/v2 v2.29.0
-
-replace github.com/crossplane/upjet => github.com/ulucinar/upbound-upjet v0.0.0-20240419053705-66007071bfaa

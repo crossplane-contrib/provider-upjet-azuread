@@ -57,11 +57,23 @@ KIND_VERSION = v0.21.0
 UP_VERSION = v0.28.0
 UP_CHANNEL = stable
 UPTEST_VERSION = v0.11.1
+UPTEST_LOCAL_VERSION = v0.12.0-9.gac371c9
+UPTEST_LOCAL_CHANNEL = main
 KUSTOMIZE_VERSION = v5.3.0
 YQ_VERSION = v4.40.5
 UXP_VERSION = 1.14.6-up.1
 
 -include build/makelib/k8s_tools.mk
+
+# uptest download and install
+UPTEST_LOCAL := $(TOOLS_HOST_DIR)/uptest-$(UPTEST_LOCAL_VERSION)
+
+$(UPTEST_LOCAL):
+	@$(INFO) installing uptest $(UPTEST_LOCAL)
+	@mkdir -p $(TOOLS_HOST_DIR)
+	@curl -fsSLo $(UPTEST_LOCAL) https://s3.us-west-2.amazonaws.com/crossplane.uptest.releases/$(UPTEST_LOCAL_CHANNEL)/$(UPTEST_LOCAL_VERSION)/bin/$(SAFEHOST_PLATFORM)/uptest || $(FAIL)
+	@chmod +x $(UPTEST_LOCAL)
+	@$(OK) installing uptest $(UPTEST_LOCAL)
 
 # ====================================================================================
 # Setup Images
@@ -183,9 +195,9 @@ CROSSPLANE_NAMESPACE = upbound-system
 # - UPTEST_EXAMPLE_LIST, a comma-separated list of examples to test
 # - UPTEST_CLOUD_CREDENTIALS (optional), cloud credentials for the provider being tested, e.g. export UPTEST_CLOUD_CREDENTIALS=$(cat ~/.aws/credentials)
 # - UPTEST_DATASOURCE_PATH (optional), see https://github.com/upbound/uptest#injecting-dynamic-values-and-datasource
-uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
+uptest: $(UPTEST_LOCAL) $(KUBECTL) $(KUTTL)
 	@$(INFO) running automated tests
-	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --setup-script=cluster/test/setup.sh || $(FAIL)
+	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) $(UPTEST_LOCAL) e2e "${UPTEST_EXAMPLE_LIST}" --setup-script=cluster/test/setup.sh || $(FAIL)
 	@$(OK) running automated tests
 
 local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)

@@ -6,7 +6,7 @@ apiVersion: conditionalaccess.azuread.upbound.io/v1beta2
 kind: Location
 metadata:
   annotations:
-    meta.upbound.io/example-id: conditionalaccess/v1beta1/location
+    meta.upbound.io/example-id: conditionalaccess/v1beta2/location
   labels:
     testing.upbound.io/example-name: example-ip
   name: example-ip

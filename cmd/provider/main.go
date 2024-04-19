@@ -37,6 +37,7 @@ import (
 	"github.com/upbound/provider-azuread/apis"
 	"github.com/upbound/provider-azuread/apis/v1alpha1"
 	"github.com/upbound/provider-azuread/config"
+	resolverapis "github.com/upbound/provider-azuread/internal/apis"
 	"github.com/upbound/provider-azuread/internal/clients"
 	"github.com/upbound/provider-azuread/internal/controller"
 	"github.com/upbound/provider-azuread/internal/features"
@@ -145,6 +146,7 @@ func main() {
 	})
 	kingpin.FatalIfError(err, "Cannot create controller manager")
 	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Azuread APIs to scheme")
+	kingpin.FatalIfError(resolverapis.BuildScheme(apis.AddToSchemes), "Cannot register the AzureAD APIs with the API resolver's runtime scheme")
 
 	metricRecorder := managed.NewMRMetricRecorder()
 	stateMetrics := statemetrics.NewMRStateMetrics()
