@@ -161,7 +161,8 @@ spec:
                       Object ID of the service principal for which to assign the policy
                     type: string
                   servicePrincipalIdRef:
-                    description: Reference to a Principal to populate servicePrincipalId.
+                    description: Reference to a Principal in serviceprincipals to
+                      populate servicePrincipalId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -195,7 +196,8 @@ spec:
                     - name
                     type: object
                   servicePrincipalIdSelector:
-                    description: Selector for a Principal to populate servicePrincipalId.
+                    description: Selector for a Principal in serviceprincipals to
+                      populate servicePrincipalId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -335,7 +337,8 @@ spec:
                       Object ID of the service principal for which to assign the policy
                     type: string
                   servicePrincipalIdRef:
-                    description: Reference to a Principal to populate servicePrincipalId.
+                    description: Reference to a Principal in serviceprincipals to
+                      populate servicePrincipalId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -369,7 +372,8 @@ spec:
                     - name
                     type: object
                   servicePrincipalIdSelector:
-                    description: Selector for a Principal to populate servicePrincipalId.
+                    description: Selector for a Principal in serviceprincipals to
+                      populate servicePrincipalId.
                     properties:
                       matchControllerRef:
                         description: |-

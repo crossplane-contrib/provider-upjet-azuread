@@ -33,14 +33,14 @@ type CertificateInitParameters struct {
 
 	// The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this certificate should be created
-	// +crossplane:generate:reference:type=Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
-	// Reference to a Principal to populate servicePrincipalId.
+	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
 	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
-	// Selector for a Principal to populate servicePrincipalId.
+	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
 	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 
@@ -110,15 +110,15 @@ type CertificateParameters struct {
 
 	// The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this certificate should be created
-	// +crossplane:generate:reference:type=Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	// +kubebuilder:validation:Optional
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
-	// Reference to a Principal to populate servicePrincipalId.
+	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
 	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
-	// Selector for a Principal to populate servicePrincipalId.
+	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
 	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 

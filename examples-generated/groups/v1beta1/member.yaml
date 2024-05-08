@@ -17,7 +17,7 @@ spec:
 
 ---
 
-apiVersion: groups.azuread.upbound.io/v1beta1
+apiVersion: groups.azuread.upbound.io/v1beta2
 kind: Group
 metadata:
   annotations:

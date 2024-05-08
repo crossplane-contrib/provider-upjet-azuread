@@ -6,6 +6,9 @@ package config
 
 import (
 	"context"
+
+	"github.com/crossplane/upjet/pkg/config/conversion"
+
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
@@ -85,8 +88,10 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithTerraformProvider(p),
+		ujconfig.WithSchemaTraversers(&ujconfig.SingletonListEmbedder{}),
 	)
 
+	bumpVersionsWithEmbeddedLists(pc)
 	for _, configure := range []func(provider *ujconfig.Provider){
 		// add custom config functions
 		invitations.Configure,
@@ -120,4 +125,24 @@ func resourceList(t map[string]ujconfig.ExternalName) []string {
 		i++
 	}
 	return l
+}
+
+func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
+	for name, r := range pc.Resources {
+		r := r
+		// nothing to do if no singleton list has been converted to
+		// an embedded object
+		if len(r.CRDListConversionPaths()) == 0 {
+			continue
+		}
+		r.Version = "v1beta2"
+		// we would like to set the storage version to v1beta1 to facilitate
+		// downgrades.
+		r.SetCRDStorageVersion("v1beta1")
+		r.Conversions = []conversion.Conversion{
+			conversion.NewIdentityConversionExpandPaths(conversion.AllVersions, conversion.AllVersions, []string{"spec.forProvider", "spec.initProvider", "status.atProvider"}, r.CRDListConversionPaths()...),
+			conversion.NewSingletonListConversion("v1beta1", "v1beta2", r.CRDListConversionPaths(), conversion.ToEmbeddedObject),
+			conversion.NewSingletonListConversion("v1beta2", "v1beta1", r.CRDListConversionPaths(), conversion.ToSingletonList)}
+		pc.Resources[name] = r
+	}
 }

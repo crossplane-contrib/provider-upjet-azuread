@@ -18,7 +18,7 @@ func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("azuread_administrative_unit_member", func(r *config.Resource) {
 		r.Kind = "Member"
 		r.References["administrative_unit_object_id"] = config.Reference{
-			Type: "Unit",
+			TerraformName: "azuread_administrative_unit",
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"

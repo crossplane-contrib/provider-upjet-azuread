@@ -25,11 +25,11 @@ func Configure(p *config.Provider) {
 	})
 	p.AddResourceConfigurator("azuread_directory_role_assignment", func(r *config.Resource) {
 		r.References["role_id"] = config.Reference{
-			Type:      "Role",
-			Extractor: `github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)`,
+			TerraformName: "azuread_directory_role",
+			Extractor:     `github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)`,
 		}
 		r.References["principal_object_id"] = config.Reference{
-			Type: "github.com/upbound/provider-azuread/apis/users/v1beta1.User",
+			TerraformName: "azuread_user",
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"

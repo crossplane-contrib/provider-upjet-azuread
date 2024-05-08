@@ -18,7 +18,7 @@ spec:
 
 ---
 
-apiVersion: applications.azuread.upbound.io/v1beta1
+apiVersion: applications.azuread.upbound.io/v1beta2
 kind: Application
 metadata:
   annotations:

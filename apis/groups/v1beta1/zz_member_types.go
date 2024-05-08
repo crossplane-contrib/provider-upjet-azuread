@@ -17,14 +17,14 @@ type MemberInitParameters struct {
 
 	// The object ID of the group you want to add the member to. Changing this forces a new resource to be created.
 	// The object ID of the group you want to add the member to
-	// +crossplane:generate:reference:type=Group
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/groups/v1beta2.Group
 	GroupObjectID *string `json:"groupObjectId,omitempty" tf:"group_object_id,omitempty"`
 
-	// Reference to a Group to populate groupObjectId.
+	// Reference to a Group in groups to populate groupObjectId.
 	// +kubebuilder:validation:Optional
 	GroupObjectIDRef *v1.Reference `json:"groupObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Group to populate groupObjectId.
+	// Selector for a Group in groups to populate groupObjectId.
 	// +kubebuilder:validation:Optional
 	GroupObjectIDSelector *v1.Selector `json:"groupObjectIdSelector,omitempty" tf:"-"`
 
@@ -59,15 +59,15 @@ type MemberParameters struct {
 
 	// The object ID of the group you want to add the member to. Changing this forces a new resource to be created.
 	// The object ID of the group you want to add the member to
-	// +crossplane:generate:reference:type=Group
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/groups/v1beta2.Group
 	// +kubebuilder:validation:Optional
 	GroupObjectID *string `json:"groupObjectId,omitempty" tf:"group_object_id,omitempty"`
 
-	// Reference to a Group to populate groupObjectId.
+	// Reference to a Group in groups to populate groupObjectId.
 	// +kubebuilder:validation:Optional
 	GroupObjectIDRef *v1.Reference `json:"groupObjectIdRef,omitempty" tf:"-"`
 
-	// Selector for a Group to populate groupObjectId.
+	// Selector for a Group in groups to populate groupObjectId.
 	// +kubebuilder:validation:Optional
 	GroupObjectIDSelector *v1.Selector `json:"groupObjectIdSelector,omitempty" tf:"-"`
 

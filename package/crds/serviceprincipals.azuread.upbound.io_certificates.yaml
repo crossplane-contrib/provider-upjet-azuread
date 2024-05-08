@@ -98,7 +98,8 @@ spec:
                       The object ID of the service principal for which this certificate should be created
                     type: string
                   servicePrincipalIdRef:
-                    description: Reference to a Principal to populate servicePrincipalId.
+                    description: Reference to a Principal in serviceprincipals to
+                      populate servicePrincipalId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -132,7 +133,8 @@ spec:
                     - name
                     type: object
                   servicePrincipalIdSelector:
-                    description: Selector for a Principal to populate servicePrincipalId.
+                    description: Selector for a Principal in serviceprincipals to
+                      populate servicePrincipalId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -240,7 +242,8 @@ spec:
                       The object ID of the service principal for which this certificate should be created
                     type: string
                   servicePrincipalIdRef:
-                    description: Reference to a Principal to populate servicePrincipalId.
+                    description: Reference to a Principal in serviceprincipals to
+                      populate servicePrincipalId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -274,7 +277,8 @@ spec:
                     - name
                     type: object
                   servicePrincipalIdSelector:
-                    description: Selector for a Principal to populate servicePrincipalId.
+                    description: Selector for a Principal in serviceprincipals to
+                      populate servicePrincipalId.
                     properties:
                       matchControllerRef:
                         description: |-

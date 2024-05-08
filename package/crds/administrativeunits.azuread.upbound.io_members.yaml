@@ -78,7 +78,8 @@ spec:
                       The object ID of the administrative unit
                     type: string
                   administrativeUnitObjectIdRef:
-                    description: Reference to a Unit to populate administrativeUnitObjectId.
+                    description: Reference to a Unit in administrativeunits to populate
+                      administrativeUnitObjectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -112,7 +113,8 @@ spec:
                     - name
                     type: object
                   administrativeUnitObjectIdSelector:
-                    description: Selector for a Unit to populate administrativeUnitObjectId.
+                    description: Selector for a Unit in administrativeunits to populate
+                      administrativeUnitObjectId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -176,7 +178,8 @@ spec:
                       The object ID of the administrative unit
                     type: string
                   administrativeUnitObjectIdRef:
-                    description: Reference to a Unit to populate administrativeUnitObjectId.
+                    description: Reference to a Unit in administrativeunits to populate
+                      administrativeUnitObjectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -210,7 +213,8 @@ spec:
                     - name
                     type: object
                   administrativeUnitObjectIdSelector:
-                    description: Selector for a Unit to populate administrativeUnitObjectId.
+                    description: Selector for a Unit in administrativeunits to populate
+                      administrativeUnitObjectId.
                     properties:
                       matchControllerRef:
                         description: |-

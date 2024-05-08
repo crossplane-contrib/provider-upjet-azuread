@@ -158,7 +158,8 @@ spec:
                       application should be added
                     type: string
                   applicationObjectIdRef:
-                    description: Reference to a Application to populate applicationObjectId.
+                    description: Reference to a Application in applications to populate
+                      applicationObjectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -192,7 +193,8 @@ spec:
                     - name
                     type: object
                   applicationObjectIdSelector:
-                    description: Selector for a Application to populate applicationObjectId.
+                    description: Selector for a Application in applications to populate
+                      applicationObjectId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -235,7 +237,8 @@ spec:
                     description: The application ID of the pre-authorized application
                     type: string
                   authorizedAppIdRef:
-                    description: Reference to a Application to populate authorizedAppId.
+                    description: Reference to a Application in applications to populate
+                      authorizedAppId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -269,7 +272,8 @@ spec:
                     - name
                     type: object
                   authorizedAppIdSelector:
-                    description: Selector for a Application to populate authorizedAppId.
+                    description: Selector for a Application in applications to populate
+                      authorizedAppId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -421,7 +425,8 @@ spec:
                       application should be added
                     type: string
                   applicationObjectIdRef:
-                    description: Reference to a Application to populate applicationObjectId.
+                    description: Reference to a Application in applications to populate
+                      applicationObjectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -455,7 +460,8 @@ spec:
                     - name
                     type: object
                   applicationObjectIdSelector:
-                    description: Selector for a Application to populate applicationObjectId.
+                    description: Selector for a Application in applications to populate
+                      applicationObjectId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -498,7 +504,8 @@ spec:
                     description: The application ID of the pre-authorized application
                     type: string
                   authorizedAppIdRef:
-                    description: Reference to a Application to populate authorizedAppId.
+                    description: Reference to a Application in applications to populate
+                      authorizedAppId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -532,7 +539,8 @@ spec:
                     - name
                     type: object
                   authorizedAppIdSelector:
-                    description: Selector for a Application to populate authorizedAppId.
+                    description: Selector for a Application in applications to populate
+                      authorizedAppId.
                     properties:
                       matchControllerRef:
                         description: |-

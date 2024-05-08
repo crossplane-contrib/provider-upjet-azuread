@@ -158,7 +158,8 @@ spec:
                       should be created
                     type: string
                   applicationObjectIdRef:
-                    description: Reference to a Application to populate applicationObjectId.
+                    description: Reference to a Application in applications to populate
+                      applicationObjectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -192,7 +193,8 @@ spec:
                     - name
                     type: object
                   applicationObjectIdSelector:
-                    description: Selector for a Application to populate applicationObjectId.
+                    description: Selector for a Application in applications to populate
+                      applicationObjectId.
                     properties:
                       matchControllerRef:
                         description: |-
@@ -380,7 +382,8 @@ spec:
                       should be created
                     type: string
                   applicationObjectIdRef:
-                    description: Reference to a Application to populate applicationObjectId.
+                    description: Reference to a Application in applications to populate
+                      applicationObjectId.
                     properties:
                       name:
                         description: Name of the referenced object.
@@ -414,7 +417,8 @@ spec:
                     - name
                     type: object
                   applicationObjectIdSelector:
-                    description: Selector for a Application to populate applicationObjectId.
+                    description: Selector for a Application in applications to populate
+                      applicationObjectId.
                     properties:
                       matchControllerRef:
                         description: |-

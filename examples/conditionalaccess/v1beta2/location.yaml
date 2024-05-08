@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2024 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: conditionalaccess.azuread.upbound.io/v1beta2
+kind: Location
+metadata:
+  annotations:
+    meta.upbound.io/example-id: conditionalaccess/v1beta2/location
+  labels:
+    testing.upbound.io/example-name: example-ip
+  name: example-ip
+spec:
+  forProvider:
+    displayName: IP Named Location
+    ip:
+      ipRanges:
+      - 1.1.1.1/32
+      - 2.2.2.2/32
+      trusted: true
