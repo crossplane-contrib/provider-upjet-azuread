@@ -6,14 +6,13 @@ package config
 
 import (
 	"context"
-
-	"github.com/crossplane/upjet/pkg/config/conversion"
-
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
+	"github.com/crossplane/upjet/pkg/config/conversion"
 	"github.com/crossplane/upjet/pkg/registry/reference"
+	"github.com/crossplane/upjet/pkg/schema/traverser"
 	conversiontfjson "github.com/crossplane/upjet/pkg/types/conversion/tfjson"
 	tfjson "github.com/hashicorp/terraform-json"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -68,15 +67,24 @@ func getProviderSchema(s string) (*schema.Provider, error) {
 
 // GetProvider returns provider configuration
 func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provider, error) {
-	var p *schema.Provider
-	var err error
-	if generationProvider {
-		p, err = getProviderSchema(providerSchema)
-	} else {
-		p, err = xpprovider.GetProviderSchema(ctx)
-	}
+	sdkProvider, err := xpprovider.GetProviderSchema(ctx)
 	if err != nil {
-		return nil, errors.Wrapf(err, "cannot get the Terraform provider schema with generation mode set to %t", generationProvider)
+		return nil, errors.Wrap(err, "cannot get the Terraform SDK provider")
+	}
+
+	if generationProvider {
+		p, err := getProviderSchema(providerSchema)
+		if err != nil {
+			return nil, errors.Wrap(err, "cannot read the Terraform SDK provider from the JSON schema for code generation")
+		}
+		if err := traverser.TFResourceSchema(sdkProvider.ResourcesMap).TraverseTFSchemas(traverser.NewMaxItemsSync(p.ResourcesMap)); err != nil {
+			return nil, errors.Wrap(err, "cannot sync the MaxItems constraints between the Go schema and the JSON schema")
+		}
+		// use the JSON schema to temporarily prevent float64->int64
+		// conversions in the CRD APIs.
+		// We would like to convert to int64s with the next major release of
+		// the provider.
+		sdkProvider = p
 	}
 
 	pc := ujconfig.NewProvider([]byte(providerSchema), resourcePrefix, modulePath, []byte(providerMetadata),
@@ -87,7 +95,7 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 		),
 		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),
 		ujconfig.WithFeaturesPackage("internal/features"),
-		ujconfig.WithTerraformProvider(p),
+		ujconfig.WithTerraformProvider(sdkProvider),
 		ujconfig.WithSchemaTraversers(&ujconfig.SingletonListEmbedder{}),
 	)
 
