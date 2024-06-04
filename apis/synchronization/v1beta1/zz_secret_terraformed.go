@@ -21,7 +21,7 @@ func (mg *Secret) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Secret
 func (tr *Secret) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"credential[*].value": "spec.forProvider.credential[*].valueSecretRef"}
+	return map[string]string{"credential[*].value": "credential[*].valueSecretRef"}
 }
 
 // GetObservation of this Secret
