@@ -64,6 +64,10 @@ type CertificateInitParameters struct {
 	// The type of key/certificate. Must be one of AsymmetricX509Cert or Symmetric. Changing this fields forces a new resource to be created.
 	// The type of key/certificate
 	Type *string `json:"type,omitempty" tf:"type,omitempty"`
+
+	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.
+	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the `encoding` argument
+	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type CertificateObservation struct {

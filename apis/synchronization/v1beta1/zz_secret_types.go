@@ -18,6 +18,10 @@ type CredentialInitParameters struct {
 	// The key of the secret.
 	// Name for this key-value pair.
 	Key *string `json:"key,omitempty" tf:"key,omitempty"`
+
+	// The value of the secret.
+	// Value for this key-value pair.
+	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type CredentialObservation struct {
@@ -36,7 +40,7 @@ type CredentialParameters struct {
 
 	// The value of the secret.
 	// Value for this key-value pair.
-	// +kubebuilder:validation:Required
+	// +kubebuilder:validation:Optional
 	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 

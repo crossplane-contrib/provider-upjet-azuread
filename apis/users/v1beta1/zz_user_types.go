@@ -120,6 +120,10 @@ type UserInitParameters struct {
 	// +listType=set
 	OtherMails []*string `json:"otherMails,omitempty" tf:"other_mails,omitempty"`
 
+	// The password for the user. The password must satisfy minimum requirements as specified by the password policy. The maximum length is 256 characters. This property is required when creating a new user.
+	// The password for the user. The password must satisfy minimum requirements as specified by the password policy. The maximum length is 256 characters. This property is required when creating a new user
+	PasswordSecretRef *v1.SecretKeySelector `json:"passwordSecretRef,omitempty" tf:"-"`
+
 	// The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code.
 	// The postal code for the user's postal address. The postal code is specific to the user's country/region. In the United States of America, this attribute contains the ZIP code
 	PostalCode *string `json:"postalCode,omitempty" tf:"postal_code,omitempty"`

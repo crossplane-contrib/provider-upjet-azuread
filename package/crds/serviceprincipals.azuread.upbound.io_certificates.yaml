@@ -327,6 +327,27 @@ spec:
                       The type of key/certificate. Must be one of AsymmetricX509Cert or Symmetric. Changing this fields forces a new resource to be created.
                       The type of key/certificate
                     type: string
+                  valueSecretRef:
+                    description: |-
+                      The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.
+                      The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER
+                    properties:
+                      key:
+                        description: The key to select.
+                        type: string
+                      name:
+                        description: Name of the secret.
+                        type: string
+                      namespace:
+                        description: Namespace of the secret.
+                        type: string
+                    required:
+                    - key
+                    - name
+                    - namespace
+                    type: object
+                required:
+                - valueSecretRef
                 type: object
               managementPolicies:
                 default:
