@@ -6,7 +6,7 @@ module github.com/upbound/provider-azuread
 
 go 1.21.3
 
-toolchain go1.21.8
+toolchain go1.22.4
 
 require (
 	dario.cat/mergo v1.0.0
