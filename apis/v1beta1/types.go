@@ -19,18 +19,19 @@ type ProviderConfigSpec struct {
 	// when Credentials.Source is `InjectedIdentity`. If unset and
 	// Credentials.Source is `InjectedIdentity`, then a system-assigned
 	// managed identity is used.
-	// +optional
+	// Required if Credentials.Source is OIDCTokenFile.
+	// +kubebuilder:validation:Optional
 	ClientID *string `json:"clientID,omitempty"`
 
 	// SubscriptionID is the Azure subscription ID to be used.
 	// If unset, subscription ID from Credentials will be used.
-	// Required if Credentials.Source is InjectedIdentity.
+	// Required if Credentials.Source is InjectedIdentity, OIDCTokenFile.
 	// +kubebuilder:validation:Optional
 	SubscriptionID *string `json:"subscriptionID,omitempty"`
 
 	// TenantID is the Azure AD tenant ID to be used.
 	// If unset, tenant ID from Credentials will be used.
-	// Required if Credentials.Source is InjectedIdentity.
+	// Required if Credentials.Source is InjectedIdentity, OIDCTokenFile.
 	// +kubebuilder:validation:Optional
 	TenantID *string `json:"tenantID,omitempty"`
 
