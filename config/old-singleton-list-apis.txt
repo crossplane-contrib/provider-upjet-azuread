@@ -1,0 +1,6 @@
+azuread_application
+azuread_conditional_access_policy
+azuread_group
+azuread_invitation
+azuread_named_location
+azuread_service_principal
