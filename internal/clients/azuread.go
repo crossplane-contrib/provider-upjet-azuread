@@ -29,11 +29,9 @@ const (
 	errTrackUsage           = "cannot track ProviderConfig usage"
 	errExtractCredentials   = "cannot extract credentials"
 	errUnmarshalCredentials = "cannot unmarshal Azure credentials as JSON"
-	errSubscriptionIDNotSet = "subscription ID must be set in ProviderConfig when credential source is InjectedIdentity, OIDCTokenFile"
 	errTenantIDNotSet       = "tenant ID must be set in ProviderConfig when credential source is InjectedIdentity, OIDCTokenFile"
 	errClientIDNotSet       = "client ID must be set in ProviderConfig when credential source is OIDCTokenFile"
 	// Azure service principal credentials file JSON keys
-	keyAzureSubscriptionID = "subscriptionId"
 	keyAzureClientID       = "clientId"
 	keyAzureClientSecret   = "clientSecret"
 	keyAzureClientCert     = "clientCertificate"
@@ -44,7 +42,6 @@ const (
 	keySkipProviderRegistration = "skip_provider_registration"
 	keyUseMSI                   = "use_msi"
 	keyClientID                 = "client_id"
-	keySubscriptionID           = "subscription_id"
 	keyTenantID                 = "tenant_id"
 	keyMSIEndpoint              = "msi_endpoint"
 	keyClientSecret             = "client_secret"
@@ -127,7 +124,6 @@ func spAuth(ctx context.Context, pc *v1beta1.ProviderConfig, ps *terraform.Setup
 		return errors.Wrap(err, errUnmarshalCredentials)
 	}
 	// set credentials configuration
-	ps.Configuration[keySubscriptionID] = azureCreds[keyAzureSubscriptionID]
 	ps.Configuration[keyTenantID] = azureCreds[keyAzureTenantID]
 	ps.Configuration[keyClientID] = azureCreds[keyAzureClientID]
 	ps.Configuration[keyClientSecret] = azureCreds[keyAzureClientSecret]
@@ -136,9 +132,6 @@ func spAuth(ctx context.Context, pc *v1beta1.ProviderConfig, ps *terraform.Setup
 		if clientCertPass, passwordOk := azureCreds[keyAzureClientCertPass]; passwordOk {
 			ps.Configuration[keyClientCertPassword] = clientCertPass
 		}
-	}
-	if pc.Spec.SubscriptionID != nil {
-		ps.Configuration[keySubscriptionID] = *pc.Spec.SubscriptionID
 	}
 	if pc.Spec.TenantID != nil {
 		ps.Configuration[keyTenantID] = *pc.Spec.TenantID
@@ -153,13 +146,9 @@ func spAuth(ctx context.Context, pc *v1beta1.ProviderConfig, ps *terraform.Setup
 }
 
 func msiAuth(pc *v1beta1.ProviderConfig, ps *terraform.Setup) error {
-	if pc.Spec.SubscriptionID == nil || len(*pc.Spec.SubscriptionID) == 0 {
-		return errors.New(errSubscriptionIDNotSet)
-	}
 	if pc.Spec.TenantID == nil || len(*pc.Spec.TenantID) == 0 {
 		return errors.New(errTenantIDNotSet)
 	}
-	ps.Configuration[keySubscriptionID] = *pc.Spec.SubscriptionID
 	ps.Configuration[keyTenantID] = *pc.Spec.TenantID
 	ps.Configuration[keyUseMSI] = "true"
 	if pc.Spec.MSIEndpoint != nil {
@@ -175,9 +164,6 @@ func msiAuth(pc *v1beta1.ProviderConfig, ps *terraform.Setup) error {
 }
 
 func oidcAuth(pc *v1beta1.ProviderConfig, ps *terraform.Setup) error {
-	if pc.Spec.SubscriptionID == nil || len(*pc.Spec.SubscriptionID) == 0 {
-		return errors.New(errSubscriptionIDNotSet)
-	}
 	if pc.Spec.TenantID == nil || len(*pc.Spec.TenantID) == 0 {
 		return errors.New(errTenantIDNotSet)
 	}
@@ -189,7 +175,6 @@ func oidcAuth(pc *v1beta1.ProviderConfig, ps *terraform.Setup) error {
 	if pc.Spec.OidcTokenFilePath != nil {
 		ps.Configuration[keyOidcTokenFilePath] = *pc.Spec.OidcTokenFilePath
 	}
-	ps.Configuration[keySubscriptionID] = *pc.Spec.SubscriptionID
 	ps.Configuration[keyTenantID] = *pc.Spec.TenantID
 	ps.Configuration[keyClientID] = *pc.Spec.ClientID
 	ps.Configuration[keyUseOIDC] = "true"

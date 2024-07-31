@@ -80,11 +80,6 @@ func (in *ProviderConfigSpec) DeepCopyInto(out *ProviderConfigSpec) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.SubscriptionID != nil {
-		in, out := &in.SubscriptionID, &out.SubscriptionID
-		*out = new(string)
-		**out = **in
-	}
 	if in.TenantID != nil {
 		in, out := &in.TenantID, &out.TenantID
 		*out = new(string)

@@ -130,12 +130,6 @@ spec:
                   OIDCTokenFilePath is the optional path to a token file
                   that allows to access a managed identity.
                 type: string
-              subscriptionID:
-                description: |-
-                  SubscriptionID is the Azure subscription ID to be used.
-                  If unset, subscription ID from Credentials will be used.
-                  Required if Credentials.Source is InjectedIdentity, OIDCTokenFile.
-                type: string
               tenantID:
                 description: |-
                   TenantID is the Azure AD tenant ID to be used.
