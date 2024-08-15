@@ -19,10 +19,9 @@ spec:
       matchLabels:
         testing.upbound.io/example-name: msgraph
     claimValues:
-        # Id obtained from status.atProvider.oauth2PermissionScopeIds["openid"] from the Principal(msgraph) resource below.
-      - 37f7f235-527c-4136-accd-4a02d197296e
-        # Id obtained from status.atProvider.oauth2PermissionScopeIds["User.Read.All"] from the Principal(msgraph) resource below.
-      - a154be20-db9c-4678-8ab7-66f6cc099a59
+        # These claim match the permission names in the requiredResourceAccess of the Application resource below.
+      - openid
+      - User.Read
 ---
 apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
 kind: Principal
