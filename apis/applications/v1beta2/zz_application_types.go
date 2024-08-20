@@ -256,7 +256,7 @@ type ApplicationInitParameters struct {
 	// Block of features to configure for this application using tags
 	FeatureTags []FeatureTagsInitParameters `json:"featureTags,omitempty" tf:"feature_tags,omitempty"`
 
-	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+	// A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
 	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
 	// +listType=set
 	GroupMembershipClaims []*string `json:"groupMembershipClaims,omitempty" tf:"group_membership_claims,omitempty"`
@@ -289,6 +289,10 @@ type ApplicationInitParameters struct {
 	// A list of object IDs of principals that will be granted ownership of the application
 	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
+
+	// A single password block as documented below. The password is generated during creation. By default, no password is generated.
+	// App password definition
+	Password *PasswordInitParameters `json:"password,omitempty" tf:"password,omitempty"`
 
 	// If true, will return an error if an existing application is found with the same name. Defaults to false.
 	// If `true`, will return an error if an existing application is found with the same name
@@ -380,7 +384,7 @@ type ApplicationObservation struct {
 	// Block of features to configure for this application using tags
 	FeatureTags []FeatureTagsObservation `json:"featureTags,omitempty" tf:"feature_tags,omitempty"`
 
-	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+	// A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
 	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
 	// +listType=set
 	GroupMembershipClaims []*string `json:"groupMembershipClaims,omitempty" tf:"group_membership_claims,omitempty"`
@@ -428,6 +432,10 @@ type ApplicationObservation struct {
 	// A list of object IDs of principals that will be granted ownership of the application
 	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
+
+	// A single password block as documented below. The password is generated during creation. By default, no password is generated.
+	// App password definition
+	Password *PasswordObservation `json:"password,omitempty" tf:"password,omitempty"`
 
 	// If true, will return an error if an existing application is found with the same name. Defaults to false.
 	// If `true`, will return an error if an existing application is found with the same name
@@ -514,7 +522,7 @@ type ApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	FeatureTags []FeatureTagsParameters `json:"featureTags,omitempty" tf:"feature_tags,omitempty"`
 
-	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+	// A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
 	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
 	// +kubebuilder:validation:Optional
 	// +listType=set
@@ -555,6 +563,11 @@ type ApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Owners []*string `json:"owners,omitempty" tf:"owners,omitempty"`
+
+	// A single password block as documented below. The password is generated during creation. By default, no password is generated.
+	// App password definition
+	// +kubebuilder:validation:Optional
+	Password *PasswordParameters `json:"password,omitempty" tf:"password,omitempty"`
 
 	// If true, will return an error if an existing application is found with the same name. Defaults to false.
 	// If `true`, will return an error if an existing application is found with the same name
@@ -921,6 +934,58 @@ type OptionalClaimsParameters struct {
 	// One or more saml2_token blocks as documented below.
 	// +kubebuilder:validation:Optional
 	Saml2Token []Saml2TokenParameters `json:"saml2Token,omitempty" tf:"saml2_token,omitempty"`
+}
+
+type PasswordInitParameters struct {
+
+	// A display name for the password. Changing this field forces a new resource to be created.
+	// A display name for the password
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`)
+	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
+
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
+	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
+}
+
+type PasswordObservation struct {
+
+	// A display name for the password. Changing this field forces a new resource to be created.
+	// A display name for the password
+	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
+
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`)
+	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
+
+	// The unique key ID for the generated password.
+	// A UUID used to uniquely identify this password credential
+	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
+
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
+	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
+}
+
+type PasswordParameters struct {
+
+	// A display name for the password. Changing this field forces a new resource to be created.
+	// A display name for the password
+	// +kubebuilder:validation:Optional
+	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
+
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
+	// The end date until which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`)
+	// +kubebuilder:validation:Optional
+	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
+
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
+	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
+	// +kubebuilder:validation:Optional
+	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
 }
 
 type PublicClientInitParameters struct {

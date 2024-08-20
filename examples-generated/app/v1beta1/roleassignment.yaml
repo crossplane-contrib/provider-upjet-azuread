@@ -49,7 +49,7 @@ metadata:
   name: example
 spec:
   forProvider:
-    applicationIdSelector:
+    clientIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
 
@@ -65,7 +65,7 @@ metadata:
   name: msgraph
 spec:
   forProvider:
-    applicationIdSelector:
+    clientIdSelector:
       matchLabels:
         testing.upbound.io/example-name: azuread_application_published_app_ids
     useExisting: true

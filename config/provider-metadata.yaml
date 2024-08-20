@@ -128,6 +128,10 @@ resources:
             requestor_settings.requestor.subject_type: (Required) Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
             requestor_settings.requests_accepted: (Optional) Whether to accept requests using this policy. When false, no new requests can be made using this policy.
             requestor_settings.scope_type: (Optional) Specifies the scopes of the requestors. Valid values are AllConfiguredConnectedOrganizationSubjects, AllExistingConnectedOrganizationSubjects, AllExistingDirectoryMemberUsers, AllExistingDirectorySubjects, AllExternalSubjects, NoSubjects, SpecificConnectedOrganizationSubjects, or SpecificDirectorySubjects.
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_access_package_assignment_policy.example 00000000-0000-0000-0000-000000000000
     azuread_access_package_catalog:
@@ -147,6 +151,10 @@ resources:
             externally_visible: '- (Optional) Whether the access packages in this catalog can be requested by users outside the tenant.'
             id: '- The ID of this resource.'
             published: '- (Optional) Whether the access packages in this catalog are available for management.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements: []
     azuread_access_package_catalog_role_assignment:
         subCategory: Identity Governance
@@ -174,6 +182,10 @@ resources:
             catalog_id: '- (Required) The ID of the Catalog this role assignment will be scoped to. Changing this forces a new resource to be created.'
             principal_object_id: '- (Required) The object ID of the principal for you want to create a role assignment. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.'
             role_id: '- (Required) The object ID of the catalog role you want to assign. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_access_package_catalog_role_assignment.example 00000000-0000-0000-0000-000000000000
     azuread_access_package_resource_catalog_association:
@@ -207,6 +219,9 @@ resources:
             id: '- The ID of this resource, the ID is the concatenation of catalog_id and resource_origin_id with colon in between.'
             resource_origin_id: '- (Required) The unique identifier of the resource in the origin system. In the case of an Azure AD group, this is the identifier of the group. Changing this forces a new resource to be created.'
             resource_origin_system: '- (Required) The type of the resource in the origin system, such as SharePointOnline, AadApplication or AadGroup. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements: []
     azuread_access_package_resource_package_association:
         subCategory: Identity Governance
@@ -250,6 +265,9 @@ resources:
             access_type: '- (Optional) The role of access type to the specified resource. Valid values are Member, or Owner The default is Member. Changing this forces a new resource to be created.'
             catalog_resource_association_id: '- (Required) The ID of the catalog association from the azuread_access_package_resource_catalog_association resource. Changing this forces a new resource to be created.'
             id: '- The ID of this resource. The ID is combined by four fields with colon in between, the four fields are access_package_id, this package association id, resource_origin_id and access_type.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements: []
     azuread_administrative_unit:
         subCategory: Administrative Units
@@ -269,6 +287,10 @@ resources:
             hidden_membership_enabled: '- (Optional) Whether the administrative unit and its members are hidden or publicly viewable in the directory.'
             members: '- (Optional) A set of object IDs of members who should be present in this administrative unit. Supported object types are Users or Groups.'
             object_id: '- The object ID of the administrative unit.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_administrative_unit.example 00000000-0000-0000-0000-000000000000
     azuread_administrative_unit_member:
@@ -293,6 +315,9 @@ resources:
         argumentDocs:
             administrative_unit_object_id: '- (Required) The object ID of the administrative unit you want to add the member to. Changing this forces a new resource to be created.'
             member_object_id: '- (Required) The object ID of the user or group you want to add as a member of the administrative unit. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_administrative_unit_member.example 00000000-0000-0000-0000-000000000000/member/11111111-1111-1111-1111-111111111111
     azuread_administrative_unit_role_member:
@@ -324,6 +349,9 @@ resources:
             administrative_unit_object_id: '- (Required) The object ID of the administrative unit you want to add the member to. Changing this forces a new resource to be created.'
             member_object_id: '- (Required) The object ID of the user, group or service principal you want to add as a member of the administrative unit. Changing this forces a new resource to be created.'
             role_object_id: '- (Required) The object ID of the directory role you want to assign. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_administrative_unit_role_member.example 00000000-0000-0000-0000-000000000000/roleMember/zX37MRLyF0uvE-xf2WH4B7x-6CPLfudNnxFGj800htpBXqkxW7bITqGb6Rj4kuTuS
     azuread_app_role_assignment:
@@ -364,11 +392,11 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}"
+                      "client_id": "${azuread_application.example.application_id}"
                     }
                 azuread_service_principal.msgraph: |-
                     {
-                      "application_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
+                      "client_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
                       "use_existing": true
                     }
             - name: example
@@ -416,11 +444,11 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}"
+                      "client_id": "${azuread_application.example.application_id}"
                     }
                 azuread_service_principal.internal: |-
                     {
-                      "application_id": "${azuread_application.internal.application_id}"
+                      "client_id": "${azuread_application.internal.application_id}"
                     }
             - name: example
               manifest: |-
@@ -458,7 +486,7 @@ resources:
                     }
                 azuread_service_principal.internal: |-
                     {
-                      "application_id": "${azuread_application.internal.application_id}"
+                      "client_id": "${azuread_application.internal.application_id}"
                     }
                 azuread_user.example: |-
                     {
@@ -502,7 +530,7 @@ resources:
                     }
                 azuread_service_principal.internal: |-
                     {
-                      "application_id": "${azuread_application.internal.application_id}"
+                      "client_id": "${azuread_application.internal.application_id}"
                     }
                 azuread_user.example: |-
                     {
@@ -532,7 +560,7 @@ resources:
                     }
                 azuread_service_principal.internal: |-
                     {
-                      "application_id": "${azuread_application.internal.application_id}"
+                      "client_id": "${azuread_application.internal.application_id}"
                     }
         argumentDocs:
             app_role_id: '- (Required) The ID of the app role to be assigned, or the default role ID 00000000-0000-0000-0000-000000000000. Changing this forces a new resource to be created.'
@@ -541,6 +569,9 @@ resources:
             principal_type: '- The object type of the principal to which the app role is assigned.'
             resource_display_name: '- The display name of the application representing the resource.'
             resource_object_id: '- (Required) The object ID of the service principal representing the resource. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_app_role_assignment.example 00000000-0000-0000-0000-000000000000/appRoleAssignment/aaBBcDDeFG6h5JKLMN2PQrrssTTUUvWWxxxxxyyyzzz
     azuread_application:
@@ -690,6 +721,28 @@ resources:
               manifest: |-
                 {
                   "display_name": "example",
+                  "owners": [
+                    "${data.azuread_client_config.current.object_id}"
+                  ],
+                  "password": [
+                    {
+                      "display_name": "MySecret-1",
+                      "end_date": "${timeadd(time_rotating.example.id, \"4320h\")}",
+                      "start_date": "${time_rotating.example.id}"
+                    }
+                  ]
+                }
+              references:
+                password.start_date: time_rotating.example.id
+              dependencies:
+                time_rotating.example: |-
+                    {
+                      "rotation_days": 180
+                    }
+            - name: example
+              manifest: |-
+                {
+                  "display_name": "example",
                   "template_id": "${data.azuread_application_template.example.template_id}"
                 }
               references:
@@ -697,7 +750,7 @@ resources:
               dependencies:
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}",
+                      "client_id": "${azuread_application.example.client_id}",
                       "use_existing": true
                     }
         argumentDocs:
@@ -733,7 +786,7 @@ resources:
             feature_tags.enterprise: '- (Optional) Whether this application represents an Enterprise Application for linked service principals. Enabling this will assign the WindowsAzureActiveDirectoryIntegratedApp tag. Defaults to false.'
             feature_tags.gallery: '- (Optional) Whether this application represents a gallery application for linked service principals. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1 tag. Defaults to false.'
             feature_tags.hide: '- (Optional) Whether this app is invisible to users in My Apps and Office 365 Launcher. Enabling this will assign the HideApp tag. Defaults to false.'
-            group_membership_claims: '- (Optional) Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.'
+            group_membership_claims: '- (Optional) A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.'
             id: '- The Terraform resource ID for the application, for use when referencing this resource in your Terraform configuration.'
             identifier_uris: '- (Optional) A set of user-defined URI(s) that uniquely identify an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant.'
             logo_image: '- (Optional) A logo image to upload for the application, as a raw base64-encoded string. The image should be in gif, jpeg or png format. Note that once an image has been uploaded, it is not possible to remove it without replacing it with another image.'
@@ -752,25 +805,35 @@ resources:
             optional_claims.id_token: '- (Optional) One or more id_token blocks as documented below.'
             optional_claims.saml2_token: '- (Optional) One or more saml2_token blocks as documented below.'
             owners: '- (Optional) A set of object IDs of principals that will be granted ownership of the application. Supported object types are users or service principals. By default, no owners are assigned.'
-            prevent_duplicate_names: '- (Optional) If true, will return an error if an existing application is found with the same name. Defaults to false.'
-            privacy_statement_url: '- (Optional) URL of the application''s privacy statement.'
-            public_client: '- (Optional) A public_client block as documented below, which configures non-web app or non-web API application settings, for example mobile or other public clients such as an installed application running on a desktop device.'
+            password: '- (Optional) A single password block as documented below. The password is generated during creation. By default, no password is generated.'
+            password.display_name: '- (Required) A display name for the password. Changing this field forces a new resource to be created.'
+            password.end_date: '- (Optional) The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.'
+            password.key_id: '- (Required) The unique key ID for the generated password.'
+            password.prevent_duplicate_names: '- (Optional) If true, will return an error if an existing application is found with the same name. Defaults to false.'
+            password.privacy_statement_url: '- (Optional) URL of the application''s privacy statement.'
+            password.public_client: '- (Optional) A public_client block as documented below, which configures non-web app or non-web API application settings, for example mobile or other public clients such as an installed application running on a desktop device.'
+            password.required_resource_access: '- (Optional) A collection of required_resource_access blocks as documented below.'
+            password.service_management_reference: '- (Optional) References application context information from a Service or Asset Management database.'
+            password.sign_in_audience: '- (Optional) The Microsoft account types that are supported for the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount. Defaults to AzureADMyOrg.'
+            password.single_page_application: '- (Optional) A single_page_application block as documented below, which configures single-page application (SPA) related settings for this application.'
+            password.start_date: '- (Optional) The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn''t specified, the current date is used.  Changing this field forces a new resource to be created.'
+            password.support_url: '- (Optional) URL of the application''s support page.'
+            password.tags: '- (Optional) A set of tags to apply to the application for configuring specific behaviours of the application and linked service principals. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.'
+            password.tags.template_id: '- (Optional) Unique ID for a templated application in the Azure AD App Gallery, from which to create the application. Changing this forces a new resource to be created.'
+            password.tags.terms_of_service_url: '- (Optional) URL of the application''s terms of service statement.'
+            password.tags.web: '- (Optional) A web block as documented below, which configures web related settings for this application.'
+            password.value: '- (Required) The generated password for the application.'
             public_client.redirect_uris: '- (Optional) A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https or ms-appx-web URL.'
             publisher_domain: '- The verified publisher domain for the application.'
-            required_resource_access: '- (Optional) A collection of required_resource_access blocks as documented below.'
             required_resource_access.resource_access: '- (Required) A collection of resource_access blocks as documented below, describing OAuth2.0 permission scopes and app roles that the application requires from the specified resource.'
             required_resource_access.resource_access.id: '- (Required) The unique identifier for an app role or OAuth2 permission scope published by the resource application.'
             required_resource_access.resource_access.type: '- (Required) Specifies whether the id property references an app role or an OAuth2 permission scope. Possible values are Role or Scope.'
             required_resource_access.resource_app_id: '- (Required) The unique identifier for the resource that the application requires access to. This should be the Application ID of the target application.'
-            service_management_reference: '- (Optional) References application context information from a Service or Asset Management database.'
-            sign_in_audience: '- (Optional) The Microsoft account types that are supported for the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount. Defaults to AzureADMyOrg.'
-            single_page_application: '- (Optional) A single_page_application block as documented below, which configures single-page application (SPA) related settings for this application.'
             single_page_application.redirect_uris: '- (Optional) A set of URLs where user tokens are sent for sign-in, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent. Must be a valid https URL.'
-            support_url: '- (Optional) URL of the application''s support page.'
-            tags: '- (Optional) A set of tags to apply to the application for configuring specific behaviours of the application and linked service principals. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.'
-            tags.template_id: '- (Optional) Unique ID for a templated application in the Azure AD App Gallery, from which to create the application. Changing this forces a new resource to be created.'
-            tags.terms_of_service_url: '- (Optional) URL of the application''s terms of service statement.'
-            tags.web: '- (Optional) A web block as documented below, which configures web related settings for this application.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
             web.homepage_url: '- (Optional) Home page or landing page of the application.'
             web.implicit_grant: '- (Optional) An implicit_grant block as documented above.'
             web.implicit_grant.access_token_issuance_enabled: '- (Optional) Whether this web application can request an access token using OAuth 2.0 implicit flow.'
@@ -829,6 +892,10 @@ resources:
             application_id: '- (Required) The resource ID of the application registration. Changing this forces a new resource to be created.'
             role_ids: '- (Optional) A set of role IDs to be granted to the application, as published by the API.'
             scope_ids: '- (Optional) A set of scope IDs to be granted to the application, as published by the API.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_application_api_access.example /applications/00000000-0000-0000-0000-000000000000/apiAccess/11111111-1111-1111-1111-111111111111
     azuread_application_app_role:
@@ -882,6 +949,10 @@ resources:
             description: '- (Required) Description of the app role that appears when the role is being assigned, and if the role functions as an application permissions, during the consent experiences.'
             display_name: '- (Required) Display name for the app role that appears during app role assignment and in consent experiences.'
             role_id: '- (Required) The unique identifier of the app role. Must be a valid UUID. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
             value: '- (Optional) The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.'
         importStatements:
             - terraform import azuread_application_app_role.example /applications/00000000-0000-0000-0000-000000000000/appRoles/11111111-1111-1111-1111-111111111111
@@ -1012,6 +1083,10 @@ resources:
             end_date_relative: '- (Optional) A relative duration for which the certificate is valid until, for example 240h (10 days) or 2400h30m. Changing this field forces a new resource to be created.'
             key_id: '- (Optional) A UUID used to uniquely identify this certificate. If omitted, a random UUID will be automatically generated. Changing this field forces a new resource to be created.'
             start_date: '- (Optional) The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn''t specified, the value is determined by Azure Active Directory and is usually the start date of the certificate for asymmetric keys, or the current timestamp for symmetric keys. Changing this field forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
             type: '- (Required) The type of key/certificate. Must be one of AsymmetricX509Cert or Symmetric. Changing this fields forces a new resource to be created.'
             value: '- (Required) The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.'
         importStatements:
@@ -1037,6 +1112,9 @@ resources:
         argumentDocs:
             application_id: '- (Required) The resource ID of the application registration. Changing this forces a new resource to be created.'
             enabled: '- (Required) Whether to enable the application as a fallback public client.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_application_fallback_public_client.example /applications/00000000-0000-0000-0000-000000000000/fallbackPublicClient
     azuread_application_federated_identity_credential:
@@ -1071,6 +1149,10 @@ resources:
             display_name: '- (Required) A unique display name for the federated identity credential. Changing this forces a new resource to be created.'
             issuer: '- (Required) The URL of the external identity provider, which must match the issuer claim of the external token being exchanged. The combination of the values of issuer and subject must be unique on the app.'
             subject: '- (Required) The identifier of the external software workload within the external identity provider. The combination of issuer and subject must be unique on the app.'
+            timeouts.create: '- (Defaults to 15 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_application_federated_identity_credential.example 00000000-0000-0000-0000-000000000000/federatedIdentityCredential/11111111-1111-1111-1111-111111111111
     azuread_application_from_template:
@@ -1093,6 +1175,10 @@ resources:
             service_principal_id: '- The resource ID for the service principal.'
             service_principal_object_id: '- The object ID for the service principal.'
             template_id: '- (Required) Unique ID for a templated application in the Azure AD App Gallery, from which to create the application. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_application_from_template.example /applicationTemplates/00000000-0000-0000-0000-000000000000/instantiate/11111111-1111-1111-1111-111111111111/22222222-2222-2222-2222-222222222222
     azuread_application_identifier_uri:
@@ -1135,6 +1221,9 @@ resources:
         argumentDocs:
             application_id: '- (Required) The resource ID of the application registration. Changing this forces a new resource to be created.'
             identifier_uri: '- (Required) The user-defined URI that uniquely identifies an application within its Azure AD tenant, or within a verified custom domain if the application is multi-tenant. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_application_identifier_uri.example /applications/00000000-0000-0000-0000-000000000000/identifierUris/aHR0cHM6Ly9leGFtcGxlLm5ldC8=
     azuread_application_known_clients:
@@ -1164,6 +1253,10 @@ resources:
         argumentDocs:
             application_id: '- (Required) The resource ID of the application registration. Changing this forces a new resource to be created.'
             known_client_ids: '- (Required) A set of client IDs for the known applications.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_application_known_clients.example /applications/00000000-0000-0000-0000-000000000000/knownClients
     azuread_application_optional_claims:
@@ -1215,6 +1308,10 @@ resources:
             application_id: '- (Required) The resource ID of the application registration. Changing this forces a new resource to be created.'
             id_token: '- (Optional) One or more id_token blocks as documented below.'
             saml2_token: '- (Optional) One or more saml2_token blocks as documented below.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_application_optional_claims.example /applications/00000000-0000-0000-0000-000000000000
     azuread_application_owner:
@@ -1245,6 +1342,9 @@ resources:
         argumentDocs:
             application_id: '- (Required) The resource ID of the application registration. Changing this forces a new resource to be created.'
             owner_object_id: '- (Required) The object ID of the owner to assign to the application, typically a user or service principal. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_application_owner.example /applications/00000000-0000-0000-0000-000000000000/owners/11111111-1111-1111-1111-111111111111
     azuread_application_password:
@@ -1291,6 +1391,10 @@ resources:
             key_id: '- A UUID used to uniquely identify this password credential.'
             rotate_when_changed: '- (Optional) A map of arbitrary key/value pairs that will force recreation of the password when they change, enabling password rotation based on external conditions such as a rotating timestamp. Changing this forces a new resource to be created.'
             start_date: '- (Optional) The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn''t specified, the current date is used.  Changing this field forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 15 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
             value: '- The password for this application, which is generated by Azure Active Directory.'
         importStatements: []
     azuread_application_permission_scope:
@@ -1340,6 +1444,10 @@ resources:
             admin_consent_display_name: '- (Required) Display name for the delegated permission, intended to be read by an administrator granting the permission on behalf of all users.'
             application_id: '- (Required) The resource ID of the application registration. Changing this forces a new resource to be created.'
             scope_id: '- (Required) The unique identifier of the permission scope. Must be a valid UUID. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
             type: '- (Required) Whether this delegated permission should be considered safe for non-admin users to consent to on behalf of themselves, or whether an administrator should be required for consent to the permissions.'
             user_consent_description: '- (Required) Delegated permission description that appears in the end user consent experience, intended to be read by a user consenting on their own behalf.'
             user_consent_display_name: '- (Required) Display name for the delegated permission that appears in the end user consent experience.'
@@ -1401,6 +1509,10 @@ resources:
             application_id: '- (Required) The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.'
             authorized_client_id: '- (Required) The client ID of the application being authorized. Changing this field forces a new resource to be created.'
             permission_ids: '- (Required) A set of permission scope IDs required by the authorized application.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_application_pre_authorized.example 00000000-0000-0000-0000-000000000000/preAuthorizedApplication/11111111-1111-1111-1111-111111111111
     azuread_application_redirect_uris:
@@ -1467,6 +1579,10 @@ resources:
         argumentDocs:
             application_id: '- (Required) The resource ID of the application registration. Changing this forces a new resource to be created.'
             redirect_uris: '- (Required) A set of redirect URIs to assign to the application.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
             type: '- (Required) The type of redirect URIs to manage. Must be one of: PublicClient, SPA, or Web. Changing this forces a new resource to be created.'
         importStatements:
             - terraform import azuread_application_redirect_uris.example /applications/00000000-0000-0000-0000-000000000000/redirectUris/Web
@@ -1509,6 +1625,10 @@ resources:
             sign_in_audience: '- (Optional) The Microsoft account types that are supported for the current application. Must be one of AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount. Defaults to AzureADMyOrg.'
             support_url: '- (Optional) URL of the support page for the application.'
             terms_of_service_url: '- (Optional) URL of the terms of service statement for the application.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_application_registration.example /applications/00000000-0000-0000-0000-000000000000
     azuread_authentication_strength_policy:
@@ -1560,6 +1680,10 @@ resources:
             description: '- (Optional) The description for this authentication strength policy.'
             display_name: '- (Required) The friendly name for this authentication strength policy.'
             id: '- The ID of the authentication strength policy.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_authentication_strength_policy.my_policy 00000000-0000-0000-0000-000000000000
     azuread_claims_mapping_policy:
@@ -1579,6 +1703,10 @@ resources:
             definition: '- (Required) The claims mapping policy. This is a JSON formatted string, for which the jsonencode() function can be used.'
             display_name: '- (Required) The display name for this Claims Mapping Policy.'
             id: '- The ID of the Claims Mapping Policy.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_claims_mapping_policy.my_policy 00000000-0000-0000-0000-000000000000
     azuread_conditional_access_policy:
@@ -1804,6 +1932,10 @@ resources:
             session_controls.sign_in_frequency_authentication_type: '- (Optional) Authentication type for enforcing sign-in frequency. Possible values are: primaryAndSecondaryAuthentication or secondaryAuthentication. Defaults to primaryAndSecondaryAuthentication.'
             session_controls.sign_in_frequency_interval: '- (Optional) The interval to apply to sign-in frequency control. Possible values are: timeBased or everyTime. Defaults to timeBased.'
             session_controls.sign_in_frequency_period: '- (Optional) The time period to enforce sign-in frequency. Possible values are: hours or days. Required when sign_in_frequency_period is specified.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 15 minutes) Used when updating the resource.'
             users.excluded_groups: '- (Optional) A list of group IDs excluded from scope of policy.'
             users.excluded_guests_or_external_users: '- (Optional) A guests_or_external_users block as documented below, which specifies internal guests and external users excluded from scope of policy.'
             users.excluded_roles: '- (Optional) A list of role IDs excluded from scope of policy.'
@@ -1853,6 +1985,10 @@ resources:
             permissions: '- (Required) A collection of permissions blocks as documented below.'
             permissions.allowed_resource_actions: '- (Required) A set of tasks that can be performed on a resource. For more information, see the Permissions Reference documentation.'
             template_id: '- (Optional) Custom template identifier that is typically used if one needs an identifier to be the same across different directories. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
             version: '- (Required) - The version of the role definition. This can be any arbitrary string between 1-128 characters.'
         importStatements: []
     azuread_directory_role:
@@ -1875,6 +2011,9 @@ resources:
             display_name: '- (Optional) The display name of the directory role to activate. Changing this forces a new resource to be created.'
             object_id: '- The object ID of the directory role.'
             template_id: '- (Optional) The object ID of the role template from which to activate the directory role. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements: []
     azuread_directory_role_assignment:
         subCategory: Directory Roles
@@ -1943,6 +2082,9 @@ resources:
             directory_scope_id: '- (Optional) Identifier of the directory object representing the scope of the assignment. Cannot be used with app_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.'
             principal_object_id: '- (Required) The object ID of the principal for you want to create a role assignment. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.'
             role_id: '- (Required) The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_directory_role_assignment.example ePROZI_iKE653D_d6aoLHyr-lKgHI8ZGiIdz8CLVcng-1
     azuread_directory_role_eligibility_schedule_request:
@@ -1971,6 +2113,9 @@ resources:
             justification: '- (Required) Justification for why the principal is granted the role eligibility. Changing this forces a new resource to be created.'
             principal_id: '- (Required) The object ID of the principal to granted the role eligibility. Changing this forces a new resource to be created.'
             role_definition_id: '- (Required) The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_directory_role_eligibility_schedule_request.example 822ec710-4c9f-4f71-a27a-451759cc7522
     azuread_directory_role_member:
@@ -1995,6 +2140,9 @@ resources:
         argumentDocs:
             member_object_id: '- (Required) The object ID of the principal you want to add as a member to the directory role. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.'
             role_object_id: '- (Required) The object ID of the directory role you want to add the member to. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_directory_role_member.example 00000000-0000-0000-0000-000000000000/member/11111111-1111-1111-1111-111111111111
     azuread_group:
@@ -2078,7 +2226,7 @@ resources:
             administrative_unit_ids: '- (Optional) The object IDs of administrative units in which the group is a member. If specified, new groups will be created in the scope of the first administrative unit and added to the others. If empty, new groups will be created at the tenant level.'
             assignable_to_role: '- (Optional) Indicates whether this group can be assigned to an Azure Active Directory role. Defaults to false. Can only be set to true for security-enabled groups. Changing this forces a new resource to be created.'
             auto_subscribe_new_members: '- (Optional) Indicates whether new members added to the group will be auto-subscribed to receive email notifications. Can only be set for Unified groups.'
-            behaviors: '- (Optional) A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.'
+            behaviors: '- (Optional) A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SkipExchangeInstantOn, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.'
             description: '- (Optional) The description for the group.'
             display_name: '- (Required) The display name for the group.'
             dynamic_membership: '- (Optional) A dynamic_membership block as documented below. Required when types contains DynamicMembership. Cannot be used with the members property.'
@@ -2105,6 +2253,10 @@ resources:
             proxy_addresses: '- List of email addresses for the group that direct to the same group mailbox.'
             security_enabled: '- (Optional) Whether the group is a security group for controlling access to in-app resources. At least one of security_enabled or mail_enabled must be specified. A Microsoft 365 group can be security enabled and mail enabled (see the types property).'
             theme: '- (Optional) The colour theme for a Microsoft 365 group. Possible values are Blue, Green, Orange, Pink, Purple, Red or Teal. By default, no theme is set.'
+            timeouts.create: '- (Defaults to 20 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 20 minutes) Used when updating the resource.'
             types: '- (Optional) A set of group types to configure for the group. Supported values are DynamicMembership, which denotes a group with dynamic membership, and Unified, which specifies a Microsoft 365 group. Required when mail_enabled is true. Changing this forces a new resource to be created.'
             visibility: '- (Optional) The group join policy and group content visibility. Possible values are Private, Public, or Hiddenmembership. Only Microsoft 365 groups can have Hiddenmembership visibility and this value must be set when the group is created. By default, security groups will receive Private visibility and Microsoft 365 groups will receive Public visibility.'
             writeback_enabled: '- (Optional) Whether the group will be written back to the configured on-premises Active Directory when Azure AD Connect is used.'
@@ -2133,8 +2285,106 @@ resources:
         argumentDocs:
             group_object_id: '- (Required) The object ID of the group you want to add the member to. Changing this forces a new resource to be created.'
             member_object_id: '- (Required) The object ID of the principal you want to add as a member to the group. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_group_member.example 00000000-0000-0000-0000-000000000000/member/11111111-1111-1111-1111-111111111111
+    azuread_group_role_management_policy:
+        subCategory: Policies
+        name: azuread_group_role_management_policy
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "active_assignment_rules": [
+                    {
+                      "expire_after": "P365D"
+                    }
+                  ],
+                  "eligible_assignment_rules": [
+                    {
+                      "expiration_required": false
+                    }
+                  ],
+                  "group_id": "${azuread_group.example.id}",
+                  "notification_rules": [
+                    {
+                      "eligible_assignments": [
+                        {
+                          "approver_notifications": [
+                            {
+                              "additional_recipients": [
+                                "someone@example.com",
+                                "someone.else@example.com"
+                              ],
+                              "default_recipients": false,
+                              "notification_level": "Critical"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "role_id": "member"
+                }
+              references:
+                group_id: azuread_group.example.id
+              dependencies:
+                azuread_group.example: |-
+                    {
+                      "display_name": "group-name",
+                      "security_enabled": true
+                    }
+                azuread_user.member: |-
+                    {
+                      "display_name": "J. Doe",
+                      "mail_nickname": "jdoe",
+                      "password": "SecretP@sswd99!",
+                      "user_principal_name": "jdoe@hashicorp.com"
+                    }
+        argumentDocs:
+            activation_rules: '- (Optional) An activation_rules block as defined below.'
+            activation_rules.approval_stage: '- (Optional) An approval_stage block as defined below.'
+            activation_rules.maximum_duration: '- (Optional) The maximum length of time an activated role can be valid, in an ISO8601 Duration format (e.g. PT8H). Valid range is PT30M to PT23H30M, in 30 minute increments, or PT1D.'
+            activation_rules.require_approval: '- (Optional) Is approval required for activation. If true an approval_stage block must be provided.'
+            activation_rules.require_justification: '- (Optional) Is a justification required during activation of the role.'
+            activation_rules.require_multifactor_authentication: '- (Optional) Is multi-factor authentication required to activate the role. Conflicts with required_conditional_access_authentication_context.'
+            activation_rules.require_ticket_info: '- (Optional) Is ticket information requrired during activation of the role.'
+            activation_rules.required_conditional_access_authentication_context: '- (Optional) The Entra ID Conditional Access context that must be present for activation (e.g c1). Conflicts with require_multifactor_authentication.'
+            active_assignment_rules: '- (Optional) An active_assignment_rules block as defined below.'
+            active_assignment_rules.expiration_required: '- (Optional) Must an assignment have an expiry date. false allows permanent assignment.'
+            active_assignment_rules.expire_after: '- (Optional) The maximum length of time an assignment can be valid, as an ISO8601 duration. Permitted values: P15D, P30D, P90D, P180D, or P365D.'
+            active_assignment_rules.require_justification: '- (Optional) Is a justification required to create new assignments.'
+            active_assignment_rules.require_multifactor_authentication: '- (Optional) Is multi-factor authentication required to create new assignments.'
+            active_assignment_rules.require_ticket_info: '- (Optional) Is ticket information required to create new assignments.'
+            approval_stage.primary_approver: blocks as defined below.
+            description: '- (String) The description of this policy.'
+            display_name: '- (String) The display name of this policy.'
+            eligible_assignment_rules: '- (Optional) An eligible_assignment_rules block as defined below.'
+            eligible_assignment_rules.expiration_required: '- Must an assignment have an expiry date. false allows permanent assignment.'
+            eligible_assignment_rules.expire_after: '- The maximum length of time an assignment can be valid, as an ISO8601 duration. Permitted values: P15D, P30D, P90D, P180D, or P365D.'
+            group_id: '- (Required) The ID of the Azure AD group for which the policy applies.'
+            id: '- (String) The ID of this policy.'
+            notification_rules: '- (Optional) A notification_rules block as defined below.'
+            notification_rules.active_assignments: '- (Optional) A notification_target block as defined below to configure notfications on active role assignments.'
+            notification_rules.eligible_activations: '- (Optional) A notification_target block as defined below for configuring notifications on activation of eligible role.'
+            notification_rules.eligible_assignments: '- (Optional) A notification_target block as defined below to configure notification on eligible role assignments.'
+            notification_settings.additional_recipients: '- (Optional) A list of additional email addresses that will receive these notifications.'
+            notification_settings.default_recipients: '- (Required) Should the default recipients receive these notifications.'
+            notification_settings.notification_level: '- (Required) What level of notifications should be sent. Options are All or Critical.'
+            notification_target.admin_notifications: '- (Optional) A notification_settings block as defined above.'
+            notification_target.approver_notifications: '- (Optional) A notification_settings block as defined above.'
+            notification_target.assignee_notifications: '- (Optional) A notification_settings block as defined above.'
+            primary_approver.object_id: '- (Required) The ID of the object which will act as an approver.'
+            primary_approver.type: '- (Required) The type of object acting as an approver. Possible options are singleUser and groupMembers.'
+            role_id: '- (Required) The type of assignment this policy coveres. Can be either member or owner.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
+        importStatements: []
     azuread_invitation:
         subCategory: Invitations
         name: azuread_invitation
@@ -2179,6 +2429,9 @@ resources:
             message.language: '- (Optional) The language you want to send the default message in. The value specified must be in ISO 639 format. Defaults to en-US. Cannot be specified with body.'
             redeem_url: '- The URL the user can use to redeem their invitation.'
             redirect_url: '- (Required) The URL that the user should be redirected to once the invitation is redeemed.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
             user_display_name: '- (Optional) The display name of the user being invited.'
             user_email_address: '- (Required) The email address of the user being invited.'
             user_id: '- Object ID of the invited user.'
@@ -2226,8 +2479,112 @@ resources:
             ip: '- (Optional) An ip block as documented below, which configures an IP-based named location.'
             ip.ip_ranges: '- (Required) List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596. Each CIDR prefix must be /8 or larger.'
             ip.trusted: '- (Optional) Whether the named location is trusted. Defaults to false.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_named_location.my_location 00000000-0000-0000-0000-000000000000
+    azuread_privileged_access_group_assignment_schedule:
+        subCategory: Identity Governance
+        name: azuread_privileged_access_group_assignment_schedule
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "assignment_type": "member",
+                  "duration": "P30D",
+                  "group_id": "${azuread_group.pim.id}",
+                  "justification": "as requested",
+                  "principal_id": "${azuread_user.member.id}"
+                }
+              references:
+                group_id: azuread_group.pim.id
+                principal_id: azuread_user.member.id
+              dependencies:
+                azuread_group.example: |-
+                    {
+                      "display_name": "group-name",
+                      "security_enabled": true
+                    }
+                azuread_user.member: |-
+                    {
+                      "display_name": "J. Doe",
+                      "mail_nickname": "jdoe",
+                      "password": "SecretP@sswd99!",
+                      "user_principal_name": "jdoe@hashicorp.com"
+                    }
+        argumentDocs:
+            assignment_type: (Required) The type of assignment to the group. Can be either member or owner.
+            duration: (Optional) The duration that this assignment is valid for, formatted as an ISO8601 duration (e.g. P30D for 30 days, PT3H for three hours).
+            expiration_date: (Optional) The date that this assignment expires, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
+            group_id: (Required) The Object ID of the Azure AD group to which the principal will be assigned.
+            id: '- (String) The ID of this request.'
+            justification: (Optional) The justification for this assignment. May be required by the role policy.
+            permanent_assignment: (Optional) Is this assigment permanently valid.
+            principal_id: (Required) The Object ID of the principal to be assigned to the above group. Can be either a user or a group.
+            start_date: (Optional) The date from which this assignment is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If not provided, the assignment is immediately valid.
+            status: '- (String) The provisioning status of this request.'
+            target_schedule_id: '- (String) The ID of this schedule created by this request.'
+            ticket_number: (Optional) The ticket number in the ticket system approving this assignment. May be required by the role policy.
+            ticket_system: (Optional) The ticket system containing the ticket number approving this assignment. May be required by the role policy.
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
+        importStatements:
+            - terraform import azuread_privileged_access_group_assignment_schedule.example 00000000-0000-0000-0000-000000000000_member_00000000-0000-0000-0000-000000000000
+    azuread_privileged_access_group_eligibility_schedule:
+        subCategory: Identity Governance
+        name: azuread_privileged_access_group_eligibility_schedule
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "assignment_type": "member",
+                  "duration": "P30D",
+                  "group_id": "${azuread_group.pim.id}",
+                  "justification": "as requested",
+                  "principal_id": "${azuread_user.member.id}"
+                }
+              references:
+                group_id: azuread_group.pim.id
+                principal_id: azuread_user.member.id
+              dependencies:
+                azuread_group.example: |-
+                    {
+                      "display_name": "group-name",
+                      "security_enabled": true
+                    }
+                azuread_user.member: |-
+                    {
+                      "display_name": "J. Doe",
+                      "mail_nickname": "jdoe",
+                      "password": "SecretP@sswd99!",
+                      "user_principal_name": "jdoe@hashicorp.com"
+                    }
+        argumentDocs:
+            assignment_type: (Required) The type of assignment to the group. Can be either member or owner.
+            duration: (Optional) The duration that this assignment is valid for, formatted as an ISO8601 duration (e.g. P30D for 30 days, PT3H for three hours).
+            expiration_date: (Optional) The date that this assignment expires, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
+            group_id: (Required) The Object ID of the Azure AD group to which the principal will be assigned.
+            id: '- (String) The ID of this request.'
+            justification: (Optional) The justification for this assignment. May be required by the role policy.
+            permanent_assignment: (Optional) Is this assigment permanently valid.
+            principal_id: (Required) The Object ID of the principal to be assigned to the above group. Can be either a user or a group.
+            start_date: (Optional) The date from which this assignment is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If not provided, the assignment is immediately valid.
+            status: '- (String) The provisioning status of this request.'
+            target_schedule_id: '- (String) The ID of this schedule created by this request.'
+            ticket_number: (Optional) The ticket number in the ticket system approving this assignment. May be required by the role policy.
+            ticket_system: (Optional) The ticket system containing the ticket number approving this assignment. May be required by the role policy.
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
+        importStatements:
+            - terraform import azuread_privileged_access_group_eligibility_schedule.example 00000000-0000-0000-0000-000000000000_member_00000000-0000-0000-0000-000000000000
     azuread_service_principal:
         subCategory: Service Principals
         name: azuread_service_principal
@@ -2337,6 +2694,10 @@ resources:
             sign_in_audience: '- The Microsoft account types that are supported for the associated application. Possible values include AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount.'
             tags: '- (Optional) A set of tags to apply to the service principal for configuring specific behaviours of the service principal. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.'
             tags.use_existing: '- (Optional) When true, any existing service principal linked to the same application will be automatically imported. When false, an import error will be raised for any pre-existing service principal.'
+            timeouts.create: '- (Defaults to 10 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 10 minutes) Used when updating the resource.'
             type: '- Identifies whether the service principal represents an application or a managed identity. Possible values include Application or ManagedIdentity.'
             user_consent_description: '- Delegated permission description that appears in the end user consent experience, intended to be read by a user consenting on their own behalf.'
             user_consent_display_name: '- Display name for the delegated permission that appears in the end user consent experience.'
@@ -2394,6 +2755,9 @@ resources:
             key_id: '- (Optional) A UUID used to uniquely identify this certificate. If not specified a UUID will be automatically generated. Changing this field forces a new resource to be created.'
             service_principal_id: '- (Required) The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.'
             start_date: '- (Optional) The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn''t specified, the value is determined by Azure Active Directory and is usually the start date of the certificate for asymmetric keys, or the current timestamp for symmetric keys. Changing this field forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
             type: '- (Required) The type of key/certificate. Must be one of AsymmetricX509Cert or Symmetric. Changing this fields forces a new resource to be created.'
             value: '- (Required) The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.'
         importStatements:
@@ -2416,6 +2780,9 @@ resources:
             claims_mapping_policy_id: '- (Required) The ID of the claims mapping policy to assign.'
             id: '- The ID of the Claims Mapping Policy Assignment.'
             service_principal_id: '- (Required) The object ID of the service principal for the policy assignment.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
             - terraform import azuread_service_principal_claims_mapping_policy_assignment.app 00000000-0000-0000-0000-000000000000/claimsMappingPolicy/11111111-0000-0000-0000-000000000000
     azuread_service_principal_delegated_permission_grant:
@@ -2458,11 +2825,11 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}"
+                      "client_id": "${azuread_application.example.application_id}"
                     }
                 azuread_service_principal.msgraph: |-
                     {
-                      "application_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
+                      "client_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
                       "use_existing": true
                     }
             - name: example
@@ -2502,11 +2869,11 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}"
+                      "client_id": "${azuread_application.example.application_id}"
                     }
                 azuread_service_principal.msgraph: |-
                     {
-                      "application_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
+                      "client_id": "${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}",
                       "use_existing": true
                     }
                 azuread_user.example: |-
@@ -2521,6 +2888,10 @@ resources:
             id: '- The ID of the delegated permission grant.'
             resource_service_principal_object_id: '- (Required) The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.'
             service_principal_object_id: '- (Required) The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
             user_object_id: '- (Optional) - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.'
         importStatements:
             - terraform import azuread_service_principal_delegated_permission_grant.example aaBBcDDeFG6h5JKLMN2PQrrssTTUUvWWxxxxxyyyzzz
@@ -2543,7 +2914,7 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}"
+                      "client_id": "${azuread_application.example.client_id}"
                     }
             - name: example
               manifest: |-
@@ -2562,7 +2933,7 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}"
+                      "client_id": "${azuread_application.example.client_id}"
                     }
                 time_rotating.example: |-
                     {
@@ -2576,6 +2947,9 @@ resources:
             rotate_when_changed: '- (Optional) A map of arbitrary key/value pairs that will force recreation of the password when they change, enabling password rotation based on external conditions such as a rotating timestamp. Changing this forces a new resource to be created.'
             service_principal_id: '- (Required) The object ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.'
             start_date: '- (Optional) The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn''t specified, the current date is used.  Changing this field forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
             value: '- The password for this service principal, which is generated by Azure Active Directory.'
         importStatements: []
     azuread_service_principal_token_signing_certificate:
@@ -2597,7 +2971,7 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}"
+                      "client_id": "${azuread_application.example.application_id}"
                     }
             - name: example
               manifest: |-
@@ -2615,20 +2989,19 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}"
+                      "client_id": "${azuread_application.example.application_id}"
                     }
         argumentDocs:
-            display_name: |-
-                - (Optional) Specifies a friendly name for the certificate.
-                Must start with CN=. Changing this field forces a new resource to be created.
+            display_name: '- (Optional) Specifies a friendly name for the certificate. Must start with CN=. Changing this field forces a new resource to be created.'
             end_date: '- (Optional) The end date until which the token signing certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.'
             key_id: '- A UUID used to uniquely identify the verify certificate.'
             service_principal_id: '- (Required) The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.'
             start_date: '- The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).'
             thumbprint: '- A SHA-1 generated thumbprint of the token signing certificate, which can be used to set the preferred signing certificate for a service principal.'
-            value: |-
-                - The certificate data, which is PEM encoded but does not include the
-                header -----BEGIN CERTIFICATE-----\n or the footer \n-----END CERTIFICATE-----.
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            value: '- The certificate data, which is PEM encoded but does not include the header -----BEGIN CERTIFICATE-----\n or the footer \n-----END CERTIFICATE-----.'
         importStatements:
             - terraform import azuread_service_principal_token_signing_certificate.example 00000000-0000-0000-0000-000000000000/tokenSigningCertificate/11111111-1111-1111-1111-111111111111
     azuread_synchronization_job:
@@ -2659,7 +3032,7 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}",
+                      "client_id": "${azuread_application.example.application_id}",
                       "use_existing": true
                     }
                 azuread_synchronization_secret.example: |-
@@ -2685,8 +3058,94 @@ resources:
             schedule.state: '- State of the job.'
             service_principal_id: '- (Required) The object ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.'
             template_id: '- (Required) Identifier of the synchronization template this job is based on.'
+            timeouts.create: '- (Defaults to 15 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_synchronization_job.example 00000000-0000-0000-0000-000000000000/job/dataBricks.f5532fc709734b1a90e8a1fa9fd03a82.8442fd39-2183-419c-8732-74b6ce866bd5
+    azuread_synchronization_job_provision_on_demand:
+        subCategory: Synchronization
+        name: azuread_synchronization_job_provision_on_demand
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "parameter": [
+                    {
+                      "rule_id": "",
+                      "subject": [
+                        {
+                          "object_id": "${azuread_group.example.object_id}",
+                          "object_type_name": "Group"
+                        }
+                      ]
+                    }
+                  ],
+                  "service_principal_id": "${azuread_service_principal.example.id}",
+                  "synchronization_job_id": "${azuread_synchronization_job.example.id}"
+                }
+              references:
+                parameter.subject.object_id: azuread_group.example.object_id
+                service_principal_id: azuread_service_principal.example.id
+                synchronization_job_id: azuread_synchronization_job.example.id
+              dependencies:
+                azuread_application.example: |-
+                    {
+                      "display_name": "example",
+                      "feature_tags": [
+                        {
+                          "enterprise": true,
+                          "gallery": true
+                        }
+                      ],
+                      "template_id": "${data.azuread_application_template.example.template_id}"
+                    }
+                azuread_group.example: |-
+                    {
+                      "display_name": "example",
+                      "owners": [
+                        "${data.azuread_client_config.current.object_id}"
+                      ],
+                      "security_enabled": true
+                    }
+                azuread_service_principal.example: |-
+                    {
+                      "client_id": "${azuread_application.example.client_id}",
+                      "use_existing": true
+                    }
+                azuread_synchronization_job.example: |-
+                    {
+                      "enabled": true,
+                      "service_principal_id": "${azuread_service_principal.example.id}",
+                      "template_id": "dataBricks"
+                    }
+                azuread_synchronization_secret.example: |-
+                    {
+                      "credential": [
+                        {
+                          "key": "BaseAddress",
+                          "value": "https://adb-example.azuredatabricks.net/api/2.0/preview/scim"
+                        },
+                        {
+                          "key": "SecretToken",
+                          "value": "some-token"
+                        }
+                      ],
+                      "service_principal_id": "${azuread_service_principal.example.id}"
+                    }
+        argumentDocs:
+            parameter: (Required) One or more parameter blocks as documented below.
+            parameter.rule_id: (Required) The identifier of the synchronization rule to be applied. This rule ID is defined in the schema for a given synchronization job or template.
+            parameter.subject: (Required) One or more subject blocks as documented below.
+            parameter.subject.object_id: '(String) The identifier of an object to which a synchronization job is to be applied. Can be one of the following: (1) An onPremisesDistinguishedName for synchronization from Active Directory to Azure AD. (2) The user ID for synchronization from Azure AD to a third-party. (3) The Worker ID of the Workday worker for synchronization from Workday to either Active Directory or Azure AD.'
+            parameter.subject.object_type_name: '(String) The type of the object to which a synchronization job is to be applied. Can be one of the following: user for synchronizing between Active Directory and Azure AD, User for synchronizing a user between Azure AD and a third-party application, Worker for synchronization a user between Workday and either Active Directory or Azure AD, Group for synchronizing a group between Azure AD and a third-party application.'
+            service_principal_id: (Required) The object ID of the service principal for the synchronization job.
+            synchronization_job_id: (Required) Identifier of the synchronization template this job is based on.
+            timeouts.create: '- (Defaults to 15 minutes) Used when creating the resource.'
+            triggers: (Optional) Map of arbitrary keys and values that, when changed, will trigger a re-invocation. To force a re-invocation without changing these keys/values, use the terraform taint command.
+        importStatements: []
     azuread_synchronization_secret:
         subCategory: Synchronization
         name: azuread_synchronization_secret
@@ -2723,7 +3182,7 @@ resources:
                     }
                 azuread_service_principal.example: |-
                     {
-                      "application_id": "${azuread_application.example.application_id}",
+                      "client_id": "${azuread_application.example.application_id}",
                       "use_existing": true
                     }
         argumentDocs:
@@ -2732,6 +3191,10 @@ resources:
             credential.value: '- (Required) The value of the secret.'
             id: '- An ID used to uniquely identify this synchronization sec.'
             service_principal_id: '- (Required) The object ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements: []
     azuread_user:
         subCategory: Users
@@ -2791,6 +3254,10 @@ resources:
             state: '- (Optional) The state or province in the user''s address.'
             street_address: '- (Optional) The street address of the user''s place of business.'
             surname: '- (Optional) The user''s surname (family name or last name).'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
             usage_location: '- (Optional) The usage location of the user. Required for users that will be assigned licenses due to legal requirement to check for availability of services in countries. The usage location is a two letter country code (ISO standard 3166). Examples include: NO, JP, and GB. Cannot be reset to null once set.'
             user_principal_name: '- (Required) The user principal name (UPN) of the user.'
             user_type: '- The user type in the directory. Possible values are Guest or Member.'
@@ -2814,5 +3281,9 @@ resources:
             description: '- (Required) The description of the user flow attribute that is shown to the user at the time of sign-up.'
             display_name: '- (Required) The display name of the user flow attribute. Changing this forces a new resource to be created.'
             id: '- An ID used to uniquely identify this user flow attribute.'
+            timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_user_flow_attribute.example extension_ecc9f88db2924942b8a96f44873616fe_Hobbyjkorv
