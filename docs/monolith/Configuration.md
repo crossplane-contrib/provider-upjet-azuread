@@ -2,24 +2,30 @@
 title: Configuration
 weight: 2
 ---
-# Azuread official provider documentation
-Upbound supports and maintains the Upbound Azuread official provider.
+
+# Configuration
 
 ## Install the provider
+
 ### Prerequisites
+
 #### Upbound Up command-line
+
 The Upbound Up command-line simplifies configuration and management of Upbound
 Universal Crossplane (UXP) and interacts with the Upbound Marketplace to manage
 users and accounts.
 
 Install `up` with the command:
+
 ```shell
 curl -sL "https://cli.upbound.io" | sh
 ```
+
 More information about the Up command-line is available in the [Upbound Up
 documentation](https://docs.upbound.io/cli/).
 
 #### Upbound Universal Crossplane
+
 UXP is the Upbound official enterprise-grade distribution of Crossplane for
 self-hosted control planes. Only Upbound Universal Crossplane (UXP) supports
 official providers.
@@ -59,10 +65,14 @@ NAME           INSTALLED   HEALTHY   PACKAGE                                    
 provider-azuread   True        True      xpkg.upbound.io/upbound/provider-azuread:v0.1.0  62s
 ```
 
-View the Crossplane [Provider CRD definition](https://doc.crds.dev/github.com/crossplane/crossplane/pkg.crossplane.io/Provider/v1) to view all available `Provider` options.
+View the
+Crossplane [Provider CRD definition](https://doc.crds.dev/github.com/crossplane/crossplane/pkg.crossplane.io/Provider/v1)
+to view all available `Provider` options.
 
 ## Configure the provider
-The Azuread provider requires credentials for authentication to Azuread Cloud Platform. The Azuread provider consumes the credentials from a Kubernetes secret object.
+
+The Azuread provider requires credentials for authentication to Azuread Cloud Platform. The Azuread provider consumes
+the credentials from a Kubernetes secret object.
 
 ### Install Azure CLI
 
@@ -81,7 +91,7 @@ Follow the Azure documentation to [find your Subscription
 ID](https://docs.microsoft.com/en-us/azure/azure-portal/get-subscription-tenant-id)
 from the Azure Portal.
 
-Using the Azure command-line, provide your Subscription ID to create a  service
+Using the Azure command-line, provide your Subscription ID to create a service
 principal and an authentication file.
 
 ```shell
@@ -91,6 +101,7 @@ az ad sp create-for-rbac --sdk-auth --role Owner --scopes /subscriptions/<Subscr
 ```
 
 Here is an example key file:
+
 ```json
 {
   "clientId": "00000000-0000-0000-0000-000000000000",
@@ -113,6 +124,7 @@ Use the JSON file to generate a Kubernetes secret.
 `kubectl create secret generic azuread-secret --from-file=creds=./azuread.json`
 
 ### Create a ProviderConfig object
+
 Apply the secret in a `ProviderConfig` Kubernetes configuration file.
 
 ```yaml
@@ -129,4 +141,5 @@ spec:
       key: creds
 ```
 
-**Note:** the `spec.credentials.secretRef.name` must match the `name` in the `kubectl create secret generic <name>` command.
+**Note:** the `spec.credentials.secretRef.name` must match the `name` in the `kubectl create secret generic <name>`
+command.

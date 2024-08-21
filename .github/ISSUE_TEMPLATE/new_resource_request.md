@@ -2,10 +2,10 @@
 name: New Resource Request
 about: Help us know what resource you need is missing.
 labels: new-resource
-title: "Request for `azuread_application` resource"
+title: "Request for `INSERT NAME` resource"
 ---
 <!--
-Thank you for helping to improve Official Azuread Provider!
+Thank you for helping to improve this provider!
 
 Please be sure to search for open issues before raising a new one. We use issues
 for bug reports and feature requests.
@@ -13,7 +13,7 @@ for bug reports and feature requests.
 
 ### What resource do you need?
 
-Azuread Resource Name: 
+Terraform Resource Name:
 <!--
 Please let us know the name of the resource you need.
 -->
