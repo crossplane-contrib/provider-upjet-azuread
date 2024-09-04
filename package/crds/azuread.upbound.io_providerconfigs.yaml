@@ -108,6 +108,9 @@ spec:
                     enum:
                     - None
                     - Secret
+                    - InjectedIdentity
+                    - Environment
+                    - Filesystem
                     - UserAssignedManagedIdentity
                     - SystemAssignedManagedIdentity
                     - OIDCTokenFile
