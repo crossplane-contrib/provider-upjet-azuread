@@ -15,8 +15,7 @@ import (
 
 type TokenSigningCertificateInitParameters struct {
 
-	// Specifies a friendly name for the certificate.
-	// Must start with CN=. Changing this field forces a new resource to be created.
+	// Specifies a friendly name for the certificate. Must start with CN=. Changing this field forces a new resource to be created.
 	// A friendly name for the certificate
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
@@ -40,8 +39,7 @@ type TokenSigningCertificateInitParameters struct {
 
 type TokenSigningCertificateObservation struct {
 
-	// Specifies a friendly name for the certificate.
-	// Must start with CN=. Changing this field forces a new resource to be created.
+	// Specifies a friendly name for the certificate. Must start with CN=. Changing this field forces a new resource to be created.
 	// A friendly name for the certificate
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
 
@@ -70,8 +68,7 @@ type TokenSigningCertificateObservation struct {
 
 type TokenSigningCertificateParameters struct {
 
-	// Specifies a friendly name for the certificate.
-	// Must start with CN=. Changing this field forces a new resource to be created.
+	// Specifies a friendly name for the certificate. Must start with CN=. Changing this field forces a new resource to be created.
 	// A friendly name for the certificate
 	// +kubebuilder:validation:Optional
 	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`

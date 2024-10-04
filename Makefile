@@ -13,7 +13,7 @@ export TERRAFORM_VERSION := 1.5.5
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/azuread
 export TERRAFORM_DOCS_PATH := docs/resources
 export TERRAFORM_PROVIDER_REPO := https://github.com/hashicorp/terraform-provider-azuread
-export TERRAFORM_PROVIDER_VERSION := 2.47.0
+export TERRAFORM_PROVIDER_VERSION := 2.53.1
 
 PLATFORMS ?= linux_amd64 linux_arm64
 

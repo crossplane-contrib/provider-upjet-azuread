@@ -50,7 +50,7 @@ metadata:
   name: example-secret
   namespace: upbound-system
 type: Opaque
-stringData: 
+stringData:
   BaseAddress: https://adb-example.azuredatabricks.net/api/2.0/preview/scim
   SecretToken: some-token
 ---
@@ -64,7 +64,7 @@ metadata:
   name: example
 spec:
   forProvider:
-    applicationIdSelector:
+    clientIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
     useExisting: true
@@ -85,5 +85,3 @@ spec:
     featureTags:
       - enterprise: true
         gallery: true
-
- 
