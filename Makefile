@@ -95,6 +95,9 @@ XPKG_IGNORE = kustomize/*,crds/kustomization.yaml
 
 -include build/makelib/xpkg.mk
 
+# Set to true to enable the cleanup examples step in the build process
+export XPKG_CLEANUP_EXAMPLES_ENABLED = true
+
 # NOTE(hasheddan): we force image building to happen prior to xpkg build so that
 # we ensure image is present in daemon.
 xpkg.build.provider-azuread: do.build.images
