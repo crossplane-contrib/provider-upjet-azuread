@@ -92,6 +92,8 @@ XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/upbound
 XPKGS = $(PROJECT_NAME)
 XPKG_DIR = $(OUTPUT_DIR)/package
 XPKG_IGNORE = kustomize/*,crds/kustomization.yaml
+# Set to true to enable the cleanup examples step in the build process
+XPKG_CLEANUP_EXAMPLES_ENABLED = true
 
 -include build/makelib/xpkg.mk
 
