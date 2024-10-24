@@ -1923,7 +1923,7 @@ spec:
                     type: array
                   groupMembershipClaims:
                     description: |-
-                      Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+                      A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
                       Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
                     items:
                       type: string
@@ -2055,6 +2055,27 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  password:
+                    description: |-
+                      A single password block as documented below. The password is generated during creation. By default, no password is generated.
+                      App password definition
+                    properties:
+                      displayName:
+                        description: |-
+                          A display name for the password. Changing this field forces a new resource to be created.
+                          A display name for the password
+                        type: string
+                      endDate:
+                        description: |-
+                          The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
+                          The end date until which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`)
+                        type: string
+                      startDate:
+                        description: |-
+                          The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
+                          The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
+                        type: string
+                    type: object
                   preventDuplicateNames:
                     description: |-
                       If true, will return an error if an existing application is found with the same name. Defaults to false.
@@ -2370,7 +2391,7 @@ spec:
                     type: array
                   groupMembershipClaims:
                     description: |-
-                      Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+                      A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
                       Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
                     items:
                       type: string
@@ -2502,6 +2523,27 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  password:
+                    description: |-
+                      A single password block as documented below. The password is generated during creation. By default, no password is generated.
+                      App password definition
+                    properties:
+                      displayName:
+                        description: |-
+                          A display name for the password. Changing this field forces a new resource to be created.
+                          A display name for the password
+                        type: string
+                      endDate:
+                        description: |-
+                          The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
+                          The end date until which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`)
+                        type: string
+                      startDate:
+                        description: |-
+                          The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
+                          The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
+                        type: string
+                    type: object
                   preventDuplicateNames:
                     description: |-
                       If true, will return an error if an existing application is found with the same name. Defaults to false.
@@ -3002,7 +3044,7 @@ spec:
                     type: array
                   groupMembershipClaims:
                     description: |-
-                      Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+                      A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
                       Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
                     items:
                       type: string
@@ -3154,6 +3196,32 @@ spec:
                       type: string
                     type: array
                     x-kubernetes-list-type: set
+                  password:
+                    description: |-
+                      A single password block as documented below. The password is generated during creation. By default, no password is generated.
+                      App password definition
+                    properties:
+                      displayName:
+                        description: |-
+                          A display name for the password. Changing this field forces a new resource to be created.
+                          A display name for the password
+                        type: string
+                      endDate:
+                        description: |-
+                          The end date until which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). Changing this field forces a new resource to be created.
+                          The end date until which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`)
+                        type: string
+                      keyId:
+                        description: |-
+                          The unique key ID for the generated password.
+                          A UUID used to uniquely identify this password credential
+                        type: string
+                      startDate:
+                        description: |-
+                          The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
+                          The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
+                        type: string
+                    type: object
                   preventDuplicateNames:
                     description: |-
                       If true, will return an error if an existing application is found with the same name. Defaults to false.

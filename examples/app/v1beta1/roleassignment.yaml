@@ -31,7 +31,7 @@ metadata:
   name: example
 spec:
   forProvider:
-    applicationIdSelector:
+    clientIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
 ---
@@ -67,6 +67,6 @@ metadata:
   name: msgraph
 spec:
   forProvider:
-    # I got this id from "data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph" 
+    # I got this id from "data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph"
     applicationId: 00000003-0000-0000-c000-000000000000
     useExisting: true
