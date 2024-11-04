@@ -113,7 +113,7 @@ func (tr *Password) GetMergedParameters(shouldMergeInitProvider bool) (map[strin
 // LateInitialize this Password using its observed tfState.
 // returns True if there are any spec changes for the resource.
 func (tr *Password) LateInitialize(attrs []byte) (bool, error) {
-	params := &PasswordParameters{}
+	params := &PasswordParameters_2{}
 	if err := json.TFParser.Unmarshal(attrs, params); err != nil {
 		return false, errors.Wrap(err, "failed to unmarshal Terraform state parameters for late-initialization")
 	}
