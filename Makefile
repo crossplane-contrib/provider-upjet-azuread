@@ -13,7 +13,7 @@ export TERRAFORM_VERSION := 1.5.5
 export TERRAFORM_PROVIDER_SOURCE := hashicorp/azuread
 export TERRAFORM_DOCS_PATH := docs/resources
 export TERRAFORM_PROVIDER_REPO := https://github.com/hashicorp/terraform-provider-azuread
-export TERRAFORM_PROVIDER_VERSION := 2.47.0
+export TERRAFORM_PROVIDER_VERSION := 2.53.1
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -243,6 +243,13 @@ schema-version-diff:
 	git cat-file -p "$${GITHUB_BASE_REF}:config/schema.json" > "$(WORK_DIR)/schema.json.$${PREV_PROVIDER_VERSION}"; \
 	./scripts/version_diff.py config/generated.lst "$(WORK_DIR)/schema.json.$${PREV_PROVIDER_VERSION}" config/schema.json
 	@$(OK) Checking for native state schema version changes
+
+go.lint.analysiskey-interval:
+	@# cache is invalidated at least every 7 days
+	@echo -n golangci-lint.cache-$$(( $$(date +%s) / (7 * 86400) ))-
+
+go.lint.analysiskey:
+	@echo $$(make go.lint.analysiskey-interval)$$(sha1sum go.sum | cut -d' ' -f1)
 
 .PHONY: cobertura submodules fallthrough run crds.clean uptest e2e crddiff schema-version-diff
 

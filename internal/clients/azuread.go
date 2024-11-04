@@ -52,12 +52,15 @@ const (
 	keyUseOIDC                  = "use_oidc"
 	// Default OidcTokenFilePath
 	defaultOidcTokenFilePath = "/var/run/secrets/azure/tokens/azure-identity-token"
+	// Upbound Auth OidcTokenFilePath
+	upboundProviderIdentityTokenFile = "/var/run/secrets/upbound.io/provider/token"
 )
 
 var (
 	credentialsSourceUserAssignedManagedIdentity   xpv1.CredentialsSource = "UserAssignedManagedIdentity"
 	credentialsSourceSystemAssignedManagedIdentity xpv1.CredentialsSource = "SystemAssignedManagedIdentity"
 	credentialsSourceOIDCTokenFile                 xpv1.CredentialsSource = "OIDCTokenFile"
+	credentialsSourceUpbound                       xpv1.CredentialsSource = "Upbound"
 )
 
 // TerraformSetupBuilder returns Terraform setup with provider specific
@@ -91,6 +94,8 @@ func TerraformSetupBuilder(tfProvider *schema.Provider) terraform.SetupFn { //no
 			err = msiAuth(pc, &ps)
 		case credentialsSourceOIDCTokenFile:
 			err = oidcAuth(pc, &ps)
+		case credentialsSourceUpbound:
+			err = upboundAuth(pc, &ps)
 		default:
 			err = spAuth(ctx, pc, &ps, client)
 		}
@@ -179,5 +184,18 @@ func oidcAuth(pc *v1beta1.ProviderConfig, ps *terraform.Setup) error {
 	ps.Configuration[keyClientID] = *pc.Spec.ClientID
 	ps.Configuration[keyUseOIDC] = "true"
 	return nil
+}
 
+func upboundAuth(pc *v1beta1.ProviderConfig, ps *terraform.Setup) error {
+	if pc.Spec.TenantID == nil || len(*pc.Spec.TenantID) == 0 {
+		return errors.New(errTenantIDNotSet)
+	}
+	if pc.Spec.ClientID == nil || len(*pc.Spec.ClientID) == 0 {
+		return errors.New(errClientIDNotSet)
+	}
+	ps.Configuration[keyOidcTokenFilePath] = upboundProviderIdentityTokenFile
+	ps.Configuration[keyTenantID] = *pc.Spec.TenantID
+	ps.Configuration[keyClientID] = *pc.Spec.ClientID
+	ps.Configuration[keyUseOIDC] = "true"
+	return nil
 }

@@ -114,6 +114,7 @@ spec:
                     - UserAssignedManagedIdentity
                     - SystemAssignedManagedIdentity
                     - OIDCTokenFile
+                    - Upbound
                     type: string
                 required:
                 - source
