@@ -244,6 +244,13 @@ schema-version-diff:
 	./scripts/version_diff.py config/generated.lst "$(WORK_DIR)/schema.json.$${PREV_PROVIDER_VERSION}" config/schema.json
 	@$(OK) Checking for native state schema version changes
 
+go.lint.analysiskey-interval:
+	@# cache is invalidated at least every 7 days
+	@echo -n golangci-lint.cache-$$(( $$(date +%s) / (7 * 86400) ))-
+
+go.lint.analysiskey:
+	@echo $$(make go.lint.analysiskey-interval)$$(sha1sum go.sum | cut -d' ' -f1)
+
 .PHONY: cobertura submodules fallthrough run crds.clean uptest e2e crddiff schema-version-diff
 
 # ====================================================================================
