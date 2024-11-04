@@ -21,7 +21,7 @@ func (mg *Application) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Application
 func (tr *Application) GetConnectionDetailsMapping() map[string]string {
-	return nil
+	return map[string]string{"password[*].value": "status.atProvider.password[*].value"}
 }
 
 // GetObservation of this Application

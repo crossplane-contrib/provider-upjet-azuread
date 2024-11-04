@@ -60,7 +60,7 @@ type GroupInitParameters struct {
 	// Indicates whether new members added to the group will be auto-subscribed to receive email notifications.
 	AutoSubscribeNewMembers *bool `json:"autoSubscribeNewMembers,omitempty" tf:"auto_subscribe_new_members,omitempty"`
 
-	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
+	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SkipExchangeInstantOn, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
 	// The group behaviours for a Microsoft 365 group
 	// +listType=set
 	Behaviors []*string `json:"behaviors,omitempty" tf:"behaviors,omitempty"`
@@ -157,7 +157,7 @@ type GroupObservation struct {
 	// Indicates whether new members added to the group will be auto-subscribed to receive email notifications.
 	AutoSubscribeNewMembers *bool `json:"autoSubscribeNewMembers,omitempty" tf:"auto_subscribe_new_members,omitempty"`
 
-	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
+	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SkipExchangeInstantOn, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
 	// The group behaviours for a Microsoft 365 group
 	// +listType=set
 	Behaviors []*string `json:"behaviors,omitempty" tf:"behaviors,omitempty"`
@@ -295,7 +295,7 @@ type GroupParameters struct {
 	// +kubebuilder:validation:Optional
 	AutoSubscribeNewMembers *bool `json:"autoSubscribeNewMembers,omitempty" tf:"auto_subscribe_new_members,omitempty"`
 
-	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
+	// A set of behaviors for a Microsoft 365 group. Possible values are AllowOnlyMembersToPost, HideGroupInOutlook, SkipExchangeInstantOn, SubscribeMembersToCalendarEventsDisabled, SubscribeNewGroupMembers and WelcomeEmailDisabled. See official documentation for more details. Changing this forces a new resource to be created.
 	// The group behaviours for a Microsoft 365 group
 	// +kubebuilder:validation:Optional
 	// +listType=set
