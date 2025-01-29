@@ -27,6 +27,20 @@ type AccessGroupEligibilityScheduleInitParameters struct {
 	// The date that this assignment expires, formatted as an RFC3339 date string in UTC (e.g. 2018-01-01T01:02:03Z)
 	ExpirationDate *string `json:"expirationDate,omitempty" tf:"expiration_date,omitempty"`
 
+	// The Object ID of the Azure AD group to which the principal will be assigned.
+	// The ID of the Group representing the scope of the assignment
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/groups/v1beta2.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractResourceID()
+	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
+
+	// Reference to a Group in groups to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDRef *v1.Reference `json:"groupIdRef,omitempty" tf:"-"`
+
+	// Selector for a Group in groups to populate groupId.
+	// +kubebuilder:validation:Optional
+	GroupIDSelector *v1.Selector `json:"groupIdSelector,omitempty" tf:"-"`
+
 	// The justification for this assignment. May be required by the role policy.
 	// The justification for the assignment
 	Justification *string `json:"justification,omitempty" tf:"justification,omitempty"`

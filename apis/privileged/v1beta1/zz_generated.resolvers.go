@@ -64,6 +64,25 @@ func (mg *AccessGroupAssignmentSchedule) ResolveReferences( // ResolveReferences
 	mg.Spec.ForProvider.PrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.PrincipalIDRef = rsp.ResolvedReference
 	{
+		m, l, err = apisresolver.GetManagedResource("groups.azuread.upbound.io", "v1beta2", "Group", "GroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.GroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.GroupIDRef,
+			Selector:     mg.Spec.InitProvider.GroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.GroupID")
+	}
+	mg.Spec.InitProvider.GroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.GroupIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("users.azuread.upbound.io", "v1beta1", "User", "UserList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -132,6 +151,25 @@ func (mg *AccessGroupEligibilitySchedule) ResolveReferences(ctx context.Context,
 	}
 	mg.Spec.ForProvider.PrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.PrincipalIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("groups.azuread.upbound.io", "v1beta2", "Group", "GroupList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.GroupID),
+			Extract:      resource.ExtractResourceID(),
+			Reference:    mg.Spec.InitProvider.GroupIDRef,
+			Selector:     mg.Spec.InitProvider.GroupIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.GroupID")
+	}
+	mg.Spec.InitProvider.GroupID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.GroupIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("users.azuread.upbound.io", "v1beta1", "User", "UserList")
 		if err != nil {

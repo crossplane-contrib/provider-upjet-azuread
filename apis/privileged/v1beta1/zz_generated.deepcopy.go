@@ -58,6 +58,21 @@ func (in *AccessGroupAssignmentScheduleInitParameters) DeepCopyInto(out *AccessG
 		*out = new(string)
 		**out = **in
 	}
+	if in.GroupID != nil {
+		in, out := &in.GroupID, &out.GroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.GroupIDRef != nil {
+		in, out := &in.GroupIDRef, &out.GroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.GroupIDSelector != nil {
+		in, out := &in.GroupIDSelector, &out.GroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.Justification != nil {
 		in, out := &in.Justification, &out.Justification
 		*out = new(string)
@@ -381,6 +396,21 @@ func (in *AccessGroupEligibilityScheduleInitParameters) DeepCopyInto(out *Access
 		in, out := &in.ExpirationDate, &out.ExpirationDate
 		*out = new(string)
 		**out = **in
+	}
+	if in.GroupID != nil {
+		in, out := &in.GroupID, &out.GroupID
+		*out = new(string)
+		**out = **in
+	}
+	if in.GroupIDRef != nil {
+		in, out := &in.GroupIDRef, &out.GroupIDRef
+		*out = new(v1.Reference)
+		(*in).DeepCopyInto(*out)
+	}
+	if in.GroupIDSelector != nil {
+		in, out := &in.GroupIDSelector, &out.GroupIDSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.Justification != nil {
 		in, out := &in.Justification, &out.Justification

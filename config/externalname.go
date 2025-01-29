@@ -4,7 +4,14 @@
 
 package config
 
-import "github.com/crossplane/upjet/pkg/config"
+import (
+	"context"
+	"fmt"
+
+	"github.com/crossplane/upjet/pkg/config"
+
+	"github.com/pkg/errors"
+)
 
 // terraformPluginSDKExternalNameConfigs contains all external name configurations for this
 // provider.
@@ -118,16 +125,41 @@ var terraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 
 	// 00000000-0000-0000-0000-000000000000_member_00000000-0000-0000-0000-00000000
 	// {group_id}_member_{eligibility_schedule_request_id}
-	"azuread_privileged_access_group_assignment_schedule": config.TemplatedStringAsIdentifier("name", "{{ .parameters.group_id }}_member_{{ .external_name }}"),
+	"azuread_privileged_access_group_assignment_schedule": privilegedAccessGroupIDConf(),
 	// 00000000-0000-0000-0000-000000000000_member_00000000-0000-0000-0000-00000000
 	// {group_id}_member_{eligibility_schedule_request_id}
-	"azuread_privileged_access_group_eligibility_schedule": config.TemplatedStringAsIdentifier("name", "{{ .parameters.group_id }}_member_{{ .external_name }}"),
+	"azuread_privileged_access_group_eligibility_schedule": privilegedAccessGroupIDConf(),
 }
 
 // cliReconciledExternalNameConfigs contains all external name configurations
 // belonging to Terraform resources to be reconciled under the CLI-based
 // architecture for this provider.
 var cliReconciledExternalNameConfigs = map[string]config.ExternalName{}
+
+func privilegedAccessGroupIDConf() config.ExternalName {
+	e := config.IdentifierFromProvider
+	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
+		target_schedule_id, ok := tfstate["target_schedule_id"]
+		if !ok {
+			return "", errors.New("cannot get target_schedule_id")
+		}
+
+		return target_schedule_id.(string), nil
+	}
+	e.GetIDFn = func(_ context.Context, externalName string, parameters map[string]interface{}, _ map[string]interface{}) (string, error) {
+		groupId, ok := parameters["group_id"]
+		if !ok {
+			return "", errors.New("cannot get group_id")
+		}
+
+		if len(externalName) == 0 {
+			return "", nil
+		}
+
+		return fmt.Sprintf("%s_member_%s", groupId, externalName), nil
+	}
+	return e
+}
 
 // resourceConfigurator applies all external name configs
 // listed in the table terraformPluginSDKExternalNameConfigs and
