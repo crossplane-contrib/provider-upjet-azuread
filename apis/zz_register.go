@@ -22,6 +22,7 @@ import (
 	v1beta1invitations "github.com/upbound/provider-azuread/apis/invitations/v1beta1"
 	v1beta2invitations "github.com/upbound/provider-azuread/apis/invitations/v1beta2"
 	v1beta1policies "github.com/upbound/provider-azuread/apis/policies/v1beta1"
+	v1beta1privileged "github.com/upbound/provider-azuread/apis/privileged/v1beta1"
 	v1beta1serviceprincipaldelegated "github.com/upbound/provider-azuread/apis/serviceprincipaldelegated/v1beta1"
 	v1beta1serviceprincipals "github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta1"
 	v1beta2serviceprincipals "github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2"
@@ -46,6 +47,7 @@ func init() {
 		v1beta1invitations.SchemeBuilder.AddToScheme,
 		v1beta2invitations.SchemeBuilder.AddToScheme,
 		v1beta1policies.SchemeBuilder.AddToScheme,
+		v1beta1privileged.SchemeBuilder.AddToScheme,
 		v1beta1serviceprincipaldelegated.SchemeBuilder.AddToScheme,
 		v1beta1serviceprincipals.SchemeBuilder.AddToScheme,
 		v1beta2serviceprincipals.SchemeBuilder.AddToScheme,
