@@ -4,14 +4,7 @@
 
 package config
 
-import (
-	"context"
-	"fmt"
-
-	"github.com/crossplane/upjet/pkg/config"
-
-	"github.com/pkg/errors"
-)
+import "github.com/crossplane/upjet/pkg/config"
 
 // terraformPluginSDKExternalNameConfigs contains all external name configurations for this
 // provider.
