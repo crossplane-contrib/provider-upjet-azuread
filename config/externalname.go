@@ -139,12 +139,12 @@ var cliReconciledExternalNameConfigs = map[string]config.ExternalName{}
 func privilegedAccessGroupIDConf() config.ExternalName {
 	e := config.IdentifierFromProvider
 	e.GetExternalNameFn = func(tfstate map[string]any) (string, error) {
-		target_schedule_id, ok := tfstate["target_schedule_id"]
+		id, ok := tfstate["id"]
 		if !ok {
-			return "", errors.New("cannot get target_schedule_id")
+			return "", errors.New("cannot get id")
 		}
 
-		return target_schedule_id.(string), nil
+		return id.(string), nil
 	}
 	e.GetIDFn = func(_ context.Context, externalName string, parameters map[string]interface{}, _ map[string]interface{}) (string, error) {
 		groupId, ok := parameters["group_id"]
