@@ -45,10 +45,25 @@ metadata:
   name: member
 spec:
   forProvider:
-    displayName: J. Doe
-    mailNickname: jdoe
+    userPrincipalName: testuser_upbound.io#EXT#@devopsupbound.onmicrosoft.com
+    displayName: testuser
     passwordSecretRef:
-      key: example-key
-      name: example-secret
+      key: credentials
+      name: member-secret
       namespace: upbound-system
-    userPrincipalName: jdoe@hashicorp.com
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privileged/v1beta1/accessgroupeligibilityschedule
+  labels:
+    testing.upbound.io/example-name: member
+  name: member-secret
+  namespace: upbound-system
+type: Opaque
+stringData:
+  credentials: SecretP@sswd99!
+
