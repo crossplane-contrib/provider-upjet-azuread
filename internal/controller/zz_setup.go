@@ -26,6 +26,8 @@ import (
 	membergroups "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
 	claimsmappingpolicy "github.com/upbound/provider-azuread/internal/controller/policies/claimsmappingpolicy"
+	accessgroupassignmentschedule "github.com/upbound/provider-azuread/internal/controller/privileged/accessgroupassignmentschedule"
+	accessgroupeligibilityschedule "github.com/upbound/provider-azuread/internal/controller/privileged/accessgroupeligibilityschedule"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
 	permissiongrant "github.com/upbound/provider-azuread/internal/controller/serviceprincipaldelegated/permissiongrant"
 	certificateserviceprincipals "github.com/upbound/provider-azuread/internal/controller/serviceprincipals/certificate"
@@ -59,6 +61,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		membergroups.Setup,
 		invitation.Setup,
 		claimsmappingpolicy.Setup,
+		accessgroupassignmentschedule.Setup,
+		accessgroupeligibilityschedule.Setup,
 		providerconfig.Setup,
 		permissiongrant.Setup,
 		certificateserviceprincipals.Setup,

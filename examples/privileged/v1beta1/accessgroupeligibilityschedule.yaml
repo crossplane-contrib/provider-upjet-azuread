@@ -1,0 +1,69 @@
+apiVersion: privileged.azuread.upbound.io/v1beta1
+kind: AccessGroupEligibilitySchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privileged/v1beta1/accessgroupeligibilityschedule
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    assignmentType: member
+    duration: P30D
+    groupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: pim
+    justification: as requested
+    principalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: member
+
+---
+
+apiVersion: groups.azuread.upbound.io/v1beta2
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privileged/v1beta1/accessgroupeligibilityschedule
+  labels:
+    testing.upbound.io/example-name: pim
+  name: pim
+spec:
+  forProvider:
+    displayName: group-name
+    securityEnabled: true
+
+---
+
+apiVersion: users.azuread.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privileged/v1beta1/accessgroupeligibilityschedule
+  labels:
+    testing.upbound.io/example-name: member
+  name: member
+spec:
+  forProvider:
+    userPrincipalName: testuser_upbound.io#EXT#@devopsupbound.onmicrosoft.com
+    displayName: testuser
+    passwordSecretRef:
+      key: credentials
+      name: member-secret
+      namespace: upbound-system
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  annotations:
+    meta.upbound.io/example-id: privileged/v1beta1/accessgroupeligibilityschedule
+  labels:
+    testing.upbound.io/example-name: member
+  name: member-secret
+  namespace: upbound-system
+type: Opaque
+stringData:
+  credentials: SecretP@sswd99!
+
