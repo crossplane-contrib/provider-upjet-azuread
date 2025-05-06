@@ -12,6 +12,8 @@ import (
 
 	"github.com/crossplane/upjet/pkg/resource"
 	"github.com/crossplane/upjet/pkg/resource/json"
+
+	"github.com/crossplane/crossplane-runtime/pkg/meta"
 )
 
 // GetTerraformResourceType returns Terraform resource type for this Group
@@ -127,4 +129,13 @@ func (tr *Group) LateInitialize(attrs []byte) (bool, error) {
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *Group) GetTerraformSchemaVersion() int {
 	return 0
+}
+
+// SetExternalName ensures the external name annotation is set from the provider's object ID after creation.
+func (tr *Group) SetExternalName() {
+	if tr.Status.AtProvider.ID != nil && *tr.Status.AtProvider.ID != "" {
+		meta.SetExternalName(tr, *tr.Status.AtProvider.ID)
+	} else if tr.Status.AtProvider.ObjectID != nil && *tr.Status.AtProvider.ObjectID != "" {
+		meta.SetExternalName(tr, *tr.Status.AtProvider.ObjectID)
+	}
 }
