@@ -717,6 +717,9 @@ resources:
                     }
                   ]
                 }
+              references:
+                api.known_client_applications: azuread_application.known1.application_id
+                owners: data.azuread_client_config.current.object_id
             - name: example
               manifest: |-
                 {
@@ -733,6 +736,7 @@ resources:
                   ]
                 }
               references:
+                owners: data.azuread_client_config.current.object_id
                 password.start_date: time_rotating.example.id
               dependencies:
                 time_rotating.example: |-
@@ -863,6 +867,8 @@ resources:
               references:
                 api_client_id: data.azuread_application_published_app_ids.well_known.result["MicrosoftGraph"]
                 application_id: azuread_application_registration.example.id
+                role_ids: data.azuread_service_principal.msgraph.app_role_ids["Group.Read.All"]
+                scope_ids: data.azuread_service_principal.msgraph.oauth2_permission_scope_ids["User.ReadWrite"]
               dependencies:
                 azuread_application_registration.example: |-
                     {
@@ -1241,6 +1247,7 @@ resources:
                 }
               references:
                 application_id: azuread_application_registration.example.id
+                known_client_ids: azuread_application_registration.client.client_id
               dependencies:
                 azuread_application_registration.client: |-
                     {
@@ -1841,6 +1848,8 @@ resources:
                   ],
                   "state": "disabled"
                 }
+              references:
+                conditions.client_applications.included_service_principals: data.azuread_client_config.current.object_id
             - name: example
               manifest: |-
                 {
@@ -1886,6 +1895,8 @@ resources:
                   ],
                   "state": "disabled"
                 }
+              references:
+                conditions.client_applications.excluded_service_principals: data.azuread_client_config.current.object_id
         argumentDocs:
             client_applications.excluded_service_principals: '- (Optional) A list of service principal IDs explicitly excluded in the policy.'
             client_applications.included_service_principals: '- (Optional) A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.'
@@ -2159,6 +2170,8 @@ resources:
                   ],
                   "security_enabled": true
                 }
+              references:
+                owners: data.azuread_client_config.current.object_id
             - name: example
               manifest: |-
                 {
@@ -2174,6 +2187,8 @@ resources:
                     "Unified"
                   ]
                 }
+              references:
+                owners: data.azuread_client_config.current.object_id
               dependencies:
                 azuread_user.group_owner: |-
                     {
@@ -2194,6 +2209,9 @@ resources:
                   ],
                   "security_enabled": true
                 }
+              references:
+                members: azuread_user.example.object_id
+                owners: data.azuread_client_config.current.object_id
               dependencies:
                 azuread_user.example: |-
                     {
@@ -2222,6 +2240,8 @@ resources:
                     "DynamicMembership"
                   ]
                 }
+              references:
+                owners: data.azuread_client_config.current.object_id
         argumentDocs:
             administrative_unit_ids: '- (Optional) The object IDs of administrative units in which the group is a member. If specified, new groups will be created in the scope of the first administrative unit and added to the others. If empty, new groups will be created at the tenant level.'
             assignable_to_role: '- (Optional) Indicates whether this group can be assigned to an Azure Active Directory role. Defaults to false. Can only be set to true for security-enabled groups. Changing this forces a new resource to be created.'
@@ -2601,6 +2621,7 @@ resources:
                 }
               references:
                 client_id: azuread_application.example.client_id
+                owners: data.azuread_client_config.current.object_id
               dependencies:
                 azuread_application.example: |-
                     {
@@ -2626,6 +2647,7 @@ resources:
                 }
               references:
                 client_id: azuread_application.example.client_id
+                owners: data.azuread_client_config.current.object_id
               dependencies:
                 azuread_application.example: |-
                     {

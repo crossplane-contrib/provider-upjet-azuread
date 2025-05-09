@@ -99,8 +99,18 @@ type GroupInitParameters struct {
 
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals. Cannot be used with the dynamic_membership block.
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// References to User in users to populate members.
+	// +kubebuilder:validation:Optional
+	MembersRefs []v1.Reference `json:"membersRefs,omitempty" tf:"-"`
+
+	// Selector for a list of User in users to populate members.
+	// +kubebuilder:validation:Optional
+	MembersSelector *v1.Selector `json:"membersSelector,omitempty" tf:"-"`
 
 	// The on-premises group type that the AAD group will be written as, when writeback is enabled. Possible values are UniversalDistributionGroup, UniversalMailEnabledSecurityGroup, or UniversalSecurityGroup.
 	// Indicates the target on-premise group type the group will be written back as
@@ -343,9 +353,19 @@ type GroupParameters struct {
 
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals. Cannot be used with the dynamic_membership block.
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
+
+	// References to User in users to populate members.
+	// +kubebuilder:validation:Optional
+	MembersRefs []v1.Reference `json:"membersRefs,omitempty" tf:"-"`
+
+	// Selector for a list of User in users to populate members.
+	// +kubebuilder:validation:Optional
+	MembersSelector *v1.Selector `json:"membersSelector,omitempty" tf:"-"`
 
 	// The on-premises group type that the AAD group will be written as, when writeback is enabled. Possible values are UniversalDistributionGroup, UniversalMailEnabledSecurityGroup, or UniversalSecurityGroup.
 	// Indicates the target on-premise group type the group will be written back as

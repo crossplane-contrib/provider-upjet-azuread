@@ -9,6 +9,7 @@
 package v1beta2
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -199,6 +200,18 @@ func (in *GroupInitParameters) DeepCopyInto(out *GroupInitParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.MembersRefs != nil {
+		in, out := &in.MembersRefs, &out.MembersRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.MembersSelector != nil {
+		in, out := &in.MembersSelector, &out.MembersSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.OnpremisesGroupType != nil {
 		in, out := &in.OnpremisesGroupType, &out.OnpremisesGroupType
@@ -609,6 +622,18 @@ func (in *GroupParameters) DeepCopyInto(out *GroupParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.MembersRefs != nil {
+		in, out := &in.MembersRefs, &out.MembersRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.MembersSelector != nil {
+		in, out := &in.MembersSelector, &out.MembersSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.OnpremisesGroupType != nil {
 		in, out := &in.OnpremisesGroupType, &out.OnpremisesGroupType
