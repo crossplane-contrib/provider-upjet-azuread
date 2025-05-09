@@ -9,9 +9,9 @@ metadata:
 spec:
   forProvider:
     api:
-    - knownClientApplications:
-      - ${azuread_application.known1.application_id}
-      - ${azuread_application.known2.application_id}
+    - knownClientApplicationsRefs:
+      - name: known1
+      - name: known2
       mappedClaimsEnabled: true
       oauth2PermissionScope:
       - adminConsentDescription: Allow the application to access example on behalf

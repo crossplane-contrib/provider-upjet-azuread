@@ -17,8 +17,18 @@ type APIInitParameters struct {
 
 	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
 	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
+
+	// References to Application in applications to populate knownClientApplications.
+	// +kubebuilder:validation:Optional
+	KnownClientApplicationsRefs []v1.Reference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Application in applications to populate knownClientApplications.
+	// +kubebuilder:validation:Optional
+	KnownClientApplicationsSelector *v1.Selector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
 	// Allows an application to use claims mapping without specifying a custom signing key
@@ -57,9 +67,19 @@ type APIParameters struct {
 
 	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
+
+	// References to Application in applications to populate knownClientApplications.
+	// +kubebuilder:validation:Optional
+	KnownClientApplicationsRefs []v1.Reference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Application in applications to populate knownClientApplications.
+	// +kubebuilder:validation:Optional
+	KnownClientApplicationsSelector *v1.Selector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
 	// Allows an application to use claims mapping without specifying a custom signing key

@@ -9,6 +9,7 @@
 package v1beta2
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -25,6 +26,18 @@ func (in *APIInitParameters) DeepCopyInto(out *APIInitParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.KnownClientApplicationsRefs != nil {
+		in, out := &in.KnownClientApplicationsRefs, &out.KnownClientApplicationsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.KnownClientApplicationsSelector != nil {
+		in, out := &in.KnownClientApplicationsSelector, &out.KnownClientApplicationsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.MappedClaimsEnabled != nil {
 		in, out := &in.MappedClaimsEnabled, &out.MappedClaimsEnabled
@@ -111,6 +124,18 @@ func (in *APIParameters) DeepCopyInto(out *APIParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.KnownClientApplicationsRefs != nil {
+		in, out := &in.KnownClientApplicationsRefs, &out.KnownClientApplicationsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.KnownClientApplicationsSelector != nil {
+		in, out := &in.KnownClientApplicationsSelector, &out.KnownClientApplicationsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.MappedClaimsEnabled != nil {
 		in, out := &in.MappedClaimsEnabled, &out.MappedClaimsEnabled
