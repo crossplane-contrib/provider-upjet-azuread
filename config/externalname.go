@@ -18,6 +18,9 @@ var terraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// azuread_application can be imported using their object ID
 	"azuread_application": config.IdentifierFromProvider,
+	// Application App Roles can be imported using the object ID of the application and the ID of the app role
+	// /applications/00000000-0000-0000-0000-000000000000/appRoles/11111111-1111-1111-1111-111111111111
+	"azuread_application_app_role": config.IdentifierFromProvider,
 	// azuread_application_certificate can be imported using the object ID of the associated application and the key ID of the certificate credential:
 	// {ObjectId}/certificate/{CertificateKeyId}
 	// 00000000-0000-0000-0000-000000000000/certificate/11111111-1111-1111-1111-111111111111

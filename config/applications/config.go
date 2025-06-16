@@ -21,6 +21,14 @@ func Configure(p *config.Provider) {
 			},
 		}
 	})
+	p.AddResourceConfigurator("azuread_application_app_role", func(r *config.Resource) {
+		r.References["application_id"] = config.Reference{
+			TerraformName: "azuread_application",
+		}
+		// We need to override the default group that upjet generated for
+		// this resource, which would be "azuread"
+		r.ShortGroup = group
+	})
 	p.AddResourceConfigurator("azuread_application_certificate", func(r *config.Resource) {
 		r.References["application_object_id"] = config.Reference{
 			TerraformName: "azuread_application",

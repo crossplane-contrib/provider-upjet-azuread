@@ -13,6 +13,7 @@ import (
 	unit "github.com/upbound/provider-azuread/internal/controller/administrativeunits/unit"
 	roleassignment "github.com/upbound/provider-azuread/internal/controller/app/roleassignment"
 	application "github.com/upbound/provider-azuread/internal/controller/applications/application"
+	approle "github.com/upbound/provider-azuread/internal/controller/applications/approle"
 	certificate "github.com/upbound/provider-azuread/internal/controller/applications/certificate"
 	federatedidentitycredential "github.com/upbound/provider-azuread/internal/controller/applications/federatedidentitycredential"
 	password "github.com/upbound/provider-azuread/internal/controller/applications/password"
@@ -46,6 +47,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		unit.Setup,
 		roleassignment.Setup,
 		application.Setup,
+		approle.Setup,
 		certificate.Setup,
 		federatedidentitycredential.Setup,
 		password.Setup,
