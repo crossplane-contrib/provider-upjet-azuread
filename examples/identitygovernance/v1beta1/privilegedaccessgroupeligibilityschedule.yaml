@@ -1,0 +1,67 @@
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: PrivilegedAccessGroupEligibilitySchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupeligibilityschedule
+    upjet.upbound.io/manual-intervention: "The service principal needs PrivilegedEligibilitySchedule.ReadWrite.AzureADGroup permission on the Entra ID tenant, for the tests to pass. In addition user must have the required license. Could not create assignment schedule request, PrivilegedAccessGroupEligibilityScheduleRequestsClient.BaseClient.Post(): unexpected status 400 with OData error: AadPremiumLicenseRequired: The tenant needs to have Microsoft Entra ID P2 or Microsoft Entra ID Governance license."
+  labels:
+    testing.upbound.io/example-name: privilegedaccessgroupeligibilityschedule
+  name: privilegedaccessgroupeligibilityschedule
+spec:
+  forProvider:
+    assignmentType: member
+    duration: P30D
+    groupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: privilegedaccessgroupeligibilityschedule-pim
+    justification: as requested
+    principalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: privilegedaccessgroupeligibilityschedule-member
+
+---
+
+apiVersion: groups.azuread.upbound.io/v1beta2
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupeligibilityschedule
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-privilegedaccessgroupeligibilityschedule.sh
+  labels:
+    testing.upbound.io/example-name: privilegedaccessgroupeligibilityschedule-pim
+  name: privilegedaccessgroupeligibilityschedule
+spec:
+  forProvider:
+    displayName: privilegedaccessgroupeligibilityschedule
+    securityEnabled: true
+
+---
+
+apiVersion: users.azuread.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupeligibilityschedule
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-privilegedaccessgroupeligibilityschedule.sh
+  labels:
+    testing.upbound.io/example-name: privilegedaccessgroupeligibilityschedule-member
+  name: privilegedaccessgroupeligibilityschedule
+spec:
+  forProvider:
+    displayName: privilegedaccessgroupeligibilityschedule
+    mailNickname: privilegedaccessgroupeligibilityschedule
+    passwordSecretRef:
+      key: credentials
+      name: privilegedaccessgroupeligibilityschedule
+      namespace: upbound-system
+    userPrincipalName: privilegedaccessgroupeligibilityschedule@changeme.onmicrosoft.com
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: privilegedaccessgroupeligibilityschedule
+  namespace: upbound-system
+type: Opaque
+stringData: 
+  credentials: SecretP@sswd99!
