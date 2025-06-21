@@ -28,6 +28,7 @@ import (
 	"github.com/upbound/provider-azuread/config/conditionalaccess"
 	"github.com/upbound/provider-azuread/config/directoryroles"
 	"github.com/upbound/provider-azuread/config/groups"
+	"github.com/upbound/provider-azuread/config/identitygovernance"
 	"github.com/upbound/provider-azuread/config/invitations"
 	"github.com/upbound/provider-azuread/config/policies"
 	"github.com/upbound/provider-azuread/config/serviceprincipaldelegated"
@@ -139,6 +140,7 @@ func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provid
 		directoryroles.Configure,
 		app.Configure,
 		serviceprincipaldelegated.Configure,
+		identitygovernance.Configure,
 	} {
 		configure(pc)
 	}

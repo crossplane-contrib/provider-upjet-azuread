@@ -25,6 +25,8 @@ import (
 	roleassignmentdirectoryroles "github.com/upbound/provider-azuread/internal/controller/directoryroles/roleassignment"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	membergroups "github.com/upbound/provider-azuread/internal/controller/groups/member"
+	privilegedaccessgroupassignmentschedule "github.com/upbound/provider-azuread/internal/controller/identitygovernance/privilegedaccessgroupassignmentschedule"
+	privilegedaccessgroupeligibilityschedule "github.com/upbound/provider-azuread/internal/controller/identitygovernance/privilegedaccessgroupeligibilityschedule"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
 	claimsmappingpolicy "github.com/upbound/provider-azuread/internal/controller/policies/claimsmappingpolicy"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/providerconfig"
@@ -59,6 +61,8 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		roleassignmentdirectoryroles.Setup,
 		group.Setup,
 		membergroups.Setup,
+		privilegedaccessgroupassignmentschedule.Setup,
+		privilegedaccessgroupeligibilityschedule.Setup,
 		invitation.Setup,
 		claimsmappingpolicy.Setup,
 		providerconfig.Setup,

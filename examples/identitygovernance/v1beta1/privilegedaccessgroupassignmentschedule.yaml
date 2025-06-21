@@ -1,0 +1,67 @@
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: PrivilegedAccessGroupAssignmentSchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupassignmentschedule
+    upjet.upbound.io/manual-intervention: "The service principal needs PrivilegedAssignmentSchedule.ReadWrite.AzureADGroup p permission on the Entra ID tenant, for the tests to pass. In addition user must have the required license. Could not create assignment schedule request, PrivilegedAccessGroupEligibilityScheduleRequestsClient.BaseClient.Post(): unexpected status 400 with OData error: AadPremiumLicenseRequired: The tenant needs to have Microsoft Entra ID P2 or Microsoft Entra ID Governance license."
+  labels:
+    testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule 
+  name: privilegedaccessgroupassignmentschedule
+spec:
+  forProvider:
+    assignmentType: member
+    duration: P30D
+    groupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule-pim
+    justification: as requested
+    principalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule-member
+
+---
+
+apiVersion: groups.azuread.upbound.io/v1beta2
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupassignmentschedule
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-privilegedaccessgroupassignmentschedule.sh
+  labels:
+    testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule-pim
+  name: privilegedaccessgroupassignmentschedule
+spec:
+  forProvider:
+    displayName: privilegedaccessgroupassignmentschedule
+    securityEnabled: true
+
+---
+
+apiVersion: users.azuread.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupassignmentschedule
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-privilegedaccessgroupassignmentschedule.sh
+  labels:
+    testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule-member
+  name: privilegedaccessgroupassignmentschedule
+spec:
+  forProvider:
+    displayName: privilegedaccessgroupassignmentschedule
+    mailNickname: privilegedaccessgroupassignmentschedule
+    passwordSecretRef:
+      key: credentials
+      name: privilegedaccessgroupassignmentschedule
+      namespace: upbound-system
+    userPrincipalName: privilegedaccessgroupassignmentschedule@changeme.onmicrosoft.com
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: privilegedaccessgroupassignmentschedule
+  namespace: upbound-system
+type: Opaque
+stringData: 
+  credentials: SecretP@sswd99!
