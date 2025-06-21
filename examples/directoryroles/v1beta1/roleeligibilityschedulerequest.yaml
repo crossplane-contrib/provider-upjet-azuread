@@ -1,0 +1,63 @@
+apiVersion: directoryroles.azuread.upbound.io/v1beta1
+kind: RoleEligibilityScheduleRequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleeligibilityschedulerequest
+    upjet.upbound.io/manual-intervention: "The service principal needs RoleEligibilitySchedule.ReadWrite.Directory or RoleManagement.ReadWrite.Directory permission on the Entra ID tenant, for the tests to pass. In addition user tenant needs to have Microsoft Entra ID P2 or Microsoft Entra ID Governance license."
+  labels:
+    testing.upbound.io/example-name: roleeligibilityschedulerequest
+  name: roleeligibilityschedulerequest
+spec:
+  forProvider:
+    directoryScopeId: /
+    justification: Example
+    principalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: roleeligibilityschedulerequest
+    roleDefinitionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: roleeligibilityschedulerequest
+
+---
+
+apiVersion: directoryroles.azuread.upbound.io/v1beta1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleeligibilityschedulerequest
+  labels:
+    testing.upbound.io/example-name: roleeligibilityschedulerequest
+  name: roleeligibilityschedulerequest
+spec:
+  forProvider:
+    displayName: Application Administrator
+
+---
+
+apiVersion: users.azuread.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleeligibilityschedulerequest
+  labels:
+    testing.upbound.io/example-name: roleeligibilityschedulerequest
+  name: roleeligibilityschedulerequest
+spec:
+  forProvider:
+    displayName: roleeligibilityschedulerequest
+    mailNickname: roleeligibilityschedulerequest
+    passwordSecretRef:
+      key: credentials
+      name: roleeligibilityschedulerequest
+      namespace: upbound-system
+    userPrincipalName: roleeligibilityschedulerequest@changeme.onmicrosoft.com
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: roleeligibilityschedulerequest
+  namespace: upbound-system
+type: Opaque
+stringData: 
+  credentials: SecretP@sswd99!

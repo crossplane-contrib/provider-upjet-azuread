@@ -186,3 +186,63 @@ func (mg *RoleAssignment) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectio
 func (mg *RoleAssignment) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
+
+// GetCondition of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetPublishConnectionDetailsTo of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
+	return mg.Spec.PublishConnectionDetailsTo
+}
+
+// GetWriteConnectionSecretToReference of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetPublishConnectionDetailsTo of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
+	mg.Spec.PublishConnectionDetailsTo = r
+}
+
+// SetWriteConnectionSecretToReference of this RoleEligibilityScheduleRequest.
+func (mg *RoleEligibilityScheduleRequest) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}

@@ -41,4 +41,14 @@ func Configure(p *config.Provider) {
 			},
 		}
 	})
+	p.AddResourceConfigurator("azuread_directory_role_eligibility_schedule_request", func(r *config.Resource) {
+		r.References["role_definition_id"] = config.Reference{
+			TerraformName: "azuread_directory_role",
+			Extractor:     `github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)`,
+		}
+
+		// We need to override the default group that upjet generated for
+		// this resource, which would be "azuread"
+		r.ShortGroup = group
+	})
 }

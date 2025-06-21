@@ -23,6 +23,7 @@ import (
 	customdirectoryrole "github.com/upbound/provider-azuread/internal/controller/directoryroles/customdirectoryrole"
 	role "github.com/upbound/provider-azuread/internal/controller/directoryroles/role"
 	roleassignmentdirectoryroles "github.com/upbound/provider-azuread/internal/controller/directoryroles/roleassignment"
+	roleeligibilityschedulerequest "github.com/upbound/provider-azuread/internal/controller/directoryroles/roleeligibilityschedulerequest"
 	group "github.com/upbound/provider-azuread/internal/controller/groups/group"
 	membergroups "github.com/upbound/provider-azuread/internal/controller/groups/member"
 	invitation "github.com/upbound/provider-azuread/internal/controller/invitations/invitation"
@@ -57,6 +58,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		customdirectoryrole.Setup,
 		role.Setup,
 		roleassignmentdirectoryroles.Setup,
+		roleeligibilityschedulerequest.Setup,
 		group.Setup,
 		membergroups.Setup,
 		invitation.Setup,

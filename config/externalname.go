@@ -106,6 +106,8 @@ var terraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	"azuread_directory_role": config.IdentifierFromProvider,
 	// azuread_directory_role_assignment can be imported using the ID of the assignment
 	"azuread_directory_role_assignment": config.IdentifierFromProvider,
+	// Directory role eligibility schedule requests can be imported using the ID of the assignment
+	"azuread_directory_role_eligibility_schedule_request": config.IdentifierFromProvider,
 
 	// app
 	//
