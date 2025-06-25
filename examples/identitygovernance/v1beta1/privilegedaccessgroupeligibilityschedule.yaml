@@ -7,7 +7,6 @@ kind: PrivilegedAccessGroupEligibilitySchedule
 metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupeligibilityschedule
-    upjet.upbound.io/manual-intervention: "The service principal needs PrivilegedEligibilitySchedule.ReadWrite.AzureADGroup permission on the Entra ID tenant, for the tests to pass. In addition user must have the required license. Could not create assignment schedule request, PrivilegedAccessGroupEligibilityScheduleRequestsClient.BaseClient.Post(): unexpected status 400 with OData error: AadPremiumLicenseRequired: The tenant needs to have Microsoft Entra ID P2 or Microsoft Entra ID Governance license."
   labels:
     testing.upbound.io/example-name: privilegedaccessgroupeligibilityschedule
   name: privilegedaccessgroupeligibilityschedule
@@ -58,7 +57,7 @@ spec:
       key: credentials
       name: privilegedaccessgroupeligibilityschedule
       namespace: upbound-system
-    userPrincipalName: privilegedaccessgroupeligibilityschedule@changeme.onmicrosoft.com
+    userPrincipalName: privilegedaccessgroupeligibilityschedule@devopsupbound.onmicrosoft.com
 
 ---
 apiVersion: v1
