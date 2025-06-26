@@ -19,6 +19,7 @@ import (
 	v1beta1directoryroles "github.com/upbound/provider-azuread/apis/directoryroles/v1beta1"
 	v1beta1groups "github.com/upbound/provider-azuread/apis/groups/v1beta1"
 	v1beta2groups "github.com/upbound/provider-azuread/apis/groups/v1beta2"
+	v1beta1identitygovernance "github.com/upbound/provider-azuread/apis/identitygovernance/v1beta1"
 	v1beta1invitations "github.com/upbound/provider-azuread/apis/invitations/v1beta1"
 	v1beta2invitations "github.com/upbound/provider-azuread/apis/invitations/v1beta2"
 	v1beta1policies "github.com/upbound/provider-azuread/apis/policies/v1beta1"
@@ -43,6 +44,7 @@ func init() {
 		v1beta1directoryroles.SchemeBuilder.AddToScheme,
 		v1beta1groups.SchemeBuilder.AddToScheme,
 		v1beta2groups.SchemeBuilder.AddToScheme,
+		v1beta1identitygovernance.SchemeBuilder.AddToScheme,
 		v1beta1invitations.SchemeBuilder.AddToScheme,
 		v1beta2invitations.SchemeBuilder.AddToScheme,
 		v1beta1policies.SchemeBuilder.AddToScheme,
