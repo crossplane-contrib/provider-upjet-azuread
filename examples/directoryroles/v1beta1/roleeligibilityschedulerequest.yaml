@@ -1,0 +1,66 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: directoryroles.azuread.upbound.io/v1beta1
+kind: RoleEligibilityScheduleRequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleeligibilityschedulerequest
+  labels:
+    testing.upbound.io/example-name: roleeligibilityschedulerequest
+  name: roleeligibilityschedulerequest
+spec:
+  forProvider:
+    directoryScopeId: /
+    justification: Example
+    principalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: roleeligibilityschedulerequest
+    roleDefinitionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: roleeligibilityschedulerequest
+
+---
+
+apiVersion: directoryroles.azuread.upbound.io/v1beta1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleeligibilityschedulerequest
+  labels:
+    testing.upbound.io/example-name: roleeligibilityschedulerequest
+  name: roleeligibilityschedulerequest
+spec:
+  forProvider:
+    displayName: Application Administrator
+
+---
+
+apiVersion: users.azuread.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleeligibilityschedulerequest
+  labels:
+    testing.upbound.io/example-name: roleeligibilityschedulerequest
+  name: roleeligibilityschedulerequest
+spec:
+  forProvider:
+    displayName: roleeligibilityschedulerequest
+    mailNickname: roleeligibilityschedulerequest
+    passwordSecretRef:
+      key: credentials
+      name: roleeligibilityschedulerequest
+      namespace: upbound-system
+    userPrincipalName: roleeligibilityschedulerequest@devopsupbound.onmicrosoft.com
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: roleeligibilityschedulerequest
+  namespace: upbound-system
+type: Opaque
+stringData: 
+  credentials: SecretP@sswd99!
