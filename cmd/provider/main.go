@@ -38,6 +38,7 @@ import (
 	"github.com/upbound/provider-azuread/apis/v1alpha1"
 	"github.com/upbound/provider-azuread/config"
 	resolverapis "github.com/upbound/provider-azuread/internal/apis"
+	"github.com/upbound/provider-azuread/internal/bootcheck"
 	"github.com/upbound/provider-azuread/internal/clients"
 	"github.com/upbound/provider-azuread/internal/controller"
 	"github.com/upbound/provider-azuread/internal/features"
@@ -49,6 +50,13 @@ const (
 	certsDirEnvVar          = "CERTS_DIR"
 	tlsServerCertDir        = "/tls/server"
 )
+
+func init() {
+	err := bootcheck.CheckEnv()
+	if err != nil {
+		log.Fatalf("bootcheck failed. provider will not be started: %v", err)
+	}
+}
 
 func main() {
 	var (
