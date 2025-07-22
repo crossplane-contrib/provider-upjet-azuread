@@ -15,13 +15,17 @@ import (
 	"github.com/alecthomas/kingpin/v2"
 	xpcontroller "github.com/crossplane/crossplane-runtime/pkg/controller"
 	"github.com/crossplane/crossplane-runtime/pkg/feature"
+	"github.com/crossplane/crossplane-runtime/pkg/gate"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
+	"github.com/crossplane/crossplane-runtime/pkg/reconciler/customresourcesgate"
 	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
 	"github.com/crossplane/crossplane-runtime/pkg/statemetrics"
 	tjcontroller "github.com/crossplane/upjet/pkg/controller"
 	"github.com/crossplane/upjet/pkg/controller/conversion"
 	"github.com/hashicorp/terraform-provider-azuread/xpprovider"
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
@@ -138,6 +142,7 @@ func main() {
 	kingpin.FatalIfError(resolverapis.BuildScheme(clusterapis.AddToSchemes), "Cannot register the cluster-scoped AzureAD APIs with the API resolver's runtime scheme")
 	kingpin.FatalIfError(namespacedapis.AddToScheme(mgr.GetScheme()), "Cannot add namespaced Azuread APIs to scheme")
 	kingpin.FatalIfError(resolverapis.BuildScheme(namespacedapis.AddToSchemes), "Cannot register the namespaced AzureAD APIs with the API resolver's runtime scheme")
+	kingpin.FatalIfError(apiextensionsv1.AddToScheme(mgr.GetScheme()), "Cannot register k8s apiextensions APIs to scheme")
 
 	metricRecorder := managed.NewMRMetricRecorder()
 	stateMetrics := statemetrics.NewMRStateMetrics()
@@ -152,6 +157,7 @@ func main() {
 	kingpin.FatalIfError(err, "Cannot initialize the cluster provider configuration")
 	namespacedProvider, err := namespacedconfig.GetProvider(ctx, sdkProvider, false)
 	kingpin.FatalIfError(err, "Cannot initialize the namespaced provider configuration")
+	crdGate := new(gate.Gate[schema.GroupVersionKind])
 	clusterOpts := tjcontroller.Options{
 		Options: xpcontroller.Options{
 			Logger:                  logr,
@@ -164,6 +170,7 @@ func main() {
 				MRMetrics:               metricRecorder,
 				MRStateMetrics:          stateMetrics,
 			},
+			Gate: crdGate,
 		},
 		Provider:              clusterProvider,
 		SetupFn:               clients.TerraformSetupBuilder(clusterProvider.TerraformProvider),
@@ -184,6 +191,7 @@ func main() {
 				MRMetrics:               metricRecorder,
 				MRStateMetrics:          stateMetrics,
 			},
+			Gate: crdGate,
 		},
 		Provider:              namespacedProvider,
 		SetupFn:               clients.TerraformSetupBuilder(namespacedProvider.TerraformProvider),
@@ -198,8 +206,9 @@ func main() {
 		logr.Info("Beta feature enabled", "flag", features.EnableBetaManagementPolicies)
 	}
 
+	kingpin.FatalIfError(customresourcesgate.Setup(mgr, namespacedOpts.Options), "Cannot setup CRD gate")
 	kingpin.FatalIfError(conversion.RegisterConversions(clusterOpts.Provider, namespacedOpts.Provider, mgr.GetScheme()), "Cannot initialize the webhook conversion registry")
-	kingpin.FatalIfError(clustercontroller.Setup(mgr, clusterOpts), "Cannot setup cluster-scoped AzureAD controllers")
-	kingpin.FatalIfError(namespacedcontroller.Setup(mgr, namespacedOpts), "Cannot setup namespaced AzureAD controllers")
+	kingpin.FatalIfError(clustercontroller.SetupGated(mgr, clusterOpts), "Cannot setup cluster-scoped AzureAD controllers")
+	kingpin.FatalIfError(namespacedcontroller.SetupGated(mgr, namespacedOpts), "Cannot setup namespaced AzureAD controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
