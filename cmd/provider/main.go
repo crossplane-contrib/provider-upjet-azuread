@@ -6,27 +6,22 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"log"
 	"os"
 	"path/filepath"
 	"time"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/certificates"
+	"github.com/alecthomas/kingpin/v2"
 	xpcontroller "github.com/crossplane/crossplane-runtime/pkg/controller"
 	"github.com/crossplane/crossplane-runtime/pkg/feature"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
 	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	"github.com/crossplane/crossplane-runtime/pkg/statemetrics"
 	tjcontroller "github.com/crossplane/upjet/pkg/controller"
 	"github.com/crossplane/upjet/pkg/controller/conversion"
-	"gopkg.in/alecthomas/kingpin.v2"
-	kerrors "k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/hashicorp/terraform-provider-azuread/xpprovider"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
@@ -34,13 +29,15 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
-	"github.com/upbound/provider-azuread/apis"
-	"github.com/upbound/provider-azuread/apis/v1alpha1"
-	"github.com/upbound/provider-azuread/config"
+	clusterapis "github.com/upbound/provider-azuread/apis/cluster"
+	namespacedapis "github.com/upbound/provider-azuread/apis/namespaced"
+	clusterconfig "github.com/upbound/provider-azuread/config/cluster"
+	namespacedconfig "github.com/upbound/provider-azuread/config/namespaced"
 	resolverapis "github.com/upbound/provider-azuread/internal/apis"
 	"github.com/upbound/provider-azuread/internal/bootcheck"
 	"github.com/upbound/provider-azuread/internal/clients"
-	"github.com/upbound/provider-azuread/internal/controller"
+	clustercontroller "github.com/upbound/provider-azuread/internal/controller/cluster"
+	namespacedcontroller "github.com/upbound/provider-azuread/internal/controller/namespaced"
 	"github.com/upbound/provider-azuread/internal/features"
 )
 
@@ -60,31 +57,15 @@ func init() {
 
 func main() {
 	var (
-		app               = kingpin.New(filepath.Base(os.Args[0]), "Terraform based Crossplane provider for Azuread").DefaultEnvars()
-		deprecationAction = func(flagName string) kingpin.Action {
-			return func(c *kingpin.ParseContext) error {
-				_, err := fmt.Fprintf(os.Stderr, "warning: Command-line flag %q is deprecated and no longer used. It will be removed in a future release. Please remove it from all of your configurations (ControllerConfigs, etc.).\n", flagName)
-				kingpin.FatalIfError(err, "Failed to print the deprecation notice.")
-				return nil
-			}
-		}
+		app                     = kingpin.New(filepath.Base(os.Args[0]), "Terraform based Crossplane provider for Azuread").DefaultEnvars()
 		debug                   = app.Flag("debug", "Run with debug logging.").Short('d').Bool()
 		syncPeriod              = app.Flag("sync", "Controller manager sync period such as 300ms, 1.5h, or 2h45m").Short('s').Default("1h").Duration()
 		pollInterval            = app.Flag("poll", "Poll interval controls how often an individual resource should be checked for drift.").Default("10m").Duration()
 		pollStateMetricInterval = app.Flag("poll-state-metric", "State metric recording interval").Default("5s").Duration()
 		leaderElection          = app.Flag("leader-election", "Use leader election for the controller manager.").Short('l').Default("false").OverrideDefaultFromEnvar("LEADER_ELECTION").Bool()
 		maxReconcileRate        = app.Flag("max-reconcile-rate", "The global maximum rate per second at which resources may checked for drift from the desired state.").Default("10").Int()
-		// now deprecated command-line arguments with the Terraform SDK-based upjet architecture
-		_ = app.Flag("terraform-version", "[DEPRECATED: This option is no longer used and it will be removed in a future release.] Terraform version.").Envar("TERRAFORM_VERSION").Hidden().Action(deprecationAction("terraform-version")).String()
-		_ = app.Flag("terraform-provider-version", "[DEPRECATED: This option is no longer used and it will be removed in a future release.] Terraform provider version.").Envar("TERRAFORM_PROVIDER_VERSION").Hidden().Action(deprecationAction("terraform-provider-version")).String()
-		_ = app.Flag("terraform-native-provider-path", "[DEPRECATED: This option is no longer used and it will be removed in a future release.] Terraform native provider path for shared execution.").Default("").Envar("TERRAFORM_NATIVE_PROVIDER_PATH").Hidden().Action(deprecationAction("terraform-native-provider-path")).String()
-		_ = app.Flag("terraform-provider-source", "[DEPRECATED: This option is no longer used and it will be removed in a future release.] Terraform provider source.").Envar("TERRAFORM_PROVIDER_SOURCE").Hidden().Action(deprecationAction("terraform-provider-source")).String()
-		_ = app.Flag("provider-ttl", "[DEPRECATED: This option is no longer used and it will be removed in a future release.] TTL for the native plugin processes before they are replaced. Changing the default may increase memory consumption.").Default("100").Hidden().Action(deprecationAction("provider-ttl")).Int()
 
-		namespace                  = app.Flag("namespace", "Namespace used to set as default scope in default secret store config.").Default("crossplane-system").Envar("POD_NAMESPACE").String()
-		enableExternalSecretStores = app.Flag("enable-external-secret-stores", "Enable support for ExternalSecretStores.").Default("false").Envar("ENABLE_EXTERNAL_SECRET_STORES").Bool()
-		essTLSCertsPath            = app.Flag("ess-tls-cert-dir", "Path of ESS TLS certificates.").Envar("ESS_TLS_CERTS_DIR").String()
-		enableManagementPolicies   = app.Flag("enable-management-policies", "Enable support for Management Policies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
+		enableManagementPolicies = app.Flag("enable-management-policies", "Enable support for Management Policies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
 
 		certsDirSet = false
 		// we record whether the command-line option "--certs-dir" was supplied
@@ -153,8 +134,10 @@ func main() {
 		RenewDeadline:              func() *time.Duration { d := 50 * time.Second; return &d }(),
 	})
 	kingpin.FatalIfError(err, "Cannot create controller manager")
-	kingpin.FatalIfError(apis.AddToScheme(mgr.GetScheme()), "Cannot add Azuread APIs to scheme")
-	kingpin.FatalIfError(resolverapis.BuildScheme(apis.AddToSchemes), "Cannot register the AzureAD APIs with the API resolver's runtime scheme")
+	kingpin.FatalIfError(clusterapis.AddToScheme(mgr.GetScheme()), "Cannot add cluster-scoped Azuread APIs to scheme")
+	kingpin.FatalIfError(resolverapis.BuildScheme(clusterapis.AddToSchemes), "Cannot register the cluster-scoped AzureAD APIs with the API resolver's runtime scheme")
+	kingpin.FatalIfError(namespacedapis.AddToScheme(mgr.GetScheme()), "Cannot add namespaced Azuread APIs to scheme")
+	kingpin.FatalIfError(resolverapis.BuildScheme(namespacedapis.AddToSchemes), "Cannot register the namespaced AzureAD APIs with the API resolver's runtime scheme")
 
 	metricRecorder := managed.NewMRMetricRecorder()
 	stateMetrics := statemetrics.NewMRStateMetrics()
@@ -163,9 +146,13 @@ func main() {
 	metrics.Registry.MustRegister(stateMetrics)
 
 	ctx := context.Background()
-	provider, err := config.GetProvider(ctx, false)
-	kingpin.FatalIfError(err, "Cannot initialize the provider configuration")
-	o := tjcontroller.Options{
+	sdkProvider, err := xpprovider.GetProviderSchema(ctx)
+	kingpin.FatalIfError(err, "Cannot get TF SDK provider")
+	clusterProvider, err := clusterconfig.GetProvider(ctx, sdkProvider, false)
+	kingpin.FatalIfError(err, "Cannot initialize the cluster provider configuration")
+	namespacedProvider, err := namespacedconfig.GetProvider(ctx, sdkProvider, false)
+	kingpin.FatalIfError(err, "Cannot initialize the namespaced provider configuration")
+	clusterOpts := tjcontroller.Options{
 		Options: xpcontroller.Options{
 			Logger:                  logr,
 			GlobalRateLimiter:       ratelimiter.NewGlobal(*maxReconcileRate),
@@ -178,47 +165,41 @@ func main() {
 				MRStateMetrics:          stateMetrics,
 			},
 		},
-		Provider:              provider,
-		SetupFn:               clients.TerraformSetupBuilder(provider.TerraformProvider),
+		Provider:              clusterProvider,
+		SetupFn:               clients.TerraformSetupBuilder(clusterProvider.TerraformProvider),
+		PollJitter:            pollJitter,
+		OperationTrackerStore: tjcontroller.NewOperationStore(logr),
+		StartWebhooks:         *certsDir != "",
+	}
+
+	namespacedOpts := tjcontroller.Options{
+		Options: xpcontroller.Options{
+			Logger:                  logr,
+			GlobalRateLimiter:       ratelimiter.NewGlobal(*maxReconcileRate),
+			PollInterval:            *pollInterval,
+			MaxConcurrentReconciles: *maxReconcileRate,
+			Features:                &feature.Flags{},
+			MetricOptions: &xpcontroller.MetricOptions{
+				PollStateMetricInterval: *pollStateMetricInterval,
+				MRMetrics:               metricRecorder,
+				MRStateMetrics:          stateMetrics,
+			},
+		},
+		Provider:              namespacedProvider,
+		SetupFn:               clients.TerraformSetupBuilder(namespacedProvider.TerraformProvider),
 		PollJitter:            pollJitter,
 		OperationTrackerStore: tjcontroller.NewOperationStore(logr),
 		StartWebhooks:         *certsDir != "",
 	}
 
 	if *enableManagementPolicies {
-		o.Features.Enable(features.EnableBetaManagementPolicies)
+		clusterOpts.Features.Enable(features.EnableBetaManagementPolicies)
+		namespacedOpts.Features.Enable(features.EnableBetaManagementPolicies)
 		logr.Info("Beta feature enabled", "flag", features.EnableBetaManagementPolicies)
 	}
 
-	if *enableExternalSecretStores {
-		o.SecretStoreConfigGVK = &v1alpha1.StoreConfigGroupVersionKind
-		logr.Info("Alpha feature enabled", "flag", features.EnableAlphaExternalSecretStores)
-
-		o.ESSOptions = &tjcontroller.ESSOptions{}
-		if *essTLSCertsPath != "" {
-			logr.Info("ESS TLS certificates path is set. Loading mTLS configuration.")
-			tCfg, err := certificates.LoadMTLSConfig(filepath.Join(*essTLSCertsPath, "ca.crt"), filepath.Join(*essTLSCertsPath, "tls.crt"), filepath.Join(*essTLSCertsPath, "tls.key"), false)
-			kingpin.FatalIfError(err, "Cannot load ESS TLS config.")
-
-			o.ESSOptions.TLSConfig = tCfg
-		}
-
-		// Ensure default store config exists.
-		kingpin.FatalIfError(resource.Ignore(kerrors.IsAlreadyExists, mgr.GetClient().Create(ctx, &v1alpha1.StoreConfig{
-			ObjectMeta: metav1.ObjectMeta{
-				Name: "default",
-			},
-			Spec: v1alpha1.StoreConfigSpec{
-				// NOTE(turkenh): We only set required spec and expect optional
-				// ones to properly be initialized with CRD level default values.
-				SecretStoreConfig: xpv1.SecretStoreConfig{
-					DefaultScope: *namespace,
-				},
-			},
-		})), "cannot create default store config")
-	}
-
-	kingpin.FatalIfError(conversion.RegisterConversions(o.Provider, mgr.GetScheme()), "Cannot initialize the webhook conversion registry")
-	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Azuread controllers")
+	kingpin.FatalIfError(conversion.RegisterConversions(clusterOpts.Provider, namespacedOpts.Provider, mgr.GetScheme()), "Cannot initialize the webhook conversion registry")
+	kingpin.FatalIfError(clustercontroller.Setup(mgr, clusterOpts), "Cannot setup cluster-scoped AzureAD controllers")
+	kingpin.FatalIfError(namespacedcontroller.Setup(mgr, namespacedOpts), "Cannot setup namespaced AzureAD controllers")
 	kingpin.FatalIfError(mgr.Start(ctrl.SetupSignalHandler()), "Cannot start controller manager")
 }
