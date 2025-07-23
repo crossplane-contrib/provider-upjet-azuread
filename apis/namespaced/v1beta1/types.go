@@ -99,7 +99,7 @@ type ProviderConfigUsage struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	xpv2.ProviderConfigUsage `json:",inline"`
+	xpv2.TypedProviderConfigUsage `json:",inline"`
 }
 
 // +kubebuilder:object:root=true

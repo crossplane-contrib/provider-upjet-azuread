@@ -27,11 +27,6 @@ func (mg *PrivilegedAccessGroupAssignmentSchedule) GetProviderConfigReference() 
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this PrivilegedAccessGroupAssignmentSchedule.
 func (mg *PrivilegedAccessGroupAssignmentSchedule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -55,11 +50,6 @@ func (mg *PrivilegedAccessGroupAssignmentSchedule) SetManagementPolicies(r xpv1.
 // SetProviderConfigReference of this PrivilegedAccessGroupAssignmentSchedule.
 func (mg *PrivilegedAccessGroupAssignmentSchedule) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this PrivilegedAccessGroupAssignmentSchedule.
@@ -87,11 +77,6 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) GetProviderConfigReference()
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this PrivilegedAccessGroupEligibilitySchedule.
 func (mg *PrivilegedAccessGroupEligibilitySchedule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -115,11 +100,6 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) SetManagementPolicies(r xpv1
 // SetProviderConfigReference of this PrivilegedAccessGroupEligibilitySchedule.
 func (mg *PrivilegedAccessGroupEligibilitySchedule) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this PrivilegedAccessGroupEligibilitySchedule.

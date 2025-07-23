@@ -1,0 +1,71 @@
+apiVersion: app.azuread.upbound.io/v1beta1
+kind: RoleAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: app/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    appRoleId: ${azuread_service_principal.msgraph.app_role_ids["User.Read.All"]}
+    principalObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    resourceObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: msgraph
+
+---
+
+apiVersion: applications.azuread.upbound.io/v1beta2
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: app/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: example
+    requiredResourceAccess:
+    - resourceAccess:
+      - id: ${azuread_service_principal.msgraph.app_role_ids["User.Read.All"]}
+        type: Role
+      - id: ${azuread_service_principal.msgraph.oauth2_permission_scope_ids["User.ReadWrite"]}
+        type: Scope
+      resourceAppId: ${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}
+
+---
+
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta2
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: app/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta2
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: app/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: msgraph
+  name: msgraph
+spec:
+  forProvider:
+    clientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: azuread_application_published_app_ids
+    useExisting: true

@@ -1,0 +1,17 @@
+apiVersion: conditionalaccess.azuread.m.upbound.io/v1beta1
+kind: Location
+metadata:
+  annotations:
+    meta.upbound.io/example-id: conditionalaccess/v1beta1/location
+  labels:
+    testing.upbound.io/example-name: example-ip
+  name: example-ip
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: IP Named Location
+    ip:
+    - ipRanges:
+      - 1.1.1.1/32
+      - 2.2.2.2/32
+      trusted: true
