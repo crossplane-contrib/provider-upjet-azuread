@@ -1,0 +1,67 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: identitygovernance.azuread.m.upbound.io/v1beta1
+kind: PrivilegedAccessGroupAssignmentSchedule
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupassignmentschedule
+  labels:
+    testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule
+  name: privilegedaccessgroupassignmentschedule
+  namespace: upbound-system
+spec:
+  forProvider:
+    assignmentType: member
+    duration: P30D
+    groupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule-pim
+    justification: as requested
+    principalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule-member
+---
+apiVersion: groups.azuread.m.upbound.io/v1beta1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupassignmentschedule
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-privilegedaccessgroupassignmentschedule.sh
+  labels:
+    testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule-pim
+  name: privilegedaccessgroupassignmentschedule
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: privilegedaccessgroupassignmentschedule
+    securityEnabled: true
+---
+apiVersion: users.azuread.m.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/privilegedaccessgroupassignmentschedule
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-privilegedaccessgroupassignmentschedule.sh
+  labels:
+    testing.upbound.io/example-name: privilegedaccessgroupassignmentschedule-member
+  name: privilegedaccessgroupassignmentschedule
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: privilegedaccessgroupassignmentschedule
+    mailNickname: privilegedaccessgroupassignmentschedule
+    passwordSecretRef:
+      key: credentials
+      name: privilegedaccessgroupassignmentschedule
+    userPrincipalName: privilegedaccessgroupassignmentschedule@devopsupbound.onmicrosoft.com
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: privilegedaccessgroupassignmentschedule
+  namespace: upbound-system
+type: Opaque
+stringData:
+  credentials: SecretP@sswd99!
