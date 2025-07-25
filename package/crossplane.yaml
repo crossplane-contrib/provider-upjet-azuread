@@ -20,3 +20,6 @@ metadata:
       If you encounter an issue please reach out on support@upbound.io email
       address.
     friendly-name.meta.crossplane.io: Provider Azuread
+spec:
+  capabilities:
+  - SafeStart
