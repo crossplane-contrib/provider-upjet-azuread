@@ -1,0 +1,77 @@
+apiVersion: serviceprincipaldelegated.azuread.m.upbound.io/v1beta1
+kind: PermissionGrant
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipaldelegated/v1beta1/permissiongrant
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    claimValues:
+    - openid
+    - User.Read.All
+    resourceServicePrincipalObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: msgraph
+    servicePrincipalObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: applications.azuread.m.upbound.io/v1beta1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipaldelegated/v1beta1/permissiongrant
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: example
+    requiredResourceAccess:
+    - resourceAccess:
+      - id: ${azuread_service_principal.msgraph.oauth2_permission_scope_ids["openid"]}
+        type: Scope
+      - id: ${azuread_service_principal.msgraph.oauth2_permission_scope_ids["User.Read"]}
+        type: Scope
+      resourceAppId: ${data.azuread_application_published_app_ids.well_known.result.MicrosoftGraph}
+
+---
+
+apiVersion: serviceprincipals.azuread.m.upbound.io/v1beta1
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipaldelegated/v1beta1/permissiongrant
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    clientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: serviceprincipals.azuread.m.upbound.io/v1beta1
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipaldelegated/v1beta1/permissiongrant
+  labels:
+    testing.upbound.io/example-name: msgraph
+  name: msgraph
+  namespace: upbound-system
+spec:
+  forProvider:
+    clientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: azuread_application_published_app_ids
+    useExisting: true

@@ -30,7 +30,7 @@ def load_crd_type(t):
 
 exceptions = {
     "provider-azuread": {
-        'StoreConfig.azuread.upbound.io/v1alpha1',
+        'ProviderConfigUsage.azuread.m.upbound.io/v1beta1',
         'ProviderConfigUsage.azuread.upbound.io/v1beta1'
     },
 }

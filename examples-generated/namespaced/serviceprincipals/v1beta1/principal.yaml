@@ -1,0 +1,34 @@
+apiVersion: serviceprincipals.azuread.m.upbound.io/v1beta1
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/principal
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    appRoleAssignmentRequired: false
+    clientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    owners:
+    - ${data.azuread_client_config.current.object_id}
+
+---
+
+apiVersion: applications.azuread.m.upbound.io/v1beta1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/principal
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: example
+    owners:
+    - ${data.azuread_client_config.current.object_id}

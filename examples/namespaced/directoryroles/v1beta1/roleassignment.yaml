@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2024 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: directoryroles.azuread.m.upbound.io/v1beta1
+kind: RoleAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    roleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    principalObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+---
+apiVersion: directoryroles.azuread.m.upbound.io/v1beta1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: Security administrator
+---
+apiVersion: users.azuread.m.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    userPrincipalName: testuser_upbound.io#EXT#@devopsupbound.onmicrosoft.com
+    displayName: testuser
+    passwordSecretRef:
+      key: credentials
+      name: example-secret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: example-secret
+  namespace: upbound-system
+type: Opaque
+stringData:
+  credentials: SecretP@sswd99!
