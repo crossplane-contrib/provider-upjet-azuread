@@ -125,5 +125,5 @@ func (tr *ClaimsMappingPolicyAssignment) LateInitialize(attrs []byte) (bool, err
 
 // GetTerraformSchemaVersion returns the associated Terraform schema version
 func (tr *ClaimsMappingPolicyAssignment) GetTerraformSchemaVersion() int {
-	return 0
+	return 1
 }

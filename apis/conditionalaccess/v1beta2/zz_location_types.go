@@ -18,6 +18,9 @@ type CountryInitParameters struct {
 	// List of countries and/or regions in two-letter format specified by ISO 3166-2.
 	CountriesAndRegions []*string `json:"countriesAndRegions,omitempty" tf:"countries_and_regions,omitempty"`
 
+	// Method of detecting country the user is located in. Possible values are clientIpAddress for IP-based location and authenticatorAppGps for Authenticator app GPS-based location.  Defaults to clientIpAddress.
+	CountryLookupMethod *string `json:"countryLookupMethod,omitempty" tf:"country_lookup_method,omitempty"`
+
 	// Whether IP addresses that don't map to a country or region should be included in the named location. Defaults to false.
 	IncludeUnknownCountriesAndRegions *bool `json:"includeUnknownCountriesAndRegions,omitempty" tf:"include_unknown_countries_and_regions,omitempty"`
 }
@@ -26,6 +29,9 @@ type CountryObservation struct {
 
 	// List of countries and/or regions in two-letter format specified by ISO 3166-2.
 	CountriesAndRegions []*string `json:"countriesAndRegions,omitempty" tf:"countries_and_regions,omitempty"`
+
+	// Method of detecting country the user is located in. Possible values are clientIpAddress for IP-based location and authenticatorAppGps for Authenticator app GPS-based location.  Defaults to clientIpAddress.
+	CountryLookupMethod *string `json:"countryLookupMethod,omitempty" tf:"country_lookup_method,omitempty"`
 
 	// Whether IP addresses that don't map to a country or region should be included in the named location. Defaults to false.
 	IncludeUnknownCountriesAndRegions *bool `json:"includeUnknownCountriesAndRegions,omitempty" tf:"include_unknown_countries_and_regions,omitempty"`
@@ -36,6 +42,10 @@ type CountryParameters struct {
 	// List of countries and/or regions in two-letter format specified by ISO 3166-2.
 	// +kubebuilder:validation:Optional
 	CountriesAndRegions []*string `json:"countriesAndRegions" tf:"countries_and_regions,omitempty"`
+
+	// Method of detecting country the user is located in. Possible values are clientIpAddress for IP-based location and authenticatorAppGps for Authenticator app GPS-based location.  Defaults to clientIpAddress.
+	// +kubebuilder:validation:Optional
+	CountryLookupMethod *string `json:"countryLookupMethod,omitempty" tf:"country_lookup_method,omitempty"`
 
 	// Whether IP addresses that don't map to a country or region should be included in the named location. Defaults to false.
 	// +kubebuilder:validation:Optional

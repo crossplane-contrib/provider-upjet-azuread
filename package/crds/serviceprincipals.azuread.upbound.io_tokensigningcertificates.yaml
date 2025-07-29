@@ -86,8 +86,8 @@ spec:
                     type: string
                   servicePrincipalId:
                     description: |-
-                      The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
-                      The object ID of the service principal for which this certificate should be created
+                      The ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
+                      The ID of the service principal for which this certificate should be created
                     type: string
                   servicePrincipalIdRef:
                     description: Reference to a Principal in serviceprincipals to
@@ -191,8 +191,8 @@ spec:
                     type: string
                   servicePrincipalId:
                     description: |-
-                      The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
-                      The object ID of the service principal for which this certificate should be created
+                      The ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
+                      The ID of the service principal for which this certificate should be created
                     type: string
                   servicePrincipalIdRef:
                     description: Reference to a Principal in serviceprincipals to
@@ -463,8 +463,8 @@ spec:
                     type: string
                   servicePrincipalId:
                     description: |-
-                      The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
-                      The object ID of the service principal for which this certificate should be created
+                      The ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
+                      The ID of the service principal for which this certificate should be created
                     type: string
                   startDate:
                     description: |-

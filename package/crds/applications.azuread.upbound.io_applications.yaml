@@ -1841,7 +1841,7 @@ spec:
                     properties:
                       knownClientApplications:
                         description: |-
-                          A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+                          A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
                           Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
                         items:
                           type: string
@@ -2388,7 +2388,7 @@ spec:
                     properties:
                       knownClientApplications:
                         description: |-
-                          A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+                          A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
                           Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
                         items:
                           type: string
@@ -3099,7 +3099,7 @@ spec:
                     properties:
                       knownClientApplications:
                         description: |-
-                          A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+                          A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
                           Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
                         items:
                           type: string
@@ -3213,9 +3213,6 @@ spec:
                       Mapping of app role names to UUIDs
                     type: object
                     x-kubernetes-map-type: granular
-                  applicationId:
-                    description: The Application ID (also called Client ID)
-                    type: string
                   clientId:
                     description: |-
                       The Client ID for the application.

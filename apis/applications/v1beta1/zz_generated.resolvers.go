@@ -102,25 +102,6 @@ func (mg *Certificate) ResolveReferences(ctx context.Context, c client.Reader) e
 		}
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationObjectID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.ForProvider.ApplicationObjectIDRef,
-			Selector:     mg.Spec.ForProvider.ApplicationObjectIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationObjectID")
-	}
-	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
 			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.ApplicationIDRef,
@@ -133,125 +114,6 @@ func (mg *Certificate) ResolveReferences(ctx context.Context, c client.Reader) e
 	}
 	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationObjectID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.InitProvider.ApplicationObjectIDRef,
-			Selector:     mg.Spec.InitProvider.ApplicationObjectIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationObjectID")
-	}
-	mg.Spec.InitProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ApplicationObjectIDRef = rsp.ResolvedReference
-
-	return nil
-}
-
-// ResolveReferences of this FederatedIdentityCredential.
-func (mg *FederatedIdentityCredential) ResolveReferences(ctx context.Context, c client.Reader) error {
-	var m xpresource.Managed
-	var l xpresource.ManagedList
-	r := reference.NewAPIResolver(c, mg)
-
-	var rsp reference.ResolutionResponse
-	var err error
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationObjectID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.ForProvider.ApplicationObjectIDRef,
-			Selector:     mg.Spec.ForProvider.ApplicationObjectIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationObjectID")
-	}
-	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationObjectID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.InitProvider.ApplicationObjectIDRef,
-			Selector:     mg.Spec.InitProvider.ApplicationObjectIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationObjectID")
-	}
-	mg.Spec.InitProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ApplicationObjectIDRef = rsp.ResolvedReference
-
-	return nil
-}
-
-// ResolveReferences of this Password.
-func (mg *Password) ResolveReferences(ctx context.Context, c client.Reader) error {
-	var m xpresource.Managed
-	var l xpresource.ManagedList
-	r := reference.NewAPIResolver(c, mg)
-
-	var rsp reference.ResolutionResponse
-	var err error
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationObjectID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.ForProvider.ApplicationObjectIDRef,
-			Selector:     mg.Spec.ForProvider.ApplicationObjectIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationObjectID")
-	}
-	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationObjectID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.InitProvider.ApplicationObjectIDRef,
-			Selector:     mg.Spec.InitProvider.ApplicationObjectIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationObjectID")
-	}
-	mg.Spec.InitProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ApplicationObjectIDRef = rsp.ResolvedReference
 
 	return nil
 }
@@ -290,44 +152,6 @@ func (mg *PreAuthorized) ResolveReferences(ctx context.Context, c client.Reader)
 		}
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationObjectID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.ForProvider.ApplicationObjectIDRef,
-			Selector:     mg.Spec.ForProvider.ApplicationObjectIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationObjectID")
-	}
-	mg.Spec.ForProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ApplicationObjectIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AuthorizedAppID),
-			Extract:      resource.ExtractParamPath("application_id", true),
-			Reference:    mg.Spec.ForProvider.AuthorizedAppIDRef,
-			Selector:     mg.Spec.ForProvider.AuthorizedAppIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.AuthorizedAppID")
-	}
-	mg.Spec.ForProvider.AuthorizedAppID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.AuthorizedAppIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
 			Extract:      resource.ExtractResourceID(),
 			Reference:    mg.Spec.InitProvider.ApplicationIDRef,
@@ -340,44 +164,6 @@ func (mg *PreAuthorized) ResolveReferences(ctx context.Context, c client.Reader)
 	}
 	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationObjectID),
-			Extract:      reference.ExternalName(),
-			Reference:    mg.Spec.InitProvider.ApplicationObjectIDRef,
-			Selector:     mg.Spec.InitProvider.ApplicationObjectIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationObjectID")
-	}
-	mg.Spec.InitProvider.ApplicationObjectID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ApplicationObjectIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AuthorizedAppID),
-			Extract:      resource.ExtractParamPath("application_id", true),
-			Reference:    mg.Spec.InitProvider.AuthorizedAppIDRef,
-			Selector:     mg.Spec.InitProvider.AuthorizedAppIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.AuthorizedAppID")
-	}
-	mg.Spec.InitProvider.AuthorizedAppID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.AuthorizedAppIDRef = rsp.ResolvedReference
 
 	return nil
 }

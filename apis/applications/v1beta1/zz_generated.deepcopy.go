@@ -1487,21 +1487,6 @@ func (in *CertificateInitParameters) DeepCopyInto(out *CertificateInitParameters
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ApplicationObjectIDRef != nil {
-		in, out := &in.ApplicationObjectIDRef, &out.ApplicationObjectIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectIDSelector != nil {
-		in, out := &in.ApplicationObjectIDSelector, &out.ApplicationObjectIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Encoding != nil {
 		in, out := &in.Encoding, &out.Encoding
 		*out = new(string)
@@ -1585,11 +1570,6 @@ func (in *CertificateObservation) DeepCopyInto(out *CertificateObservation) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
 	if in.Encoding != nil {
 		in, out := &in.Encoding, &out.Encoding
 		*out = new(string)
@@ -1652,21 +1632,6 @@ func (in *CertificateParameters) DeepCopyInto(out *CertificateParameters) {
 	}
 	if in.ApplicationIDSelector != nil {
 		in, out := &in.ApplicationIDSelector, &out.ApplicationIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ApplicationObjectIDRef != nil {
-		in, out := &in.ApplicationObjectIDRef, &out.ApplicationObjectIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectIDSelector != nil {
-		in, out := &in.ApplicationObjectIDSelector, &out.ApplicationObjectIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
@@ -1888,21 +1853,6 @@ func (in *FederatedIdentityCredentialInitParameters) DeepCopyInto(out *Federated
 		*out = new(string)
 		**out = **in
 	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ApplicationObjectIDRef != nil {
-		in, out := &in.ApplicationObjectIDRef, &out.ApplicationObjectIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectIDSelector != nil {
-		in, out := &in.ApplicationObjectIDSelector, &out.ApplicationObjectIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.Audiences != nil {
 		in, out := &in.Audiences, &out.Audiences
 		*out = make([]*string, len(*in))
@@ -1986,11 +1936,6 @@ func (in *FederatedIdentityCredentialObservation) DeepCopyInto(out *FederatedIde
 		*out = new(string)
 		**out = **in
 	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
 	if in.Audiences != nil {
 		in, out := &in.Audiences, &out.Audiences
 		*out = make([]*string, len(*in))
@@ -2051,21 +1996,6 @@ func (in *FederatedIdentityCredentialParameters) DeepCopyInto(out *FederatedIden
 		in, out := &in.ApplicationID, &out.ApplicationID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ApplicationObjectIDRef != nil {
-		in, out := &in.ApplicationObjectIDRef, &out.ApplicationObjectIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectIDSelector != nil {
-		in, out := &in.ApplicationObjectIDSelector, &out.ApplicationObjectIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.Audiences != nil {
 		in, out := &in.Audiences, &out.Audiences
@@ -2681,21 +2611,6 @@ func (in *PasswordInitParameters_2) DeepCopyInto(out *PasswordInitParameters_2) 
 		*out = new(string)
 		**out = **in
 	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ApplicationObjectIDRef != nil {
-		in, out := &in.ApplicationObjectIDRef, &out.ApplicationObjectIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectIDSelector != nil {
-		in, out := &in.ApplicationObjectIDSelector, &out.ApplicationObjectIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.DisplayName != nil {
 		in, out := &in.DisplayName, &out.DisplayName
 		*out = new(string)
@@ -2819,11 +2734,6 @@ func (in *PasswordObservation_2) DeepCopyInto(out *PasswordObservation_2) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
 	if in.DisplayName != nil {
 		in, out := &in.DisplayName, &out.DisplayName
 		*out = new(string)
@@ -2919,21 +2829,6 @@ func (in *PasswordParameters_2) DeepCopyInto(out *PasswordParameters_2) {
 		in, out := &in.ApplicationID, &out.ApplicationID
 		*out = new(string)
 		**out = **in
-	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ApplicationObjectIDRef != nil {
-		in, out := &in.ApplicationObjectIDRef, &out.ApplicationObjectIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectIDSelector != nil {
-		in, out := &in.ApplicationObjectIDSelector, &out.ApplicationObjectIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
 	}
 	if in.DisplayName != nil {
 		in, out := &in.DisplayName, &out.DisplayName
@@ -3063,36 +2958,6 @@ func (in *PreAuthorizedInitParameters) DeepCopyInto(out *PreAuthorizedInitParame
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ApplicationObjectIDRef != nil {
-		in, out := &in.ApplicationObjectIDRef, &out.ApplicationObjectIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectIDSelector != nil {
-		in, out := &in.ApplicationObjectIDSelector, &out.ApplicationObjectIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.AuthorizedAppID != nil {
-		in, out := &in.AuthorizedAppID, &out.AuthorizedAppID
-		*out = new(string)
-		**out = **in
-	}
-	if in.AuthorizedAppIDRef != nil {
-		in, out := &in.AuthorizedAppIDRef, &out.AuthorizedAppIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.AuthorizedAppIDSelector != nil {
-		in, out := &in.AuthorizedAppIDSelector, &out.AuthorizedAppIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
 	if in.AuthorizedClientID != nil {
 		in, out := &in.AuthorizedClientID, &out.AuthorizedClientID
 		*out = new(string)
@@ -3161,16 +3026,6 @@ func (in *PreAuthorizedObservation) DeepCopyInto(out *PreAuthorizedObservation) 
 		*out = new(string)
 		**out = **in
 	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
-	if in.AuthorizedAppID != nil {
-		in, out := &in.AuthorizedAppID, &out.AuthorizedAppID
-		*out = new(string)
-		**out = **in
-	}
 	if in.AuthorizedClientID != nil {
 		in, out := &in.AuthorizedClientID, &out.AuthorizedClientID
 		*out = new(string)
@@ -3219,36 +3074,6 @@ func (in *PreAuthorizedParameters) DeepCopyInto(out *PreAuthorizedParameters) {
 	}
 	if in.ApplicationIDSelector != nil {
 		in, out := &in.ApplicationIDSelector, &out.ApplicationIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectID != nil {
-		in, out := &in.ApplicationObjectID, &out.ApplicationObjectID
-		*out = new(string)
-		**out = **in
-	}
-	if in.ApplicationObjectIDRef != nil {
-		in, out := &in.ApplicationObjectIDRef, &out.ApplicationObjectIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.ApplicationObjectIDSelector != nil {
-		in, out := &in.ApplicationObjectIDSelector, &out.ApplicationObjectIDSelector
-		*out = new(v1.Selector)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.AuthorizedAppID != nil {
-		in, out := &in.AuthorizedAppID, &out.AuthorizedAppID
-		*out = new(string)
-		**out = **in
-	}
-	if in.AuthorizedAppIDRef != nil {
-		in, out := &in.AuthorizedAppIDRef, &out.AuthorizedAppIDRef
-		*out = new(v1.Reference)
-		(*in).DeepCopyInto(*out)
-	}
-	if in.AuthorizedAppIDSelector != nil {
-		in, out := &in.AuthorizedAppIDSelector, &out.AuthorizedAppIDSelector
 		*out = new(v1.Selector)
 		(*in).DeepCopyInto(*out)
 	}

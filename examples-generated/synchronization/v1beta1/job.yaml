@@ -11,43 +11,8 @@ spec:
     enabled: true
     servicePrincipalIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: azuread_service_principal
     templateId: dataBricks
-
----
-
-apiVersion: applications.azuread.upbound.io/v1beta2
-kind: Application
-metadata:
-  annotations:
-    meta.upbound.io/example-id: synchronization/v1beta1/job
-  labels:
-    testing.upbound.io/example-name: example
-  name: example
-spec:
-  forProvider:
-    displayName: example
-    featureTags:
-    - enterprise: true
-      gallery: true
-    templateId: ${data.azuread_application_template.example.template_id}
-
----
-
-apiVersion: serviceprincipals.azuread.upbound.io/v1beta2
-kind: Principal
-metadata:
-  annotations:
-    meta.upbound.io/example-id: synchronization/v1beta1/job
-  labels:
-    testing.upbound.io/example-name: example
-  name: example
-spec:
-  forProvider:
-    clientIdSelector:
-      matchLabels:
-        testing.upbound.io/example-name: example
-    useExisting: true
 
 ---
 
@@ -74,4 +39,4 @@ spec:
         namespace: upbound-system
     servicePrincipalIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: azuread_service_principal

@@ -15,10 +15,10 @@ import (
 
 type APIInitParameters struct {
 
-	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+	// A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("client_id",true)
 	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
 
@@ -45,7 +45,7 @@ type APIInitParameters struct {
 
 type APIObservation struct {
 
-	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+	// A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
 	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
@@ -65,10 +65,10 @@ type APIObservation struct {
 
 type APIParameters struct {
 
-	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+	// A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("client_id",true)
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
@@ -372,9 +372,6 @@ type ApplicationObservation struct {
 	// Mapping of app role names to UUIDs
 	// +mapType=granular
 	AppRoleIds map[string]*string `json:"appRoleIds,omitempty" tf:"app_role_ids,omitempty"`
-
-	// The Application ID (also called Client ID)
-	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
 	// The Client ID for the application.
 	// The Client ID (also called Application ID)

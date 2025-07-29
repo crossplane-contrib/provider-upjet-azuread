@@ -717,11 +717,6 @@ func (in *ApplicationObservation) DeepCopyInto(out *ApplicationObservation) {
 			(*out)[key] = outVal
 		}
 	}
-	if in.ApplicationID != nil {
-		in, out := &in.ApplicationID, &out.ApplicationID
-		*out = new(string)
-		**out = **in
-	}
 	if in.ClientID != nil {
 		in, out := &in.ClientID, &out.ClientID
 		*out = new(string)

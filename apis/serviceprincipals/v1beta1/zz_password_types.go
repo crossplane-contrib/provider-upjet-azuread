@@ -32,8 +32,8 @@ type PasswordInitParameters struct {
 	// +mapType=granular
 	RotateWhenChanged map[string]*string `json:"rotateWhenChanged,omitempty" tf:"rotate_when_changed,omitempty"`
 
-	// The object ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
-	// The object ID of the service principal for which this password should be created
+	// The ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
+	// The ID of the service principal for which this password should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
@@ -75,8 +75,8 @@ type PasswordObservation struct {
 	// +mapType=granular
 	RotateWhenChanged map[string]*string `json:"rotateWhenChanged,omitempty" tf:"rotate_when_changed,omitempty"`
 
-	// The object ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
-	// The object ID of the service principal for which this password should be created
+	// The ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
+	// The ID of the service principal for which this password should be created
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
 	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
@@ -107,8 +107,8 @@ type PasswordParameters struct {
 	// +mapType=granular
 	RotateWhenChanged map[string]*string `json:"rotateWhenChanged,omitempty" tf:"rotate_when_changed,omitempty"`
 
-	// The object ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
-	// The object ID of the service principal for which this password should be created
+	// The ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
+	// The ID of the service principal for which this password should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	// +kubebuilder:validation:Optional
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`

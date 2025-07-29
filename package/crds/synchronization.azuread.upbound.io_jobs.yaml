@@ -74,13 +74,13 @@ spec:
                 properties:
                   enabled:
                     description: |-
-                      Whether or not the provisioning job is enabled. Default state is true.
+                      Whether the provisioning job is enabled. Default state is true.
                       Whether or not the synchronization job is enabled
                     type: boolean
                   servicePrincipalId:
                     description: |-
-                      The object ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.
-                      The object ID of the service principal for which this synchronization job should be created
+                      The ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.
+                      The ID of the service principal for which this synchronization job should be created
                     type: string
                   servicePrincipalIdRef:
                     description: Reference to a Principal in serviceprincipals to
@@ -179,13 +179,13 @@ spec:
                 properties:
                   enabled:
                     description: |-
-                      Whether or not the provisioning job is enabled. Default state is true.
+                      Whether the provisioning job is enabled. Default state is true.
                       Whether or not the synchronization job is enabled
                     type: boolean
                   servicePrincipalId:
                     description: |-
-                      The object ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.
-                      The object ID of the service principal for which this synchronization job should be created
+                      The ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.
+                      The ID of the service principal for which this synchronization job should be created
                     type: string
                   servicePrincipalIdRef:
                     description: Reference to a Principal in serviceprincipals to
@@ -448,7 +448,7 @@ spec:
                 properties:
                   enabled:
                     description: |-
-                      Whether or not the provisioning job is enabled. Default state is true.
+                      Whether the provisioning job is enabled. Default state is true.
                       Whether or not the synchronization job is enabled
                     type: boolean
                   id:
@@ -474,8 +474,8 @@ spec:
                     type: array
                   servicePrincipalId:
                     description: |-
-                      The object ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.
-                      The object ID of the service principal for which this synchronization job should be created
+                      The ID of the service principal for which this synchronization job should be created. Changing this field forces a new resource to be created.
+                      The ID of the service principal for which this synchronization job should be created
                     type: string
                   templateId:
                     description: |-

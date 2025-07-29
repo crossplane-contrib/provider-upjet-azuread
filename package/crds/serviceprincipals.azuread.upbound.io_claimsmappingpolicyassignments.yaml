@@ -157,8 +157,8 @@ spec:
                     type: object
                   servicePrincipalId:
                     description: |-
-                      The object ID of the service principal for the policy assignment.
-                      Object ID of the service principal for which to assign the policy
+                      The ID of the service principal for the policy assignment.
+                      ID of the service principal for which to assign the policy
                     type: string
                   servicePrincipalIdRef:
                     description: Reference to a Principal in serviceprincipals to
@@ -333,8 +333,8 @@ spec:
                     type: object
                   servicePrincipalId:
                     description: |-
-                      The object ID of the service principal for the policy assignment.
-                      Object ID of the service principal for which to assign the policy
+                      The ID of the service principal for the policy assignment.
+                      ID of the service principal for which to assign the policy
                     type: string
                   servicePrincipalIdRef:
                     description: Reference to a Principal in serviceprincipals to
@@ -596,8 +596,8 @@ spec:
                     type: string
                   servicePrincipalId:
                     description: |-
-                      The object ID of the service principal for the policy assignment.
-                      Object ID of the service principal for which to assign the policy
+                      The ID of the service principal for the policy assignment.
+                      ID of the service principal for which to assign the policy
                     type: string
                 type: object
               conditions:

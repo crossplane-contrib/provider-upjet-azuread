@@ -19,15 +19,9 @@ type RoleAssignmentInitParameters struct {
 	// Identifier of the app-specific scope when the assignment scope is app-specific
 	AppScopeID *string `json:"appScopeId,omitempty" tf:"app_scope_id,omitempty"`
 
-	// Identifier of the app-specific scope when the assignment scope is app-specific
-	AppScopeObjectID *string `json:"appScopeObjectId,omitempty" tf:"app_scope_object_id,omitempty"`
-
 	// Identifier of the directory object representing the scope of the assignment. Cannot be used with app_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
 	// Identifier of the directory object representing the scope of the assignment
 	DirectoryScopeID *string `json:"directoryScopeId,omitempty" tf:"directory_scope_id,omitempty"`
-
-	// Identifier of the directory object representing the scope of the assignment
-	DirectoryScopeObjectID *string `json:"directoryScopeObjectId,omitempty" tf:"directory_scope_object_id,omitempty"`
 
 	// The object ID of the principal for you want to create a role assignment. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the member principal
@@ -63,15 +57,9 @@ type RoleAssignmentObservation struct {
 	// Identifier of the app-specific scope when the assignment scope is app-specific
 	AppScopeID *string `json:"appScopeId,omitempty" tf:"app_scope_id,omitempty"`
 
-	// Identifier of the app-specific scope when the assignment scope is app-specific
-	AppScopeObjectID *string `json:"appScopeObjectId,omitempty" tf:"app_scope_object_id,omitempty"`
-
 	// Identifier of the directory object representing the scope of the assignment. Cannot be used with app_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
 	// Identifier of the directory object representing the scope of the assignment
 	DirectoryScopeID *string `json:"directoryScopeId,omitempty" tf:"directory_scope_id,omitempty"`
-
-	// Identifier of the directory object representing the scope of the assignment
-	DirectoryScopeObjectID *string `json:"directoryScopeObjectId,omitempty" tf:"directory_scope_object_id,omitempty"`
 
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
@@ -91,18 +79,10 @@ type RoleAssignmentParameters struct {
 	// +kubebuilder:validation:Optional
 	AppScopeID *string `json:"appScopeId,omitempty" tf:"app_scope_id,omitempty"`
 
-	// Identifier of the app-specific scope when the assignment scope is app-specific
-	// +kubebuilder:validation:Optional
-	AppScopeObjectID *string `json:"appScopeObjectId,omitempty" tf:"app_scope_object_id,omitempty"`
-
 	// Identifier of the directory object representing the scope of the assignment. Cannot be used with app_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
 	// Identifier of the directory object representing the scope of the assignment
 	// +kubebuilder:validation:Optional
 	DirectoryScopeID *string `json:"directoryScopeId,omitempty" tf:"directory_scope_id,omitempty"`
-
-	// Identifier of the directory object representing the scope of the assignment
-	// +kubebuilder:validation:Optional
-	DirectoryScopeObjectID *string `json:"directoryScopeObjectId,omitempty" tf:"directory_scope_object_id,omitempty"`
 
 	// The object ID of the principal for you want to create a role assignment. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the member principal

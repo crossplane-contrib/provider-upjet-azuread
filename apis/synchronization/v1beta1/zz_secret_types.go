@@ -49,7 +49,7 @@ type SecretInitParameters struct {
 	// One or more credential blocks as documented below.
 	Credential []CredentialInitParameters `json:"credential,omitempty" tf:"credential,omitempty"`
 
-	// The object ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.
+	// The ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this synchronization secret should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
@@ -71,7 +71,7 @@ type SecretObservation struct {
 	// An ID used to uniquely identify this synchronization sec.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The object ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.
+	// The ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this synchronization secret should be created
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 }
@@ -82,7 +82,7 @@ type SecretParameters struct {
 	// +kubebuilder:validation:Optional
 	Credential []CredentialParameters `json:"credential,omitempty" tf:"credential,omitempty"`
 
-	// The object ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.
+	// The ID of the service principal for which this synchronization secrets should be stored. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this synchronization secret should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	// +kubebuilder:validation:Optional

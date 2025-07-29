@@ -67,6 +67,10 @@ type UserInitParameters struct {
 	// The name of the division in which the user works.
 	Division *string `json:"division,omitempty" tf:"division,omitempty"`
 
+	// The hire date of the user, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
+	// The hire date of the user, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`).
+	EmployeeHireDate *string `json:"employeeHireDate,omitempty" tf:"employee_hire_date,omitempty"`
+
 	// The employee identifier assigned to the user by the organisation.
 	// The employee identifier assigned to the user by the organisation
 	EmployeeID *string `json:"employeeId,omitempty" tf:"employee_id,omitempty"`
@@ -217,6 +221,10 @@ type UserObservation struct {
 	// The name of the division in which the user works.
 	// The name of the division in which the user works.
 	Division *string `json:"division,omitempty" tf:"division,omitempty"`
+
+	// The hire date of the user, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
+	// The hire date of the user, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`).
+	EmployeeHireDate *string `json:"employeeHireDate,omitempty" tf:"employee_hire_date,omitempty"`
 
 	// The employee identifier assigned to the user by the organisation.
 	// The employee identifier assigned to the user by the organisation
@@ -416,6 +424,11 @@ type UserParameters struct {
 	// The name of the division in which the user works.
 	// +kubebuilder:validation:Optional
 	Division *string `json:"division,omitempty" tf:"division,omitempty"`
+
+	// The hire date of the user, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
+	// The hire date of the user, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`).
+	// +kubebuilder:validation:Optional
+	EmployeeHireDate *string `json:"employeeHireDate,omitempty" tf:"employee_hire_date,omitempty"`
 
 	// The employee identifier assigned to the user by the organisation.
 	// The employee identifier assigned to the user by the organisation

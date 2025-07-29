@@ -28,8 +28,8 @@ type ClaimsMappingPolicyAssignmentInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ClaimsMappingPolicyIDSelector *v1.Selector `json:"claimsMappingPolicyIdSelector,omitempty" tf:"-"`
 
-	// The object ID of the service principal for the policy assignment.
-	// Object ID of the service principal for which to assign the policy
+	// The ID of the service principal for the policy assignment.
+	// ID of the service principal for which to assign the policy
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
@@ -51,8 +51,8 @@ type ClaimsMappingPolicyAssignmentObservation struct {
 	// The ID of the Claims Mapping Policy Assignment.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// The object ID of the service principal for the policy assignment.
-	// Object ID of the service principal for which to assign the policy
+	// The ID of the service principal for the policy assignment.
+	// ID of the service principal for which to assign the policy
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 }
 
@@ -72,8 +72,8 @@ type ClaimsMappingPolicyAssignmentParameters struct {
 	// +kubebuilder:validation:Optional
 	ClaimsMappingPolicyIDSelector *v1.Selector `json:"claimsMappingPolicyIdSelector,omitempty" tf:"-"`
 
-	// The object ID of the service principal for the policy assignment.
-	// Object ID of the service principal for which to assign the policy
+	// The ID of the service principal for the policy assignment.
+	// ID of the service principal for which to assign the policy
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	// +kubebuilder:validation:Optional
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`

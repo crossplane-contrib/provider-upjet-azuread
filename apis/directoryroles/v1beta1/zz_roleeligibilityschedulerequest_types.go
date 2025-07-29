@@ -25,17 +25,7 @@ type RoleEligibilityScheduleRequestInitParameters struct {
 
 	// The object ID of the principal to granted the role eligibility. Changing this forces a new resource to be created.
 	// The object ID of the member principal
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
 	PrincipalID *string `json:"principalId,omitempty" tf:"principal_id,omitempty"`
-
-	// Reference to a User in users to populate principalId.
-	// +kubebuilder:validation:Optional
-	PrincipalIDRef *v1.Reference `json:"principalIdRef,omitempty" tf:"-"`
-
-	// Selector for a User in users to populate principalId.
-	// +kubebuilder:validation:Optional
-	PrincipalIDSelector *v1.Selector `json:"principalIdSelector,omitempty" tf:"-"`
 
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this role eligibility schedule request
@@ -87,18 +77,8 @@ type RoleEligibilityScheduleRequestParameters struct {
 
 	// The object ID of the principal to granted the role eligibility. Changing this forces a new resource to be created.
 	// The object ID of the member principal
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	PrincipalID *string `json:"principalId,omitempty" tf:"principal_id,omitempty"`
-
-	// Reference to a User in users to populate principalId.
-	// +kubebuilder:validation:Optional
-	PrincipalIDRef *v1.Reference `json:"principalIdRef,omitempty" tf:"-"`
-
-	// Selector for a User in users to populate principalId.
-	// +kubebuilder:validation:Optional
-	PrincipalIDSelector *v1.Selector `json:"principalIdSelector,omitempty" tf:"-"`
 
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this role eligibility schedule request
@@ -154,6 +134,7 @@ type RoleEligibilityScheduleRequest struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.directoryScopeId) || (has(self.initProvider) && has(self.initProvider.directoryScopeId))",message="spec.forProvider.directoryScopeId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.justification) || (has(self.initProvider) && has(self.initProvider.justification))",message="spec.forProvider.justification is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.principalId) || (has(self.initProvider) && has(self.initProvider.principalId))",message="spec.forProvider.principalId is a required parameter"
 	Spec   RoleEligibilityScheduleRequestSpec   `json:"spec"`
 	Status RoleEligibilityScheduleRequestStatus `json:"status,omitempty"`
 }

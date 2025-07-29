@@ -29,31 +29,6 @@ type PreAuthorizedInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
-	// The object ID of the application to which this pre-authorized application should be added
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
-
-	// Reference to a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
-
-	// The application ID of the pre-authorized application
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
-	AuthorizedAppID *string `json:"authorizedAppId,omitempty" tf:"authorized_app_id,omitempty"`
-
-	// Reference to a Application in applications to populate authorizedAppId.
-	// +kubebuilder:validation:Optional
-	AuthorizedAppIDRef *v1.Reference `json:"authorizedAppIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate authorizedAppId.
-	// +kubebuilder:validation:Optional
-	AuthorizedAppIDSelector *v1.Selector `json:"authorizedAppIdSelector,omitempty" tf:"-"`
-
 	// The client ID of the application being authorized. Changing this field forces a new resource to be created.
 	// The client ID of the pre-authorized application
 	AuthorizedClientID *string `json:"authorizedClientId,omitempty" tf:"authorized_client_id,omitempty"`
@@ -69,12 +44,6 @@ type PreAuthorizedObservation struct {
 	// The resource ID of the application for which permissions are being authorized. Changing this field forces a new resource to be created.
 	// The resource ID of the application to which this pre-authorized application should be added
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
-
-	// The object ID of the application to which this pre-authorized application should be added
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
-
-	// The application ID of the pre-authorized application
-	AuthorizedAppID *string `json:"authorizedAppId,omitempty" tf:"authorized_app_id,omitempty"`
 
 	// The client ID of the application being authorized. Changing this field forces a new resource to be created.
 	// The client ID of the pre-authorized application
@@ -104,33 +73,6 @@ type PreAuthorizedParameters struct {
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
-
-	// The object ID of the application to which this pre-authorized application should be added
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	// +kubebuilder:validation:Optional
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
-
-	// Reference to a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
-
-	// The application ID of the pre-authorized application
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
-	// +kubebuilder:validation:Optional
-	AuthorizedAppID *string `json:"authorizedAppId,omitempty" tf:"authorized_app_id,omitempty"`
-
-	// Reference to a Application in applications to populate authorizedAppId.
-	// +kubebuilder:validation:Optional
-	AuthorizedAppIDRef *v1.Reference `json:"authorizedAppIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate authorizedAppId.
-	// +kubebuilder:validation:Optional
-	AuthorizedAppIDSelector *v1.Selector `json:"authorizedAppIdSelector,omitempty" tf:"-"`
 
 	// The client ID of the application being authorized. Changing this field forces a new resource to be created.
 	// The client ID of the pre-authorized application
@@ -180,6 +122,7 @@ type PreAuthorizedStatus struct {
 type PreAuthorized struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.authorizedClientId) || (has(self.initProvider) && has(self.initProvider.authorizedClientId))",message="spec.forProvider.authorizedClientId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.permissionIds) || (has(self.initProvider) && has(self.initProvider.permissionIds))",message="spec.forProvider.permissionIds is a required parameter"
 	Spec   PreAuthorizedSpec   `json:"spec"`
 	Status PreAuthorizedStatus `json:"status,omitempty"`

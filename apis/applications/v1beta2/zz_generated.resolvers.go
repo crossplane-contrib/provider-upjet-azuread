@@ -33,7 +33,7 @@ func (mg *Application) ResolveReferences( // ResolveReferences of this Applicati
 			}
 			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.API.KnownClientApplications),
-				Extract:       resource.ExtractParamPath("application_id", true),
+				Extract:       resource.ExtractParamPath("client_id", true),
 				References:    mg.Spec.ForProvider.API.KnownClientApplicationsRefs,
 				Selector:      mg.Spec.ForProvider.API.KnownClientApplicationsSelector,
 				To:            reference.To{List: l, Managed: m},
@@ -54,7 +54,7 @@ func (mg *Application) ResolveReferences( // ResolveReferences of this Applicati
 			}
 			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 				CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.API.KnownClientApplications),
-				Extract:       resource.ExtractParamPath("application_id", true),
+				Extract:       resource.ExtractParamPath("client_id", true),
 				References:    mg.Spec.InitProvider.API.KnownClientApplicationsRefs,
 				Selector:      mg.Spec.InitProvider.API.KnownClientApplicationsSelector,
 				To:            reference.To{List: l, Managed: m},

@@ -114,6 +114,11 @@ func (in *UserInitParameters) DeepCopyInto(out *UserInitParameters) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.EmployeeHireDate != nil {
+		in, out := &in.EmployeeHireDate, &out.EmployeeHireDate
+		*out = new(string)
+		**out = **in
+	}
 	if in.EmployeeID != nil {
 		in, out := &in.EmployeeID, &out.EmployeeID
 		*out = new(string)
@@ -355,6 +360,11 @@ func (in *UserObservation) DeepCopyInto(out *UserObservation) {
 	}
 	if in.Division != nil {
 		in, out := &in.Division, &out.Division
+		*out = new(string)
+		**out = **in
+	}
+	if in.EmployeeHireDate != nil {
+		in, out := &in.EmployeeHireDate, &out.EmployeeHireDate
 		*out = new(string)
 		**out = **in
 	}
@@ -624,6 +634,11 @@ func (in *UserParameters) DeepCopyInto(out *UserParameters) {
 	}
 	if in.Division != nil {
 		in, out := &in.Division, &out.Division
+		*out = new(string)
+		**out = **in
+	}
+	if in.EmployeeHireDate != nil {
+		in, out := &in.EmployeeHireDate, &out.EmployeeHireDate
 		*out = new(string)
 		**out = **in
 	}

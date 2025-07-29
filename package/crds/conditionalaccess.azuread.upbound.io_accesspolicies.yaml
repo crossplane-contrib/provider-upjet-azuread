@@ -1553,6 +1553,10 @@ spec:
                                 type: string
                             type: object
                         type: object
+                      insiderRiskLevels:
+                        description: 'The insider risk level in the policy. Possible
+                          values are: minor, moderate, elevated, unknownFutureValue.'
+                        type: string
                       locations:
                         description: A locations block as documented below, which
                           specifies locations included in and excluded from the policy.
@@ -1733,8 +1737,9 @@ spec:
                       the policy.
                     properties:
                       authenticationStrengthPolicyId:
-                        description: ID of an Authentication Strength Policy to use
-                          in this policy.
+                        description: 'ID of an Authentication Strength Policy to use
+                          in this policy. When using a hard-coded ID, the UUID value
+                          should be prefixed with: /policies/authenticationStrengthPolicies/.'
                         type: string
                       builtInControls:
                         description: 'List of built-in controls required by the policy.
@@ -1898,6 +1903,10 @@ spec:
                                 type: string
                             type: object
                         type: object
+                      insiderRiskLevels:
+                        description: 'The insider risk level in the policy. Possible
+                          values are: minor, moderate, elevated, unknownFutureValue.'
+                        type: string
                       locations:
                         description: A locations block as documented below, which
                           specifies locations included in and excluded from the policy.
@@ -2078,8 +2087,9 @@ spec:
                       the policy.
                     properties:
                       authenticationStrengthPolicyId:
-                        description: ID of an Authentication Strength Policy to use
-                          in this policy.
+                        description: 'ID of an Authentication Strength Policy to use
+                          in this policy. When using a hard-coded ID, the UUID value
+                          should be prefixed with: /policies/authenticationStrengthPolicies/.'
                         type: string
                       builtInControls:
                         description: 'List of built-in controls required by the policy.
@@ -2415,6 +2425,10 @@ spec:
                                 type: string
                             type: object
                         type: object
+                      insiderRiskLevels:
+                        description: 'The insider risk level in the policy. Possible
+                          values are: minor, moderate, elevated, unknownFutureValue.'
+                        type: string
                       locations:
                         description: A locations block as documented below, which
                           specifies locations included in and excluded from the policy.
@@ -2595,8 +2609,9 @@ spec:
                       the policy.
                     properties:
                       authenticationStrengthPolicyId:
-                        description: ID of an Authentication Strength Policy to use
-                          in this policy.
+                        description: 'ID of an Authentication Strength Policy to use
+                          in this policy. When using a hard-coded ID, the UUID value
+                          should be prefixed with: /policies/authenticationStrengthPolicies/.'
                         type: string
                       builtInControls:
                         description: 'List of built-in controls required by the policy.
@@ -2622,6 +2637,11 @@ spec:
                     type: object
                   id:
                     description: The ID of the Conditional Access Policy.
+                    type: string
+                  objectId:
+                    description: |-
+                      The ID of the Conditional Access Policy.
+                      The object ID of the policy
                     type: string
                   sessionControls:
                     description: A session_controls block as documented below, which

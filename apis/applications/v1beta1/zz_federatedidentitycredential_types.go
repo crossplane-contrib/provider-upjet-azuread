@@ -19,18 +19,6 @@ type FederatedIdentityCredentialInitParameters struct {
 	// The resource ID of the application for which this federated identity credential should be created
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
-	// The object ID of the application for which this federated identity credential should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
-
-	// Reference to a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
-
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the `aud` claim of incoming tokens.
 	Audiences []*string `json:"audiences,omitempty" tf:"audiences,omitempty"`
@@ -57,9 +45,6 @@ type FederatedIdentityCredentialObservation struct {
 	// The resource ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this federated identity credential should be created
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
-
-	// The object ID of the application for which this federated identity credential should be created
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the `aud` claim of incoming tokens.
@@ -94,19 +79,6 @@ type FederatedIdentityCredentialParameters struct {
 	// The resource ID of the application for which this federated identity credential should be created
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
-
-	// The object ID of the application for which this federated identity credential should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	// +kubebuilder:validation:Optional
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
-
-	// Reference to a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
 
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the `aud` claim of incoming tokens.
@@ -170,6 +142,7 @@ type FederatedIdentityCredentialStatus struct {
 type FederatedIdentityCredential struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.applicationId) || (has(self.initProvider) && has(self.initProvider.applicationId))",message="spec.forProvider.applicationId is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.audiences) || (has(self.initProvider) && has(self.initProvider.audiences))",message="spec.forProvider.audiences is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.displayName) || (has(self.initProvider) && has(self.initProvider.displayName))",message="spec.forProvider.displayName is a required parameter"
 	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.issuer) || (has(self.initProvider) && has(self.initProvider.issuer))",message="spec.forProvider.issuer is a required parameter"

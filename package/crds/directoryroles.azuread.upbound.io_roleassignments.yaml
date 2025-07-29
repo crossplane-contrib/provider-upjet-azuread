@@ -77,18 +77,10 @@ spec:
                       Identifier of the app-specific scope when the assignment scope is app-specific. Cannot be used with directory_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
                       Identifier of the app-specific scope when the assignment scope is app-specific
                     type: string
-                  appScopeObjectId:
-                    description: Identifier of the app-specific scope when the assignment
-                      scope is app-specific
-                    type: string
                   directoryScopeId:
                     description: |-
                       Identifier of the directory object representing the scope of the assignment. Cannot be used with app_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
                       Identifier of the directory object representing the scope of the assignment
-                    type: string
-                  directoryScopeObjectId:
-                    description: Identifier of the directory object representing the
-                      scope of the assignment
                     type: string
                   principalObjectId:
                     description: |-
@@ -269,18 +261,10 @@ spec:
                       Identifier of the app-specific scope when the assignment scope is app-specific. Cannot be used with directory_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
                       Identifier of the app-specific scope when the assignment scope is app-specific
                     type: string
-                  appScopeObjectId:
-                    description: Identifier of the app-specific scope when the assignment
-                      scope is app-specific
-                    type: string
                   directoryScopeId:
                     description: |-
                       Identifier of the directory object representing the scope of the assignment. Cannot be used with app_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
                       Identifier of the directory object representing the scope of the assignment
-                    type: string
-                  directoryScopeObjectId:
-                    description: Identifier of the directory object representing the
-                      scope of the assignment
                     type: string
                   principalObjectId:
                     description: |-
@@ -620,18 +604,10 @@ spec:
                       Identifier of the app-specific scope when the assignment scope is app-specific. Cannot be used with directory_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
                       Identifier of the app-specific scope when the assignment scope is app-specific
                     type: string
-                  appScopeObjectId:
-                    description: Identifier of the app-specific scope when the assignment
-                      scope is app-specific
-                    type: string
                   directoryScopeId:
                     description: |-
                       Identifier of the directory object representing the scope of the assignment. Cannot be used with app_scope_id. See official documentation for example usage. Changing this forces a new resource to be created.
                       Identifier of the directory object representing the scope of the assignment
-                    type: string
-                  directoryScopeObjectId:
-                    description: Identifier of the directory object representing the
-                      scope of the assignment
                     type: string
                   id:
                     type: string
