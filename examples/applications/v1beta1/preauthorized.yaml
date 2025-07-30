@@ -12,10 +12,10 @@ metadata:
   name: example
 spec:
   forProvider:
-    applicationObjectIdSelector:
+    applicationIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example-authorizing-app
-    authorizedAppIdSelector:
+    authorizedClientIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example-authorized-app
     permissionIds:

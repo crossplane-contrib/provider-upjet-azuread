@@ -17,7 +17,16 @@ type PasswordInitParameters_2 struct {
 
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// A display name for the password. Changing this field forces a new resource to be created.
 	// A display name for the password
@@ -79,8 +88,17 @@ type PasswordParameters_2 struct {
 
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
+
+	// Reference to a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+
+	// Selector for a Application in applications to populate applicationId.
+	// +kubebuilder:validation:Optional
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// A display name for the password. Changing this field forces a new resource to be created.
 	// A display name for the password
@@ -145,9 +163,8 @@ type PasswordStatus struct {
 type Password struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	// +kubebuilder:validation:XValidation:rule="!('*' in self.managementPolicies || 'Create' in self.managementPolicies || 'Update' in self.managementPolicies) || has(self.forProvider.applicationId) || (has(self.initProvider) && has(self.initProvider.applicationId))",message="spec.forProvider.applicationId is a required parameter"
-	Spec   PasswordSpec   `json:"spec"`
-	Status PasswordStatus `json:"status,omitempty"`
+	Spec              PasswordSpec   `json:"spec"`
+	Status            PasswordStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
