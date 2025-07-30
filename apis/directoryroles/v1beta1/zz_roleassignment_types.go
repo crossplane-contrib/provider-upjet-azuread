@@ -26,6 +26,7 @@ type RoleAssignmentInitParameters struct {
 	// The object ID of the principal for you want to create a role assignment. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the member principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
 	PrincipalObjectID *string `json:"principalObjectId,omitempty" tf:"principal_object_id,omitempty"`
 
 	// Reference to a User in users to populate principalObjectId.
@@ -87,6 +88,7 @@ type RoleAssignmentParameters struct {
 	// The object ID of the principal for you want to create a role assignment. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the member principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/users/v1beta1.User
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	PrincipalObjectID *string `json:"principalObjectId,omitempty" tf:"principal_object_id,omitempty"`
 
