@@ -27,6 +27,18 @@ func (in *APIInitParameters) DeepCopyInto(out *APIInitParameters) {
 			}
 		}
 	}
+	if in.KnownClientApplicationsRefs != nil {
+		in, out := &in.KnownClientApplicationsRefs, &out.KnownClientApplicationsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.KnownClientApplicationsSelector != nil {
+		in, out := &in.KnownClientApplicationsSelector, &out.KnownClientApplicationsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.MappedClaimsEnabled != nil {
 		in, out := &in.MappedClaimsEnabled, &out.MappedClaimsEnabled
 		*out = new(bool)
@@ -112,6 +124,18 @@ func (in *APIParameters) DeepCopyInto(out *APIParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.KnownClientApplicationsRefs != nil {
+		in, out := &in.KnownClientApplicationsRefs, &out.KnownClientApplicationsRefs
+		*out = make([]v1.Reference, len(*in))
+		for i := range *in {
+			(*in)[i].DeepCopyInto(&(*out)[i])
+		}
+	}
+	if in.KnownClientApplicationsSelector != nil {
+		in, out := &in.KnownClientApplicationsSelector, &out.KnownClientApplicationsSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 	if in.MappedClaimsEnabled != nil {
 		in, out := &in.MappedClaimsEnabled, &out.MappedClaimsEnabled
@@ -978,11 +1002,6 @@ func (in *ApplicationObservation) DeepCopyInto(out *ApplicationObservation) {
 			}
 			(*out)[key] = outVal
 		}
-	}
-	if in.ApplicationID != nil {
-		in, out := &in.ApplicationID, &out.ApplicationID
-		*out = new(string)
-		**out = **in
 	}
 	if in.ClientID != nil {
 		in, out := &in.ClientID, &out.ClientID

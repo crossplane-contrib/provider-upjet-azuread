@@ -68,6 +68,61 @@ func (mg *AppRole) ResolveReferences(ctx context.Context, c client.Reader) error
 	return nil
 }
 
+// ResolveReferences of this Application.
+func (mg *Application) ResolveReferences(ctx context.Context, c client.Reader) error {
+	var m xpresource.Managed
+	var l xpresource.ManagedList
+	r := reference.NewAPIResolver(c, mg)
+
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	for i3 := 0; i3 < len(mg.Spec.ForProvider.API); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta1", "Application", "ApplicationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.API[i3].KnownClientApplications),
+				Extract:       resource.ExtractParamPath("client_id", true),
+				References:    mg.Spec.ForProvider.API[i3].KnownClientApplicationsRefs,
+				Selector:      mg.Spec.ForProvider.API[i3].KnownClientApplicationsSelector,
+				To:            reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.ForProvider.API[i3].KnownClientApplications")
+		}
+		mg.Spec.ForProvider.API[i3].KnownClientApplications = reference.ToPtrValues(mrsp.ResolvedValues)
+		mg.Spec.ForProvider.API[i3].KnownClientApplicationsRefs = mrsp.ResolvedReferences
+
+	}
+	for i3 := 0; i3 < len(mg.Spec.InitProvider.API); i3++ {
+		{
+			m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta1", "Application", "ApplicationList")
+			if err != nil {
+				return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+			}
+			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+				CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.API[i3].KnownClientApplications),
+				Extract:       resource.ExtractParamPath("client_id", true),
+				References:    mg.Spec.InitProvider.API[i3].KnownClientApplicationsRefs,
+				Selector:      mg.Spec.InitProvider.API[i3].KnownClientApplicationsSelector,
+				To:            reference.To{List: l, Managed: m},
+			})
+		}
+		if err != nil {
+			return errors.Wrap(err, "mg.Spec.InitProvider.API[i3].KnownClientApplications")
+		}
+		mg.Spec.InitProvider.API[i3].KnownClientApplications = reference.ToPtrValues(mrsp.ResolvedValues)
+		mg.Spec.InitProvider.API[i3].KnownClientApplicationsRefs = mrsp.ResolvedReferences
+
+	}
+
+	return nil
+}
+
 // ResolveReferences of this Certificate.
 func (mg *Certificate) ResolveReferences(ctx context.Context, c client.Reader) error {
 	var m xpresource.Managed
