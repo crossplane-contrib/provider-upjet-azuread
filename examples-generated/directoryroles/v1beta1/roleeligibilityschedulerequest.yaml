@@ -10,7 +10,9 @@ spec:
   forProvider:
     directoryScopeId: /
     justification: Example
-    principalId: ${data.azuread_user.example.object_id}
+    principalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: azuread_user
     roleDefinitionIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

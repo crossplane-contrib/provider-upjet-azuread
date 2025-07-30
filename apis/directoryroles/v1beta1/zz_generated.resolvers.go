@@ -114,6 +114,25 @@ func (mg *RoleEligibilityScheduleRequest) ResolveReferences(ctx context.Context,
 	var rsp reference.ResolutionResponse
 	var err error
 	{
+		m, l, err = apisresolver.GetManagedResource("users.azuread.upbound.io", "v1beta1", "User", "UserList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PrincipalID),
+			Extract:      resource.ExtractParamPath("object_id", true),
+			Reference:    mg.Spec.ForProvider.PrincipalIDRef,
+			Selector:     mg.Spec.ForProvider.PrincipalIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.PrincipalID")
+	}
+	mg.Spec.ForProvider.PrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.PrincipalIDRef = rsp.ResolvedReference
+	{
 		m, l, err = apisresolver.GetManagedResource("directoryroles.azuread.upbound.io", "v1beta1", "Role", "RoleList")
 		if err != nil {
 			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
@@ -132,6 +151,25 @@ func (mg *RoleEligibilityScheduleRequest) ResolveReferences(ctx context.Context,
 	}
 	mg.Spec.ForProvider.RoleDefinitionID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.RoleDefinitionIDRef = rsp.ResolvedReference
+	{
+		m, l, err = apisresolver.GetManagedResource("users.azuread.upbound.io", "v1beta1", "User", "UserList")
+		if err != nil {
+			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
+		}
+
+		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
+			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrincipalID),
+			Extract:      resource.ExtractParamPath("object_id", true),
+			Reference:    mg.Spec.InitProvider.PrincipalIDRef,
+			Selector:     mg.Spec.InitProvider.PrincipalIDSelector,
+			To:           reference.To{List: l, Managed: m},
+		})
+	}
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.PrincipalID")
+	}
+	mg.Spec.InitProvider.PrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PrincipalIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("directoryroles.azuread.upbound.io", "v1beta1", "Role", "RoleList")
 		if err != nil {

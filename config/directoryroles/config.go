@@ -46,6 +46,10 @@ func Configure(p *config.Provider) {
 			TerraformName: "azuread_directory_role",
 			Extractor:     `github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)`,
 		}
+		r.References["principal_id"] = config.Reference{
+			TerraformName: "azuread_user",
+			Extractor:     `github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)`,
+		}
 
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
