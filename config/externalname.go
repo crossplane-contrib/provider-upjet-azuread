@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-package cluster
+package config
 
 import "github.com/crossplane/upjet/pkg/config"
 

@@ -38,8 +38,7 @@ import (
 
 	clusterapis "github.com/upbound/provider-azuread/apis/cluster"
 	namespacedapis "github.com/upbound/provider-azuread/apis/namespaced"
-	clusterconfig "github.com/upbound/provider-azuread/config/cluster"
-	namespacedconfig "github.com/upbound/provider-azuread/config/namespaced"
+	pconfig "github.com/upbound/provider-azuread/config"
 	resolverapis "github.com/upbound/provider-azuread/internal/apis"
 	"github.com/upbound/provider-azuread/internal/bootcheck"
 	"github.com/upbound/provider-azuread/internal/clients"
@@ -156,9 +155,9 @@ func main() {
 	ctx := context.Background()
 	sdkProvider, err := xpprovider.GetProviderSchema(ctx)
 	kingpin.FatalIfError(err, "Cannot get TF SDK provider")
-	clusterProvider, err := clusterconfig.GetProvider(ctx, sdkProvider, false)
+	clusterProvider, err := pconfig.GetProvider(ctx, sdkProvider, false)
 	kingpin.FatalIfError(err, "Cannot initialize the cluster provider configuration")
-	namespacedProvider, err := namespacedconfig.GetProvider(ctx, sdkProvider, false)
+	namespacedProvider, err := pconfig.GetNamespacedProvider(ctx, sdkProvider, false)
 	kingpin.FatalIfError(err, "Cannot initialize the namespaced provider configuration")
 	clusterOpts := tjcontroller.Options{
 		Options: xpcontroller.Options{

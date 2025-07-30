@@ -18,8 +18,7 @@ import (
 	"github.com/crossplane/upjet/pkg/pipeline"
 	"github.com/hashicorp/terraform-provider-azuread/xpprovider"
 
-	configCluster "github.com/upbound/provider-azuread/config/cluster"
-	configNamespaced "github.com/upbound/provider-azuread/config/namespaced"
+	"github.com/upbound/provider-azuread/config"
 )
 
 func main() {
@@ -37,9 +36,9 @@ func main() {
 	}
 	sdkProvider, err := xpprovider.GetProviderSchema(context.Background())
 	kingpin.FatalIfError(err, "cannot get provider schema")
-	pc, err := configCluster.GetProvider(context.Background(), sdkProvider, true)
+	pc, err := config.GetProvider(context.Background(), sdkProvider, true)
 	kingpin.FatalIfError(err, "Cannot initialize the cluster-scoped provider configuration")
-	pns, err := configNamespaced.GetProvider(context.Background(), sdkProvider, true)
+	pns, err := config.GetNamespacedProvider(context.Background(), sdkProvider, true)
 	kingpin.FatalIfError(err, "Cannot initialize the cluster-scoped provider configuration")
 	dumpGeneratedResourceList(pc, generatedResourceList)
 	dumpSkippedResourcesCSV(pc, skippedResourcesCSV)
