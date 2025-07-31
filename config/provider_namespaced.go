@@ -2,7 +2,7 @@ package config
 
 import (
 	"context"
-	"github.com/crossplane/crossplane-runtime/pkg/errors"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 
 	ujconfig "github.com/crossplane/upjet/pkg/config"
 	"github.com/crossplane/upjet/pkg/registry/reference"
