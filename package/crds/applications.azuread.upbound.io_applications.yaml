@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: applications.applications.azuread.upbound.io
 spec:
   group: applications.azuread.upbound.io
@@ -79,12 +79,91 @@ spec:
                       properties:
                         knownClientApplications:
                           description: |-
-                            A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+                            A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
                             Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
+                        knownClientApplicationsRefs:
+                          description: References to Application in applications to
+                            populate knownClientApplications.
+                          items:
+                            description: A Reference to a named object.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          type: array
+                        knownClientApplicationsSelector:
+                          description: Selector for a list of Application in applications
+                            to populate knownClientApplications.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                         mappedClaimsEnabled:
                           description: |-
                             Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
@@ -236,7 +315,7 @@ spec:
                     type: array
                   groupMembershipClaims:
                     description: |-
-                      Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+                      A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
                       Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
                     items:
                       type: string
@@ -561,12 +640,91 @@ spec:
                       properties:
                         knownClientApplications:
                           description: |-
-                            A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+                            A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
                             Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
                           items:
                             type: string
                           type: array
                           x-kubernetes-list-type: set
+                        knownClientApplicationsRefs:
+                          description: References to Application in applications to
+                            populate knownClientApplications.
+                          items:
+                            description: A Reference to a named object.
+                            properties:
+                              name:
+                                description: Name of the referenced object.
+                                type: string
+                              policy:
+                                description: Policies for referencing.
+                                properties:
+                                  resolution:
+                                    default: Required
+                                    description: |-
+                                      Resolution specifies whether resolution of this reference is required.
+                                      The default is 'Required', which means the reconcile will fail if the
+                                      reference cannot be resolved. 'Optional' means this reference will be
+                                      a no-op if it cannot be resolved.
+                                    enum:
+                                    - Required
+                                    - Optional
+                                    type: string
+                                  resolve:
+                                    description: |-
+                                      Resolve specifies when this reference should be resolved. The default
+                                      is 'IfNotPresent', which will attempt to resolve the reference only when
+                                      the corresponding field is not present. Use 'Always' to resolve the
+                                      reference on every reconcile.
+                                    enum:
+                                    - Always
+                                    - IfNotPresent
+                                    type: string
+                                type: object
+                            required:
+                            - name
+                            type: object
+                          type: array
+                        knownClientApplicationsSelector:
+                          description: Selector for a list of Application in applications
+                            to populate knownClientApplications.
+                          properties:
+                            matchControllerRef:
+                              description: |-
+                                MatchControllerRef ensures an object with the same controller reference
+                                as the selecting object is selected.
+                              type: boolean
+                            matchLabels:
+                              additionalProperties:
+                                type: string
+                              description: MatchLabels ensures an object with matching
+                                labels is selected.
+                              type: object
+                            policy:
+                              description: Policies for selection.
+                              properties:
+                                resolution:
+                                  default: Required
+                                  description: |-
+                                    Resolution specifies whether resolution of this reference is required.
+                                    The default is 'Required', which means the reconcile will fail if the
+                                    reference cannot be resolved. 'Optional' means this reference will be
+                                    a no-op if it cannot be resolved.
+                                  enum:
+                                  - Required
+                                  - Optional
+                                  type: string
+                                resolve:
+                                  description: |-
+                                    Resolve specifies when this reference should be resolved. The default
+                                    is 'IfNotPresent', which will attempt to resolve the reference only when
+                                    the corresponding field is not present. Use 'Always' to resolve the
+                                    reference on every reconcile.
+                                  enum:
+                                  - Always
+                                  - IfNotPresent
+                                  type: string
+                              type: object
+                          type: object
                         mappedClaimsEnabled:
                           description: |-
                             Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
@@ -718,7 +876,7 @@ spec:
                     type: array
                   groupMembershipClaims:
                     description: |-
-                      Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+                      A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
                       Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
                     items:
                       type: string
@@ -1207,7 +1365,7 @@ spec:
                       properties:
                         knownClientApplications:
                           description: |-
-                            A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+                            A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
                             Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
                           items:
                             type: string
@@ -1322,9 +1480,6 @@ spec:
                       Mapping of app role names to UUIDs
                     type: object
                     x-kubernetes-map-type: granular
-                  applicationId:
-                    description: The Application ID (also called Client ID)
-                    type: string
                   clientId:
                     description: |-
                       The Client ID for the application.
@@ -1385,7 +1540,7 @@ spec:
                     type: array
                   groupMembershipClaims:
                     description: |-
-                      Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+                      A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
                       Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
                     items:
                       type: string
@@ -1841,7 +1996,7 @@ spec:
                     properties:
                       knownClientApplications:
                         description: |-
-                          A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+                          A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
                           Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
                         items:
                           type: string
@@ -2388,7 +2543,7 @@ spec:
                     properties:
                       knownClientApplications:
                         description: |-
-                          A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+                          A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
                           Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
                         items:
                           type: string
@@ -3099,7 +3254,7 @@ spec:
                     properties:
                       knownClientApplications:
                         description: |-
-                          A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+                          A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
                           Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
                         items:
                           type: string
@@ -3213,9 +3368,6 @@ spec:
                       Mapping of app role names to UUIDs
                     type: object
                     x-kubernetes-map-type: granular
-                  applicationId:
-                    description: The Application ID (also called Client ID)
-                    type: string
                   clientId:
                     description: |-
                       The Client ID for the application.

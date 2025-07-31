@@ -398,18 +398,8 @@ func (in *RoleAssignmentInitParameters) DeepCopyInto(out *RoleAssignmentInitPara
 		*out = new(string)
 		**out = **in
 	}
-	if in.AppScopeObjectID != nil {
-		in, out := &in.AppScopeObjectID, &out.AppScopeObjectID
-		*out = new(string)
-		**out = **in
-	}
 	if in.DirectoryScopeID != nil {
 		in, out := &in.DirectoryScopeID, &out.DirectoryScopeID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DirectoryScopeObjectID != nil {
-		in, out := &in.DirectoryScopeObjectID, &out.DirectoryScopeObjectID
 		*out = new(string)
 		**out = **in
 	}
@@ -495,18 +485,8 @@ func (in *RoleAssignmentObservation) DeepCopyInto(out *RoleAssignmentObservation
 		*out = new(string)
 		**out = **in
 	}
-	if in.AppScopeObjectID != nil {
-		in, out := &in.AppScopeObjectID, &out.AppScopeObjectID
-		*out = new(string)
-		**out = **in
-	}
 	if in.DirectoryScopeID != nil {
 		in, out := &in.DirectoryScopeID, &out.DirectoryScopeID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DirectoryScopeObjectID != nil {
-		in, out := &in.DirectoryScopeObjectID, &out.DirectoryScopeObjectID
 		*out = new(string)
 		**out = **in
 	}
@@ -545,18 +525,8 @@ func (in *RoleAssignmentParameters) DeepCopyInto(out *RoleAssignmentParameters) 
 		*out = new(string)
 		**out = **in
 	}
-	if in.AppScopeObjectID != nil {
-		in, out := &in.AppScopeObjectID, &out.AppScopeObjectID
-		*out = new(string)
-		**out = **in
-	}
 	if in.DirectoryScopeID != nil {
 		in, out := &in.DirectoryScopeID, &out.DirectoryScopeID
-		*out = new(string)
-		**out = **in
-	}
-	if in.DirectoryScopeObjectID != nil {
-		in, out := &in.DirectoryScopeObjectID, &out.DirectoryScopeObjectID
 		*out = new(string)
 		**out = **in
 	}

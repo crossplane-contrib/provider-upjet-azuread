@@ -32,25 +32,6 @@ func (mg *Principal) ResolveReferences( // ResolveReferences of this Principal.
 		}
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationID),
-			Extract:      resource.ExtractParamPath("application_id", true),
-			Reference:    mg.Spec.ForProvider.ApplicationIDRef,
-			Selector:     mg.Spec.ForProvider.ApplicationIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationID")
-	}
-	mg.Spec.ForProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ApplicationIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClientID),
 			Extract:      resource.ExtractParamPath("client_id", true),
 			Reference:    mg.Spec.ForProvider.ClientIDRef,
@@ -63,25 +44,6 @@ func (mg *Principal) ResolveReferences( // ResolveReferences of this Principal.
 	}
 	mg.Spec.ForProvider.ClientID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.ForProvider.ClientIDRef = rsp.ResolvedReference
-	{
-		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
-		if err != nil {
-			return errors.Wrap(err, "failed to get the reference target managed resource and its list for reference resolution")
-		}
-
-		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
-			Extract:      resource.ExtractParamPath("application_id", true),
-			Reference:    mg.Spec.InitProvider.ApplicationIDRef,
-			Selector:     mg.Spec.InitProvider.ApplicationIDSelector,
-			To:           reference.To{List: l, Managed: m},
-		})
-	}
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationID")
-	}
-	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
 	{
 		m, l, err = apisresolver.GetManagedResource("applications.azuread.upbound.io", "v1beta2", "Application", "ApplicationList")
 		if err != nil {

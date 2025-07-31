@@ -29,18 +29,6 @@ type CertificateInitParameters struct {
 	// +kubebuilder:validation:Optional
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
-	// The object ID of the application for which this certificate should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
-
-	// Reference to a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
-
 	// Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.
 	// Specifies the encoding used for the supplied certificate data
 	Encoding *string `json:"encoding,omitempty" tf:"encoding,omitempty"`
@@ -75,9 +63,6 @@ type CertificateObservation struct {
 	// The resource ID of the application for which this certificate should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this certificate should be created
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
-
-	// The object ID of the application for which this certificate should be created
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
 	// Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.
 	// Specifies the encoding used for the supplied certificate data
@@ -122,19 +107,6 @@ type CertificateParameters struct {
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
 	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
-
-	// The object ID of the application for which this certificate should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	// +kubebuilder:validation:Optional
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
-
-	// Reference to a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
 
 	// Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.
 	// Specifies the encoding used for the supplied certificate data

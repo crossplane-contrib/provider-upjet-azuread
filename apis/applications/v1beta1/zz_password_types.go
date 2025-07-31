@@ -17,19 +17,16 @@ type PasswordInitParameters_2 struct {
 
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
-	// The object ID of the application for which this password should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
-
-	// Reference to a Application in applications to populate applicationObjectId.
+	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
 
-	// Selector for a Application in applications to populate applicationObjectId.
+	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// A display name for the password. Changing this field forces a new resource to be created.
 	// A display name for the password
@@ -58,9 +55,6 @@ type PasswordObservation_2 struct {
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
-
-	// The object ID of the application for which this password should be created
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
 
 	// A display name for the password. Changing this field forces a new resource to be created.
 	// A display name for the password
@@ -94,21 +88,17 @@ type PasswordParameters_2 struct {
 
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
-	// The object ID of the application for which this password should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta2.Application
+	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationObjectID *string `json:"applicationObjectId,omitempty" tf:"application_object_id,omitempty"`
+	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
 
-	// Reference to a Application in applications to populate applicationObjectId.
+	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationObjectIDRef *v1.Reference `json:"applicationObjectIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate applicationObjectId.
-	// +kubebuilder:validation:Optional
-	ApplicationObjectIDSelector *v1.Selector `json:"applicationObjectIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// A display name for the password. Changing this field forces a new resource to be created.
 	// A display name for the password

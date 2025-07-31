@@ -33,7 +33,7 @@ func (mg *RoleAssignment) ResolveReferences( // ResolveReferences of this RoleAs
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PrincipalObjectID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractParamPath("object_id", true),
 			Reference:    mg.Spec.ForProvider.PrincipalObjectIDRef,
 			Selector:     mg.Spec.ForProvider.PrincipalObjectIDSelector,
 			To:           reference.To{List: l, Managed: m},
@@ -71,7 +71,7 @@ func (mg *RoleAssignment) ResolveReferences( // ResolveReferences of this RoleAs
 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrincipalObjectID),
-			Extract:      reference.ExternalName(),
+			Extract:      resource.ExtractParamPath("object_id", true),
 			Reference:    mg.Spec.InitProvider.PrincipalObjectIDRef,
 			Selector:     mg.Spec.InitProvider.PrincipalObjectIDSelector,
 			To:           reference.To{List: l, Managed: m},

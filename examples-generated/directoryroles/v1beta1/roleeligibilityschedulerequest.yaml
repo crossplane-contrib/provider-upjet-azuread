@@ -12,7 +12,7 @@ spec:
     justification: Example
     principalIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: azuread_user
     roleDefinitionIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example

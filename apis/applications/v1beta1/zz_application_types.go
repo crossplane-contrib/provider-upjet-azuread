@@ -15,10 +15,20 @@ import (
 
 type APIInitParameters struct {
 
-	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+	// A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("client_id",true)
 	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
+
+	// References to Application in applications to populate knownClientApplications.
+	// +kubebuilder:validation:Optional
+	KnownClientApplicationsRefs []v1.Reference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Application in applications to populate knownClientApplications.
+	// +kubebuilder:validation:Optional
+	KnownClientApplicationsSelector *v1.Selector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
 	// Allows an application to use claims mapping without specifying a custom signing key
@@ -35,7 +45,7 @@ type APIInitParameters struct {
 
 type APIObservation struct {
 
-	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+	// A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
 	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
@@ -55,11 +65,21 @@ type APIObservation struct {
 
 type APIParameters struct {
 
-	// A set of application IDs (client IDs), used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
+	// A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("client_id",true)
 	// +kubebuilder:validation:Optional
 	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
+
+	// References to Application in applications to populate knownClientApplications.
+	// +kubebuilder:validation:Optional
+	KnownClientApplicationsRefs []v1.Reference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
+
+	// Selector for a list of Application in applications to populate knownClientApplications.
+	// +kubebuilder:validation:Optional
+	KnownClientApplicationsSelector *v1.Selector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
 	// Allows an application to use claims mapping without specifying a custom signing key
@@ -256,7 +276,7 @@ type ApplicationInitParameters struct {
 	// Block of features to configure for this application using tags
 	FeatureTags []FeatureTagsInitParameters `json:"featureTags,omitempty" tf:"feature_tags,omitempty"`
 
-	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+	// A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
 	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
 	// +listType=set
 	GroupMembershipClaims []*string `json:"groupMembershipClaims,omitempty" tf:"group_membership_claims,omitempty"`
@@ -353,9 +373,6 @@ type ApplicationObservation struct {
 	// +mapType=granular
 	AppRoleIds map[string]*string `json:"appRoleIds,omitempty" tf:"app_role_ids,omitempty"`
 
-	// The Application ID (also called Client ID)
-	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
-
 	// The Client ID for the application.
 	// The Client ID (also called Application ID)
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
@@ -384,7 +401,7 @@ type ApplicationObservation struct {
 	// Block of features to configure for this application using tags
 	FeatureTags []FeatureTagsObservation `json:"featureTags,omitempty" tf:"feature_tags,omitempty"`
 
-	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+	// A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
 	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
 	// +listType=set
 	GroupMembershipClaims []*string `json:"groupMembershipClaims,omitempty" tf:"group_membership_claims,omitempty"`
@@ -522,7 +539,7 @@ type ApplicationParameters struct {
 	// +kubebuilder:validation:Optional
 	FeatureTags []FeatureTagsParameters `json:"featureTags,omitempty" tf:"feature_tags,omitempty"`
 
-	// Configures the groups claim issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
+	// A set of strings containing membership claims issued in a user or OAuth 2.0 access token that the app expects. Possible values are None, SecurityGroup, DirectoryRole, ApplicationGroup or All.
 	// Configures the `groups` claim issued in a user or OAuth 2.0 access token that the app expects
 	// +kubebuilder:validation:Optional
 	// +listType=set

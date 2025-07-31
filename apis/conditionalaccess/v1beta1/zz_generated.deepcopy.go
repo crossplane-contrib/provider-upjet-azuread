@@ -144,6 +144,11 @@ func (in *AccessPolicyObservation) DeepCopyInto(out *AccessPolicyObservation) {
 		*out = new(string)
 		**out = **in
 	}
+	if in.ObjectID != nil {
+		in, out := &in.ObjectID, &out.ObjectID
+		*out = new(string)
+		**out = **in
+	}
 	if in.SessionControls != nil {
 		in, out := &in.SessionControls, &out.SessionControls
 		*out = make([]SessionControlsObservation, len(*in))
@@ -539,6 +544,11 @@ func (in *ConditionsInitParameters) DeepCopyInto(out *ConditionsInitParameters) 
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.InsiderRiskLevels != nil {
+		in, out := &in.InsiderRiskLevels, &out.InsiderRiskLevels
+		*out = new(string)
+		**out = **in
+	}
 	if in.Locations != nil {
 		in, out := &in.Locations, &out.Locations
 		*out = make([]LocationsInitParameters, len(*in))
@@ -639,6 +649,11 @@ func (in *ConditionsObservation) DeepCopyInto(out *ConditionsObservation) {
 		for i := range *in {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
+	}
+	if in.InsiderRiskLevels != nil {
+		in, out := &in.InsiderRiskLevels, &out.InsiderRiskLevels
+		*out = new(string)
+		**out = **in
 	}
 	if in.Locations != nil {
 		in, out := &in.Locations, &out.Locations
@@ -741,6 +756,11 @@ func (in *ConditionsParameters) DeepCopyInto(out *ConditionsParameters) {
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.InsiderRiskLevels != nil {
+		in, out := &in.InsiderRiskLevels, &out.InsiderRiskLevels
+		*out = new(string)
+		**out = **in
+	}
 	if in.Locations != nil {
 		in, out := &in.Locations, &out.Locations
 		*out = make([]LocationsParameters, len(*in))
@@ -821,6 +841,11 @@ func (in *CountryInitParameters) DeepCopyInto(out *CountryInitParameters) {
 			}
 		}
 	}
+	if in.CountryLookupMethod != nil {
+		in, out := &in.CountryLookupMethod, &out.CountryLookupMethod
+		*out = new(string)
+		**out = **in
+	}
 	if in.IncludeUnknownCountriesAndRegions != nil {
 		in, out := &in.IncludeUnknownCountriesAndRegions, &out.IncludeUnknownCountriesAndRegions
 		*out = new(bool)
@@ -852,6 +877,11 @@ func (in *CountryObservation) DeepCopyInto(out *CountryObservation) {
 			}
 		}
 	}
+	if in.CountryLookupMethod != nil {
+		in, out := &in.CountryLookupMethod, &out.CountryLookupMethod
+		*out = new(string)
+		**out = **in
+	}
 	if in.IncludeUnknownCountriesAndRegions != nil {
 		in, out := &in.IncludeUnknownCountriesAndRegions, &out.IncludeUnknownCountriesAndRegions
 		*out = new(bool)
@@ -882,6 +912,11 @@ func (in *CountryParameters) DeepCopyInto(out *CountryParameters) {
 				**out = **in
 			}
 		}
+	}
+	if in.CountryLookupMethod != nil {
+		in, out := &in.CountryLookupMethod, &out.CountryLookupMethod
+		*out = new(string)
+		**out = **in
 	}
 	if in.IncludeUnknownCountriesAndRegions != nil {
 		in, out := &in.IncludeUnknownCountriesAndRegions, &out.IncludeUnknownCountriesAndRegions

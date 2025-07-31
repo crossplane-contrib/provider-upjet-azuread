@@ -13,7 +13,7 @@ metadata:
 spec:
   forProvider:
     type: AsymmetricX509Cert
-    applicationObjectIdSelector:
+    applicationIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
     valueSecretRef:

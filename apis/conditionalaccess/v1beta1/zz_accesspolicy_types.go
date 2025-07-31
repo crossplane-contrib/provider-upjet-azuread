@@ -45,6 +45,10 @@ type AccessPolicyObservation struct {
 	// The ID of the Conditional Access Policy.
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// The ID of the Conditional Access Policy.
+	// The object ID of the policy
+	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
+
 	// A session_controls block as documented below, which specifies the session controls that are enforced after sign-in.
 	SessionControls []SessionControlsObservation `json:"sessionControls,omitempty" tf:"session_controls,omitempty"`
 
@@ -157,6 +161,9 @@ type ConditionsInitParameters struct {
 	// A devices block as documented below, which describes devices to be included in and excluded from the policy. A devices block can be added to an existing policy, but removing the devices block forces a new resource to be created.
 	Devices []DevicesInitParameters `json:"devices,omitempty" tf:"devices,omitempty"`
 
+	// The insider risk level in the policy. Possible values are: minor, moderate, elevated, unknownFutureValue.
+	InsiderRiskLevels *string `json:"insiderRiskLevels,omitempty" tf:"insider_risk_levels,omitempty"`
+
 	// A locations block as documented below, which specifies locations included in and excluded from the policy.
 	Locations []LocationsInitParameters `json:"locations,omitempty" tf:"locations,omitempty"`
 
@@ -189,6 +196,9 @@ type ConditionsObservation struct {
 
 	// A devices block as documented below, which describes devices to be included in and excluded from the policy. A devices block can be added to an existing policy, but removing the devices block forces a new resource to be created.
 	Devices []DevicesObservation `json:"devices,omitempty" tf:"devices,omitempty"`
+
+	// The insider risk level in the policy. Possible values are: minor, moderate, elevated, unknownFutureValue.
+	InsiderRiskLevels *string `json:"insiderRiskLevels,omitempty" tf:"insider_risk_levels,omitempty"`
 
 	// A locations block as documented below, which specifies locations included in and excluded from the policy.
 	Locations []LocationsObservation `json:"locations,omitempty" tf:"locations,omitempty"`
@@ -226,6 +236,10 @@ type ConditionsParameters struct {
 	// A devices block as documented below, which describes devices to be included in and excluded from the policy. A devices block can be added to an existing policy, but removing the devices block forces a new resource to be created.
 	// +kubebuilder:validation:Optional
 	Devices []DevicesParameters `json:"devices,omitempty" tf:"devices,omitempty"`
+
+	// The insider risk level in the policy. Possible values are: minor, moderate, elevated, unknownFutureValue.
+	// +kubebuilder:validation:Optional
+	InsiderRiskLevels *string `json:"insiderRiskLevels,omitempty" tf:"insider_risk_levels,omitempty"`
 
 	// A locations block as documented below, which specifies locations included in and excluded from the policy.
 	// +kubebuilder:validation:Optional
@@ -360,7 +374,7 @@ type FilterParameters struct {
 
 type GrantControlsInitParameters struct {
 
-	// ID of an Authentication Strength Policy to use in this policy.
+	// ID of an Authentication Strength Policy to use in this policy. When using a hard-coded ID, the UUID value should be prefixed with: /policies/authenticationStrengthPolicies/.
 	AuthenticationStrengthPolicyID *string `json:"authenticationStrengthPolicyId,omitempty" tf:"authentication_strength_policy_id,omitempty"`
 
 	// List of built-in controls required by the policy. Possible values are: block, mfa, approvedApplication, compliantApplication, compliantDevice, domainJoinedDevice, passwordChange or unknownFutureValue.
@@ -378,7 +392,7 @@ type GrantControlsInitParameters struct {
 
 type GrantControlsObservation struct {
 
-	// ID of an Authentication Strength Policy to use in this policy.
+	// ID of an Authentication Strength Policy to use in this policy. When using a hard-coded ID, the UUID value should be prefixed with: /policies/authenticationStrengthPolicies/.
 	AuthenticationStrengthPolicyID *string `json:"authenticationStrengthPolicyId,omitempty" tf:"authentication_strength_policy_id,omitempty"`
 
 	// List of built-in controls required by the policy. Possible values are: block, mfa, approvedApplication, compliantApplication, compliantDevice, domainJoinedDevice, passwordChange or unknownFutureValue.
@@ -396,7 +410,7 @@ type GrantControlsObservation struct {
 
 type GrantControlsParameters struct {
 
-	// ID of an Authentication Strength Policy to use in this policy.
+	// ID of an Authentication Strength Policy to use in this policy. When using a hard-coded ID, the UUID value should be prefixed with: /policies/authenticationStrengthPolicies/.
 	// +kubebuilder:validation:Optional
 	AuthenticationStrengthPolicyID *string `json:"authenticationStrengthPolicyId,omitempty" tf:"authentication_strength_policy_id,omitempty"`
 

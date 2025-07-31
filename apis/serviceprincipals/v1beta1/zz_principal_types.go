@@ -149,20 +149,6 @@ type PrincipalInitParameters struct {
 	// Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application
 	AppRoleAssignmentRequired *bool `json:"appRoleAssignmentRequired,omitempty" tf:"app_role_assignment_required,omitempty"`
 
-	// The unique identifier of the app_role.
-	// The application ID (client ID) of the application for which to create a service principal
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
-	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
-
-	// Reference to a Application in applications to populate applicationId.
-	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate applicationId.
-	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
-
 	// The client ID of the application for which to create a service principal.
 	// The client ID of the application for which to create a service principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
@@ -243,10 +229,6 @@ type PrincipalObservation struct {
 
 	// A list of app roles published by the associated application, as documented below. For more information official documentation.
 	AppRoles []AppRolesObservation `json:"appRoles,omitempty" tf:"app_roles,omitempty"`
-
-	// The unique identifier of the app_role.
-	// The application ID (client ID) of the application for which to create a service principal
-	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
 	// The tenant ID where the associated application is registered.
 	// The tenant ID where the associated application is registered
@@ -364,21 +346,6 @@ type PrincipalParameters struct {
 	// Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application
 	// +kubebuilder:validation:Optional
 	AppRoleAssignmentRequired *bool `json:"appRoleAssignmentRequired,omitempty" tf:"app_role_assignment_required,omitempty"`
-
-	// The unique identifier of the app_role.
-	// The application ID (client ID) of the application for which to create a service principal
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/applications/v1beta1.Application
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("application_id",true)
-	// +kubebuilder:validation:Optional
-	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
-
-	// Reference to a Application in applications to populate applicationId.
-	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
-
-	// Selector for a Application in applications to populate applicationId.
-	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// The client ID of the application for which to create a service principal.
 	// The client ID of the application for which to create a service principal

@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.14.0
+    controller-gen.kubebuilder.io/version: v0.16.5
   name: locations.conditionalaccess.azuread.upbound.io
 spec:
   group: conditionalaccess.azuread.upbound.io
@@ -83,6 +83,12 @@ spec:
                           items:
                             type: string
                           type: array
+                        countryLookupMethod:
+                          description: Method of detecting country the user is located
+                            in. Possible values are clientIpAddress for IP-based location
+                            and authenticatorAppGps for Authenticator app GPS-based
+                            location.  Defaults to clientIpAddress.
+                          type: string
                         includeUnknownCountriesAndRegions:
                           description: Whether IP addresses that don't map to a country
                             or region should be included in the named location. Defaults
@@ -136,6 +142,12 @@ spec:
                           items:
                             type: string
                           type: array
+                        countryLookupMethod:
+                          description: Method of detecting country the user is located
+                            in. Possible values are clientIpAddress for IP-based location
+                            and authenticatorAppGps for Authenticator app GPS-based
+                            location.  Defaults to clientIpAddress.
+                          type: string
                         includeUnknownCountriesAndRegions:
                           description: Whether IP addresses that don't map to a country
                             or region should be included in the named location. Defaults
@@ -353,6 +365,12 @@ spec:
                           items:
                             type: string
                           type: array
+                        countryLookupMethod:
+                          description: Method of detecting country the user is located
+                            in. Possible values are clientIpAddress for IP-based location
+                            and authenticatorAppGps for Authenticator app GPS-based
+                            location.  Defaults to clientIpAddress.
+                          type: string
                         includeUnknownCountriesAndRegions:
                           description: Whether IP addresses that don't map to a country
                             or region should be included in the named location. Defaults
@@ -510,6 +528,12 @@ spec:
                         items:
                           type: string
                         type: array
+                      countryLookupMethod:
+                        description: Method of detecting country the user is located
+                          in. Possible values are clientIpAddress for IP-based location
+                          and authenticatorAppGps for Authenticator app GPS-based
+                          location.  Defaults to clientIpAddress.
+                        type: string
                       includeUnknownCountriesAndRegions:
                         description: Whether IP addresses that don't map to a country
                           or region should be included in the named location. Defaults
@@ -559,6 +583,12 @@ spec:
                         items:
                           type: string
                         type: array
+                      countryLookupMethod:
+                        description: Method of detecting country the user is located
+                          in. Possible values are clientIpAddress for IP-based location
+                          and authenticatorAppGps for Authenticator app GPS-based
+                          location.  Defaults to clientIpAddress.
+                        type: string
                       includeUnknownCountriesAndRegions:
                         description: Whether IP addresses that don't map to a country
                           or region should be included in the named location. Defaults
@@ -772,6 +802,12 @@ spec:
                         items:
                           type: string
                         type: array
+                      countryLookupMethod:
+                        description: Method of detecting country the user is located
+                          in. Possible values are clientIpAddress for IP-based location
+                          and authenticatorAppGps for Authenticator app GPS-based
+                          location.  Defaults to clientIpAddress.
+                        type: string
                       includeUnknownCountriesAndRegions:
                         description: Whether IP addresses that don't map to a country
                           or region should be included in the named location. Defaults

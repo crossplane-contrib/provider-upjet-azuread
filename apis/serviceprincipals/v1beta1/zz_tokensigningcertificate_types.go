@@ -23,8 +23,8 @@ type TokenSigningCertificateInitParameters struct {
 	// The end date until which the certificate is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). Default is 3 years from current date.
 	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
 
-	// The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
-	// The object ID of the service principal for which this certificate should be created
+	// The ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The ID of the service principal for which this certificate should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
@@ -53,8 +53,8 @@ type TokenSigningCertificateObservation struct {
 	// A UUID used to uniquely identify the verify certificate.
 	KeyID *string `json:"keyId,omitempty" tf:"key_id,omitempty"`
 
-	// The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
-	// The object ID of the service principal for which this certificate should be created
+	// The ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The ID of the service principal for which this certificate should be created
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
 	// The start date from which the certificate is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z).
@@ -78,8 +78,8 @@ type TokenSigningCertificateParameters struct {
 	// +kubebuilder:validation:Optional
 	EndDate *string `json:"endDate,omitempty" tf:"end_date,omitempty"`
 
-	// The object ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
-	// The object ID of the service principal for which this certificate should be created
+	// The ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
+	// The ID of the service principal for which this certificate should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/serviceprincipals/v1beta2.Principal
 	// +kubebuilder:validation:Optional
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
