@@ -14,7 +14,7 @@ import (
 
 	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
-	"github.com/crossplane/upjet/pkg/terraform"
+	"github.com/crossplane/upjet/v2/pkg/terraform"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"

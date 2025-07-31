@@ -26,7 +26,7 @@ type RoleEligibilityScheduleRequestInitParameters struct {
 	// The object ID of the principal to granted the role eligibility. Changing this forces a new resource to be created.
 	// The object ID of the member principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	PrincipalID *string `json:"principalId,omitempty" tf:"principal_id,omitempty"`
 
 	// Reference to a User in users to populate principalId.
@@ -40,7 +40,7 @@ type RoleEligibilityScheduleRequestInitParameters struct {
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this role eligibility schedule request
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/directoryroles/v1beta1.Role
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("template_id",true)
 	RoleDefinitionID *string `json:"roleDefinitionId,omitempty" tf:"role_definition_id,omitempty"`
 
 	// Reference to a Role in directoryroles to populate roleDefinitionId.
@@ -88,7 +88,7 @@ type RoleEligibilityScheduleRequestParameters struct {
 	// The object ID of the principal to granted the role eligibility. Changing this forces a new resource to be created.
 	// The object ID of the member principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	PrincipalID *string `json:"principalId,omitempty" tf:"principal_id,omitempty"`
 
@@ -103,7 +103,7 @@ type RoleEligibilityScheduleRequestParameters struct {
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this role eligibility schedule request
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/directoryroles/v1beta1.Role
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("template_id",true)
 	// +kubebuilder:validation:Optional
 	RoleDefinitionID *string `json:"roleDefinitionId,omitempty" tf:"role_definition_id,omitempty"`
 

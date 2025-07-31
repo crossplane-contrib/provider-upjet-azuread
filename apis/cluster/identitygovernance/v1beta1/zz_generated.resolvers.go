@@ -8,7 +8,7 @@ package v1beta1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
-	resource "github.com/crossplane/upjet/pkg/resource"
+	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
 	v1beta2 "github.com/upbound/provider-azuread/apis/cluster/groups/v1beta2"
 	v1beta1 "github.com/upbound/provider-azuread/apis/cluster/users/v1beta1"

@@ -26,7 +26,7 @@ type RoleAssignmentInitParameters struct {
 	// The object ID of the principal for you want to create a role assignment. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the member principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	PrincipalObjectID *string `json:"principalObjectId,omitempty" tf:"principal_object_id,omitempty"`
 
 	// Reference to a User in users to populate principalObjectId.
@@ -40,7 +40,7 @@ type RoleAssignmentInitParameters struct {
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this assignment
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/directoryroles/v1beta1.Role
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("template_id",true)
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 
 	// Reference to a Role in directoryroles to populate roleId.
@@ -88,7 +88,7 @@ type RoleAssignmentParameters struct {
 	// The object ID of the principal for you want to create a role assignment. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the member principal
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	PrincipalObjectID *string `json:"principalObjectId,omitempty" tf:"principal_object_id,omitempty"`
 
@@ -103,7 +103,7 @@ type RoleAssignmentParameters struct {
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this assignment
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/directoryroles/v1beta1.Role
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("template_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("template_id",true)
 	// +kubebuilder:validation:Optional
 	RoleID *string `json:"roleId,omitempty" tf:"role_id,omitempty"`
 

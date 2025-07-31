@@ -7,7 +7,7 @@ package controller
 import (
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	"github.com/crossplane/upjet/pkg/controller"
+	"github.com/crossplane/upjet/v2/pkg/controller"
 
 	member "github.com/upbound/provider-azuread/internal/controller/cluster/administrativeunits/member"
 	unit "github.com/upbound/provider-azuread/internal/controller/cluster/administrativeunits/unit"

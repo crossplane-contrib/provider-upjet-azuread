@@ -8,7 +8,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/providerconfig"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
-	"github.com/crossplane/upjet/pkg/controller"
+	"github.com/crossplane/upjet/v2/pkg/controller"
 	ctrl "sigs.k8s.io/controller-runtime"
 
 	"github.com/upbound/provider-azuread/apis/cluster/v1beta1"

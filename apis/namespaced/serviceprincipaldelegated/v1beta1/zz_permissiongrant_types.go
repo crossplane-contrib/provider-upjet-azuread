@@ -50,7 +50,7 @@ type PermissionGrantInitParameters struct {
 	// - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.
 	// The object ID of the user on behalf of whom the service principal is authorized to access the resource
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	UserObjectID *string `json:"userObjectId,omitempty" tf:"user_object_id,omitempty"`
 
 	// Reference to a User in users to populate userObjectId.
@@ -124,7 +124,7 @@ type PermissionGrantParameters struct {
 	// - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.
 	// The object ID of the user on behalf of whom the service principal is authorized to access the resource
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/pkg/resource.ExtractParamPath("object_id",true)
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	UserObjectID *string `json:"userObjectId,omitempty" tf:"user_object_id,omitempty"`
 

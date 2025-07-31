@@ -4,7 +4,7 @@
 
 package applications
 
-import "github.com/crossplane/upjet/pkg/config"
+import "github.com/crossplane/upjet/v2/pkg/config"
 
 const group = "applications"
 
@@ -56,7 +56,7 @@ func Configure(p *config.Provider) {
 		}
 		r.References["authorized_client_id"] = config.Reference{
 			TerraformName: "azuread_application",
-			Extractor:     `github.com/crossplane/upjet/pkg/resource.ExtractParamPath("client_id",true)`,
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("client_id",true)`,
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
