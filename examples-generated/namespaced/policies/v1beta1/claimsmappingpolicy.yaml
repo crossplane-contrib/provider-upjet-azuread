@@ -1,0 +1,36 @@
+apiVersion: policies.azuread.m.upbound.io/v1beta1
+kind: ClaimsMappingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: policies/v1beta1/claimsmappingpolicy
+  labels:
+    testing.upbound.io/example-name: my_policy
+  name: my-policy
+  namespace: upbound-system
+spec:
+  forProvider:
+    definition:
+    - |-
+      ${jsonencode(
+            {
+              ClaimsMappingPolicy = {
+                ClaimsSchema = [
+                  {
+                    ID            = "employeeid"
+                    JwtClaimType  = "name"
+                    SamlClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+                    Source        = "user"
+                  },
+                  {
+                    ID            = "tenantcountry"
+                    JwtClaimType  = "country"
+                    SamlClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/country"
+                    Source        = "company"
+                  }
+                ]
+                IncludeBasicClaimSet = "true"
+                Version              = 1
+              }
+            }
+          )}
+    displayName: My Policy

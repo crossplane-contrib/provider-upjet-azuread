@@ -1,0 +1,30 @@
+apiVersion: directoryroles.azuread.upbound.io/v1beta1
+kind: RoleAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    principalObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: azuread_user
+    roleIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: directoryroles.azuread.upbound.io/v1beta1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: Security administrator

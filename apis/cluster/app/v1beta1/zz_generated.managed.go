@@ -5,7 +5,7 @@
 
 package v1beta1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this RoleAssignment.
 func (mg *RoleAssignment) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -25,11 +25,6 @@ func (mg *RoleAssignment) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this RoleAssignment.
 func (mg *RoleAssignment) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this RoleAssignment.
-func (mg *RoleAssignment) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this RoleAssignment.
@@ -55,11 +50,6 @@ func (mg *RoleAssignment) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this RoleAssignment.
 func (mg *RoleAssignment) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this RoleAssignment.
-func (mg *RoleAssignment) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this RoleAssignment.

@@ -1,0 +1,34 @@
+apiVersion: directoryroles.azuread.m.upbound.io/v1beta1
+kind: RoleEligibilityScheduleRequest
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleeligibilityschedulerequest
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    directoryScopeId: /
+    justification: Example
+    principalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: azuread_user
+    roleDefinitionIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+
+---
+
+apiVersion: directoryroles.azuread.m.upbound.io/v1beta1
+kind: Role
+metadata:
+  annotations:
+    meta.upbound.io/example-id: directoryroles/v1beta1/roleeligibilityschedulerequest
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: Application Administrator

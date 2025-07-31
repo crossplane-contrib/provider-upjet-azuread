@@ -1,0 +1,33 @@
+apiVersion: groups.azuread.m.upbound.io/v1beta1
+kind: Member
+metadata:
+  annotations:
+    meta.upbound.io/example-id: groups/v1beta1/member
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    groupObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    memberObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: azuread_user
+
+---
+
+apiVersion: groups.azuread.m.upbound.io/v1beta1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: groups/v1beta1/member
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: my_group
+    securityEnabled: true

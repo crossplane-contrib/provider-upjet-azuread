@@ -1,0 +1,28 @@
+apiVersion: administrativeunits.azuread.upbound.io/v1beta1
+kind: Member
+metadata:
+  annotations:
+    meta.upbound.io/example-id: administrativeunits/v1beta1/member
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    administrativeUnitObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    memberObjectId: ${data.azuread_user.example.id}
+
+---
+
+apiVersion: administrativeunits.azuread.upbound.io/v1beta1
+kind: Unit
+metadata:
+  annotations:
+    meta.upbound.io/example-id: administrativeunits/v1beta1/member
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: Example-AU

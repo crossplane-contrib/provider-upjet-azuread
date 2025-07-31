@@ -5,7 +5,7 @@
 
 package v1beta2
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this Principal.
 func (mg *Principal) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -25,11 +25,6 @@ func (mg *Principal) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this Principal.
 func (mg *Principal) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this Principal.
-func (mg *Principal) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this Principal.
@@ -55,11 +50,6 @@ func (mg *Principal) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this Principal.
 func (mg *Principal) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this Principal.
-func (mg *Principal) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this Principal.

@@ -1,0 +1,19 @@
+apiVersion: applications.azuread.upbound.io/v1beta1
+kind: Certificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: applications/v1beta1/certificate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    endDate: "2021-05-01T01:02:03Z"
+    type: AsymmetricX509Cert
+    valueSecretRef:
+      key: attribute.cert.pem
+      name: example-secret
+      namespace: upbound-system

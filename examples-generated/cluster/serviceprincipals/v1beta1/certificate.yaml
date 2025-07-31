@@ -1,0 +1,49 @@
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta1
+kind: Certificate
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/certificate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    endDate: "2021-05-01T01:02:03Z"
+    servicePrincipalIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    type: AsymmetricX509Cert
+    valueSecretRef:
+      key: attribute.cert.pem
+      name: example-secret
+      namespace: upbound-system
+
+---
+
+apiVersion: applications.azuread.upbound.io/v1beta2
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/certificate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: example
+
+---
+
+apiVersion: serviceprincipals.azuread.upbound.io/v1beta2
+kind: Principal
+metadata:
+  annotations:
+    meta.upbound.io/example-id: serviceprincipals/v1beta1/certificate
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    clientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example

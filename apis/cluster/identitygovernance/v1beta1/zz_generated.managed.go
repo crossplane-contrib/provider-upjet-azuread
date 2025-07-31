@@ -5,7 +5,7 @@
 
 package v1beta1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this PrivilegedAccessGroupAssignmentSchedule.
 func (mg *PrivilegedAccessGroupAssignmentSchedule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -25,11 +25,6 @@ func (mg *PrivilegedAccessGroupAssignmentSchedule) GetManagementPolicies() xpv1.
 // GetProviderConfigReference of this PrivilegedAccessGroupAssignmentSchedule.
 func (mg *PrivilegedAccessGroupAssignmentSchedule) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this PrivilegedAccessGroupAssignmentSchedule.
@@ -57,11 +52,6 @@ func (mg *PrivilegedAccessGroupAssignmentSchedule) SetProviderConfigReference(r 
 	mg.Spec.ProviderConfigReference = r
 }
 
-// SetPublishConnectionDetailsTo of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
-}
-
 // SetWriteConnectionSecretToReference of this PrivilegedAccessGroupAssignmentSchedule.
 func (mg *PrivilegedAccessGroupAssignmentSchedule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
@@ -87,11 +77,6 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) GetProviderConfigReference()
 	return mg.Spec.ProviderConfigReference
 }
 
-// GetPublishConnectionDetailsTo of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
-}
-
 // GetWriteConnectionSecretToReference of this PrivilegedAccessGroupEligibilitySchedule.
 func (mg *PrivilegedAccessGroupEligibilitySchedule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
@@ -115,11 +100,6 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) SetManagementPolicies(r xpv1
 // SetProviderConfigReference of this PrivilegedAccessGroupEligibilitySchedule.
 func (mg *PrivilegedAccessGroupEligibilitySchedule) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this PrivilegedAccessGroupEligibilitySchedule.

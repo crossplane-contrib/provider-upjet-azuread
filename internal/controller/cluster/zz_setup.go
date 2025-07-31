@@ -84,3 +84,46 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupGated creates all controllers with the supplied logger and adds them to
+// the supplied manager gated.
+func SetupGated(mgr ctrl.Manager, o controller.Options) error {
+	for _, setup := range []func(ctrl.Manager, controller.Options) error{
+		member.SetupGated,
+		unit.SetupGated,
+		roleassignment.SetupGated,
+		application.SetupGated,
+		approle.SetupGated,
+		certificate.SetupGated,
+		federatedidentitycredential.SetupGated,
+		password.SetupGated,
+		preauthorized.SetupGated,
+		accesspolicy.SetupGated,
+		location.SetupGated,
+		customdirectoryrole.SetupGated,
+		role.SetupGated,
+		roleassignmentdirectoryroles.SetupGated,
+		roleeligibilityschedulerequest.SetupGated,
+		group.SetupGated,
+		membergroups.SetupGated,
+		privilegedaccessgroupassignmentschedule.SetupGated,
+		privilegedaccessgroupeligibilityschedule.SetupGated,
+		invitation.SetupGated,
+		claimsmappingpolicy.SetupGated,
+		providerconfig.SetupGated,
+		permissiongrant.SetupGated,
+		certificateserviceprincipals.SetupGated,
+		claimsmappingpolicyassignment.SetupGated,
+		passwordserviceprincipals.SetupGated,
+		principal.SetupGated,
+		tokensigningcertificate.SetupGated,
+		job.SetupGated,
+		secret.SetupGated,
+		user.SetupGated,
+	} {
+		if err := setup(mgr, o); err != nil {
+			return err
+		}
+	}
+	return nil
+}

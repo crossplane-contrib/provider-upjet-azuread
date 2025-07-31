@@ -1,0 +1,89 @@
+apiVersion: applications.azuread.upbound.io/v1beta2
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: applications/v1beta2/application
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    api:
+    - knownClientApplicationsRefs:
+      - name: known1
+      - name: known2
+      mappedClaimsEnabled: true
+      oauth2PermissionScope:
+      - adminConsentDescription: Allow the application to access example on behalf
+          of the signed-in user.
+        adminConsentDisplayName: Access example
+        enabled: true
+        id: 96183846-204b-4b43-82e1-5d2222eb4b9b
+        type: User
+        userConsentDescription: Allow the application to access example on your behalf.
+        userConsentDisplayName: Access example
+        value: user_impersonation
+      - adminConsentDescription: Administer the example application
+        adminConsentDisplayName: Administer
+        enabled: true
+        id: be98fa3e-ab5b-4b11-83d9-04ba2b7946bc
+        type: Admin
+        value: administer
+      requestedAccessTokenVersion: 2
+    appRole:
+    - allowedMemberTypes:
+      - User
+      - Application
+      description: Admins can manage roles and perform all task actions
+      displayName: Admin
+      enabled: true
+      id: 1b19509b-32b1-4e9f-b71d-4992aa991967
+      value: admin
+    - allowedMemberTypes:
+      - User
+      description: ReadOnly roles have limited query access
+      displayName: ReadOnly
+      enabled: true
+      id: 497406e4-012a-4267-bf18-45a1cb148a01
+      value: User
+    displayName: example
+    featureTags:
+    - enterprise: true
+      gallery: true
+    identifierUris:
+    - api://example-app
+    logoImage: ${filebase64("/path/to/logo.png")}
+    optionalClaims:
+    - accessToken:
+      - name: myclaim
+      - name: otherclaim
+      idToken:
+      - additionalProperties:
+        - emit_as_roles
+        essential: true
+        name: userclaim
+        source: user
+      saml2Token:
+      - name: samlexample
+    owners:
+    - ${data.azuread_client_config.current.object_id}
+    requiredResourceAccess:
+    - resourceAccess:
+      - id: df021288-bdef-4463-88db-98f22de89214
+        type: Role
+      - id: b4e74841-8e56-480b-be8b-910348b18b4c
+        type: Scope
+      resourceAppId: 00000003-0000-0000-c000-000000000000
+    - resourceAccess:
+      - id: 594c1fb6-4f81-4475-ae41-0c394909246c
+        type: Role
+      resourceAppId: c5393580-f805-4401-95e8-94b7a6ef2fc2
+    signInAudience: AzureADMultipleOrgs
+    web:
+    - homepageUrl: https://app.example.net
+      implicitGrant:
+      - accessTokenIssuanceEnabled: true
+        idTokenIssuanceEnabled: true
+      logoutUrl: https://app.example.net/logout
+      redirectUris:
+      - https://app.example.net/account

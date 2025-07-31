@@ -1,0 +1,19 @@
+apiVersion: applications.azuread.upbound.io/v1beta1
+kind: AppRole
+metadata:
+  annotations:
+    meta.upbound.io/example-id: applications/v1beta1/approle
+  labels:
+    testing.upbound.io/example-name: example_administer
+  name: example-administer
+spec:
+  forProvider:
+    allowedMemberTypes:
+    - User
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: My role description
+    displayName: Administer
+    roleId: ${random_uuid.example_administrator.id}
+    value: admin

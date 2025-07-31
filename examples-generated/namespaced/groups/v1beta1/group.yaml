@@ -1,0 +1,15 @@
+apiVersion: groups.azuread.m.upbound.io/v1beta1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: groups/v1beta1/group
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: example
+    owners:
+    - ${data.azuread_client_config.current.object_id}
+    securityEnabled: true

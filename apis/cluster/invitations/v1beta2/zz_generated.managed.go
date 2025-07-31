@@ -5,7 +5,7 @@
 
 package v1beta2
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this Invitation.
 func (mg *Invitation) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -25,11 +25,6 @@ func (mg *Invitation) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this Invitation.
 func (mg *Invitation) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this Invitation.
-func (mg *Invitation) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this Invitation.
@@ -55,11 +50,6 @@ func (mg *Invitation) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this Invitation.
 func (mg *Invitation) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this Invitation.
-func (mg *Invitation) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this Invitation.

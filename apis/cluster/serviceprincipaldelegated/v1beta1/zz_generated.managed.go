@@ -5,7 +5,7 @@
 
 package v1beta1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this PermissionGrant.
 func (mg *PermissionGrant) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -25,11 +25,6 @@ func (mg *PermissionGrant) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this PermissionGrant.
 func (mg *PermissionGrant) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this PermissionGrant.
-func (mg *PermissionGrant) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this PermissionGrant.
@@ -55,11 +50,6 @@ func (mg *PermissionGrant) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this PermissionGrant.
 func (mg *PermissionGrant) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this PermissionGrant.
-func (mg *PermissionGrant) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this PermissionGrant.
