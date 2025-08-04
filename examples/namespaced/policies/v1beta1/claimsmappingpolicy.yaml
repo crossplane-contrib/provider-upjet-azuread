@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: 2024 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: policies.azuread.m.upbound.io/v1beta1
+kind: ClaimsMappingPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: policies/v1beta1/claimsmappingpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: My Policy
+    definition:
+      - |-
+        {
+          "ClaimsMappingPolicy": {
+            "ClaimsSchema": [
+              {
+                "ID"            : "employeeid",
+                "JwtClaimType"  : "name",
+                "SamlClaimType" : "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name",
+                "Source"        : "user"
+              },
+              {
+                "ID"            : "tenantcountry",
+                "JwtClaimType"  : "country",
+                "SamlClaimType" : "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/country",
+                "Source"        : "company"
+              }
+            ],
+            "IncludeBasicClaimSet" : "true",
+            "Version"              : 1
+          }
+        }

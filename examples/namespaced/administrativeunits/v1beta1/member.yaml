@@ -1,0 +1,33 @@
+# SPDX-FileCopyrightText: 2024 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: administrativeunits.azuread.m.upbound.io/v1beta1
+kind: Member
+metadata:
+  annotations:
+    meta.upbound.io/example-id: administrativeunits/v1beta1/member
+    upjet.upbound.io/manual-intervention: "This resource either requires object ID of an existing user or group"
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    administrativeUnitObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    memberObjectId: <object ID of the user or group you want to add as a member of the administrative unit>
+---
+apiVersion: administrativeunits.azuread.m.upbound.io/v1beta1
+kind: Unit
+metadata:
+  annotations:
+    meta.upbound.io/example-id: administrativeunits/v1beta1/member
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: Example-AU
