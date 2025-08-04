@@ -2,8 +2,8 @@ package config
 
 import (
 	"context"
-	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 
+	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	ujconfig "github.com/crossplane/upjet/v2/pkg/config"
 	"github.com/crossplane/upjet/v2/pkg/registry/reference"
 	"github.com/crossplane/upjet/v2/pkg/schema/traverser"
