@@ -1,0 +1,13 @@
+apiVersion: invitations.azuread.m.upbound.io/v1beta1
+kind: Invitation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: invitations/v1beta1/invitation
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    redirectUrl: https://portal.azure.com
+    userEmailAddress: jdoe@hashicorp.com

@@ -11,30 +11,28 @@ import (
 	// Note(turkenh): we are importing this to embed provider schema document
 	_ "embed"
 
-	"github.com/crossplane/upjet/pkg/config"
-	ujconfig "github.com/crossplane/upjet/pkg/config"
-	"github.com/crossplane/upjet/pkg/config/conversion"
-	"github.com/crossplane/upjet/pkg/registry/reference"
-	"github.com/crossplane/upjet/pkg/schema/traverser"
-	conversiontfjson "github.com/crossplane/upjet/pkg/types/conversion/tfjson"
+	ujconfig "github.com/crossplane/upjet/v2/pkg/config"
+	"github.com/crossplane/upjet/v2/pkg/config/conversion"
+	"github.com/crossplane/upjet/v2/pkg/registry/reference"
+	"github.com/crossplane/upjet/v2/pkg/schema/traverser"
+	conversiontfjson "github.com/crossplane/upjet/v2/pkg/types/conversion/tfjson"
 	tfjson "github.com/hashicorp/terraform-json"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/hashicorp/terraform-provider-azuread/xpprovider"
 	"github.com/pkg/errors"
 
-	"github.com/upbound/provider-azuread/config/administrativeunits"
-	"github.com/upbound/provider-azuread/config/app"
-	"github.com/upbound/provider-azuread/config/applications"
-	"github.com/upbound/provider-azuread/config/conditionalaccess"
-	"github.com/upbound/provider-azuread/config/directoryroles"
-	"github.com/upbound/provider-azuread/config/groups"
-	"github.com/upbound/provider-azuread/config/identitygovernance"
-	"github.com/upbound/provider-azuread/config/invitations"
-	"github.com/upbound/provider-azuread/config/policies"
-	"github.com/upbound/provider-azuread/config/serviceprincipaldelegated"
-	"github.com/upbound/provider-azuread/config/serviceprincipals"
-	"github.com/upbound/provider-azuread/config/synchronization"
-	"github.com/upbound/provider-azuread/config/users"
+	"github.com/upbound/provider-azuread/config/cluster/administrativeunits"
+	"github.com/upbound/provider-azuread/config/cluster/app"
+	"github.com/upbound/provider-azuread/config/cluster/applications"
+	"github.com/upbound/provider-azuread/config/cluster/conditionalaccess"
+	"github.com/upbound/provider-azuread/config/cluster/directoryroles"
+	"github.com/upbound/provider-azuread/config/cluster/groups"
+	"github.com/upbound/provider-azuread/config/cluster/identitygovernance"
+	"github.com/upbound/provider-azuread/config/cluster/invitations"
+	"github.com/upbound/provider-azuread/config/cluster/policies"
+	"github.com/upbound/provider-azuread/config/cluster/serviceprincipaldelegated"
+	"github.com/upbound/provider-azuread/config/cluster/serviceprincipals"
+	"github.com/upbound/provider-azuread/config/cluster/synchronization"
+	"github.com/upbound/provider-azuread/config/cluster/users"
 )
 
 const (
@@ -92,12 +90,7 @@ func getProviderSchema(s string) (*schema.Provider, error) {
 }
 
 // GetProvider returns provider configuration
-func GetProvider(ctx context.Context, generationProvider bool) (*ujconfig.Provider, error) {
-	sdkProvider, err := xpprovider.GetProviderSchema(ctx)
-	if err != nil {
-		return nil, errors.Wrap(err, "cannot get the Terraform SDK provider")
-	}
-
+func GetProvider(ctx context.Context, sdkProvider *schema.Provider, generationProvider bool) (*ujconfig.Provider, error) {
 	if generationProvider {
 		p, err := getProviderSchema(providerSchema)
 		if err != nil {
@@ -194,8 +187,8 @@ func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
 			// with the converted API (with embedded objects in place of
 			// singleton lists), so we need the appropriate Terraform
 			// converter in this case.
-			r.TerraformConversions = []config.TerraformConversion{
-				config.NewTFSingletonConversion(),
+			r.TerraformConversions = []ujconfig.TerraformConversion{
+				ujconfig.NewTFSingletonConversion(),
 			}
 		}
 		pc.Resources[name] = r

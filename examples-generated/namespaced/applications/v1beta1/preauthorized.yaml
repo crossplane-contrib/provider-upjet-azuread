@@ -1,0 +1,51 @@
+apiVersion: applications.azuread.m.upbound.io/v1beta1
+kind: PreAuthorized
+metadata:
+  annotations:
+    meta.upbound.io/example-id: applications/v1beta1/preauthorized
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    applicationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: authorizer
+    authorizedClientIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: authorized
+    permissionIds:
+    - 00000000-0000-0000-0000-000000000000
+    - 11111111-1111-1111-1111-111111111111
+
+---
+
+apiVersion: applications.azuread.m.upbound.io/v1beta1
+kind: Application
+metadata:
+  annotations:
+    meta.upbound.io/example-id: applications/v1beta1/preauthorized
+  labels:
+    testing.upbound.io/example-name: authorizer
+  name: authorizer
+  namespace: upbound-system
+spec:
+  forProvider:
+    api:
+    - oauth2PermissionScope:
+      - adminConsentDescription: Administer the application
+        adminConsentDisplayName: Administer
+        enabled: true
+        id: 00000000-0000-0000-0000-000000000000
+        type: Admin
+        value: administer
+      - adminConsentDescription: Access the application
+        adminConsentDisplayName: Access
+        enabled: true
+        id: 11111111-1111-1111-1111-111111111111
+        type: User
+        userConsentDescription: Access the application
+        userConsentDisplayName: Access
+        value: user_impersonation
+    displayName: example-authorizing-app

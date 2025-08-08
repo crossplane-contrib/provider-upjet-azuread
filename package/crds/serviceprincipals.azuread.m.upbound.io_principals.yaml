@@ -1,0 +1,847 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.18.0
+  name: principals.serviceprincipals.azuread.m.upbound.io
+spec:
+  group: serviceprincipals.azuread.m.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - azuread
+    kind: Principal
+    listKind: PrincipalList
+    plural: principals
+    singular: principal
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: Principal is the Schema for the Principals API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: PrincipalSpec defines the desired state of Principal
+            properties:
+              forProvider:
+                properties:
+                  accountEnabled:
+                    description: |-
+                      Whether or not the service principal account is enabled. Defaults to true.
+                      Whether or not the service principal account is enabled
+                    type: boolean
+                  alternativeNames:
+                    description: |-
+                      A set of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities.
+                      A list of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  appRoleAssignmentRequired:
+                    description: |-
+                      Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application. Defaults to false.
+                      Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application
+                    type: boolean
+                  clientId:
+                    description: |-
+                      The client ID of the application for which to create a service principal.
+                      The client ID of the application for which to create a service principal
+                    type: string
+                  clientIdRef:
+                    description: Reference to a Application in applications to populate
+                      clientId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  clientIdSelector:
+                    description: Selector for a Application in applications to populate
+                      clientId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  description:
+                    description: |-
+                      A description of the service principal provided for internal end-users.
+                      Description of the service principal provided for internal end-users
+                    type: string
+                  featureTags:
+                    description: |-
+                      A feature_tags block as described below. Cannot be used together with the tags property.
+                      Block of features to configure for this service principal using tags
+                    items:
+                      properties:
+                        customSingleSignOn:
+                          description: |-
+                            Whether this service principal represents a custom SAML application. Enabling this will assign the WindowsAzureActiveDirectoryCustomSingleSignOnApplication tag. Defaults to false.
+                            Whether this service principal represents a custom SAML application
+                          type: boolean
+                        enterprise:
+                          description: |-
+                            Whether this service principal represents an Enterprise Application. Enabling this will assign the WindowsAzureActiveDirectoryIntegratedApp tag. Defaults to false.
+                            Whether this service principal represents an Enterprise Application
+                          type: boolean
+                        gallery:
+                          description: |-
+                            Whether this service principal represents a gallery application. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1 tag. Defaults to false.
+                            Whether this service principal represents a gallery application
+                          type: boolean
+                        hide:
+                          description: |-
+                            Whether this app is invisible to users in My Apps and Office 365 Launcher. Enabling this will assign the HideApp tag. Defaults to false.
+                            Whether this app is invisible to users in My Apps and Office 365 Launcher
+                          type: boolean
+                      type: object
+                    type: array
+                  loginUrl:
+                    description: |-
+                      The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on.
+                      The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on
+                    type: string
+                  notes:
+                    description: |-
+                      A free text field to capture information about the service principal, typically used for operational purposes.
+                      Free text field to capture information about the service principal, typically used for operational purposes
+                    type: string
+                  notificationEmailAddresses:
+                    description: |-
+                      A set of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications.
+                      List of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  owners:
+                    description: |-
+                      A set of object IDs of principals that will be granted ownership of the service principal. Supported object types are users or service principals. By default, no owners are assigned.
+                      A list of object IDs of principals that will be granted ownership of the service principal
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  preferredSingleSignOnMode:
+                    description: |-
+                      The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps. Supported values are oidc, password, saml or notSupported. Omit this property or specify a blank string to unset.
+                      The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps
+                    type: string
+                  samlSingleSignOn:
+                    description: |-
+                      A saml_single_sign_on block as documented below.
+                      Settings related to SAML single sign-on
+                    properties:
+                      relayState:
+                        description: |-
+                          The relative URI the service provider would redirect to after completion of the single sign-on flow.
+                          The relative URI the service provider would redirect to after completion of the single sign-on flow
+                        type: string
+                    type: object
+                  tags:
+                    description: |-
+                      A set of tags to apply to the service principal for configuring specific behaviours of the service principal. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
+                      A set of tags to apply to the service principal
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  useExisting:
+                    description: |-
+                      When true, any existing service principal linked to the same application will be automatically imported. When false, an import error will be raised for any pre-existing service principal.
+                      When true, the resource will return an existing service principal instead of failing with an error
+                    type: boolean
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accountEnabled:
+                    description: |-
+                      Whether or not the service principal account is enabled. Defaults to true.
+                      Whether or not the service principal account is enabled
+                    type: boolean
+                  alternativeNames:
+                    description: |-
+                      A set of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities.
+                      A list of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  appRoleAssignmentRequired:
+                    description: |-
+                      Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application. Defaults to false.
+                      Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application
+                    type: boolean
+                  clientId:
+                    description: |-
+                      The client ID of the application for which to create a service principal.
+                      The client ID of the application for which to create a service principal
+                    type: string
+                  clientIdRef:
+                    description: Reference to a Application in applications to populate
+                      clientId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      namespace:
+                        description: Namespace of the referenced object
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  clientIdSelector:
+                    description: Selector for a Application in applications to populate
+                      clientId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      namespace:
+                        description: Namespace for the selector
+                        type: string
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  description:
+                    description: |-
+                      A description of the service principal provided for internal end-users.
+                      Description of the service principal provided for internal end-users
+                    type: string
+                  featureTags:
+                    description: |-
+                      A feature_tags block as described below. Cannot be used together with the tags property.
+                      Block of features to configure for this service principal using tags
+                    items:
+                      properties:
+                        customSingleSignOn:
+                          description: |-
+                            Whether this service principal represents a custom SAML application. Enabling this will assign the WindowsAzureActiveDirectoryCustomSingleSignOnApplication tag. Defaults to false.
+                            Whether this service principal represents a custom SAML application
+                          type: boolean
+                        enterprise:
+                          description: |-
+                            Whether this service principal represents an Enterprise Application. Enabling this will assign the WindowsAzureActiveDirectoryIntegratedApp tag. Defaults to false.
+                            Whether this service principal represents an Enterprise Application
+                          type: boolean
+                        gallery:
+                          description: |-
+                            Whether this service principal represents a gallery application. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1 tag. Defaults to false.
+                            Whether this service principal represents a gallery application
+                          type: boolean
+                        hide:
+                          description: |-
+                            Whether this app is invisible to users in My Apps and Office 365 Launcher. Enabling this will assign the HideApp tag. Defaults to false.
+                            Whether this app is invisible to users in My Apps and Office 365 Launcher
+                          type: boolean
+                      type: object
+                    type: array
+                  loginUrl:
+                    description: |-
+                      The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on.
+                      The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on
+                    type: string
+                  notes:
+                    description: |-
+                      A free text field to capture information about the service principal, typically used for operational purposes.
+                      Free text field to capture information about the service principal, typically used for operational purposes
+                    type: string
+                  notificationEmailAddresses:
+                    description: |-
+                      A set of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications.
+                      List of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  owners:
+                    description: |-
+                      A set of object IDs of principals that will be granted ownership of the service principal. Supported object types are users or service principals. By default, no owners are assigned.
+                      A list of object IDs of principals that will be granted ownership of the service principal
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  preferredSingleSignOnMode:
+                    description: |-
+                      The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps. Supported values are oidc, password, saml or notSupported. Omit this property or specify a blank string to unset.
+                      The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps
+                    type: string
+                  samlSingleSignOn:
+                    description: |-
+                      A saml_single_sign_on block as documented below.
+                      Settings related to SAML single sign-on
+                    properties:
+                      relayState:
+                        description: |-
+                          The relative URI the service provider would redirect to after completion of the single sign-on flow.
+                          The relative URI the service provider would redirect to after completion of the single sign-on flow
+                        type: string
+                    type: object
+                  tags:
+                    description: |-
+                      A set of tags to apply to the service principal for configuring specific behaviours of the service principal. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
+                      A set of tags to apply to the service principal
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  useExisting:
+                    description: |-
+                      When true, any existing service principal linked to the same application will be automatically imported. When false, an import error will be raised for any pre-existing service principal.
+                      When true, the resource will return an existing service principal instead of failing with an error
+                    type: boolean
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  kind: ClusterProviderConfig
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  kind:
+                    description: Kind of the referenced object.
+                    type: string
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                required:
+                - kind
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - forProvider
+            type: object
+          status:
+            description: PrincipalStatus defines the observed state of Principal.
+            properties:
+              atProvider:
+                properties:
+                  accountEnabled:
+                    description: |-
+                      Whether or not the service principal account is enabled. Defaults to true.
+                      Whether or not the service principal account is enabled
+                    type: boolean
+                  alternativeNames:
+                    description: |-
+                      A set of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities.
+                      A list of alternative names, used to retrieve service principals by subscription, identify resource group and full resource ids for managed identities
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  appRoleAssignmentRequired:
+                    description: |-
+                      Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application. Defaults to false.
+                      Whether this service principal requires an app role assignment to a user or group before Azure AD will issue a user or access token to the application
+                    type: boolean
+                  appRoleIds:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      A mapping of app role values to app role IDs, as published by the associated application, intended to be useful when referencing app roles in other resources in your configuration.
+                      Mapping of app role names to UUIDs
+                    type: object
+                    x-kubernetes-map-type: granular
+                  appRoles:
+                    description: A list of app roles published by the associated application,
+                      as documented below. For more information official documentation.
+                    items:
+                      properties:
+                        allowedMemberTypes:
+                          description: 'Specifies whether this app role definition
+                            can be assigned to users and groups, or to other applications
+                            (that are accessing this application in a standalone scenario).
+                            Possible values are: User and Application, or both.'
+                          items:
+                            type: string
+                          type: array
+                        description:
+                          description: A description of the service principal provided
+                            for internal end-users.
+                          type: string
+                        displayName:
+                          description: The display name of the application associated
+                            with this service principal.
+                          type: string
+                        enabled:
+                          description: Determines if the app role is enabled.
+                          type: boolean
+                        id:
+                          description: The unique identifier of the app_role.
+                          type: string
+                        value:
+                          description: The value that is used for the roles claim
+                            in ID tokens and OAuth 2.0 access tokens that are authenticating
+                            an assigned service or user principal.
+                          type: string
+                      type: object
+                    type: array
+                  applicationTenantId:
+                    description: |-
+                      The tenant ID where the associated application is registered.
+                      The tenant ID where the associated application is registered
+                    type: string
+                  clientId:
+                    description: |-
+                      The client ID of the application for which to create a service principal.
+                      The client ID of the application for which to create a service principal
+                    type: string
+                  description:
+                    description: |-
+                      A description of the service principal provided for internal end-users.
+                      Description of the service principal provided for internal end-users
+                    type: string
+                  displayName:
+                    description: |-
+                      The display name of the application associated with this service principal.
+                      The display name of the application associated with this service principal
+                    type: string
+                  featureTags:
+                    description: |-
+                      A feature_tags block as described below. Cannot be used together with the tags property.
+                      Block of features to configure for this service principal using tags
+                    items:
+                      properties:
+                        customSingleSignOn:
+                          description: |-
+                            Whether this service principal represents a custom SAML application. Enabling this will assign the WindowsAzureActiveDirectoryCustomSingleSignOnApplication tag. Defaults to false.
+                            Whether this service principal represents a custom SAML application
+                          type: boolean
+                        enterprise:
+                          description: |-
+                            Whether this service principal represents an Enterprise Application. Enabling this will assign the WindowsAzureActiveDirectoryIntegratedApp tag. Defaults to false.
+                            Whether this service principal represents an Enterprise Application
+                          type: boolean
+                        gallery:
+                          description: |-
+                            Whether this service principal represents a gallery application. Enabling this will assign the WindowsAzureActiveDirectoryGalleryApplicationNonPrimaryV1 tag. Defaults to false.
+                            Whether this service principal represents a gallery application
+                          type: boolean
+                        hide:
+                          description: |-
+                            Whether this app is invisible to users in My Apps and Office 365 Launcher. Enabling this will assign the HideApp tag. Defaults to false.
+                            Whether this app is invisible to users in My Apps and Office 365 Launcher
+                          type: boolean
+                      type: object
+                    type: array
+                  homepageUrl:
+                    description: |-
+                      Home page or landing page of the associated application.
+                      Home page or landing page of the application
+                    type: string
+                  id:
+                    description: The unique identifier of the app_role.
+                    type: string
+                  loginUrl:
+                    description: |-
+                      The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on.
+                      The URL where the service provider redirects the user to Azure AD to authenticate. Azure AD uses the URL to launch the application from Microsoft 365 or the Azure AD My Apps. When blank, Azure AD performs IdP-initiated sign-on for applications configured with SAML-based single sign-on
+                    type: string
+                  logoutUrl:
+                    description: |-
+                      The URL that will be used by Microsoft's authorization service to log out an user using OpenId Connect front-channel, back-channel or SAML logout protocols, taken from the associated application.
+                      The URL that will be used by Microsoft's authorization service to sign out a user using front-channel, back-channel or SAML logout protocols
+                    type: string
+                  notes:
+                    description: |-
+                      A free text field to capture information about the service principal, typically used for operational purposes.
+                      Free text field to capture information about the service principal, typically used for operational purposes
+                    type: string
+                  notificationEmailAddresses:
+                    description: |-
+                      A set of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications.
+                      List of email addresses where Azure AD sends a notification when the active certificate is near the expiration date. This is only for the certificates used to sign the SAML token issued for Azure AD Gallery applications
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  oauth2PermissionScopeIds:
+                    additionalProperties:
+                      type: string
+                    description: |-
+                      A mapping of OAuth2.0 permission scope values to scope IDs, as exposed by the associated application, intended to be useful when referencing permission scopes in other resources in your configuration.
+                      Mapping of OAuth2.0 permission scope names to UUIDs
+                    type: object
+                    x-kubernetes-map-type: granular
+                  oauth2PermissionScopes:
+                    description: A list of OAuth 2.0 delegated permission scopes exposed
+                      by the associated application, as documented below.
+                    items:
+                      properties:
+                        adminConsentDescription:
+                          description: Delegated permission description that appears
+                            in all tenant-wide admin consent experiences, intended
+                            to be read by an administrator granting the permission
+                            on behalf of all users.
+                          type: string
+                        adminConsentDisplayName:
+                          description: Display name for the delegated permission,
+                            intended to be read by an administrator granting the permission
+                            on behalf of all users.
+                          type: string
+                        enabled:
+                          description: Determines if the app role is enabled.
+                          type: boolean
+                        id:
+                          description: The unique identifier of the app_role.
+                          type: string
+                        type:
+                          description: Identifies whether the service principal represents
+                            an application or a managed identity. Possible values
+                            include Application or ManagedIdentity.
+                          type: string
+                        userConsentDescription:
+                          description: Delegated permission description that appears
+                            in the end user consent experience, intended to be read
+                            by a user consenting on their own behalf.
+                          type: string
+                        userConsentDisplayName:
+                          description: Display name for the delegated permission that
+                            appears in the end user consent experience.
+                          type: string
+                        value:
+                          description: The value that is used for the roles claim
+                            in ID tokens and OAuth 2.0 access tokens that are authenticating
+                            an assigned service or user principal.
+                          type: string
+                      type: object
+                    type: array
+                  objectId:
+                    description: |-
+                      The object ID of the service principal.
+                      The object ID of the service principal
+                    type: string
+                  owners:
+                    description: |-
+                      A set of object IDs of principals that will be granted ownership of the service principal. Supported object types are users or service principals. By default, no owners are assigned.
+                      A list of object IDs of principals that will be granted ownership of the service principal
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  preferredSingleSignOnMode:
+                    description: |-
+                      The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps. Supported values are oidc, password, saml or notSupported. Omit this property or specify a blank string to unset.
+                      The single sign-on mode configured for this application. Azure AD uses the preferred single sign-on mode to launch the application from Microsoft 365 or the Azure AD My Apps
+                    type: string
+                  redirectUris:
+                    description: |-
+                      A list of URLs where user tokens are sent for sign-in with the associated application, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent for the associated application.
+                      The URLs where user tokens are sent for sign-in with the associated application, or the redirect URIs where OAuth 2.0 authorization codes and access tokens are sent for the associated application
+                    items:
+                      type: string
+                    type: array
+                  samlMetadataUrl:
+                    description: |-
+                      The URL where the service exposes SAML metadata for federation.
+                      The URL where the service exposes SAML metadata for federation
+                    type: string
+                  samlSingleSignOn:
+                    description: |-
+                      A saml_single_sign_on block as documented below.
+                      Settings related to SAML single sign-on
+                    properties:
+                      relayState:
+                        description: |-
+                          The relative URI the service provider would redirect to after completion of the single sign-on flow.
+                          The relative URI the service provider would redirect to after completion of the single sign-on flow
+                        type: string
+                    type: object
+                  servicePrincipalNames:
+                    description: |-
+                      A list of identifier URI(s), copied over from the associated application.
+                      A list of identifier URI(s), copied over from the associated application
+                    items:
+                      type: string
+                    type: array
+                  signInAudience:
+                    description: |-
+                      The Microsoft account types that are supported for the associated application. Possible values include AzureADMyOrg, AzureADMultipleOrgs, AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount.
+                      The Microsoft account types that are supported for the associated application
+                    type: string
+                  tags:
+                    description: |-
+                      A set of tags to apply to the service principal for configuring specific behaviours of the service principal. Note that these are not provided for use by practitioners. Cannot be used together with the feature_tags block.
+                      A set of tags to apply to the service principal
+                    items:
+                      type: string
+                    type: array
+                    x-kubernetes-list-type: set
+                  type:
+                    description: |-
+                      Identifies whether the service principal represents an application or a managed identity. Possible values include Application or ManagedIdentity.
+                      Identifies whether the service principal represents an application or a managed identity
+                    type: string
+                  useExisting:
+                    description: |-
+                      When true, any existing service principal linked to the same application will be automatically imported. When false, an import error will be raised for any pre-existing service principal.
+                      When true, the resource will return an existing service principal instead of failing with an error
+                    type: boolean
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}

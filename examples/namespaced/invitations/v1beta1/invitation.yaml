@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2024 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: invitations.azuread.m.upbound.io/v1beta1
+kind: Invitation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: invitations/v1beta1/invitation
+    upjet.upbound.io/manual-intervention: "This resource either requires a user with an email in untrusted domain (but this needs collaboration configuration) or an email in a trusted domain (but in our testing account invitations in this domain has been disabled)"
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    userEmailAddress: testuser@upbound.io
+    redirectUrl: https://portal.azure.com
