@@ -24,6 +24,7 @@ type PermissionGrantInitParameters struct {
 	// The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.
 	// The object ID of the service principal representing the resource to be accessed
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/serviceprincipals/v1beta1.Principal
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	ResourceServicePrincipalObjectID *string `json:"resourceServicePrincipalObjectId,omitempty" tf:"resource_service_principal_object_id,omitempty"`
 
 	// Reference to a Principal in serviceprincipals to populate resourceServicePrincipalObjectId.
@@ -37,6 +38,7 @@ type PermissionGrantInitParameters struct {
 	// The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.
 	// The object ID of the service principal for which this delegated permission grant should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/serviceprincipals/v1beta1.Principal
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	ServicePrincipalObjectID *string `json:"servicePrincipalObjectId,omitempty" tf:"service_principal_object_id,omitempty"`
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalObjectId.
@@ -96,6 +98,7 @@ type PermissionGrantParameters struct {
 	// The object ID of the service principal representing the resource to be accessed. Changing this forces a new resource to be created.
 	// The object ID of the service principal representing the resource to be accessed
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/serviceprincipals/v1beta1.Principal
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	ResourceServicePrincipalObjectID *string `json:"resourceServicePrincipalObjectId,omitempty" tf:"resource_service_principal_object_id,omitempty"`
 
@@ -110,6 +113,7 @@ type PermissionGrantParameters struct {
 	// The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.
 	// The object ID of the service principal for which this delegated permission grant should be created
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/serviceprincipals/v1beta1.Principal
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	ServicePrincipalObjectID *string `json:"servicePrincipalObjectId,omitempty" tf:"service_principal_object_id,omitempty"`
 

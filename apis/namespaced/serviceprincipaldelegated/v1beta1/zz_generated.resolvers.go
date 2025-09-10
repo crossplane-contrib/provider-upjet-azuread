@@ -24,7 +24,7 @@ func (mg *PermissionGrant) ResolveReferences(ctx context.Context, c client.Reade
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ResourceServicePrincipalObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ResourceServicePrincipalObjectIDRef,
 		Selector:     mg.Spec.ForProvider.ResourceServicePrincipalObjectIDSelector,
@@ -41,7 +41,7 @@ func (mg *PermissionGrant) ResolveReferences(ctx context.Context, c client.Reade
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ServicePrincipalObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ServicePrincipalObjectIDRef,
 		Selector:     mg.Spec.ForProvider.ServicePrincipalObjectIDSelector,
@@ -75,7 +75,7 @@ func (mg *PermissionGrant) ResolveReferences(ctx context.Context, c client.Reade
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ResourceServicePrincipalObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ResourceServicePrincipalObjectIDRef,
 		Selector:     mg.Spec.InitProvider.ResourceServicePrincipalObjectIDSelector,
@@ -92,7 +92,7 @@ func (mg *PermissionGrant) ResolveReferences(ctx context.Context, c client.Reade
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ServicePrincipalObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ServicePrincipalObjectIDRef,
 		Selector:     mg.Spec.InitProvider.ServicePrincipalObjectIDSelector,
