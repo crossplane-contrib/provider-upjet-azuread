@@ -8,6 +8,7 @@ package v1beta1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
+	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
 	v1beta1 "github.com/upbound/provider-azuread/apis/namespaced/serviceprincipals/v1beta1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -22,7 +23,7 @@ func (mg *RoleAssignment) ResolveReferences(ctx context.Context, c client.Reader
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PrincipalObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.PrincipalObjectIDRef,
 		Selector:     mg.Spec.ForProvider.PrincipalObjectIDSelector,
@@ -39,7 +40,7 @@ func (mg *RoleAssignment) ResolveReferences(ctx context.Context, c client.Reader
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ResourceObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ResourceObjectIDRef,
 		Selector:     mg.Spec.ForProvider.ResourceObjectIDSelector,
@@ -56,7 +57,7 @@ func (mg *RoleAssignment) ResolveReferences(ctx context.Context, c client.Reader
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrincipalObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.PrincipalObjectIDRef,
 		Selector:     mg.Spec.InitProvider.PrincipalObjectIDSelector,
@@ -73,7 +74,7 @@ func (mg *RoleAssignment) ResolveReferences(ctx context.Context, c client.Reader
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ResourceObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.ResourceObjectIDRef,
 		Selector:     mg.Spec.InitProvider.ResourceObjectIDSelector,

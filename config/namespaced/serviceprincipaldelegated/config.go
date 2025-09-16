@@ -12,9 +12,11 @@ func Configure(p *config.Provider) {
 		r.Kind = "PermissionGrant"
 		r.References["service_principal_object_id"] = config.Reference{
 			TerraformName: "azuread_service_principal",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)`,
 		}
 		r.References["resource_service_principal_object_id"] = config.Reference{
 			TerraformName: "azuread_service_principal",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)`,
 		}
 		// We need to override the default group that upjet generated for
 		// this resource, which would be "azuread"
