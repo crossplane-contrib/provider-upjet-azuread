@@ -24,7 +24,7 @@ func (mg *PrivilegedAccessGroupAssignmentSchedule) ResolveReferences(ctx context
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.GroupID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.GroupIDRef,
 		Selector:     mg.Spec.ForProvider.GroupIDSelector,
@@ -41,7 +41,7 @@ func (mg *PrivilegedAccessGroupAssignmentSchedule) ResolveReferences(ctx context
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PrincipalID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.PrincipalIDRef,
 		Selector:     mg.Spec.ForProvider.PrincipalIDSelector,
@@ -58,7 +58,7 @@ func (mg *PrivilegedAccessGroupAssignmentSchedule) ResolveReferences(ctx context
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.GroupID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.GroupIDRef,
 		Selector:     mg.Spec.InitProvider.GroupIDSelector,
@@ -75,7 +75,7 @@ func (mg *PrivilegedAccessGroupAssignmentSchedule) ResolveReferences(ctx context
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrincipalID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.PrincipalIDRef,
 		Selector:     mg.Spec.InitProvider.PrincipalIDSelector,
@@ -102,7 +102,7 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) ResolveReferences(ctx contex
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.GroupID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.GroupIDRef,
 		Selector:     mg.Spec.ForProvider.GroupIDSelector,
@@ -119,7 +119,7 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) ResolveReferences(ctx contex
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PrincipalID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.PrincipalIDRef,
 		Selector:     mg.Spec.ForProvider.PrincipalIDSelector,
@@ -136,7 +136,7 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) ResolveReferences(ctx contex
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.GroupID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.GroupIDRef,
 		Selector:     mg.Spec.InitProvider.GroupIDSelector,
@@ -153,7 +153,7 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) ResolveReferences(ctx contex
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrincipalID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.PrincipalIDRef,
 		Selector:     mg.Spec.InitProvider.PrincipalIDSelector,
