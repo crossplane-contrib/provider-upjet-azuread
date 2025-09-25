@@ -29,5 +29,9 @@ func Configure(p *config.Provider) {
 			TerraformName: "azuread_group",
 			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)`,
 		}
+		r.References["principal_id"] = config.Reference{
+			TerraformName: "azuread_user",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)`,
+		}
 	})
 }

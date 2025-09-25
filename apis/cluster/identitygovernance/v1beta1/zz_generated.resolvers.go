@@ -119,7 +119,7 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) ResolveReferences(ctx contex
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PrincipalID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.PrincipalIDRef,
 		Selector:     mg.Spec.ForProvider.PrincipalIDSelector,
@@ -153,7 +153,7 @@ func (mg *PrivilegedAccessGroupEligibilitySchedule) ResolveReferences(ctx contex
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrincipalID),
-		Extract:      resource.ExtractResourceID(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.PrincipalIDRef,
 		Selector:     mg.Spec.InitProvider.PrincipalIDSelector,
