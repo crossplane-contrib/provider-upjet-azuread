@@ -19,6 +19,10 @@ func Configure(p *config.Provider) {
 			TerraformName: "azuread_group",
 			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)`,
 		}
+		r.References["principal_id"] = config.Reference{
+			TerraformName: "azuread_user",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)`,
+		}
 	})
 	p.AddResourceConfigurator("azuread_privileged_access_group_eligibility_schedule", func(r *config.Resource) {
 		// We need to override the default group that upjet generated for

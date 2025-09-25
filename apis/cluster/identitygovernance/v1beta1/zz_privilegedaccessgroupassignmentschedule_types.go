@@ -52,7 +52,7 @@ type PrivilegedAccessGroupAssignmentScheduleInitParameters struct {
 	// The Object ID of the principal to be assigned to the above group. Can be either a user or a group.
 	// The ID of the Principal assigned to the schedule
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	PrincipalID *string `json:"principalId,omitempty" tf:"principal_id,omitempty"`
 
 	// Reference to a User in users to populate principalId.
@@ -171,7 +171,7 @@ type PrivilegedAccessGroupAssignmentScheduleParameters struct {
 	// The Object ID of the principal to be assigned to the above group. Can be either a user or a group.
 	// The ID of the Principal assigned to the schedule
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/users/v1beta1.User
-	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractResourceID()
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	PrincipalID *string `json:"principalId,omitempty" tf:"principal_id,omitempty"`
 
