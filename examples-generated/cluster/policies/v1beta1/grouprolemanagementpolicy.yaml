@@ -1,0 +1,61 @@
+apiVersion: policies.azuread.upbound.io/v1beta1
+kind: GroupRoleManagementPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: policies/v1beta1/grouprolemanagementpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    activeAssignmentRules:
+    - expireAfter: P365D
+    eligibleAssignmentRules:
+    - expirationRequired: false
+    groupIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    notificationRules:
+    - eligibleAssignments:
+      - approverNotifications:
+        - additionalRecipients:
+          - someone@example.com
+          - someone.else@example.com
+          defaultRecipients: false
+          notificationLevel: Critical
+    roleId: member
+
+---
+
+apiVersion: groups.azuread.upbound.io/v1beta2
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: policies/v1beta1/grouprolemanagementpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: group-name
+    securityEnabled: true
+
+---
+
+apiVersion: users.azuread.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: policies/v1beta1/grouprolemanagementpolicy
+  labels:
+    testing.upbound.io/example-name: member
+  name: member
+spec:
+  forProvider:
+    displayName: J. Doe
+    mailNickname: jdoe
+    passwordSecretRef:
+      key: example-key
+      name: example-secret
+      namespace: upbound-system
+    userPrincipalName: jdoe@hashicorp.com

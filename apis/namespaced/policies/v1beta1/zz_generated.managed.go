@@ -46,3 +46,43 @@ func (mg *ClaimsMappingPolicy) SetProviderConfigReference(r *xpv1.ProviderConfig
 func (mg *ClaimsMappingPolicy) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
+
+// GetCondition of this GroupRoleManagementPolicy.
+func (mg *GroupRoleManagementPolicy) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetManagementPolicies of this GroupRoleManagementPolicy.
+func (mg *GroupRoleManagementPolicy) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this GroupRoleManagementPolicy.
+func (mg *GroupRoleManagementPolicy) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this GroupRoleManagementPolicy.
+func (mg *GroupRoleManagementPolicy) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this GroupRoleManagementPolicy.
+func (mg *GroupRoleManagementPolicy) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetManagementPolicies of this GroupRoleManagementPolicy.
+func (mg *GroupRoleManagementPolicy) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this GroupRoleManagementPolicy.
+func (mg *GroupRoleManagementPolicy) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this GroupRoleManagementPolicy.
+func (mg *GroupRoleManagementPolicy) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}

@@ -72,6 +72,8 @@ var terraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	//
 	// azuread_claims_mapping_policy can be imported using the id
 	"azuread_claims_mapping_policy": config.IdentifierFromProvider,
+	// azuread_group_role_management_policy can be imported using the id
+	"azuread_group_role_management_policy": config.IdentifierFromProvider,
 
 	// administrativeunits
 	//
