@@ -8,6 +8,7 @@ package v1beta1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
+	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
 	v1beta1 "github.com/upbound/provider-azuread/apis/namespaced/groups/v1beta1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -22,7 +23,7 @@ func (mg *GroupRoleManagementPolicy) ResolveReferences(ctx context.Context, c cl
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.GroupID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.GroupIDRef,
 		Selector:     mg.Spec.ForProvider.GroupIDSelector,
@@ -39,7 +40,7 @@ func (mg *GroupRoleManagementPolicy) ResolveReferences(ctx context.Context, c cl
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.GroupID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.GroupIDRef,
 		Selector:     mg.Spec.InitProvider.GroupIDSelector,

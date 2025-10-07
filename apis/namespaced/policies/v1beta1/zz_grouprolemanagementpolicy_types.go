@@ -865,6 +865,7 @@ type GroupRoleManagementPolicyInitParameters struct {
 	// The ID of the Azure AD group for which the policy applies.
 	// ID of the group to which this policy is assigned
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/groups/v1beta1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
 
 	// Reference to a Group in groups to populate groupId.
@@ -942,6 +943,7 @@ type GroupRoleManagementPolicyParameters struct {
 	// The ID of the Azure AD group for which the policy applies.
 	// ID of the group to which this policy is assigned
 	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/groups/v1beta1.Group
+	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	GroupID *string `json:"groupId,omitempty" tf:"group_id,omitempty"`
 

@@ -21,6 +21,7 @@ func Configure(p *config.Provider) {
 		r.ShortGroup = group
 		r.References["group_id"] = config.Reference{
 			TerraformName: "azuread_group",
+			Extractor:     `github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)`,
 		}
 	})
 }
