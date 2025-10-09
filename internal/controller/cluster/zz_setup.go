@@ -30,6 +30,7 @@ import (
 	privilegedaccessgroupeligibilityschedule "github.com/upbound/provider-azuread/internal/controller/cluster/identitygovernance/privilegedaccessgroupeligibilityschedule"
 	invitation "github.com/upbound/provider-azuread/internal/controller/cluster/invitations/invitation"
 	claimsmappingpolicy "github.com/upbound/provider-azuread/internal/controller/cluster/policies/claimsmappingpolicy"
+	grouprolemanagementpolicy "github.com/upbound/provider-azuread/internal/controller/cluster/policies/grouprolemanagementpolicy"
 	providerconfig "github.com/upbound/provider-azuread/internal/controller/cluster/providerconfig"
 	permissiongrant "github.com/upbound/provider-azuread/internal/controller/cluster/serviceprincipaldelegated/permissiongrant"
 	certificateserviceprincipals "github.com/upbound/provider-azuread/internal/controller/cluster/serviceprincipals/certificate"
@@ -67,6 +68,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		privilegedaccessgroupeligibilityschedule.Setup,
 		invitation.Setup,
 		claimsmappingpolicy.Setup,
+		grouprolemanagementpolicy.Setup,
 		providerconfig.Setup,
 		permissiongrant.Setup,
 		certificateserviceprincipals.Setup,
@@ -110,6 +112,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		privilegedaccessgroupeligibilityschedule.SetupGated,
 		invitation.SetupGated,
 		claimsmappingpolicy.SetupGated,
+		grouprolemanagementpolicy.SetupGated,
 		providerconfig.SetupGated,
 		permissiongrant.SetupGated,
 		certificateserviceprincipals.SetupGated,
