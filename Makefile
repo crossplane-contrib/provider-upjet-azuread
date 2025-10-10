@@ -191,11 +191,14 @@ uptest: $(UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 	@KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
 	@$(OK) running automated tests
 
-local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
-	@$(INFO) running locally built provider
-	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
-	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
-	@$(OK) running locally built provider
+local-deploy: build controlplane.up $(YQ) local.xpkg.deploy.provider.$(PROJECT_NAME)
+	@container_patch="$$($(KUBECTL) get deploymentruntimeconfigs.pkg.crossplane.io runtimeconfig-$(PROJECT_NAME) -o jsonpath='{.spec.deploymentTemplate.spec.template.spec.containers[?(.name == "package-runtime")]}' | $(YQ) '.ports = [{"containerPort": 8081, "name": "readyz", "protocol": "TCP"}]' | $(YQ) '.readinessProbe = {"httpGet": {"scheme": "HTTP", "port": "readyz", "path": "/readyz"}}' | $(YQ) e -o=json)" && \
+	$(INFO) Patching DeploymentRuntimeConfig package-runtime container spec with a readiness probe using: $$container_patch && \
+	$(KUBECTL) patch deploymentruntimeconfigs.pkg.crossplane.io runtimeconfig-$(PROJECT_NAME) --type=merge -p="{\"spec\": {\"deploymentTemplate\":{\"spec\":{\"template\":{\"spec\":{\"containers\":[$$container_patch]}}}}}}" && \
+	$(INFO) running locally built provider && \
+	$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m && \
+	$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m && \
+	$(OK) running locally built provider
 
 # This target requires the following environment variables to be set:
 # - UPTEST_CLOUD_CREDENTIALS, cloud credentials for the provider being tested, e.g. export UPTEST_CLOUD_CREDENTIALS=$(cat ~/.aws/credentials)
