@@ -53,14 +53,13 @@ GO_SUBDIRS += cmd internal apis generate
 # ====================================================================================
 # Setup Kubernetes tools
 
-KIND_VERSION = v0.29.0
-UP_VERSION = v0.40.0-0.rc.2
-UP_CHANNEL = alpha
-UPTEST_VERSION = v2.0.1
+KIND_VERSION = v0.30.0
+UPTEST_VERSION = v2.2.0
 KUSTOMIZE_VERSION = v5.3.0
 YQ_VERSION = v4.40.5
-CROSSPLANE_VERSION = 1.20.0
 CRDDIFF_VERSION = v0.12.1
+CROSSPLANE_VERSION = 2.0.2
+CROSSPLANE_CLI_VERSION = v2.0.2
 
 -include build/makelib/k8s_tools.mk
 
@@ -92,7 +91,7 @@ xpkg.build.provider-azuread: do.build.images
 
 # NOTE(hasheddan): we ensure up is installed prior to running platform-specific
 # build steps in parallel to avoid encountering an installation race condition.
-build.init: $(UP)
+build.init: $(CROSSPLANE_CLI)
 
 # ====================================================================================
 # Fallthrough
