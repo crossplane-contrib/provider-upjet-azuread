@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
 apiVersion: conditionalaccess.azuread.upbound.io/v1beta2
 kind: AccessPolicy
 metadata:
@@ -9,23 +13,23 @@ metadata:
 spec:
   forProvider:
     conditions:
-    - applications:
-      - excludedApplications: []
+      applications:
+        excludedApplications: []
         includedApplications:
         - All
       clientAppTypes:
       - all
       devices:
-      - filter:
-        - mode: exclude
+        filter:
+          mode: exclude
           rule: device.operatingSystem eq "Doors"
       locations:
-      - excludedLocations:
+        excludedLocations:
         - AllTrusted
         includedLocations:
         - All
       platforms:
-      - excludedPlatforms:
+        excludedPlatforms:
         - iOS
         includedPlatforms:
         - android
@@ -34,17 +38,17 @@ spec:
       userRiskLevels:
       - medium
       users:
-      - excludedUsers:
+        excludedUsers:
         - GuestsOrExternalUsers
         includedUsers:
         - All
     displayName: example policy
     grantControls:
-    - builtInControls:
+      builtInControls:
       - mfa
       operator: OR
     sessionControls:
-    - applicationEnforcedRestrictionsEnabled: true
+      applicationEnforcedRestrictionsEnabled: true
       cloudAppSecurityPolicy: monitorOnly
       disableResilienceDefaults: false
       signInFrequency: 10

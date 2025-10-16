@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
 apiVersion: applications.azuread.m.upbound.io/v1beta1
 kind: Application
 metadata:
@@ -10,7 +14,7 @@ metadata:
 spec:
   forProvider:
     api:
-    - knownClientApplicationsRefs:
+      knownClientApplicationsRefs:
       - name: known1
       - name: known2
       mappedClaimsEnabled: true
@@ -55,7 +59,7 @@ spec:
     - api://example-app
     logoImage: ${filebase64("/path/to/logo.png")}
     optionalClaims:
-    - accessToken:
+      accessToken:
       - name: myclaim
       - name: otherclaim
       idToken:
@@ -81,9 +85,9 @@ spec:
       resourceAppId: c5393580-f805-4401-95e8-94b7a6ef2fc2
     signInAudience: AzureADMultipleOrgs
     web:
-    - homepageUrl: https://app.example.net
+      homepageUrl: https://app.example.net
       implicitGrant:
-      - accessTokenIssuanceEnabled: true
+        accessTokenIssuanceEnabled: true
         idTokenIssuanceEnabled: true
       logoutUrl: https://app.example.net/logout
       redirectUris:
