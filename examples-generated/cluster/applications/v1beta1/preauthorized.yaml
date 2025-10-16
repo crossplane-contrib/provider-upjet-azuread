@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
 apiVersion: applications.azuread.upbound.io/v1beta1
 kind: PreAuthorized
 metadata:
@@ -31,7 +35,7 @@ metadata:
 spec:
   forProvider:
     api:
-    - oauth2PermissionScope:
+      oauth2PermissionScope:
       - adminConsentDescription: Administer the application
         adminConsentDisplayName: Administer
         enabled: true

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
 apiVersion: policies.azuread.upbound.io/v1beta1
 kind: GroupRoleManagementPolicy
 metadata:
@@ -9,16 +13,16 @@ metadata:
 spec:
   forProvider:
     activeAssignmentRules:
-    - expireAfter: P365D
+      expireAfter: P365D
     eligibleAssignmentRules:
-    - expirationRequired: false
+      expirationRequired: false
     groupIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
     notificationRules:
-    - eligibleAssignments:
-      - approverNotifications:
-        - additionalRecipients:
+      eligibleAssignments:
+        approverNotifications:
+          additionalRecipients:
           - someone@example.com
           - someone.else@example.com
           defaultRecipients: false
