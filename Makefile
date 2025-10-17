@@ -190,10 +190,8 @@ uptest: $(UPTEST) $(KUBECTL) $(CHAINSAW) $(CROSSPLANE_CLI)
 	@KUBECTL=$(KUBECTL) CHAINSAW=$(CHAINSAW) CROSSPLANE_CLI=$(CROSSPLANE_CLI) CROSSPLANE_NAMESPACE=$(CROSSPLANE_NAMESPACE) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --data-source="${UPTEST_DATASOURCE_PATH}" --setup-script=cluster/test/setup.sh --default-conditions="Test" || $(FAIL)
 	@$(OK) running automated tests
 
-local-deploy: build controlplane.up $(YQ) local.xpkg.deploy.provider.$(PROJECT_NAME)
-	@container_patch="$$($(KUBECTL) get deploymentruntimeconfigs.pkg.crossplane.io runtimeconfig-$(PROJECT_NAME) -o jsonpath='{.spec.deploymentTemplate.spec.template.spec.containers[?(.name == "package-runtime")]}' | $(YQ) '.ports = [{"containerPort": 8081, "name": "readyz", "protocol": "TCP"}]' | $(YQ) '.readinessProbe = {"httpGet": {"scheme": "HTTP", "port": "readyz", "path": "/readyz"}}' | $(YQ) e -o=json)" && \
-	$(INFO) Patching DeploymentRuntimeConfig package-runtime container spec with a readiness probe using: $$container_patch && \
-	$(KUBECTL) patch deploymentruntimeconfigs.pkg.crossplane.io runtimeconfig-$(PROJECT_NAME) --type=merge -p="{\"spec\": {\"deploymentTemplate\":{\"spec\":{\"template\":{\"spec\":{\"containers\":[$$container_patch]}}}}}}" && \
+local-deploy: build controlplane.up $(YQ)
+	$(MAKE) local.xpkg.deploy.provider.$(PROJECT_NAME) DRC_FILE="./examples/deploymentruntimeconfig.yaml" && \
 	$(INFO) running locally built provider && \
 	$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m && \
 	$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m && \
