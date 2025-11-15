@@ -18,7 +18,7 @@ type PasswordInitParameters_2 struct {
 
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/namespaced/applications/v1beta1.Application
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
 	// Reference to a Application in applications to populate applicationId.
@@ -89,7 +89,7 @@ type PasswordParameters_2 struct {
 
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/namespaced/applications/v1beta1.Application
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 

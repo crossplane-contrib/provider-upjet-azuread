@@ -21,8 +21,8 @@ import (
 	"github.com/pkg/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 
-	v1beta1 "github.com/upbound/provider-azuread/apis/cluster/serviceprincipaldelegated/v1beta1"
-	features "github.com/upbound/provider-azuread/internal/features"
+	v1beta1 "github.com/upbound/provider-azuread/v2/apis/cluster/serviceprincipaldelegated/v1beta1"
+	features "github.com/upbound/provider-azuread/v2/internal/features"
 )
 
 // SetupGated adds a controller that reconciles PermissionGrant managed resources.

@@ -17,7 +17,7 @@ type APIInitParameters struct {
 
 	// A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/applications/v1beta1.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("client_id",true)
 	// +listType=set
 	KnownClientApplications []*string `json:"knownClientApplications,omitempty" tf:"known_client_applications,omitempty"`
@@ -67,7 +67,7 @@ type APIParameters struct {
 
 	// A set of client IDs, used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app.
 	// Used for bundling consent if you have a solution that contains two parts: a client app and a custom web API app
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/applications/v1beta1.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("client_id",true)
 	// +kubebuilder:validation:Optional
 	// +listType=set

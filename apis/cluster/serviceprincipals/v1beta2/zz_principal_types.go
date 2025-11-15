@@ -151,7 +151,7 @@ type PrincipalInitParameters struct {
 
 	// The client ID of the application for which to create a service principal.
 	// The client ID of the application for which to create a service principal
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/applications/v1beta2.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/applications/v1beta2.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("client_id",true)
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`
 
@@ -349,7 +349,7 @@ type PrincipalParameters struct {
 
 	// The client ID of the application for which to create a service principal.
 	// The client ID of the application for which to create a service principal
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/applications/v1beta2.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/applications/v1beta2.Application
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("client_id",true)
 	// +kubebuilder:validation:Optional
 	ClientID *string `json:"clientId,omitempty" tf:"client_id,omitempty"`

@@ -19,7 +19,7 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/pipeline"
 	"github.com/hashicorp/terraform-provider-azuread/xpprovider"
 
-	"github.com/upbound/provider-azuread/config"
+	"github.com/upbound/provider-azuread/v2/config"
 )
 
 func main() {

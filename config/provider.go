@@ -20,24 +20,24 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/pkg/errors"
 
-	"github.com/upbound/provider-azuread/config/cluster/administrativeunits"
-	"github.com/upbound/provider-azuread/config/cluster/app"
-	"github.com/upbound/provider-azuread/config/cluster/applications"
-	"github.com/upbound/provider-azuread/config/cluster/conditionalaccess"
-	"github.com/upbound/provider-azuread/config/cluster/directoryroles"
-	"github.com/upbound/provider-azuread/config/cluster/groups"
-	"github.com/upbound/provider-azuread/config/cluster/identitygovernance"
-	"github.com/upbound/provider-azuread/config/cluster/invitations"
-	"github.com/upbound/provider-azuread/config/cluster/policies"
-	"github.com/upbound/provider-azuread/config/cluster/serviceprincipaldelegated"
-	"github.com/upbound/provider-azuread/config/cluster/serviceprincipals"
-	"github.com/upbound/provider-azuread/config/cluster/synchronization"
-	"github.com/upbound/provider-azuread/config/cluster/users"
+	"github.com/upbound/provider-azuread/v2/config/cluster/administrativeunits"
+	"github.com/upbound/provider-azuread/v2/config/cluster/app"
+	"github.com/upbound/provider-azuread/v2/config/cluster/applications"
+	"github.com/upbound/provider-azuread/v2/config/cluster/conditionalaccess"
+	"github.com/upbound/provider-azuread/v2/config/cluster/directoryroles"
+	"github.com/upbound/provider-azuread/v2/config/cluster/groups"
+	"github.com/upbound/provider-azuread/v2/config/cluster/identitygovernance"
+	"github.com/upbound/provider-azuread/v2/config/cluster/invitations"
+	"github.com/upbound/provider-azuread/v2/config/cluster/policies"
+	"github.com/upbound/provider-azuread/v2/config/cluster/serviceprincipaldelegated"
+	"github.com/upbound/provider-azuread/v2/config/cluster/serviceprincipals"
+	"github.com/upbound/provider-azuread/v2/config/cluster/synchronization"
+	"github.com/upbound/provider-azuread/v2/config/cluster/users"
 )
 
 const (
 	resourcePrefix = "azuread"
-	modulePath     = "github.com/upbound/provider-azuread"
+	modulePath     = "github.com/upbound/provider-azuread/v2"
 )
 
 //go:embed schema.json

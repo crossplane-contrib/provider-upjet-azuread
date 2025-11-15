@@ -10,9 +10,9 @@ import (
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
-	v1beta11 "github.com/upbound/provider-azuread/apis/cluster/applications/v1beta1"
-	v1beta1 "github.com/upbound/provider-azuread/apis/cluster/policies/v1beta1"
-	v1beta2 "github.com/upbound/provider-azuread/apis/cluster/serviceprincipals/v1beta2"
+	v1beta11 "github.com/upbound/provider-azuread/v2/apis/cluster/applications/v1beta1"
+	v1beta1 "github.com/upbound/provider-azuread/v2/apis/cluster/policies/v1beta1"
+	v1beta2 "github.com/upbound/provider-azuread/v2/apis/cluster/serviceprincipals/v1beta2"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 

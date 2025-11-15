@@ -9,7 +9,7 @@ import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
-	v1beta1 "github.com/upbound/provider-azuread/apis/namespaced/serviceprincipals/v1beta1"
+	v1beta1 "github.com/upbound/provider-azuread/v2/apis/namespaced/serviceprincipals/v1beta1"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 

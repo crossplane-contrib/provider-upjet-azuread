@@ -17,7 +17,7 @@ type MemberInitParameters struct {
 
 	// The object ID of the administrative unit you want to add the member to. Changing this forces a new resource to be created.
 	// The object ID of the administrative unit
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/administrativeunits/v1beta1.Unit
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/administrativeunits/v1beta1.Unit
 	AdministrativeUnitObjectID *string `json:"administrativeUnitObjectId,omitempty" tf:"administrative_unit_object_id,omitempty"`
 
 	// Reference to a Unit in administrativeunits to populate administrativeUnitObjectId.
@@ -50,7 +50,7 @@ type MemberParameters struct {
 
 	// The object ID of the administrative unit you want to add the member to. Changing this forces a new resource to be created.
 	// The object ID of the administrative unit
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/administrativeunits/v1beta1.Unit
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/administrativeunits/v1beta1.Unit
 	// +kubebuilder:validation:Optional
 	AdministrativeUnitObjectID *string `json:"administrativeUnitObjectId,omitempty" tf:"administrative_unit_object_id,omitempty"`
 

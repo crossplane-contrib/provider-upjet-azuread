@@ -35,7 +35,7 @@ type PasswordInitParameters struct {
 
 	// The ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
 	// The ID of the service principal for which this password should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/serviceprincipals/v1beta1.Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/namespaced/serviceprincipals/v1beta1.Principal
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
@@ -110,7 +110,7 @@ type PasswordParameters struct {
 
 	// The ID of the service principal for which this password should be created. Changing this field forces a new resource to be created.
 	// The ID of the service principal for which this password should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/serviceprincipals/v1beta1.Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/namespaced/serviceprincipals/v1beta1.Principal
 	// +kubebuilder:validation:Optional
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
