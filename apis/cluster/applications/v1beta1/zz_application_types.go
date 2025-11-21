@@ -159,31 +159,6 @@ type AccessTokenParameters struct {
 }
 
 type AppRoleInitParameters struct {
-
-	// Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
-	// Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
-	// +listType=set
-	AllowedMemberTypes []*string `json:"allowedMemberTypes,omitempty" tf:"allowed_member_types,omitempty"`
-
-	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
-	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
-	Description *string `json:"description,omitempty" tf:"description,omitempty"`
-
-	// Display name for the app role that appears during app role assignment and in consent experiences.
-	// Display name for the app role that appears during app role assignment and in consent experiences
-	DisplayName *string `json:"displayName,omitempty" tf:"display_name,omitempty"`
-
-	// Determines if the app role is enabled. Defaults to true.
-	// Determines if the app role is enabled
-	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
-
-	// The unique identifier of the app role. Must be a valid UUID.
-	// The unique identifier of the app role
-	ID *string `json:"id,omitempty" tf:"id,omitempty"`
-
-	// The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.
-	// The value that is used for the `roles` claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type AppRoleObservation struct {
@@ -215,46 +190,12 @@ type AppRoleObservation struct {
 }
 
 type AppRoleParameters struct {
-
-	// Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
-	// Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
-	// +kubebuilder:validation:Optional
-	// +listType=set
-	AllowedMemberTypes []*string `json:"allowedMemberTypes" tf:"allowed_member_types,omitempty"`
-
-	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
-	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
-	// +kubebuilder:validation:Optional
-	Description *string `json:"description" tf:"description,omitempty"`
-
-	// Display name for the app role that appears during app role assignment and in consent experiences.
-	// Display name for the app role that appears during app role assignment and in consent experiences
-	// +kubebuilder:validation:Optional
-	DisplayName *string `json:"displayName" tf:"display_name,omitempty"`
-
-	// Determines if the app role is enabled. Defaults to true.
-	// Determines if the app role is enabled
-	// +kubebuilder:validation:Optional
-	Enabled *bool `json:"enabled,omitempty" tf:"enabled,omitempty"`
-
-	// The unique identifier of the app role. Must be a valid UUID.
-	// The unique identifier of the app role
-	// +kubebuilder:validation:Optional
-	ID *string `json:"id" tf:"id,omitempty"`
-
-	// The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.
-	// The value that is used for the `roles` claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal
-	// +kubebuilder:validation:Optional
-	Value *string `json:"value,omitempty" tf:"value,omitempty"`
 }
 
 type ApplicationInitParameters struct {
 
 	// An api block as documented below, which configures API related settings for this application.
 	API []APIInitParameters `json:"api,omitempty" tf:"api,omitempty"`
-
-	// A collection of app_role blocks as documented below. For more information see official documentation on Application Roles.
-	AppRole []AppRoleInitParameters `json:"appRole,omitempty" tf:"app_role,omitempty"`
 
 	// A description of the application, as shown to end users.
 	// Description of the application as shown to end users
@@ -509,10 +450,6 @@ type ApplicationParameters struct {
 	// An api block as documented below, which configures API related settings for this application.
 	// +kubebuilder:validation:Optional
 	API []APIParameters `json:"api,omitempty" tf:"api,omitempty"`
-
-	// A collection of app_role blocks as documented below. For more information see official documentation on Application Roles.
-	// +kubebuilder:validation:Optional
-	AppRole []AppRoleParameters `json:"appRole,omitempty" tf:"app_role,omitempty"`
 
 	// A description of the application, as shown to end users.
 	// Description of the application as shown to end users

@@ -20,6 +20,8 @@ func Configure(p *config.Provider) {
 				"tags",
 			},
 		}
+
+		config.MoveToStatus(r.TerraformResource, "app_role")
 	})
 	p.AddResourceConfigurator("azuread_application_app_role", func(r *config.Resource) {
 		r.References["application_id"] = config.Reference{
