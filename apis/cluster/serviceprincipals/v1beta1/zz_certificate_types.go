@@ -33,7 +33,7 @@ type CertificateInitParameters struct {
 
 	// The ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this certificate should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/serviceprincipals/v1beta2.Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/serviceprincipals/v1beta2.Principal
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
@@ -114,7 +114,7 @@ type CertificateParameters struct {
 
 	// The ID of the service principal for which this certificate should be created. Changing this field forces a new resource to be created.
 	// The object ID of the service principal for which this certificate should be created
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/serviceprincipals/v1beta2.Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/serviceprincipals/v1beta2.Principal
 	// +kubebuilder:validation:Optional
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 

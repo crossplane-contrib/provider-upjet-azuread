@@ -19,8 +19,8 @@ import (
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	clusterv1beta1 "github.com/upbound/provider-azuread/apis/cluster/v1beta1"
-	namespacedv1beta1 "github.com/upbound/provider-azuread/apis/namespaced/v1beta1"
+	clusterv1beta1 "github.com/upbound/provider-azuread/v2/apis/cluster/v1beta1"
+	namespacedv1beta1 "github.com/upbound/provider-azuread/v2/apis/namespaced/v1beta1"
 )
 
 const (

@@ -17,7 +17,7 @@ type ClaimsMappingPolicyAssignmentInitParameters struct {
 
 	// The ID of the claims mapping policy to assign.
 	// ID of the claims mapping policy to assign
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/policies/v1beta1.ClaimsMappingPolicy
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/policies/v1beta1.ClaimsMappingPolicy
 	ClaimsMappingPolicyID *string `json:"claimsMappingPolicyId,omitempty" tf:"claims_mapping_policy_id,omitempty"`
 
 	// Reference to a ClaimsMappingPolicy in policies to populate claimsMappingPolicyId.
@@ -30,7 +30,7 @@ type ClaimsMappingPolicyAssignmentInitParameters struct {
 
 	// The ID of the service principal for the policy assignment.
 	// ID of the service principal for which to assign the policy
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/serviceprincipals/v1beta2.Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/serviceprincipals/v1beta2.Principal
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
@@ -60,7 +60,7 @@ type ClaimsMappingPolicyAssignmentParameters struct {
 
 	// The ID of the claims mapping policy to assign.
 	// ID of the claims mapping policy to assign
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/policies/v1beta1.ClaimsMappingPolicy
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/policies/v1beta1.ClaimsMappingPolicy
 	// +kubebuilder:validation:Optional
 	ClaimsMappingPolicyID *string `json:"claimsMappingPolicyId,omitempty" tf:"claims_mapping_policy_id,omitempty"`
 
@@ -74,7 +74,7 @@ type ClaimsMappingPolicyAssignmentParameters struct {
 
 	// The ID of the service principal for the policy assignment.
 	// ID of the service principal for which to assign the policy
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/serviceprincipals/v1beta2.Principal
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/serviceprincipals/v1beta2.Principal
 	// +kubebuilder:validation:Optional
 	ServicePrincipalID *string `json:"servicePrincipalId,omitempty" tf:"service_principal_id,omitempty"`
 

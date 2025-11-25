@@ -99,7 +99,7 @@ type GroupInitParameters struct {
 
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals. Cannot be used with the dynamic_membership block.
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/users/v1beta1.User
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/users/v1beta1.User
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	// +listType=set
 	Members []*string `json:"members,omitempty" tf:"members,omitempty"`
@@ -353,7 +353,7 @@ type GroupParameters struct {
 
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals. Cannot be used with the dynamic_membership block.
 	// A set of members who should be present in this group. Supported object types are Users, Groups or Service Principals
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/cluster/users/v1beta1.User
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/cluster/users/v1beta1.User
 	// +crossplane:generate:reference:extractor=github.com/crossplane/upjet/v2/pkg/resource.ExtractParamPath("object_id",true)
 	// +kubebuilder:validation:Optional
 	// +listType=set

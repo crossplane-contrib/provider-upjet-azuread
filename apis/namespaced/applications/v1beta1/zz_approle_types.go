@@ -23,7 +23,7 @@ type AppRoleInitParameters_2 struct {
 
 	// The resource ID of the application registration. Changing this forces a new resource to be created.
 	// The resource ID of the application to which this app role should be applied
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/namespaced/applications/v1beta1.Application
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 
 	// Reference to a Application in applications to populate applicationId.
@@ -91,7 +91,7 @@ type AppRoleParameters_2 struct {
 
 	// The resource ID of the application registration. Changing this forces a new resource to be created.
 	// The resource ID of the application to which this app role should be applied
-	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/apis/namespaced/applications/v1beta1.Application
+	// +crossplane:generate:reference:type=github.com/upbound/provider-azuread/v2/apis/namespaced/applications/v1beta1.Application
 	// +kubebuilder:validation:Optional
 	ApplicationID *string `json:"applicationId,omitempty" tf:"application_id,omitempty"`
 

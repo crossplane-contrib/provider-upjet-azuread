@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: CC0-1.0
 
-module github.com/upbound/provider-azuread
+module github.com/upbound/provider-azuread/v2
 
 go 1.24.7
 
