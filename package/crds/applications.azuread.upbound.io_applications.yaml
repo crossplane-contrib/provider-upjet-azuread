@@ -224,47 +224,6 @@ spec:
                           type: number
                       type: object
                     type: array
-                  appRole:
-                    description: A collection of app_role blocks as documented below.
-                      For more information see official documentation on Application
-                      Roles.
-                    items:
-                      properties:
-                        allowedMemberTypes:
-                          description: |-
-                            Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
-                            Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
-                          items:
-                            type: string
-                          type: array
-                          x-kubernetes-list-type: set
-                        description:
-                          description: |-
-                            Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
-                            Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
-                          type: string
-                        displayName:
-                          description: |-
-                            Display name for the app role that appears during app role assignment and in consent experiences.
-                            Display name for the app role that appears during app role assignment and in consent experiences
-                          type: string
-                        enabled:
-                          description: |-
-                            Determines if the app role is enabled. Defaults to true.
-                            Determines if the app role is enabled
-                          type: boolean
-                        id:
-                          description: |-
-                            The unique identifier of the app role. Must be a valid UUID.
-                            The unique identifier of the app role
-                          type: string
-                        value:
-                          description: |-
-                            The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.
-                            The value that is used for the `roles` claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal
-                          type: string
-                      type: object
-                    type: array
                   description:
                     description: |-
                       A description of the application, as shown to end users.
@@ -783,47 +742,6 @@ spec:
                             The access token version expected by this resource. Must be one of 1 or 2, and must be 2 when sign_in_audience is either AzureADandPersonalMicrosoftAccount or PersonalMicrosoftAccount Defaults to 1.
                             The access token version expected by this resource
                           type: number
-                      type: object
-                    type: array
-                  appRole:
-                    description: A collection of app_role blocks as documented below.
-                      For more information see official documentation on Application
-                      Roles.
-                    items:
-                      properties:
-                        allowedMemberTypes:
-                          description: |-
-                            Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
-                            Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
-                          items:
-                            type: string
-                          type: array
-                          x-kubernetes-list-type: set
-                        description:
-                          description: |-
-                            Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
-                            Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
-                          type: string
-                        displayName:
-                          description: |-
-                            Display name for the app role that appears during app role assignment and in consent experiences.
-                            Display name for the app role that appears during app role assignment and in consent experiences
-                          type: string
-                        enabled:
-                          description: |-
-                            Determines if the app role is enabled. Defaults to true.
-                            Determines if the app role is enabled
-                          type: boolean
-                        id:
-                          description: |-
-                            The unique identifier of the app role. Must be a valid UUID.
-                            The unique identifier of the app role
-                          type: string
-                        value:
-                          description: |-
-                            The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.
-                            The value that is used for the `roles` claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal
-                          type: string
                       type: object
                     type: array
                   description:
@@ -2059,47 +1977,6 @@ spec:
                           The access token version expected by this resource
                         type: number
                     type: object
-                  appRole:
-                    description: A collection of app_role blocks as documented below.
-                      For more information see official documentation on Application
-                      Roles.
-                    items:
-                      properties:
-                        allowedMemberTypes:
-                          description: |-
-                            Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
-                            Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
-                          items:
-                            type: string
-                          type: array
-                          x-kubernetes-list-type: set
-                        description:
-                          description: |-
-                            Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
-                            Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
-                          type: string
-                        displayName:
-                          description: |-
-                            Display name for the app role that appears during app role assignment and in consent experiences.
-                            Display name for the app role that appears during app role assignment and in consent experiences
-                          type: string
-                        enabled:
-                          description: |-
-                            Determines if the app role is enabled. Defaults to true.
-                            Determines if the app role is enabled
-                          type: boolean
-                        id:
-                          description: |-
-                            The unique identifier of the app role. Must be a valid UUID.
-                            The unique identifier of the app role
-                          type: string
-                        value:
-                          description: |-
-                            The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.
-                            The value that is used for the `roles` claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal
-                          type: string
-                      type: object
-                    type: array
                   description:
                     description: |-
                       A description of the application, as shown to end users.
@@ -2606,47 +2483,6 @@ spec:
                           The access token version expected by this resource
                         type: number
                     type: object
-                  appRole:
-                    description: A collection of app_role blocks as documented below.
-                      For more information see official documentation on Application
-                      Roles.
-                    items:
-                      properties:
-                        allowedMemberTypes:
-                          description: |-
-                            Specifies whether this app role definition can be assigned to users and groups by setting to User, or to other applications (that are accessing this application in a standalone scenario) by setting to Application, or to both.
-                            Specifies whether this app role definition can be assigned to users and groups by setting to `User`, or to other applications (that are accessing this application in a standalone scenario) by setting to `Application`, or to both
-                          items:
-                            type: string
-                          type: array
-                          x-kubernetes-list-type: set
-                        description:
-                          description: |-
-                            Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences.
-                            Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
-                          type: string
-                        displayName:
-                          description: |-
-                            Display name for the app role that appears during app role assignment and in consent experiences.
-                            Display name for the app role that appears during app role assignment and in consent experiences
-                          type: string
-                        enabled:
-                          description: |-
-                            Determines if the app role is enabled. Defaults to true.
-                            Determines if the app role is enabled
-                          type: boolean
-                        id:
-                          description: |-
-                            The unique identifier of the app role. Must be a valid UUID.
-                            The unique identifier of the app role
-                          type: string
-                        value:
-                          description: |-
-                            The value that is used for the roles claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal.
-                            The value that is used for the `roles` claim in ID tokens and OAuth 2.0 access tokens that are authenticating an assigned service or user principal
-                          type: string
-                      type: object
-                    type: array
                   description:
                     description: |-
                       A description of the application, as shown to end users.

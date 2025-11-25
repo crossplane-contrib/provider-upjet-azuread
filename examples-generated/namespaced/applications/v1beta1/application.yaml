@@ -35,22 +35,6 @@ spec:
         type: Admin
         value: administer
       requestedAccessTokenVersion: 2
-    appRole:
-    - allowedMemberTypes:
-      - User
-      - Application
-      description: Admins can manage roles and perform all task actions
-      displayName: Admin
-      enabled: true
-      id: 1b19509b-32b1-4e9f-b71d-4992aa991967
-      value: admin
-    - allowedMemberTypes:
-      - User
-      description: ReadOnly roles have limited query access
-      displayName: ReadOnly
-      enabled: true
-      id: 497406e4-012a-4267-bf18-45a1cb148a01
-      value: User
     displayName: example
     featureTags:
     - enterprise: true
