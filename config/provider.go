@@ -177,7 +177,7 @@ func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
 			r.SetCRDStorageVersion("v1beta1")
 			// because the controller reconciles on the API version with the singleton list API,
 			// no need for a Terraform conversion.
-			r.ControllerReconcileVersion = "v1beta1"
+			r.ControllerReconcileVersion = "v1beta1" //nolint:staticcheck
 			r.Conversions = []conversion.Conversion{
 				conversion.NewIdentityConversionExpandPaths(conversion.AllVersions, conversion.AllVersions, conversion.DefaultPathPrefixes(), r.CRDListConversionPaths()...),
 				conversion.NewSingletonListConversion("v1beta1", "v1beta2", conversion.DefaultPathPrefixes(), r.CRDListConversionPaths(), conversion.ToEmbeddedObject),
