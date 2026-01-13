@@ -23,10 +23,12 @@
       "description": "Bump Go version in workflows",
       "managerFilePatterns": ["/^\\.github\\/workflows\\/[^/]+\\.ya?ml$/"],
       "matchStrings": [
-        "GO_VERSION: '(?<currentValue>.*?)'\\n"
+        "GO_VERSION: ['\"]?(?<currentValue>.*?)['\"]?\\n"
       ],
       "datasourceTemplate": "golang-version",
-      "depNameTemplate": "golang"
+      "depNameTemplate": "go",
+      "packageNameTemplate": "go",
+      "depTypeTemplate": "golang"
     },
     {
       // We want a PR to bump golangci-lint versions used through env variables in
@@ -181,9 +183,29 @@
       "groupSlug": "golangci-lint-in-ci"
     },
     {
+      // Allow bumping the go version directive at go.mod
+      "matchDatasources": ["golang-version"],
+      "matchManagers": ["gomod"],
+      "matchDepNames": ["go"],
+      "matchDepTypes": ["golang"],
+      "rangeStrategy": "bump",
+    },
+    {
+      // Single PR for bumping Go version at the CI env vars and go.mod
+      "matchDatasources": ["golang-version"],
+      "matchPackageNames": ["go"],
+      "matchManagers": ["gomod", "custom.regex"],
+      "matchDepNames": ["go"],
+      "matchDepTypes": ["golang"],
+      "separateMinorPatch": true,
+      "groupName": "golang versions",
+      "groupSlug": "golang-versions",
+      "enabled": true
+    },
+    {
       // We want dedicated PRs for each major bump to Github Actions
       "matchDepTypes": ["action"],
       "pinDigests": true
     }
-  ]
+  ],
 }
