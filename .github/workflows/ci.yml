@@ -38,9 +38,13 @@ jobs:
         with:
           submodules: true
 
+      - name: Fetch base branch for PR
+        if: github.event_name == 'pull_request'
+        run: git fetch origin ${{ github.base_ref }}:${{ github.base_ref }}
+
       - name: Get modified CRDs
         id: modified-crds
-        uses: tj-actions/changed-files@e0021407031f5be11a464abee9a0776171c79891 # v47.0.1 (breaks the 'Report native schema version changes' step on newer versions)
+        uses: tj-actions/changed-files@e0021407031f5be11a464abee9a0776171c79891 # v47.0.1
         with:
           files: |
             package/crds/**
