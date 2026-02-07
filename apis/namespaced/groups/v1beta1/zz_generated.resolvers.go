@@ -67,7 +67,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.GroupObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.GroupObjectIDRef,
 		Selector:     mg.Spec.ForProvider.GroupObjectIDSelector,
@@ -84,7 +84,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MemberObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.MemberObjectIDRef,
 		Selector:     mg.Spec.ForProvider.MemberObjectIDSelector,
@@ -101,7 +101,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.GroupObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.GroupObjectIDRef,
 		Selector:     mg.Spec.InitProvider.GroupObjectIDSelector,
@@ -118,7 +118,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.MemberObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.MemberObjectIDRef,
 		Selector:     mg.Spec.InitProvider.MemberObjectIDSelector,
