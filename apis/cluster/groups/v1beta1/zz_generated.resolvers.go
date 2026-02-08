@@ -8,6 +8,7 @@ package v1beta1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
+	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
 	v1beta2 "github.com/upbound/provider-azuread/v2/apis/cluster/groups/v1beta2"
 	v1beta1 "github.com/upbound/provider-azuread/v2/apis/cluster/users/v1beta1"
@@ -23,7 +24,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.GroupObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.GroupObjectIDRef,
 		Selector:     mg.Spec.ForProvider.GroupObjectIDSelector,
@@ -40,7 +41,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MemberObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.MemberObjectIDRef,
 		Selector:     mg.Spec.ForProvider.MemberObjectIDSelector,
@@ -57,7 +58,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.GroupObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.GroupObjectIDRef,
 		Selector:     mg.Spec.InitProvider.GroupObjectIDSelector,
@@ -74,7 +75,7 @@ func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error 
 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.MemberObjectID),
-		Extract:      reference.ExternalName(),
+		Extract:      resource.ExtractParamPath("object_id", true),
 		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.InitProvider.MemberObjectIDRef,
 		Selector:     mg.Spec.InitProvider.MemberObjectIDSelector,
