@@ -267,6 +267,11 @@ spec:
                           to false.
                         type: boolean
                     type: object
+                  objectId:
+                    description: |-
+                      The object ID of the named location.
+                      The object ID of the named location
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.
