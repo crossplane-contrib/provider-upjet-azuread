@@ -207,6 +207,56 @@ func (mg *FederatedIdentityCredential) SetWriteConnectionSecretToReference(r *xp
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
+// GetCondition of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) GetDeletionPolicy() xpv1.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) GetProviderConfigReference() *xpv1.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) SetProviderConfigReference(r *xpv1.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
 // GetCondition of this Password.
 func (mg *Password) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
