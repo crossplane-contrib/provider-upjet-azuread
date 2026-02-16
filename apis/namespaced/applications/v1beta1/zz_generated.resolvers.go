@@ -194,6 +194,50 @@ func (mg *FederatedIdentityCredential) ResolveReferences(ctx context.Context, c 
 	return nil
 }
 
+// ResolveReferences of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApplicationID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.ApplicationIDRef,
+		Selector:     mg.Spec.ForProvider.ApplicationIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ApplicationID")
+	}
+	mg.Spec.ForProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ApplicationIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApplicationID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.ApplicationIDRef,
+		Selector:     mg.Spec.InitProvider.ApplicationIDSelector,
+		To: reference.To{
+			List:    &ApplicationList{},
+			Managed: &Application{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ApplicationID")
+	}
+	mg.Spec.InitProvider.ApplicationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ApplicationIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this Password.
 func (mg *Password) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPINamespacedResolver(c, mg)
