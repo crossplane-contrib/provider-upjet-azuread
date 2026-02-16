@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.20.0
+    controller-gen.kubebuilder.io/version: v0.20.1
   name: locations.conditionalaccess.azuread.m.upbound.io
 spec:
   group: conditionalaccess.azuread.m.upbound.io
@@ -267,6 +267,11 @@ spec:
                           to false.
                         type: boolean
                     type: object
+                  objectId:
+                    description: |-
+                      The object ID of the named location.
+                      The object ID of the named location
+                    type: string
                 type: object
               conditions:
                 description: Conditions of the resource.
