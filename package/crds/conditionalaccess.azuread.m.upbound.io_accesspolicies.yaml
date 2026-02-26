@@ -92,6 +92,14 @@ spec:
                               type: string
                             type: array
                         type: object
+                      authenticationFlowTransferMethods:
+                        description: 'A list of authentication flow transfer methods
+                          included in the policy. Possible values are: authenticationTransfer
+                          and deviceCodeFlow.'
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: set
                       clientAppTypes:
                         description: 'A list of client application types included
                           in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients,
@@ -110,6 +118,18 @@ spec:
                             items:
                               type: string
                             type: array
+                          filter:
+                            description: A filter block as documented below.
+                            properties:
+                              mode:
+                                description: Whether to include in, or exclude from,
+                                  matching items from the policy. Supported values
+                                  are include or exclude.
+                                type: string
+                              rule:
+                                description: Condition filter to match items.
+                                type: string
+                            type: object
                           includedServicePrincipals:
                             description: A list of service principal IDs explicitly
                               included in the policy. Can be set to ServicePrincipalsInMyTenant
@@ -127,16 +147,15 @@ spec:
                           removing the devices block forces a new resource to be created.
                         properties:
                           filter:
-                            description: A filter block as described below.
+                            description: A filter block as documented below.
                             properties:
                               mode:
                                 description: Whether to include in, or exclude from,
-                                  matching devices from the policy. Supported values
+                                  matching items from the policy. Supported values
                                   are include or exclude.
                                 type: string
                               rule:
-                                description: Condition filter to match devices. For
-                                  more information, see official documentation.
+                                description: Condition filter to match items.
                                 type: string
                             type: object
                         type: object
@@ -442,6 +461,14 @@ spec:
                               type: string
                             type: array
                         type: object
+                      authenticationFlowTransferMethods:
+                        description: 'A list of authentication flow transfer methods
+                          included in the policy. Possible values are: authenticationTransfer
+                          and deviceCodeFlow.'
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: set
                       clientAppTypes:
                         description: 'A list of client application types included
                           in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients,
@@ -460,6 +487,18 @@ spec:
                             items:
                               type: string
                             type: array
+                          filter:
+                            description: A filter block as documented below.
+                            properties:
+                              mode:
+                                description: Whether to include in, or exclude from,
+                                  matching items from the policy. Supported values
+                                  are include or exclude.
+                                type: string
+                              rule:
+                                description: Condition filter to match items.
+                                type: string
+                            type: object
                           includedServicePrincipals:
                             description: A list of service principal IDs explicitly
                               included in the policy. Can be set to ServicePrincipalsInMyTenant
@@ -477,16 +516,15 @@ spec:
                           removing the devices block forces a new resource to be created.
                         properties:
                           filter:
-                            description: A filter block as described below.
+                            description: A filter block as documented below.
                             properties:
                               mode:
                                 description: Whether to include in, or exclude from,
-                                  matching devices from the policy. Supported values
+                                  matching items from the policy. Supported values
                                   are include or exclude.
                                 type: string
                               rule:
-                                description: Condition filter to match devices. For
-                                  more information, see official documentation.
+                                description: Condition filter to match items.
                                 type: string
                             type: object
                         type: object
@@ -855,6 +893,14 @@ spec:
                               type: string
                             type: array
                         type: object
+                      authenticationFlowTransferMethods:
+                        description: 'A list of authentication flow transfer methods
+                          included in the policy. Possible values are: authenticationTransfer
+                          and deviceCodeFlow.'
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: set
                       clientAppTypes:
                         description: 'A list of client application types included
                           in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients,
@@ -873,6 +919,18 @@ spec:
                             items:
                               type: string
                             type: array
+                          filter:
+                            description: A filter block as documented below.
+                            properties:
+                              mode:
+                                description: Whether to include in, or exclude from,
+                                  matching items from the policy. Supported values
+                                  are include or exclude.
+                                type: string
+                              rule:
+                                description: Condition filter to match items.
+                                type: string
+                            type: object
                           includedServicePrincipals:
                             description: A list of service principal IDs explicitly
                               included in the policy. Can be set to ServicePrincipalsInMyTenant
@@ -890,16 +948,15 @@ spec:
                           removing the devices block forces a new resource to be created.
                         properties:
                           filter:
-                            description: A filter block as described below.
+                            description: A filter block as documented below.
                             properties:
                               mode:
                                 description: Whether to include in, or exclude from,
-                                  matching devices from the policy. Supported values
+                                  matching items from the policy. Supported values
                                   are include or exclude.
                                 type: string
                               rule:
-                                description: Condition filter to match devices. For
-                                  more information, see official documentation.
+                                description: Condition filter to match items.
                                 type: string
                             type: object
                         type: object
