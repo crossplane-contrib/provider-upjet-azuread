@@ -123,6 +123,9 @@ type ClientApplicationsInitParameters struct {
 	// A list of service principal IDs explicitly excluded in the policy.
 	ExcludedServicePrincipals []*string `json:"excludedServicePrincipals,omitempty" tf:"excluded_service_principals,omitempty"`
 
+	// A filter block as documented below.
+	Filter *FilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+
 	// A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.
 	IncludedServicePrincipals []*string `json:"includedServicePrincipals,omitempty" tf:"included_service_principals,omitempty"`
 }
@@ -131,6 +134,9 @@ type ClientApplicationsObservation struct {
 
 	// A list of service principal IDs explicitly excluded in the policy.
 	ExcludedServicePrincipals []*string `json:"excludedServicePrincipals,omitempty" tf:"excluded_service_principals,omitempty"`
+
+	// A filter block as documented below.
+	Filter *FilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.
 	IncludedServicePrincipals []*string `json:"includedServicePrincipals,omitempty" tf:"included_service_principals,omitempty"`
@@ -142,6 +148,10 @@ type ClientApplicationsParameters struct {
 	// +kubebuilder:validation:Optional
 	ExcludedServicePrincipals []*string `json:"excludedServicePrincipals,omitempty" tf:"excluded_service_principals,omitempty"`
 
+	// A filter block as documented below.
+	// +kubebuilder:validation:Optional
+	Filter *FilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+
 	// A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.
 	// +kubebuilder:validation:Optional
 	IncludedServicePrincipals []*string `json:"includedServicePrincipals,omitempty" tf:"included_service_principals,omitempty"`
@@ -151,6 +161,10 @@ type ConditionsInitParameters struct {
 
 	// An applications block as documented below, which specifies applications and user actions included in and excluded from the policy.
 	Applications []ApplicationsInitParameters `json:"applications,omitempty" tf:"applications,omitempty"`
+
+	// A list of authentication flow transfer methods included in the policy. Possible values are: authenticationTransfer and deviceCodeFlow.
+	// +listType=set
+	AuthenticationFlowTransferMethods []*string `json:"authenticationFlowTransferMethods,omitempty" tf:"authentication_flow_transfer_methods,omitempty"`
 
 	// A list of client application types included in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients, exchangeActiveSync, easSupported and other.
 	ClientAppTypes []*string `json:"clientAppTypes,omitempty" tf:"client_app_types,omitempty"`
@@ -188,6 +202,10 @@ type ConditionsObservation struct {
 	// An applications block as documented below, which specifies applications and user actions included in and excluded from the policy.
 	Applications []ApplicationsObservation `json:"applications,omitempty" tf:"applications,omitempty"`
 
+	// A list of authentication flow transfer methods included in the policy. Possible values are: authenticationTransfer and deviceCodeFlow.
+	// +listType=set
+	AuthenticationFlowTransferMethods []*string `json:"authenticationFlowTransferMethods,omitempty" tf:"authentication_flow_transfer_methods,omitempty"`
+
 	// A list of client application types included in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients, exchangeActiveSync, easSupported and other.
 	ClientAppTypes []*string `json:"clientAppTypes,omitempty" tf:"client_app_types,omitempty"`
 
@@ -224,6 +242,11 @@ type ConditionsParameters struct {
 	// An applications block as documented below, which specifies applications and user actions included in and excluded from the policy.
 	// +kubebuilder:validation:Optional
 	Applications []ApplicationsParameters `json:"applications" tf:"applications,omitempty"`
+
+	// A list of authentication flow transfer methods included in the policy. Possible values are: authenticationTransfer and deviceCodeFlow.
+	// +kubebuilder:validation:Optional
+	// +listType=set
+	AuthenticationFlowTransferMethods []*string `json:"authenticationFlowTransferMethods,omitempty" tf:"authentication_flow_transfer_methods,omitempty"`
 
 	// A list of client application types included in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients, exchangeActiveSync, easSupported and other.
 	// +kubebuilder:validation:Optional
@@ -266,23 +289,52 @@ type ConditionsParameters struct {
 	Users []UsersParameters `json:"users" tf:"users,omitempty"`
 }
 
+type DevicesFilterInitParameters struct {
+
+	// Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// Condition filter to match items.
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type DevicesFilterObservation struct {
+
+	// Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// Condition filter to match items.
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type DevicesFilterParameters struct {
+
+	// Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode" tf:"mode,omitempty"`
+
+	// Condition filter to match items.
+	// +kubebuilder:validation:Optional
+	Rule *string `json:"rule" tf:"rule,omitempty"`
+}
+
 type DevicesInitParameters struct {
 
 	// A filter block as described below.
-	Filter []FilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+	Filter []DevicesFilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
 }
 
 type DevicesObservation struct {
 
 	// A filter block as described below.
-	Filter []FilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
+	Filter []DevicesFilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
 }
 
 type DevicesParameters struct {
 
 	// A filter block as described below.
 	// +kubebuilder:validation:Optional
-	Filter []FilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+	Filter []DevicesFilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
 }
 
 type ExcludedGuestsOrExternalUsersInitParameters struct {
@@ -345,29 +397,29 @@ type ExternalTenantsParameters struct {
 
 type FilterInitParameters struct {
 
-	// Whether to include in, or exclude from, matching devices from the policy. Supported values are include or exclude.
+	// Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// Condition filter to match devices. For more information, see official documentation.
+	// Condition filter to match items.
 	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type FilterObservation struct {
 
-	// Whether to include in, or exclude from, matching devices from the policy. Supported values are include or exclude.
+	// Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.
 	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
 
-	// Condition filter to match devices. For more information, see official documentation.
+	// Condition filter to match items.
 	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
 }
 
 type FilterParameters struct {
 
-	// Whether to include in, or exclude from, matching devices from the policy. Supported values are include or exclude.
+	// Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.
 	// +kubebuilder:validation:Optional
 	Mode *string `json:"mode" tf:"mode,omitempty"`
 
-	// Condition filter to match devices. For more information, see official documentation.
+	// Condition filter to match items.
 	// +kubebuilder:validation:Optional
 	Rule *string `json:"rule" tf:"rule,omitempty"`
 }
