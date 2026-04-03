@@ -36,10 +36,10 @@ func setupNamespacedProviderConfig(mgr ctrl.Manager, o controller.Options) error
 		Named(name).
 		WithOptions(o.ForControllerRuntime()).
 		For(&v1beta1.ProviderConfig{}).
-		Watches(&v1beta1.ProviderConfigUsage{}, &resource.EnqueueRequestForProviderConfig{}).
+		Watches(&v1beta1.ProviderConfigUsage{}, &resource.EnqueueRequestForProviderConfig{Kind: "ProviderConfig"}).
 		Complete(providerconfig.NewReconciler(mgr, of,
 			providerconfig.WithLogger(o.Logger.WithValues("controller", name)),
-			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name)))))
+			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))))) //nolint:staticcheck // crossplane-runtime does not support new events API yet (crossplane/crossplane#7152)
 }
 func setupClusterProviderConfig(mgr ctrl.Manager, o controller.Options) error {
 	name := providerconfig.ControllerName(v1beta1.ClusterProviderConfigGroupKind)
@@ -55,10 +55,10 @@ func setupClusterProviderConfig(mgr ctrl.Manager, o controller.Options) error {
 		WithOptions(o.ForControllerRuntime()).
 		For(&v1beta1.ClusterProviderConfig{}).
 		// Usage types are shared
-		Watches(&v1beta1.ProviderConfigUsage{}, &resource.EnqueueRequestForProviderConfig{}).
+		Watches(&v1beta1.ProviderConfigUsage{}, &resource.EnqueueRequestForProviderConfig{Kind: "ClusterProviderConfig"}).
 		Complete(providerconfig.NewReconciler(mgr, of,
 			providerconfig.WithLogger(o.Logger.WithValues("controller", name)),
-			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name)))))
+			providerconfig.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))))) //nolint:staticcheck // crossplane-runtime does not support new events API yet (crossplane/crossplane#7152)
 }
 
 // SetupGated adds a controller that reconciles ProviderConfigs by accounting for
