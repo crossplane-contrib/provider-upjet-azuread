@@ -1,0 +1,67 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: accesspackages.azuread.upbound.io/v1beta1
+kind: AccessPackageCatalogRoleAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: accesspackages/v1beta1/accesspackagecatalogroleassignment
+  labels:
+    testing.upbound.io/example-name: accesspackagecatalogroleassignment
+  name: accesspackagecatalogroleassignment
+spec:
+  forProvider:
+    catalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: accesspackagecatalog
+    principalObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: accesspackagecatalogroleassignment-user
+    roleId: ae79f266-94d4-4dab-b730-feca7e132178
+
+---
+
+apiVersion: accesspackages.azuread.upbound.io/v1beta1
+kind: AccessPackageCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: accesspackages/v1beta1/accesspackagecatalogroleassignment
+  labels:
+    testing.upbound.io/example-name: accesspackagecatalog
+  name: catalogroundassignment-catalog
+spec:
+  forProvider:
+    displayName: example-catalog
+    description: Example access package catalog
+
+---
+
+apiVersion: users.azuread.upbound.io/v1beta1
+kind: User
+metadata:
+  annotations:
+    meta.upbound.io/example-id: accesspackages/v1beta1/accesspackagecatalogroleassignment
+  labels:
+    testing.upbound.io/example-name: accesspackagecatalogroleassignment-user
+  name: catalogroundassignment-user
+spec:
+  forProvider:
+    displayName: catalogroundassignment-user
+    mailNickname: catalogroundassignment-user
+    passwordSecretRef:
+      key: credentials
+      name: catalogroundassignment-user
+      namespace: upbound-system
+    userPrincipalName: catalogroundassignment-user@devopsupbound.onmicrosoft.com
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: catalogroundassignment-user
+  namespace: upbound-system
+type: Opaque
+stringData:
+  credentials: SecretP@sswd99!

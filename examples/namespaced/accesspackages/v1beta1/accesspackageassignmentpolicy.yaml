@@ -1,0 +1,56 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: accesspackages.azuread.m.upbound.io/v1beta1
+kind: AccessPackageAssignmentPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: accesspackages/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: accesspackageassignmentpolicy
+  name: accesspackageassignmentpolicy
+  namespace: upbound-system
+spec:
+  forProvider:
+    accessPackageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: accesspackage
+    displayName: example-assignment-policy
+    description: Example assignment policy
+    durationInDays: 90
+
+---
+
+apiVersion: accesspackages.azuread.m.upbound.io/v1beta1
+kind: AccessPackage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: accesspackages/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: accesspackage
+  name: assignmentpolicy-package
+  namespace: upbound-system
+spec:
+  forProvider:
+    catalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: accesspackagecatalog
+    displayName: example-access-package
+    description: Example access package
+
+---
+
+apiVersion: accesspackages.azuread.m.upbound.io/v1beta1
+kind: AccessPackageCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: accesspackages/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: accesspackagecatalog
+  name: assignmentpolicy-catalog
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: example-catalog
+    description: Example access package catalog

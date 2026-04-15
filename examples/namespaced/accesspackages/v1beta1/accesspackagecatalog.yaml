@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: accesspackages.azuread.m.upbound.io/v1beta1
+kind: AccessPackageCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: accesspackages/v1beta1/accesspackagecatalog
+  labels:
+    testing.upbound.io/example-name: accesspackagecatalog
+  name: accesspackagecatalog
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: example-catalog
+    description: Example access package catalog

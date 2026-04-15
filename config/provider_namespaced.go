@@ -9,6 +9,7 @@ import (
 	"github.com/crossplane/upjet/v2/pkg/schema/traverser"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
+	"github.com/upbound/provider-azuread/v2/config/namespaced/accesspackages"
 	"github.com/upbound/provider-azuread/v2/config/namespaced/administrativeunits"
 	"github.com/upbound/provider-azuread/v2/config/namespaced/app"
 	"github.com/upbound/provider-azuread/v2/config/namespaced/applications"
@@ -60,6 +61,7 @@ func GetNamespacedProvider(ctx context.Context, sdkProvider *schema.Provider, ge
 		// add custom config functions
 		invitations.Configure,
 		applications.Configure,
+		accesspackages.Configure,
 		groups.Configure,
 		users.Configure,
 		serviceprincipals.Configure,

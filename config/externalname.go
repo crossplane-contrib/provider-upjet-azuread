@@ -131,6 +131,21 @@ var terraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	// 00000000-0000-0000-0000-000000000000_member_00000000-0000-0000-0000-00000000
 	// {group_id}_member_{eligibility_schedule_request_id}
 	"azuread_privileged_access_group_eligibility_schedule": config.IdentifierFromProvider,
+
+	// accesspackages
+	//
+	// azuread_access_package can be imported using its ID
+	"azuread_access_package": config.IdentifierFromProvider,
+	// azuread_access_package_catalog can be imported using its ID
+	"azuread_access_package_catalog": config.IdentifierFromProvider,
+	// azuread_access_package_assignment_policy can be imported using its ID
+	"azuread_access_package_assignment_policy": config.IdentifierFromProvider,
+	// azuread_access_package_catalog_role_assignment can be imported using its ID
+	"azuread_access_package_catalog_role_assignment": config.IdentifierFromProvider,
+	// azuread_access_package_resource_catalog_association can be imported using its ID
+	"azuread_access_package_resource_catalog_association": config.IdentifierFromProvider,
+	// azuread_access_package_resource_package_association can be imported using its ID
+	"azuread_access_package_resource_package_association": config.IdentifierFromProvider,
 }
 
 // cliReconciledExternalNameConfigs contains all external name configurations

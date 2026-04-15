@@ -19,6 +19,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/pkg/errors"
 
+	"github.com/upbound/provider-azuread/v2/config/cluster/accesspackages"
 	"github.com/upbound/provider-azuread/v2/config/cluster/administrativeunits"
 	"github.com/upbound/provider-azuread/v2/config/cluster/app"
 	"github.com/upbound/provider-azuread/v2/config/cluster/applications"
@@ -122,6 +123,7 @@ func GetProvider(ctx context.Context, sdkProvider *schema.Provider, generationPr
 		// add custom config functions
 		invitations.Configure,
 		applications.Configure,
+		accesspackages.Configure,
 		groups.Configure,
 		users.Configure,
 		serviceprincipals.Configure,
