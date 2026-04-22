@@ -1161,6 +1161,42 @@ resources:
             timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
             - terraform import azuread_application_federated_identity_credential.example 00000000-0000-0000-0000-000000000000/federatedIdentityCredential/11111111-1111-1111-1111-111111111111
+    azuread_application_flexible_federated_identity_credential:
+        subCategory: Applications
+        name: azuread_application_flexible_federated_identity_credential
+        title: ""
+        examples:
+            - name: example
+              manifest: |-
+                {
+                  "application_id": "${azuread_application_registration.example.id}",
+                  "audience": "api://AzureADTokenExchange",
+                  "claims_matching_expression": "claims['sub'] matches 'repo:contoso/contoso-repo:ref:refs/heads/*' and claims['job_workflow_ref'] matches 'contoso/contoso-prod/.github/workflows/*.yml@refs/heads/main'",
+                  "description": "Deployments for my-repo",
+                  "display_name": "my-repo-deploy",
+                  "issuer": "https://token.actions.githubusercontent.com"
+                }
+              references:
+                application_id: azuread_application_registration.example.id
+              dependencies:
+                azuread_application_registration.example: |-
+                    {
+                      "display_name": "example"
+                    }
+        argumentDocs:
+            application_id: '- (Required) The resource ID of the application for which this federated identity credential should be created. Changing this field forces a new resource to be created.'
+            audience: '- (Required) The audience that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.'
+            claims_matching_expression: '- (Required) The expression to match for claims. See the Preview Documentation for more information.'
+            credential_id: '- A UUID used to uniquely identify this federated identity credential.'
+            description: '- (Optional) A description for the federated identity credential.'
+            display_name: '- (Required) A unique display name for the federated identity credential. Changing this forces a new resource to be created.'
+            issuer: '- (Required) The URL of the external identity provider, which must match the issuer claim of the external token being exchanged.'
+            timeouts.create: '- (Defaults to 15 minutes) Used when creating the resource.'
+            timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
+            timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
+            timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
+        importStatements:
+            - terraform import azuread_application_flexible_federated_identity_credential.example 00000000-0000-0000-0000-000000000000/federatedIdentityCredential/11111111-1111-1111-1111-111111111111
     azuread_application_from_template:
         subCategory: Applications
         name: azuread_application_from_template
@@ -1715,7 +1751,7 @@ resources:
             timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
             timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
-            - terraform import azuread_claims_mapping_policy.my_policy 00000000-0000-0000-0000-000000000000
+            - terraform import azuread_claims_mapping_policy.my_policy /policies/claimsMappingPolicies/00000000-0000-0000-0000-000000000000
     azuread_conditional_access_policy:
         subCategory: Conditional Access
         name: azuread_conditional_access_policy
@@ -1899,12 +1935,14 @@ resources:
                 conditions.client_applications.excluded_service_principals: data.azuread_client_config.current.object_id
         argumentDocs:
             client_applications.excluded_service_principals: '- (Optional) A list of service principal IDs explicitly excluded in the policy.'
+            client_applications.filter: '- (Optional) A filter block as documented below.'
             client_applications.included_service_principals: '- (Optional) A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.'
             conditions: '- (Required) A conditions block as documented below, which specifies the rules that must be met for the policy to apply.'
             conditions.applications: '- (Required) An applications block as documented below, which specifies applications and user actions included in and excluded from the policy.'
             conditions.applications.excluded_applications: '- (Optional) A list of application IDs explicitly excluded from the policy. Can also be set to Office365.'
             conditions.applications.included_applications: '- (Optional) A list of application IDs the policy applies to, unless explicitly excluded (in excluded_applications). Can also be set to All, None or Office365. Cannot be specified with included_user_actions. One of included_applications or included_user_actions must be specified.'
             conditions.applications.included_user_actions: '- (Optional) A list of user actions to include. Supported values are urn:user:registerdevice and urn:user:registersecurityinfo. Cannot be specified with included_applications. One of included_applications or included_user_actions must be specified.'
+            conditions.authentication_flow_transfer_methods: '- (Optional) A list of authentication flow transfer methods included in the policy. Possible values are: authenticationTransfer and deviceCodeFlow.'
             conditions.client_app_types: '- (Required) A list of client application types included in the policy. Possible values are: all, browser, mobileAppsAndDesktopClients, exchangeActiveSync, easSupported and other.'
             conditions.client_applications: '- (Optional) An client_applications block as documented below, which specifies service principals included in and excluded from the policy.'
             conditions.devices: '- (Optional) A devices block as documented below, which describes devices to be included in and excluded from the policy. A devices block can be added to an existing policy, but removing the devices block forces a new resource to be created.'
@@ -1915,9 +1953,9 @@ resources:
             conditions.sign_in_risk_levels: '- (Optional) A list of user sign-in risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.'
             conditions.user_risk_levels: '- (Optional) A list of user risk levels included in the policy. Possible values are: low, medium, high, hidden, none, unknownFutureValue.'
             conditions.users: '- (Required) A users block as documented below, which specifies users, groups, and roles included in and excluded from the policy.'
-            devices.filter: '- (Optional) A filter block as described below.'
-            devices.filter.mode: '- (Required) Whether to include in, or exclude from, matching devices from the policy. Supported values are include or exclude.'
-            devices.filter.rule: '- (Required) Condition filter to match devices. For more information, see official documentation.'
+            devices.filter: '- (Optional) A filter block as documented below.'
+            devices.filter.mode: '- (Required) Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.'
+            devices.filter.rule: '- (Required) Condition filter to match items.'
             display_name: '- (Required) The friendly name for this Conditional Access Policy.'
             grant_controls: '- (Optional) A grant_controls block as documented below, which specifies the grant controls that must be fulfilled to pass the policy.'
             grant_controls.authentication_strength_policy_id: '- (Optional) ID of an Authentication Strength Policy to use in this policy. When using a hard-coded ID, the UUID value should be prefixed with: /policies/authenticationStrengthPolicies/.'
@@ -2601,6 +2639,7 @@ resources:
             ip: '- (Optional) An ip block as documented below, which configures an IP-based named location.'
             ip.ip_ranges: '- (Required) List of IP address ranges in IPv4 CIDR format (e.g. 1.2.3.4/32) or any allowable IPv6 format from IETF RFC596. Each CIDR prefix must be /8 or larger.'
             ip.trusted: '- (Optional) Whether the named location is trusted. Defaults to false.'
+            object_id: '- The object ID of the named location.'
             timeouts.create: '- (Defaults to 5 minutes) Used when creating the resource.'
             timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
             timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
@@ -2908,7 +2947,7 @@ resources:
             timeouts.delete: '- (Defaults to 5 minutes) Used when deleting the resource.'
             timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
         importStatements:
-            - terraform import azuread_service_principal_claims_mapping_policy_assignment.app 00000000-0000-0000-0000-000000000000/claimsMappingPolicy/11111111-0000-0000-0000-000000000000
+            - terraform import azuread_service_principal_claims_mapping_policy_assignment.app /servicePrincipals/00000000-0000-0000-0000-000000000000/claimsMappingPolicies/11111111-0000-0000-0000-000000000000
     azuread_service_principal_delegated_permission_grant:
         subCategory: Delegated Permission Grants
         name: azuread_service_principal_delegated_permission_grant
@@ -3018,7 +3057,7 @@ resources:
             timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
             user_object_id: '- (Optional) - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.'
         importStatements:
-            - terraform import azuread_service_principal_delegated_permission_grant.example aaBBcDDeFG6h5JKLMN2PQrrssTTUUvWWxxxxxyyyzzz
+            - terraform import azuread_service_principal_delegated_permission_grant.example /oauth2PermissionGrants/aaBBcDDeFG6h5JKLMN2PQrrssTTUUvWWxxxxxyyyzzz
     azuread_service_principal_password:
         subCategory: Service Principals
         name: azuread_service_principal_password
@@ -3176,7 +3215,7 @@ resources:
             timeouts.read: '- (Defaults to 5 minutes) Used when retrieving the resource.'
             timeouts.update: '- (Defaults to 5 minutes) Used when updating the resource.'
         importStatements:
-            - terraform import azuread_synchronization_job.example 00000000-0000-0000-0000-000000000000/job/dataBricks.f5532fc709734b1a90e8a1fa9fd03a82.8442fd39-2183-419c-8732-74b6ce866bd5
+            - terraform import azuread_synchronization_job.example /servicePrincipals/00000000-0000-0000-0000-000000000000/synchronization/jobs/dataBricks.f5532fc709734b1a90e8a1fa9fd03a82.8442fd39-2183-419c-8732-74b6ce866bd5
     azuread_synchronization_job_provision_on_demand:
         subCategory: Synchronization
         name: azuread_synchronization_job_provision_on_demand

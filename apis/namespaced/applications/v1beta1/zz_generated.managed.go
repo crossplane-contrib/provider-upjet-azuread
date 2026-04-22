@@ -167,6 +167,46 @@ func (mg *FederatedIdentityCredential) SetWriteConnectionSecretToReference(r *xp
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
+// GetCondition of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetManagementPolicies of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) GetManagementPolicies() xpv1.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) GetProviderConfigReference() *xpv1.ProviderConfigReference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) GetWriteConnectionSecretToReference() *xpv1.LocalSecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) SetConditions(c ...xpv1.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetManagementPolicies of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) SetManagementPolicies(r xpv1.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) SetProviderConfigReference(r *xpv1.ProviderConfigReference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this FlexibleFederatedIdentityCredential.
+func (mg *FlexibleFederatedIdentityCredential) SetWriteConnectionSecretToReference(r *xpv1.LocalSecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
 // GetCondition of this Password.
 func (mg *Password) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
 	return mg.Status.GetCondition(ct)
