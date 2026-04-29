@@ -106,6 +106,10 @@ type LocationObservation struct {
 
 	// An ip block as documented below, which configures an IP-based named location.
 	IP *IPObservation `json:"ip,omitempty" tf:"ip,omitempty"`
+
+	// The object ID of the named location.
+	// The object ID of the named location
+	ObjectID *string `json:"objectId,omitempty" tf:"object_id,omitempty"`
 }
 
 type LocationParameters struct {
