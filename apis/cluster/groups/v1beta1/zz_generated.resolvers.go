@@ -15,6 +15,50 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+// ResolveReferences of this Group.
+func (mg *Group) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPIResolver(c, mg)
+
+	var mrsp reference.MultiResolutionResponse
+	var err error
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.Members),
+		Extract:       resource.ExtractParamPath("object_id", true),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.ForProvider.MembersRefs,
+		Selector:      mg.Spec.ForProvider.MembersSelector,
+		To: reference.To{
+			List:    &v1beta1.UserList{},
+			Managed: &v1beta1.User{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.Members")
+	}
+	mg.Spec.ForProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.ForProvider.MembersRefs = mrsp.ResolvedReferences
+
+	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
+		CurrentValues: reference.FromPtrValues(mg.Spec.InitProvider.Members),
+		Extract:       resource.ExtractParamPath("object_id", true),
+		Namespace:     mg.GetNamespace(),
+		References:    mg.Spec.InitProvider.MembersRefs,
+		Selector:      mg.Spec.InitProvider.MembersSelector,
+		To: reference.To{
+			List:    &v1beta1.UserList{},
+			Managed: &v1beta1.User{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.Members")
+	}
+	mg.Spec.InitProvider.Members = reference.ToPtrValues(mrsp.ResolvedValues)
+	mg.Spec.InitProvider.MembersRefs = mrsp.ResolvedReferences
+
+	return nil
+}
+
 // ResolveReferences of this Member.
 func (mg *Member) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPIResolver(c, mg)
