@@ -62,6 +62,8 @@ linters:
     goconst:
       min-len: 3
       min-occurrences: 5
+      ignore-string-values:
+        - "azuread_application"
     gocritic:
       enabled-tags:
         - performance
