@@ -36,6 +36,10 @@ var terraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	// {ObjectId}/preAuthorizedApplication/{ApplicationId}
 	// 00000000-0000-0000-0000-000000000000/preAuthorizedApplication/11111111-1111-1111-1111-111111111111
 	"azuread_application_pre_authorized": config.IdentifierFromProvider,
+	// azuread_application_flexible_federated_identity_credential can be imported using the object ID of the associated application and the ID of the flexible federated identity credential:
+	// {ObjectId}/federatedIdentityCredential/{CredentialId}
+	// 00000000-0000-0000-0000-000000000000/federatedIdentityCredential/11111111-1111-1111-1111-111111111111
+	"azuread_application_flexible_federated_identity_credential": config.IdentifierFromProvider,
 
 	// groups
 	//

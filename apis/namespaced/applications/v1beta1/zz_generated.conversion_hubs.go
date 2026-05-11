@@ -19,6 +19,9 @@ func (tr *Certificate) Hub() {}
 func (tr *FederatedIdentityCredential) Hub() {}
 
 // Hub marks this type as a conversion hub.
+func (tr *FlexibleFederatedIdentityCredential) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *Password) Hub() {}
 
 // Hub marks this type as a conversion hub.

@@ -16,6 +16,7 @@ import (
 	approle "github.com/upbound/provider-azuread/v2/internal/controller/cluster/applications/approle"
 	certificate "github.com/upbound/provider-azuread/v2/internal/controller/cluster/applications/certificate"
 	federatedidentitycredential "github.com/upbound/provider-azuread/v2/internal/controller/cluster/applications/federatedidentitycredential"
+	flexiblefederatedidentitycredential "github.com/upbound/provider-azuread/v2/internal/controller/cluster/applications/flexiblefederatedidentitycredential"
 	password "github.com/upbound/provider-azuread/v2/internal/controller/cluster/applications/password"
 	preauthorized "github.com/upbound/provider-azuread/v2/internal/controller/cluster/applications/preauthorized"
 	accesspolicy "github.com/upbound/provider-azuread/v2/internal/controller/cluster/conditionalaccess/accesspolicy"
@@ -54,6 +55,7 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		approle.Setup,
 		certificate.Setup,
 		federatedidentitycredential.Setup,
+		flexiblefederatedidentitycredential.Setup,
 		password.Setup,
 		preauthorized.Setup,
 		accesspolicy.Setup,
@@ -98,6 +100,7 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		approle.SetupGated,
 		certificate.SetupGated,
 		federatedidentitycredential.SetupGated,
+		flexiblefederatedidentitycredential.SetupGated,
 		password.SetupGated,
 		preauthorized.SetupGated,
 		accesspolicy.SetupGated,
