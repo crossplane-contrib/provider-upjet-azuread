@@ -4,7 +4,7 @@
 
 module github.com/upbound/provider-azuread/v2
 
-go 1.25.10
+go 1.26.4
 
 tool golang.org/x/tools/cmd/goimports
 
