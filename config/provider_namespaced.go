@@ -22,6 +22,7 @@ import (
 	"github.com/upbound/provider-azuread/v2/config/namespaced/serviceprincipals"
 	"github.com/upbound/provider-azuread/v2/config/namespaced/synchronization"
 	"github.com/upbound/provider-azuread/v2/config/namespaced/users"
+	"github.com/upbound/provider-azuread/v2/config/templates"
 )
 
 // GetNamespacedProvider returns the namespaced provider configuration
@@ -47,6 +48,7 @@ func GetNamespacedProvider(ctx context.Context, sdkProvider *schema.Provider, ge
 		ujconfig.WithDefaultResourceOptions(
 			resourceConfigurator(),
 		),
+		ujconfig.WithControllerTemplate(templates.ControllerTemplate),
 		ujconfig.WithRootGroup("azuread.m.upbound.io"),
 		ujconfig.WithShortName("azuread"),
 		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),

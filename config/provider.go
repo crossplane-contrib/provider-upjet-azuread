@@ -32,6 +32,7 @@ import (
 	"github.com/upbound/provider-azuread/v2/config/cluster/serviceprincipals"
 	"github.com/upbound/provider-azuread/v2/config/cluster/synchronization"
 	"github.com/upbound/provider-azuread/v2/config/cluster/users"
+	"github.com/upbound/provider-azuread/v2/config/templates"
 )
 
 const (
@@ -111,6 +112,7 @@ func GetProvider(ctx context.Context, sdkProvider *schema.Provider, generationPr
 		ujconfig.WithDefaultResourceOptions(
 			resourceConfigurator(),
 		),
+		ujconfig.WithControllerTemplate(templates.ControllerTemplate),
 		ujconfig.WithReferenceInjectors([]ujconfig.ReferenceInjector{reference.NewInjector(modulePath)}),
 		ujconfig.WithFeaturesPackage("internal/features"),
 		ujconfig.WithTerraformProvider(sdkProvider),
