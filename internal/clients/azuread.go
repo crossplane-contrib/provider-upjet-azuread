@@ -7,6 +7,7 @@ package clients
 import (
 	"context"
 	"encoding/json"
+	"net/http"
 	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -14,7 +15,9 @@ import (
 
 	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	upjetmetrics "github.com/crossplane/upjet/v2/pkg/metrics"
 	"github.com/crossplane/upjet/v2/pkg/terraform"
+	tfazureclient "github.com/hashicorp/terraform-provider-azuread/xpprovider"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -64,6 +67,22 @@ var (
 	credentialsSourceUpbound                       xpv1.CredentialsSource = "Upbound"
 )
 
+// graphServiceFromPath extracts a short service label from a Microsoft Graph
+// API request path.
+//
+// Graph URL pattern: /{version}/{service}/...
+// Examples:
+//   - /v1.0/groups/abc-123      → "groups"
+//   - /beta/servicePrincipals   → "servicePrincipals"
+//   - /v1.0/directory/admin...  → "directory"
+func graphServiceFromPath(path string) string {
+	parts := strings.SplitN(strings.TrimPrefix(path, "/"), "/", 3)
+	if len(parts) >= 2 && parts[1] != "" {
+		return parts[1]
+	}
+	return "unknown"
+}
+
 // TerraformSetupBuilder returns Terraform setup with provider specific
 // configuration like provider credentials used to connect to cloud APIs in the
 // expected form of a Terraform provider.
@@ -106,6 +125,15 @@ func configureNoForkAzureClient(ctx context.Context, ps *terraform.Setup, p sche
 		return errors.Errorf("failed to configure the provider: %v", diag)
 	}
 	ps.Meta = p.Meta()
+	// RegisterResponseMiddleware will increment the `external_api_calls_total` metric multiple times if the request is retried e.g. as a result of HTTP 429
+	// It will NOT increment the metric if we do not receive a response back e.g. connection failure
+	tfazureclient.RegisterResponseMiddleware(ps.Meta, func(req *http.Request, resp *http.Response) (*http.Response, error) {
+		if req == nil || req.URL == nil || resp == nil {
+			return resp, nil
+		}
+		upjetmetrics.ExternalAPICalls.WithLabelValues(graphServiceFromPath(req.URL.Path), req.Method).Inc()
+		return resp, nil
+	})
 	return nil
 }
 
