@@ -1940,6 +1940,7 @@ resources:
             conditions: '- (Required) A conditions block as documented below, which specifies the rules that must be met for the policy to apply.'
             conditions.applications: '- (Required) An applications block as documented below, which specifies applications and user actions included in and excluded from the policy.'
             conditions.applications.excluded_applications: '- (Optional) A list of application IDs explicitly excluded from the policy. Can also be set to Office365.'
+            conditions.applications.filter: '- (Optional) A filter block as documented below.'
             conditions.applications.included_applications: '- (Optional) A list of application IDs the policy applies to, unless explicitly excluded (in excluded_applications). Can also be set to All, None or Office365. Cannot be specified with included_user_actions. One of included_applications or included_user_actions must be specified.'
             conditions.applications.included_user_actions: '- (Optional) A list of user actions to include. Supported values are urn:user:registerdevice and urn:user:registersecurityinfo. Cannot be specified with included_applications. One of included_applications or included_user_actions must be specified.'
             conditions.authentication_flow_transfer_methods: '- (Optional) A list of authentication flow transfer methods included in the policy. Possible values are: authenticationTransfer and deviceCodeFlow.'

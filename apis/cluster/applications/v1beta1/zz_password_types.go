@@ -13,7 +13,7 @@ import (
 	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 )
 
-type PasswordInitParameters_2 struct {
+type PasswordInitParameters struct {
 
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
@@ -50,7 +50,7 @@ type PasswordInitParameters_2 struct {
 	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
 }
 
-type PasswordObservation_2 struct {
+type PasswordObservation struct {
 
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
@@ -84,7 +84,7 @@ type PasswordObservation_2 struct {
 	StartDate *string `json:"startDate,omitempty" tf:"start_date,omitempty"`
 }
 
-type PasswordParameters_2 struct {
+type PasswordParameters struct {
 
 	// The resource ID of the application for which this password should be created. Changing this field forces a new resource to be created.
 	// The resource ID of the application for which this password should be created
@@ -130,7 +130,7 @@ type PasswordParameters_2 struct {
 // PasswordSpec defines the desired state of Password
 type PasswordSpec struct {
 	v1.ResourceSpec `json:",inline"`
-	ForProvider     PasswordParameters_2 `json:"forProvider"`
+	ForProvider     PasswordParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -141,13 +141,13 @@ type PasswordSpec struct {
 	// required on creation, but we do not desire to update them after creation,
 	// for example because of an external controller is managing them, like an
 	// autoscaler.
-	InitProvider PasswordInitParameters_2 `json:"initProvider,omitempty"`
+	InitProvider PasswordInitParameters `json:"initProvider,omitempty"`
 }
 
 // PasswordStatus defines the observed state of Password.
 type PasswordStatus struct {
 	v1.ResourceStatus `json:",inline"`
-	AtProvider        PasswordObservation_2 `json:"atProvider,omitempty"`
+	AtProvider        PasswordObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

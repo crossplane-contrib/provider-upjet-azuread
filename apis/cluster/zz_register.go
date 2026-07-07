@@ -14,13 +14,11 @@ import (
 	v1beta1app "github.com/upbound/provider-azuread/v2/apis/cluster/app/v1beta1"
 	v1beta1applications "github.com/upbound/provider-azuread/v2/apis/cluster/applications/v1beta1"
 	v1beta2 "github.com/upbound/provider-azuread/v2/apis/cluster/applications/v1beta2"
-	v1beta1conditionalaccess "github.com/upbound/provider-azuread/v2/apis/cluster/conditionalaccess/v1beta1"
 	v1beta2conditionalaccess "github.com/upbound/provider-azuread/v2/apis/cluster/conditionalaccess/v1beta2"
 	v1beta1directoryroles "github.com/upbound/provider-azuread/v2/apis/cluster/directoryroles/v1beta1"
 	v1beta1groups "github.com/upbound/provider-azuread/v2/apis/cluster/groups/v1beta1"
 	v1beta2groups "github.com/upbound/provider-azuread/v2/apis/cluster/groups/v1beta2"
 	v1beta1identitygovernance "github.com/upbound/provider-azuread/v2/apis/cluster/identitygovernance/v1beta1"
-	v1beta1invitations "github.com/upbound/provider-azuread/v2/apis/cluster/invitations/v1beta1"
 	v1beta2invitations "github.com/upbound/provider-azuread/v2/apis/cluster/invitations/v1beta2"
 	v1beta1policies "github.com/upbound/provider-azuread/v2/apis/cluster/policies/v1beta1"
 	v1beta1serviceprincipaldelegated "github.com/upbound/provider-azuread/v2/apis/cluster/serviceprincipaldelegated/v1beta1"
@@ -39,13 +37,11 @@ func init() {
 		v1beta1app.SchemeBuilder.AddToScheme,
 		v1beta1applications.SchemeBuilder.AddToScheme,
 		v1beta2.SchemeBuilder.AddToScheme,
-		v1beta1conditionalaccess.SchemeBuilder.AddToScheme,
 		v1beta2conditionalaccess.SchemeBuilder.AddToScheme,
 		v1beta1directoryroles.SchemeBuilder.AddToScheme,
 		v1beta1groups.SchemeBuilder.AddToScheme,
 		v1beta2groups.SchemeBuilder.AddToScheme,
 		v1beta1identitygovernance.SchemeBuilder.AddToScheme,
-		v1beta1invitations.SchemeBuilder.AddToScheme,
 		v1beta2invitations.SchemeBuilder.AddToScheme,
 		v1beta1policies.SchemeBuilder.AddToScheme,
 		v1beta1serviceprincipaldelegated.SchemeBuilder.AddToScheme,

@@ -8,9 +8,7 @@ package v1beta1
 import (
 	"context"
 	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
-	resource "github.com/crossplane/upjet/v2/pkg/resource"
 	errors "github.com/pkg/errors"
-	v1beta11 "github.com/upbound/provider-azuread/v2/apis/cluster/applications/v1beta1"
 	v1beta1 "github.com/upbound/provider-azuread/v2/apis/cluster/policies/v1beta1"
 	v1beta2 "github.com/upbound/provider-azuread/v2/apis/cluster/serviceprincipals/v1beta2"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
@@ -178,50 +176,6 @@ func (mg *Password) ResolveReferences(ctx context.Context, c client.Reader) erro
 	}
 	mg.Spec.InitProvider.ServicePrincipalID = reference.ToPtrValue(rsp.ResolvedValue)
 	mg.Spec.InitProvider.ServicePrincipalIDRef = rsp.ResolvedReference
-
-	return nil
-}
-
-// ResolveReferences of this Principal.
-func (mg *Principal) ResolveReferences(ctx context.Context, c client.Reader) error {
-	r := reference.NewAPIResolver(c, mg)
-
-	var rsp reference.ResolutionResponse
-	var err error
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ClientID),
-		Extract:      resource.ExtractParamPath("client_id", true),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.ForProvider.ClientIDRef,
-		Selector:     mg.Spec.ForProvider.ClientIDSelector,
-		To: reference.To{
-			List:    &v1beta11.ApplicationList{},
-			Managed: &v1beta11.Application{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.ForProvider.ClientID")
-	}
-	mg.Spec.ForProvider.ClientID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.ForProvider.ClientIDRef = rsp.ResolvedReference
-
-	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
-		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ClientID),
-		Extract:      resource.ExtractParamPath("client_id", true),
-		Namespace:    mg.GetNamespace(),
-		Reference:    mg.Spec.InitProvider.ClientIDRef,
-		Selector:     mg.Spec.InitProvider.ClientIDSelector,
-		To: reference.To{
-			List:    &v1beta11.ApplicationList{},
-			Managed: &v1beta11.Application{},
-		},
-	})
-	if err != nil {
-		return errors.Wrap(err, "mg.Spec.InitProvider.ClientID")
-	}
-	mg.Spec.InitProvider.ClientID = reference.ToPtrValue(rsp.ResolvedValue)
-	mg.Spec.InitProvider.ClientIDRef = rsp.ResolvedReference
 
 	return nil
 }
