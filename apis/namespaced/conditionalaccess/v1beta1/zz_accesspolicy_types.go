@@ -85,6 +85,9 @@ type ApplicationsInitParameters struct {
 	// A list of application IDs explicitly excluded from the policy. Can also be set to Office365.
 	ExcludedApplications []*string `json:"excludedApplications,omitempty" tf:"excluded_applications,omitempty"`
 
+	// A filter block as documented below.
+	Filter *FilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+
 	// A list of application IDs the policy applies to, unless explicitly excluded (in excluded_applications). Can also be set to All, None or Office365. Cannot be specified with included_user_actions. One of included_applications or included_user_actions must be specified.
 	IncludedApplications []*string `json:"includedApplications,omitempty" tf:"included_applications,omitempty"`
 
@@ -96,6 +99,9 @@ type ApplicationsObservation struct {
 
 	// A list of application IDs explicitly excluded from the policy. Can also be set to Office365.
 	ExcludedApplications []*string `json:"excludedApplications,omitempty" tf:"excluded_applications,omitempty"`
+
+	// A filter block as documented below.
+	Filter *FilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// A list of application IDs the policy applies to, unless explicitly excluded (in excluded_applications). Can also be set to All, None or Office365. Cannot be specified with included_user_actions. One of included_applications or included_user_actions must be specified.
 	IncludedApplications []*string `json:"includedApplications,omitempty" tf:"included_applications,omitempty"`
@@ -110,6 +116,10 @@ type ApplicationsParameters struct {
 	// +kubebuilder:validation:Optional
 	ExcludedApplications []*string `json:"excludedApplications,omitempty" tf:"excluded_applications,omitempty"`
 
+	// A filter block as documented below.
+	// +kubebuilder:validation:Optional
+	Filter *FilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+
 	// A list of application IDs the policy applies to, unless explicitly excluded (in excluded_applications). Can also be set to All, None or Office365. Cannot be specified with included_user_actions. One of included_applications or included_user_actions must be specified.
 	// +kubebuilder:validation:Optional
 	IncludedApplications []*string `json:"includedApplications,omitempty" tf:"included_applications,omitempty"`
@@ -119,13 +129,42 @@ type ApplicationsParameters struct {
 	IncludedUserActions []*string `json:"includedUserActions,omitempty" tf:"included_user_actions,omitempty"`
 }
 
+type ClientApplicationsFilterInitParameters struct {
+
+	// Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// Condition filter to match items.
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type ClientApplicationsFilterObservation struct {
+
+	// Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.
+	Mode *string `json:"mode,omitempty" tf:"mode,omitempty"`
+
+	// Condition filter to match items.
+	Rule *string `json:"rule,omitempty" tf:"rule,omitempty"`
+}
+
+type ClientApplicationsFilterParameters struct {
+
+	// Whether to include in, or exclude from, matching items from the policy. Supported values are include or exclude.
+	// +kubebuilder:validation:Optional
+	Mode *string `json:"mode" tf:"mode,omitempty"`
+
+	// Condition filter to match items.
+	// +kubebuilder:validation:Optional
+	Rule *string `json:"rule" tf:"rule,omitempty"`
+}
+
 type ClientApplicationsInitParameters struct {
 
 	// A list of service principal IDs explicitly excluded in the policy.
 	ExcludedServicePrincipals []*string `json:"excludedServicePrincipals,omitempty" tf:"excluded_service_principals,omitempty"`
 
 	// A filter block as documented below.
-	Filter *FilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+	Filter *ClientApplicationsFilterInitParameters `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.
 	IncludedServicePrincipals []*string `json:"includedServicePrincipals,omitempty" tf:"included_service_principals,omitempty"`
@@ -137,7 +176,7 @@ type ClientApplicationsObservation struct {
 	ExcludedServicePrincipals []*string `json:"excludedServicePrincipals,omitempty" tf:"excluded_service_principals,omitempty"`
 
 	// A filter block as documented below.
-	Filter *FilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
+	Filter *ClientApplicationsFilterObservation `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.
 	IncludedServicePrincipals []*string `json:"includedServicePrincipals,omitempty" tf:"included_service_principals,omitempty"`
@@ -151,7 +190,7 @@ type ClientApplicationsParameters struct {
 
 	// A filter block as documented below.
 	// +kubebuilder:validation:Optional
-	Filter *FilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
+	Filter *ClientApplicationsFilterParameters `json:"filter,omitempty" tf:"filter,omitempty"`
 
 	// A list of service principal IDs explicitly included in the policy. Can be set to ServicePrincipalsInMyTenant to include all service principals. This is mandatory value when at least one excluded_service_principals is set.
 	// +kubebuilder:validation:Optional

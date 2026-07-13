@@ -172,8 +172,8 @@ github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.4/go.mod h1:6Nz966r3vQYCqIzWsuEl
 github.com/hashicorp/errwrap v1.0.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
 github.com/hashicorp/errwrap v1.1.0 h1:OxrOeh75EUXMY8TBjag2fzXGZ40LB6IKw45YeGUDY2I=
 github.com/hashicorp/errwrap v1.1.0/go.mod h1:YH+1FKiLXxHSkmPseP+kNlulaMuP3n2brvKWEqk/Jc4=
-github.com/hashicorp/go-azure-helpers v0.76.2 h1:59isOIbH9GQky32/yReufDWEyb+k8y4wL33FKlMj6zA=
-github.com/hashicorp/go-azure-helpers v0.76.2/go.mod h1:K+woaDnRuEg2qyg8pWMLeYhIcH7QAcUGLFlBHoF/WhA=
+github.com/hashicorp/go-azure-helpers v0.80.0 h1:1k3CqMRdmxRBh66gkS2vXxEbvuP8pIeujzGkGHhyhEQ=
+github.com/hashicorp/go-azure-helpers v0.80.0/go.mod h1:K+woaDnRuEg2qyg8pWMLeYhIcH7QAcUGLFlBHoF/WhA=
 github.com/hashicorp/go-azure-sdk/microsoft-graph v0.20260212.1143955 h1:vVmawvhoUiQtokd3dzZvyNSGgQSQZyekpMIVwDWuDAE=
 github.com/hashicorp/go-azure-sdk/microsoft-graph v0.20260212.1143955/go.mod h1:xW/IFqEMyAdq55/l+p/f3VsYPIY6Lg/iuXbXQLjyC7w=
 github.com/hashicorp/go-azure-sdk/sdk v0.20260212.1143955 h1:gie0s39tv613EX3l5X+EPQfviauvUH3TpGVlAEmxWqc=
@@ -368,8 +368,8 @@ github.com/tmccombs/hcl2json v0.3.3 h1:+DLNYqpWE0CsOQiEZu+OZm5ZBImake3wtITYxQ8uL
 github.com/tmccombs/hcl2json v0.3.3/go.mod h1:Y2chtz2x9bAeRTvSibVRVgbLJhLJXKlUeIvjeVdnm4w=
 github.com/ugorji/go/codec v1.2.11 h1:BMaWp1Bb6fHwEtbplGBGJ498wD+LKlNSl25MjdZY4dU=
 github.com/ugorji/go/codec v1.2.11/go.mod h1:UNopzCgEMSXjBc6AOMqYvWC1ktqTAfzJZUZgYf6w6lg=
-github.com/upbound/terraform-provider-azuread v0.0.0-20260701132504-ccaa296b8da8 h1:dgqc4wI5i4j+9wjD2BzehSA6odo9IfnMi0ozb2i2J7w=
-github.com/upbound/terraform-provider-azuread v0.0.0-20260701132504-ccaa296b8da8/go.mod h1:VTroVZDG7yZsE7CI8b6X8NGtll4vkDLC4zfL6UxiCWU=
+github.com/upbound/terraform-provider-azuread v0.0.0-20260707060449-1f6e89d6d3b6 h1:Kf6STuI7Zn0A4qWJTGtjyB1+WBj2l8kyuZuwNBUAVYc=
+github.com/upbound/terraform-provider-azuread v0.0.0-20260707060449-1f6e89d6d3b6/go.mod h1:JaHP557YAepp0N/04LBFDdYyQejglwZLUk8NRLPcOMI=
 github.com/upbound/uptest v0.12.1-0.20260123170102-8965579a213b h1:3skJb1zt9rBR/4wUWMT32Ip02OckGzYyMhjCkEeCdfA=
 github.com/upbound/uptest v0.12.1-0.20260123170102-8965579a213b/go.mod h1:LaaCdCFepE8h8UtssvRbKBgrNUK4CKNh+bEyE0HnLvc=
 github.com/vmihailenco/msgpack v3.3.3+incompatible/go.mod h1:fy3FlTQTDXWkZ7Bh6AcGMlsjHatGryHQYUTf1ShIgkk=
