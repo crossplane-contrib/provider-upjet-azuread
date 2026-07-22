@@ -4,7 +4,7 @@
 
 module github.com/upbound/provider-azuread/v2
 
-go 1.25.11
+go 1.26.4
 
 tool golang.org/x/tools/cmd/goimports
 
@@ -74,7 +74,7 @@ require (
 	github.com/google/gnostic-models v0.7.1 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
-	github.com/hashicorp/go-azure-helpers v0.76.2 // indirect
+	github.com/hashicorp/go-azure-helpers v0.80.0 // indirect
 	github.com/hashicorp/go-azure-sdk/microsoft-graph v0.20260212.1143955 // indirect
 	github.com/hashicorp/go-azure-sdk/sdk v0.20260212.1143955 // indirect
 	github.com/hashicorp/go-checkpoint v0.5.0 // indirect
@@ -184,4 +184,4 @@ require (
 	software.sslmate.com/src/go-pkcs12 v0.6.0 // indirect
 )
 
-replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20260701132504-ccaa296b8da8
+replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20260707060449-1f6e89d6d3b6

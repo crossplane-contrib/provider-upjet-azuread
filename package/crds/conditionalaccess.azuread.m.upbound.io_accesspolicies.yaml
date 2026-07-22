@@ -73,6 +73,18 @@ spec:
                             items:
                               type: string
                             type: array
+                          filter:
+                            description: A filter block as documented below.
+                            properties:
+                              mode:
+                                description: Whether to include in, or exclude from,
+                                  matching items from the policy. Supported values
+                                  are include or exclude.
+                                type: string
+                              rule:
+                                description: Condition filter to match items.
+                                type: string
+                            type: object
                           includedApplications:
                             description: A list of application IDs the policy applies
                               to, unless explicitly excluded (in excluded_applications).
@@ -442,6 +454,18 @@ spec:
                             items:
                               type: string
                             type: array
+                          filter:
+                            description: A filter block as documented below.
+                            properties:
+                              mode:
+                                description: Whether to include in, or exclude from,
+                                  matching items from the policy. Supported values
+                                  are include or exclude.
+                                type: string
+                              rule:
+                                description: Condition filter to match items.
+                                type: string
+                            type: object
                           includedApplications:
                             description: A list of application IDs the policy applies
                               to, unless explicitly excluded (in excluded_applications).
@@ -874,6 +898,18 @@ spec:
                             items:
                               type: string
                             type: array
+                          filter:
+                            description: A filter block as documented below.
+                            properties:
+                              mode:
+                                description: Whether to include in, or exclude from,
+                                  matching items from the policy. Supported values
+                                  are include or exclude.
+                                type: string
+                              rule:
+                                description: Condition filter to match items.
+                                type: string
+                            type: object
                           includedApplications:
                             description: A list of application IDs the policy applies
                               to, unless explicitly excluded (in excluded_applications).
