@@ -1,0 +1,47 @@
+# SPDX-FileCopyrightText: 2026 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackageResourceCatalogAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcecatalogassociation
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    catalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    resourceOriginIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    resourceOriginSystem: AadGroup
+---
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackageCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcecatalogassociation
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Example access package catalog
+    displayName: example-access-package-catalog
+---
+apiVersion: groups.azuread.upbound.io/v1beta2
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcecatalogassociation
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    displayName: example-group
+    securityEnabled: true

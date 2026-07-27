@@ -1,0 +1,100 @@
+# SPDX-FileCopyrightText: 2026 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackageAssignmentPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    accessPackageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    approvalSettings:
+      approvalRequired: true
+      approvalStage:
+      - approvalTimeoutInDays: 14
+        primaryApprover:
+        - objectIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: approvers
+          subjectType: groupMembers
+    assignmentReviewSettings:
+      accessReviewTimeoutBehavior: keepAccess
+      durationInDays: 3
+      enabled: true
+      reviewFrequency: weekly
+      reviewType: Self
+    description: My assignment policy
+    displayName: assignment-policy
+    durationInDays: 90
+    question:
+    - text:
+        defaultText: hello, how are you?
+    requestorSettings:
+      requestor:
+      - objectIdSelector:
+          matchLabels:
+            testing.upbound.io/example-name: requestors
+        subjectType: groupMembers
+      scopeType: SpecificDirectorySubjects
+---
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    catalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    description: Example access package
+    displayName: example-access-package
+---
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackageCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Example catalog
+    displayName: example-catalog
+---
+apiVersion: groups.azuread.upbound.io/v1beta2
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: approvers
+  name: approvers
+spec:
+  forProvider:
+    displayName: example-approvers
+    securityEnabled: true
+---
+apiVersion: groups.azuread.upbound.io/v1beta2
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: requestors
+  name: requestors
+spec:
+  forProvider:
+    displayName: example-requestors
+    securityEnabled: true
