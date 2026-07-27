@@ -27,6 +27,12 @@ import (
 	roleeligibilityschedulerequest "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/directoryroles/roleeligibilityschedulerequest"
 	group "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/groups/group"
 	membergroups "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/groups/member"
+	accesspackage "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/identitygovernance/accesspackage"
+	accesspackageassignmentpolicy "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/identitygovernance/accesspackageassignmentpolicy"
+	accesspackagecatalog "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/identitygovernance/accesspackagecatalog"
+	accesspackagecatalogroleassignment "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/identitygovernance/accesspackagecatalogroleassignment"
+	accesspackageresourcecatalogassociation "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/identitygovernance/accesspackageresourcecatalogassociation"
+	accesspackageresourcepackageassociation "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/identitygovernance/accesspackageresourcepackageassociation"
 	privilegedaccessgroupassignmentschedule "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/identitygovernance/privilegedaccessgroupassignmentschedule"
 	privilegedaccessgroupeligibilityschedule "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/identitygovernance/privilegedaccessgroupeligibilityschedule"
 	invitation "github.com/upbound/provider-azuread/v2/internal/controller/namespaced/invitations/invitation"
@@ -66,6 +72,12 @@ func Setup(mgr ctrl.Manager, o controller.Options) error {
 		roleeligibilityschedulerequest.Setup,
 		group.Setup,
 		membergroups.Setup,
+		accesspackage.Setup,
+		accesspackageassignmentpolicy.Setup,
+		accesspackagecatalog.Setup,
+		accesspackagecatalogroleassignment.Setup,
+		accesspackageresourcecatalogassociation.Setup,
+		accesspackageresourcepackageassociation.Setup,
 		privilegedaccessgroupassignmentschedule.Setup,
 		privilegedaccessgroupeligibilityschedule.Setup,
 		invitation.Setup,
@@ -111,6 +123,12 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 		roleeligibilityschedulerequest.SetupGated,
 		group.SetupGated,
 		membergroups.SetupGated,
+		accesspackage.SetupGated,
+		accesspackageassignmentpolicy.SetupGated,
+		accesspackagecatalog.SetupGated,
+		accesspackagecatalogroleassignment.SetupGated,
+		accesspackageresourcecatalogassociation.SetupGated,
+		accesspackageresourcepackageassociation.SetupGated,
 		privilegedaccessgroupassignmentschedule.SetupGated,
 		privilegedaccessgroupeligibilityschedule.SetupGated,
 		invitation.SetupGated,
@@ -155,6 +173,12 @@ func SetupWebhookWithManager(mgr ctrl.Manager) error {
 		roleeligibilityschedulerequest.SetupWebhookWithManager,
 		group.SetupWebhookWithManager,
 		membergroups.SetupWebhookWithManager,
+		accesspackage.SetupWebhookWithManager,
+		accesspackageassignmentpolicy.SetupWebhookWithManager,
+		accesspackagecatalog.SetupWebhookWithManager,
+		accesspackagecatalogroleassignment.SetupWebhookWithManager,
+		accesspackageresourcecatalogassociation.SetupWebhookWithManager,
+		accesspackageresourcepackageassociation.SetupWebhookWithManager,
 		privilegedaccessgroupassignmentschedule.SetupWebhookWithManager,
 		privilegedaccessgroupeligibilityschedule.SetupWebhookWithManager,
 		invitation.SetupWebhookWithManager,

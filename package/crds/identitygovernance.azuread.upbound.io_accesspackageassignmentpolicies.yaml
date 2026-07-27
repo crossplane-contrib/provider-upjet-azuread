@@ -1,0 +1,1990 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.20.1
+  name: accesspackageassignmentpolicies.identitygovernance.azuread.upbound.io
+spec:
+  group: identitygovernance.azuread.upbound.io
+  names:
+    categories:
+    - crossplane
+    - managed
+    - azuread
+    kind: AccessPackageAssignmentPolicy
+    listKind: AccessPackageAssignmentPolicyList
+    plural: accesspackageassignmentpolicies
+    singular: accesspackageassignmentpolicy
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.conditions[?(@.type=='Synced')].status
+      name: SYNCED
+      type: string
+    - jsonPath: .status.conditions[?(@.type=='Ready')].status
+      name: READY
+      type: string
+    - jsonPath: .metadata.annotations.crossplane\.io/external-name
+      name: EXTERNAL-NAME
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: AGE
+      type: date
+    name: v1beta1
+    schema:
+      openAPIV3Schema:
+        description: AccessPackageAssignmentPolicy is the Schema for the AccessPackageAssignmentPolicys
+          API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: AccessPackageAssignmentPolicySpec defines the desired state
+              of AccessPackageAssignmentPolicy
+            properties:
+              deletionPolicy:
+                default: Delete
+                description: |-
+                  DeletionPolicy specifies what will happen to the underlying external
+                  when this managed resource is deleted - either "Delete" or "Orphan" the
+                  external resource.
+                  This field is planned to be deprecated in favor of the ManagementPolicies
+                  field in a future release. Currently, both could be set independently and
+                  non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                enum:
+                - Orphan
+                - Delete
+                type: string
+              forProvider:
+                properties:
+                  accessPackageId:
+                    description: |-
+                      The ID of the access package that will contain the policy.
+                      The ID of the access package that will contain the policy
+                    type: string
+                  accessPackageIdRef:
+                    description: Reference to a AccessPackage in identitygovernance
+                      to populate accessPackageId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accessPackageIdSelector:
+                    description: Selector for a AccessPackage in identitygovernance
+                      to populate accessPackageId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  approvalSettings:
+                    description: |-
+                      An approval_settings block to specify whether approvals are required and how they are obtained, as documented below.
+                      Settings of whether approvals are required and how they are obtained
+                    properties:
+                      approvalRequired:
+                        description: |-
+                          Whether an approval is required.
+                          Whether an approval is required
+                        type: boolean
+                      approvalRequiredForExtension:
+                        description: |-
+                          Whether an approval is required to grant extension. Same approval settings used to approve initial access will apply.
+                          Whether an approval is required to grant extension. Same approval settings used to approve initial access will apply
+                        type: boolean
+                      approvalStage:
+                        description: |-
+                          An approval_stage block specifying the process to obtain an approval, as documented below.
+                          The process to obtain an approval
+                        items:
+                          properties:
+                            alternativeApprovalEnabled:
+                              description: |-
+                                Whether alternative approvers are enabled.
+                                If no action taken, forward to alternate approvers?
+                              type: boolean
+                            alternativeApprover:
+                              description: |-
+                                A block specifying alternative approvers when escalation is enabled and the primary approvers do not respond before the escalation time, as documented below.
+                                If escalation is enabled and the primary approvers do not respond before the escalation time, the escalationApprovers are the users who will be asked to approve requests. This can be a collection of singleUser, groupMembers, requestorManager, internalSponsors and externalSponsors. When creating or updating a policy, if there are no escalation approvers, or escalation approvers are not required for the stage, the value of this property should be an empty collection
+                              items:
+                                properties:
+                                  backup:
+                                    description: |-
+                                      For a user in an approval stage, this property indicates whether the user is a backup approver.
+                                      For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                                    type: boolean
+                                  objectId:
+                                    description: |-
+                                      The ID of the subject.
+                                      The object ID of the subject
+                                    type: string
+                                  objectIdRef:
+                                    description: Reference to a Group in groups to
+                                      populate objectId.
+                                    properties:
+                                      name:
+                                        description: Name of the referenced object.
+                                        type: string
+                                      policy:
+                                        description: Policies for referencing.
+                                        properties:
+                                          resolution:
+                                            default: Required
+                                            description: |-
+                                              Resolution specifies whether resolution of this reference is required.
+                                              The default is 'Required', which means the reconcile will fail if the
+                                              reference cannot be resolved. 'Optional' means this reference will be
+                                              a no-op if it cannot be resolved.
+                                            enum:
+                                            - Required
+                                            - Optional
+                                            type: string
+                                          resolve:
+                                            description: |-
+                                              Resolve specifies when this reference should be resolved. The default
+                                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                                              the corresponding field is not present. Use 'Always' to resolve the
+                                              reference on every reconcile.
+                                            enum:
+                                            - Always
+                                            - IfNotPresent
+                                            type: string
+                                        type: object
+                                    required:
+                                    - name
+                                    type: object
+                                  objectIdSelector:
+                                    description: Selector for a Group in groups to
+                                      populate objectId.
+                                    properties:
+                                      matchControllerRef:
+                                        description: |-
+                                          MatchControllerRef ensures an object with the same controller reference
+                                          as the selecting object is selected.
+                                        type: boolean
+                                      matchLabels:
+                                        additionalProperties:
+                                          type: string
+                                        description: MatchLabels ensures an object
+                                          with matching labels is selected.
+                                        type: object
+                                      policy:
+                                        description: Policies for selection.
+                                        properties:
+                                          resolution:
+                                            default: Required
+                                            description: |-
+                                              Resolution specifies whether resolution of this reference is required.
+                                              The default is 'Required', which means the reconcile will fail if the
+                                              reference cannot be resolved. 'Optional' means this reference will be
+                                              a no-op if it cannot be resolved.
+                                            enum:
+                                            - Required
+                                            - Optional
+                                            type: string
+                                          resolve:
+                                            description: |-
+                                              Resolve specifies when this reference should be resolved. The default
+                                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                                              the corresponding field is not present. Use 'Always' to resolve the
+                                              reference on every reconcile.
+                                            enum:
+                                            - Always
+                                            - IfNotPresent
+                                            type: string
+                                        type: object
+                                    type: object
+                                  subjectType:
+                                    description: |-
+                                      Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                      Type of users
+                                    type: string
+                                type: object
+                              type: array
+                            approvalTimeoutInDays:
+                              description: |-
+                                Maximum number of days within which a request must be approved. If a request is not approved within this time period after it is made, it will be automatically rejected.
+                                Decision must be made in how many days? If a request is not approved within this time period after it is made, it will be automatically rejected
+                              type: number
+                            approverJustificationRequired:
+                              description: |-
+                                Whether an approver must provide a justification for their decision. Justification is visible to other approvers and the requestor.
+                                Whether an approver must provide a justification for their decision. Justification is visible to other approvers and the requestor
+                              type: boolean
+                            enableAlternativeApprovalInDays:
+                              description: |-
+                                Number of days before the request is forwarded to alternative approvers.
+                                Forward to alternate approver(s) after how many days?
+                              type: number
+                            primaryApprover:
+                              description: |-
+                                A block specifying the users who will be asked to approve requests, as documented below.
+                                The users who will be asked to approve requests. A collection of singleUser, groupMembers, requestorManager, internalSponsors and externalSponsors. When creating or updating a policy, include at least one userSet in this collection
+                              items:
+                                properties:
+                                  backup:
+                                    description: |-
+                                      For a user in an approval stage, this property indicates whether the user is a backup fallback approver.
+                                      For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                                    type: boolean
+                                  objectId:
+                                    description: |-
+                                      The ID of the subject.
+                                      The object ID of the subject
+                                    type: string
+                                  objectIdRef:
+                                    description: Reference to a Group in groups to
+                                      populate objectId.
+                                    properties:
+                                      name:
+                                        description: Name of the referenced object.
+                                        type: string
+                                      policy:
+                                        description: Policies for referencing.
+                                        properties:
+                                          resolution:
+                                            default: Required
+                                            description: |-
+                                              Resolution specifies whether resolution of this reference is required.
+                                              The default is 'Required', which means the reconcile will fail if the
+                                              reference cannot be resolved. 'Optional' means this reference will be
+                                              a no-op if it cannot be resolved.
+                                            enum:
+                                            - Required
+                                            - Optional
+                                            type: string
+                                          resolve:
+                                            description: |-
+                                              Resolve specifies when this reference should be resolved. The default
+                                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                                              the corresponding field is not present. Use 'Always' to resolve the
+                                              reference on every reconcile.
+                                            enum:
+                                            - Always
+                                            - IfNotPresent
+                                            type: string
+                                        type: object
+                                    required:
+                                    - name
+                                    type: object
+                                  objectIdSelector:
+                                    description: Selector for a Group in groups to
+                                      populate objectId.
+                                    properties:
+                                      matchControllerRef:
+                                        description: |-
+                                          MatchControllerRef ensures an object with the same controller reference
+                                          as the selecting object is selected.
+                                        type: boolean
+                                      matchLabels:
+                                        additionalProperties:
+                                          type: string
+                                        description: MatchLabels ensures an object
+                                          with matching labels is selected.
+                                        type: object
+                                      policy:
+                                        description: Policies for selection.
+                                        properties:
+                                          resolution:
+                                            default: Required
+                                            description: |-
+                                              Resolution specifies whether resolution of this reference is required.
+                                              The default is 'Required', which means the reconcile will fail if the
+                                              reference cannot be resolved. 'Optional' means this reference will be
+                                              a no-op if it cannot be resolved.
+                                            enum:
+                                            - Required
+                                            - Optional
+                                            type: string
+                                          resolve:
+                                            description: |-
+                                              Resolve specifies when this reference should be resolved. The default
+                                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                                              the corresponding field is not present. Use 'Always' to resolve the
+                                              reference on every reconcile.
+                                            enum:
+                                            - Always
+                                            - IfNotPresent
+                                            type: string
+                                        type: object
+                                    type: object
+                                  subjectType:
+                                    description: |-
+                                      Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                      Type of users
+                                    type: string
+                                type: object
+                              type: array
+                          type: object
+                        type: array
+                      requestorJustificationRequired:
+                        description: |-
+                          Whether a requestor is required to provide a justification to request an access package. Justification is visible to approvers and the requestor.
+                          Whether requestor are required to provide a justification to request an access package. Justification is visible to other approvers and the requestor
+                        type: boolean
+                    type: object
+                  assignmentReviewSettings:
+                    description: |-
+                      An assignment_review_settings block, to specify whether assignment review is needed and how it is conducted, as documented below.
+                      The settings of whether assignment review is needed and how it's conducted
+                    properties:
+                      accessRecommendationEnabled:
+                        description: |-
+                          in at least once during the last 30 days. The reviewer will be recommended to deny the review if the user has not signed-in during the last 30 days.
+                          Whether to show Show reviewer decision helpers. If enabled, system recommendations based on users' access information will be shown to the reviewers. The reviewer will be recommended to approve the review if the user has signed-in at least once during the last 30 days. The reviewer will be recommended to deny the review if the user has not signed-in during the last 30 days
+                        type: boolean
+                      accessReviewTimeoutBehavior:
+                        description: |-
+                          Specifies the actions the system takes if reviewers don't respond in time. Valid values are keepAccess, removeAccess, or acceptAccessRecommendation.
+                          What actions the system takes if reviewers don't respond in time
+                        type: string
+                      approverJustificationRequired:
+                        description: |-
+                          Whether a reviewer needs to provide a justification for their decision. Justification is visible to other reviewers and the requestor.
+                          Whether a reviewer need provide a justification for their decision. Justification is visible to other reviewers and the requestor
+                        type: boolean
+                      durationInDays:
+                        description: |-
+                          (Number) How many days each occurrence of the access review series will run.
+                          How many days each occurrence of the access review series will run
+                        type: number
+                      enabled:
+                        description: |-
+                          Whether to enable assignment review.
+                          Whether to enable assignment review
+                        type: boolean
+                      reviewFrequency:
+                        description: |-
+                          This will determine how often the access review campaign runs, valid values are weekly, monthly, quarterly, halfyearly, or annual.
+                          This will determine how often the access review campaign runs
+                        type: string
+                      reviewType:
+                        description: |-
+                          review or specific reviewers. Valid values are Manager, Reviewers, or Self.
+                          Self review or specific reviewers
+                        type: string
+                      reviewer:
+                        description: |-
+                          One or more reviewer blocks to specify the users who will be reviewers (when review_type is Reviewers), as documented below.
+                          If the reviewerType is Reviewers, this collection specifies the users who will be reviewers, either by ID or as members of a group, using a collection of singleUser and groupMembers
+                        items:
+                          properties:
+                            backup:
+                              description: |-
+                                For a user in an approval stage, this property indicates whether the user is a backup approver.
+                                For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                              type: boolean
+                            objectId:
+                              description: |-
+                                The ID of the subject.
+                                The object ID of the subject
+                              type: string
+                            objectIdRef:
+                              description: Reference to a Group in groups to populate
+                                objectId.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            objectIdSelector:
+                              description: Selector for a Group in groups to populate
+                                objectId.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                            subjectType:
+                              description: |-
+                                Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                Type of users
+                              type: string
+                          type: object
+                        type: array
+                      startingOn:
+                        description: |-
+                          01-01T01:02:03Z), default is now. Once an access review has been created, you cannot update its start date
+                          This is the date the access review campaign will start on, formatted as an RFC3339 date string in UTC(e.g. 2018-01-01T01:02:03Z), default is now. Once an access review has been created, you cannot update its start date
+                        type: string
+                    type: object
+                  description:
+                    description: |-
+                      The description of the policy.
+                      The description of the policy
+                    type: string
+                  displayName:
+                    description: |-
+                      The display name of the policy.
+                      The display name of the policy
+                    type: string
+                  durationInDays:
+                    description: |-
+                      How many days this assignment is valid for.
+                      How many days this assignment is valid for
+                    type: number
+                  expirationDate:
+                    description: |-
+                      01-01T01:02:03Z).
+                      The date that this assignment expires, formatted as an RFC3339 date string in UTC (e.g. 2018-01-01T01:02:03Z)
+                    type: string
+                  extensionEnabled:
+                    description: |-
+                      Whether users will be able to request extension of their access to this package before their access expires.
+                      When enabled, users will be able to request extension of their access to this package before their access expires
+                    type: boolean
+                  question:
+                    description: |-
+                      One or more question blocks for the requestor, as documented below.
+                      One or more questions to the requestor
+                    items:
+                      properties:
+                        choice:
+                          description: |-
+                            One or more blocks configuring a choice to the question, as documented below.
+                            Configuration of a choice to the question
+                          items:
+                            properties:
+                              actualValue:
+                                description: |-
+                                  The actual value of this choice.
+                                  The actual value of this choice
+                                type: string
+                              displayValue:
+                                description: |-
+                                  A block describing the display text of this choice, as documented below.
+                                  The display text of this choice
+                                properties:
+                                  defaultText:
+                                    description: |-
+                                      The default text of this question choice.
+                                      The default text of this question
+                                    type: string
+                                  localizedText:
+                                    description: |-
+                                      One or more blocks describing localized text of this question choice, as documented below.
+                                      The localized text of this question
+                                    items:
+                                      properties:
+                                        content:
+                                          description: |-
+                                            The localized content of this question choice.
+                                            The localized content of this question
+                                          type: string
+                                        languageCode:
+                                          description: |-
+                                            The ISO 639 language code for this question choice content.
+                                            The language code of this question content
+                                          type: string
+                                      type: object
+                                    type: array
+                                type: object
+                            type: object
+                          type: array
+                        required:
+                          description: |-
+                            Whether this question is required.
+                            Whether this question is required
+                          type: boolean
+                        sequence:
+                          description: |-
+                            The sequence number of this question.
+                            The sequence number of this question
+                          type: number
+                        text:
+                          description: |-
+                            A block describing the content of this question, as documented below.
+                            The content of this question
+                          properties:
+                            defaultText:
+                              description: |-
+                                The default text of this question.
+                                The default text of this question
+                              type: string
+                            localizedText:
+                              description: |-
+                                One or more blocks describing localized text of this question, as documented below.
+                                The localized text of this question
+                              items:
+                                properties:
+                                  content:
+                                    description: |-
+                                      The localized content of this question.
+                                      The localized content of this question
+                                    type: string
+                                  languageCode:
+                                    description: |-
+                                      The ISO 639 language code for this question content.
+                                      The language code of this question content
+                                    type: string
+                                type: object
+                              type: array
+                          type: object
+                      type: object
+                    type: array
+                  requestorSettings:
+                    description: |-
+                      A requestor_settings block to configure the users who can request access, as documented below.
+                      This block configures the users who can request access
+                    properties:
+                      requestor:
+                        description: |-
+                          A block specifying the users who are allowed to request on this policy, as documented below.
+                          The users who are allowed to request on this policy, which can be singleUser, groupMembers, and connectedOrganizationMembers
+                        items:
+                          properties:
+                            backup:
+                              description: |-
+                                For a user in an approval stage, this property indicates whether the user is a backup approver.
+                                For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                              type: boolean
+                            objectId:
+                              description: |-
+                                The ID of the subject.
+                                The object ID of the subject
+                              type: string
+                            objectIdRef:
+                              description: Reference to a Group in groups to populate
+                                objectId.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            objectIdSelector:
+                              description: Selector for a Group in groups to populate
+                                objectId.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                            subjectType:
+                              description: |-
+                                Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                Type of users
+                              type: string
+                          type: object
+                        type: array
+                      requestsAccepted:
+                        description: |-
+                          Whether to accept requests using this policy. When false, no new requests can be made using this policy.
+                          Whether to accept requests now, when disabled, no new requests can be made using this policy
+                        type: boolean
+                      scopeType:
+                        description: |-
+                          Specifies the scopes of the requestors. Valid values are AllConfiguredConnectedOrganizationSubjects, AllExistingConnectedOrganizationSubjects, AllExistingDirectoryMemberUsers, AllExistingDirectorySubjects, AllExternalSubjects, NoSubjects, SpecificConnectedOrganizationSubjects, or SpecificDirectorySubjects.
+                          Specify the scopes of the requestors
+                        type: string
+                    type: object
+                type: object
+              initProvider:
+                description: |-
+                  THIS IS A BETA FIELD. It will be honored
+                  unless the Management Policies feature flag is disabled.
+                  InitProvider holds the same fields as ForProvider, with the exception
+                  of Identifier and other resource reference fields. The fields that are
+                  in InitProvider are merged into ForProvider when the resource is created.
+                  The same fields are also added to the terraform ignore_changes hook, to
+                  avoid updating them after creation. This is useful for fields that are
+                  required on creation, but we do not desire to update them after creation,
+                  for example because of an external controller is managing them, like an
+                  autoscaler.
+                properties:
+                  accessPackageId:
+                    description: |-
+                      The ID of the access package that will contain the policy.
+                      The ID of the access package that will contain the policy
+                    type: string
+                  accessPackageIdRef:
+                    description: Reference to a AccessPackage in identitygovernance
+                      to populate accessPackageId.
+                    properties:
+                      name:
+                        description: Name of the referenced object.
+                        type: string
+                      policy:
+                        description: Policies for referencing.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    required:
+                    - name
+                    type: object
+                  accessPackageIdSelector:
+                    description: Selector for a AccessPackage in identitygovernance
+                      to populate accessPackageId.
+                    properties:
+                      matchControllerRef:
+                        description: |-
+                          MatchControllerRef ensures an object with the same controller reference
+                          as the selecting object is selected.
+                        type: boolean
+                      matchLabels:
+                        additionalProperties:
+                          type: string
+                        description: MatchLabels ensures an object with matching labels
+                          is selected.
+                        type: object
+                      policy:
+                        description: Policies for selection.
+                        properties:
+                          resolution:
+                            default: Required
+                            description: |-
+                              Resolution specifies whether resolution of this reference is required.
+                              The default is 'Required', which means the reconcile will fail if the
+                              reference cannot be resolved. 'Optional' means this reference will be
+                              a no-op if it cannot be resolved.
+                            enum:
+                            - Required
+                            - Optional
+                            type: string
+                          resolve:
+                            description: |-
+                              Resolve specifies when this reference should be resolved. The default
+                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                              the corresponding field is not present. Use 'Always' to resolve the
+                              reference on every reconcile.
+                            enum:
+                            - Always
+                            - IfNotPresent
+                            type: string
+                        type: object
+                    type: object
+                  approvalSettings:
+                    description: |-
+                      An approval_settings block to specify whether approvals are required and how they are obtained, as documented below.
+                      Settings of whether approvals are required and how they are obtained
+                    properties:
+                      approvalRequired:
+                        description: |-
+                          Whether an approval is required.
+                          Whether an approval is required
+                        type: boolean
+                      approvalRequiredForExtension:
+                        description: |-
+                          Whether an approval is required to grant extension. Same approval settings used to approve initial access will apply.
+                          Whether an approval is required to grant extension. Same approval settings used to approve initial access will apply
+                        type: boolean
+                      approvalStage:
+                        description: |-
+                          An approval_stage block specifying the process to obtain an approval, as documented below.
+                          The process to obtain an approval
+                        items:
+                          properties:
+                            alternativeApprovalEnabled:
+                              description: |-
+                                Whether alternative approvers are enabled.
+                                If no action taken, forward to alternate approvers?
+                              type: boolean
+                            alternativeApprover:
+                              description: |-
+                                A block specifying alternative approvers when escalation is enabled and the primary approvers do not respond before the escalation time, as documented below.
+                                If escalation is enabled and the primary approvers do not respond before the escalation time, the escalationApprovers are the users who will be asked to approve requests. This can be a collection of singleUser, groupMembers, requestorManager, internalSponsors and externalSponsors. When creating or updating a policy, if there are no escalation approvers, or escalation approvers are not required for the stage, the value of this property should be an empty collection
+                              items:
+                                properties:
+                                  backup:
+                                    description: |-
+                                      For a user in an approval stage, this property indicates whether the user is a backup approver.
+                                      For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                                    type: boolean
+                                  objectId:
+                                    description: |-
+                                      The ID of the subject.
+                                      The object ID of the subject
+                                    type: string
+                                  objectIdRef:
+                                    description: Reference to a Group in groups to
+                                      populate objectId.
+                                    properties:
+                                      name:
+                                        description: Name of the referenced object.
+                                        type: string
+                                      policy:
+                                        description: Policies for referencing.
+                                        properties:
+                                          resolution:
+                                            default: Required
+                                            description: |-
+                                              Resolution specifies whether resolution of this reference is required.
+                                              The default is 'Required', which means the reconcile will fail if the
+                                              reference cannot be resolved. 'Optional' means this reference will be
+                                              a no-op if it cannot be resolved.
+                                            enum:
+                                            - Required
+                                            - Optional
+                                            type: string
+                                          resolve:
+                                            description: |-
+                                              Resolve specifies when this reference should be resolved. The default
+                                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                                              the corresponding field is not present. Use 'Always' to resolve the
+                                              reference on every reconcile.
+                                            enum:
+                                            - Always
+                                            - IfNotPresent
+                                            type: string
+                                        type: object
+                                    required:
+                                    - name
+                                    type: object
+                                  objectIdSelector:
+                                    description: Selector for a Group in groups to
+                                      populate objectId.
+                                    properties:
+                                      matchControllerRef:
+                                        description: |-
+                                          MatchControllerRef ensures an object with the same controller reference
+                                          as the selecting object is selected.
+                                        type: boolean
+                                      matchLabels:
+                                        additionalProperties:
+                                          type: string
+                                        description: MatchLabels ensures an object
+                                          with matching labels is selected.
+                                        type: object
+                                      policy:
+                                        description: Policies for selection.
+                                        properties:
+                                          resolution:
+                                            default: Required
+                                            description: |-
+                                              Resolution specifies whether resolution of this reference is required.
+                                              The default is 'Required', which means the reconcile will fail if the
+                                              reference cannot be resolved. 'Optional' means this reference will be
+                                              a no-op if it cannot be resolved.
+                                            enum:
+                                            - Required
+                                            - Optional
+                                            type: string
+                                          resolve:
+                                            description: |-
+                                              Resolve specifies when this reference should be resolved. The default
+                                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                                              the corresponding field is not present. Use 'Always' to resolve the
+                                              reference on every reconcile.
+                                            enum:
+                                            - Always
+                                            - IfNotPresent
+                                            type: string
+                                        type: object
+                                    type: object
+                                  subjectType:
+                                    description: |-
+                                      Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                      Type of users
+                                    type: string
+                                type: object
+                              type: array
+                            approvalTimeoutInDays:
+                              description: |-
+                                Maximum number of days within which a request must be approved. If a request is not approved within this time period after it is made, it will be automatically rejected.
+                                Decision must be made in how many days? If a request is not approved within this time period after it is made, it will be automatically rejected
+                              type: number
+                            approverJustificationRequired:
+                              description: |-
+                                Whether an approver must provide a justification for their decision. Justification is visible to other approvers and the requestor.
+                                Whether an approver must provide a justification for their decision. Justification is visible to other approvers and the requestor
+                              type: boolean
+                            enableAlternativeApprovalInDays:
+                              description: |-
+                                Number of days before the request is forwarded to alternative approvers.
+                                Forward to alternate approver(s) after how many days?
+                              type: number
+                            primaryApprover:
+                              description: |-
+                                A block specifying the users who will be asked to approve requests, as documented below.
+                                The users who will be asked to approve requests. A collection of singleUser, groupMembers, requestorManager, internalSponsors and externalSponsors. When creating or updating a policy, include at least one userSet in this collection
+                              items:
+                                properties:
+                                  backup:
+                                    description: |-
+                                      For a user in an approval stage, this property indicates whether the user is a backup fallback approver.
+                                      For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                                    type: boolean
+                                  objectId:
+                                    description: |-
+                                      The ID of the subject.
+                                      The object ID of the subject
+                                    type: string
+                                  objectIdRef:
+                                    description: Reference to a Group in groups to
+                                      populate objectId.
+                                    properties:
+                                      name:
+                                        description: Name of the referenced object.
+                                        type: string
+                                      policy:
+                                        description: Policies for referencing.
+                                        properties:
+                                          resolution:
+                                            default: Required
+                                            description: |-
+                                              Resolution specifies whether resolution of this reference is required.
+                                              The default is 'Required', which means the reconcile will fail if the
+                                              reference cannot be resolved. 'Optional' means this reference will be
+                                              a no-op if it cannot be resolved.
+                                            enum:
+                                            - Required
+                                            - Optional
+                                            type: string
+                                          resolve:
+                                            description: |-
+                                              Resolve specifies when this reference should be resolved. The default
+                                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                                              the corresponding field is not present. Use 'Always' to resolve the
+                                              reference on every reconcile.
+                                            enum:
+                                            - Always
+                                            - IfNotPresent
+                                            type: string
+                                        type: object
+                                    required:
+                                    - name
+                                    type: object
+                                  objectIdSelector:
+                                    description: Selector for a Group in groups to
+                                      populate objectId.
+                                    properties:
+                                      matchControllerRef:
+                                        description: |-
+                                          MatchControllerRef ensures an object with the same controller reference
+                                          as the selecting object is selected.
+                                        type: boolean
+                                      matchLabels:
+                                        additionalProperties:
+                                          type: string
+                                        description: MatchLabels ensures an object
+                                          with matching labels is selected.
+                                        type: object
+                                      policy:
+                                        description: Policies for selection.
+                                        properties:
+                                          resolution:
+                                            default: Required
+                                            description: |-
+                                              Resolution specifies whether resolution of this reference is required.
+                                              The default is 'Required', which means the reconcile will fail if the
+                                              reference cannot be resolved. 'Optional' means this reference will be
+                                              a no-op if it cannot be resolved.
+                                            enum:
+                                            - Required
+                                            - Optional
+                                            type: string
+                                          resolve:
+                                            description: |-
+                                              Resolve specifies when this reference should be resolved. The default
+                                              is 'IfNotPresent', which will attempt to resolve the reference only when
+                                              the corresponding field is not present. Use 'Always' to resolve the
+                                              reference on every reconcile.
+                                            enum:
+                                            - Always
+                                            - IfNotPresent
+                                            type: string
+                                        type: object
+                                    type: object
+                                  subjectType:
+                                    description: |-
+                                      Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                      Type of users
+                                    type: string
+                                type: object
+                              type: array
+                          type: object
+                        type: array
+                      requestorJustificationRequired:
+                        description: |-
+                          Whether a requestor is required to provide a justification to request an access package. Justification is visible to approvers and the requestor.
+                          Whether requestor are required to provide a justification to request an access package. Justification is visible to other approvers and the requestor
+                        type: boolean
+                    type: object
+                  assignmentReviewSettings:
+                    description: |-
+                      An assignment_review_settings block, to specify whether assignment review is needed and how it is conducted, as documented below.
+                      The settings of whether assignment review is needed and how it's conducted
+                    properties:
+                      accessRecommendationEnabled:
+                        description: |-
+                          in at least once during the last 30 days. The reviewer will be recommended to deny the review if the user has not signed-in during the last 30 days.
+                          Whether to show Show reviewer decision helpers. If enabled, system recommendations based on users' access information will be shown to the reviewers. The reviewer will be recommended to approve the review if the user has signed-in at least once during the last 30 days. The reviewer will be recommended to deny the review if the user has not signed-in during the last 30 days
+                        type: boolean
+                      accessReviewTimeoutBehavior:
+                        description: |-
+                          Specifies the actions the system takes if reviewers don't respond in time. Valid values are keepAccess, removeAccess, or acceptAccessRecommendation.
+                          What actions the system takes if reviewers don't respond in time
+                        type: string
+                      approverJustificationRequired:
+                        description: |-
+                          Whether a reviewer needs to provide a justification for their decision. Justification is visible to other reviewers and the requestor.
+                          Whether a reviewer need provide a justification for their decision. Justification is visible to other reviewers and the requestor
+                        type: boolean
+                      durationInDays:
+                        description: |-
+                          (Number) How many days each occurrence of the access review series will run.
+                          How many days each occurrence of the access review series will run
+                        type: number
+                      enabled:
+                        description: |-
+                          Whether to enable assignment review.
+                          Whether to enable assignment review
+                        type: boolean
+                      reviewFrequency:
+                        description: |-
+                          This will determine how often the access review campaign runs, valid values are weekly, monthly, quarterly, halfyearly, or annual.
+                          This will determine how often the access review campaign runs
+                        type: string
+                      reviewType:
+                        description: |-
+                          review or specific reviewers. Valid values are Manager, Reviewers, or Self.
+                          Self review or specific reviewers
+                        type: string
+                      reviewer:
+                        description: |-
+                          One or more reviewer blocks to specify the users who will be reviewers (when review_type is Reviewers), as documented below.
+                          If the reviewerType is Reviewers, this collection specifies the users who will be reviewers, either by ID or as members of a group, using a collection of singleUser and groupMembers
+                        items:
+                          properties:
+                            backup:
+                              description: |-
+                                For a user in an approval stage, this property indicates whether the user is a backup approver.
+                                For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                              type: boolean
+                            objectId:
+                              description: |-
+                                The ID of the subject.
+                                The object ID of the subject
+                              type: string
+                            objectIdRef:
+                              description: Reference to a Group in groups to populate
+                                objectId.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            objectIdSelector:
+                              description: Selector for a Group in groups to populate
+                                objectId.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                            subjectType:
+                              description: |-
+                                Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                Type of users
+                              type: string
+                          type: object
+                        type: array
+                      startingOn:
+                        description: |-
+                          01-01T01:02:03Z), default is now. Once an access review has been created, you cannot update its start date
+                          This is the date the access review campaign will start on, formatted as an RFC3339 date string in UTC(e.g. 2018-01-01T01:02:03Z), default is now. Once an access review has been created, you cannot update its start date
+                        type: string
+                    type: object
+                  description:
+                    description: |-
+                      The description of the policy.
+                      The description of the policy
+                    type: string
+                  displayName:
+                    description: |-
+                      The display name of the policy.
+                      The display name of the policy
+                    type: string
+                  durationInDays:
+                    description: |-
+                      How many days this assignment is valid for.
+                      How many days this assignment is valid for
+                    type: number
+                  expirationDate:
+                    description: |-
+                      01-01T01:02:03Z).
+                      The date that this assignment expires, formatted as an RFC3339 date string in UTC (e.g. 2018-01-01T01:02:03Z)
+                    type: string
+                  extensionEnabled:
+                    description: |-
+                      Whether users will be able to request extension of their access to this package before their access expires.
+                      When enabled, users will be able to request extension of their access to this package before their access expires
+                    type: boolean
+                  question:
+                    description: |-
+                      One or more question blocks for the requestor, as documented below.
+                      One or more questions to the requestor
+                    items:
+                      properties:
+                        choice:
+                          description: |-
+                            One or more blocks configuring a choice to the question, as documented below.
+                            Configuration of a choice to the question
+                          items:
+                            properties:
+                              actualValue:
+                                description: |-
+                                  The actual value of this choice.
+                                  The actual value of this choice
+                                type: string
+                              displayValue:
+                                description: |-
+                                  A block describing the display text of this choice, as documented below.
+                                  The display text of this choice
+                                properties:
+                                  defaultText:
+                                    description: |-
+                                      The default text of this question choice.
+                                      The default text of this question
+                                    type: string
+                                  localizedText:
+                                    description: |-
+                                      One or more blocks describing localized text of this question choice, as documented below.
+                                      The localized text of this question
+                                    items:
+                                      properties:
+                                        content:
+                                          description: |-
+                                            The localized content of this question choice.
+                                            The localized content of this question
+                                          type: string
+                                        languageCode:
+                                          description: |-
+                                            The ISO 639 language code for this question choice content.
+                                            The language code of this question content
+                                          type: string
+                                      type: object
+                                    type: array
+                                type: object
+                            type: object
+                          type: array
+                        required:
+                          description: |-
+                            Whether this question is required.
+                            Whether this question is required
+                          type: boolean
+                        sequence:
+                          description: |-
+                            The sequence number of this question.
+                            The sequence number of this question
+                          type: number
+                        text:
+                          description: |-
+                            A block describing the content of this question, as documented below.
+                            The content of this question
+                          properties:
+                            defaultText:
+                              description: |-
+                                The default text of this question.
+                                The default text of this question
+                              type: string
+                            localizedText:
+                              description: |-
+                                One or more blocks describing localized text of this question, as documented below.
+                                The localized text of this question
+                              items:
+                                properties:
+                                  content:
+                                    description: |-
+                                      The localized content of this question.
+                                      The localized content of this question
+                                    type: string
+                                  languageCode:
+                                    description: |-
+                                      The ISO 639 language code for this question content.
+                                      The language code of this question content
+                                    type: string
+                                type: object
+                              type: array
+                          type: object
+                      type: object
+                    type: array
+                  requestorSettings:
+                    description: |-
+                      A requestor_settings block to configure the users who can request access, as documented below.
+                      This block configures the users who can request access
+                    properties:
+                      requestor:
+                        description: |-
+                          A block specifying the users who are allowed to request on this policy, as documented below.
+                          The users who are allowed to request on this policy, which can be singleUser, groupMembers, and connectedOrganizationMembers
+                        items:
+                          properties:
+                            backup:
+                              description: |-
+                                For a user in an approval stage, this property indicates whether the user is a backup approver.
+                                For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                              type: boolean
+                            objectId:
+                              description: |-
+                                The ID of the subject.
+                                The object ID of the subject
+                              type: string
+                            objectIdRef:
+                              description: Reference to a Group in groups to populate
+                                objectId.
+                              properties:
+                                name:
+                                  description: Name of the referenced object.
+                                  type: string
+                                policy:
+                                  description: Policies for referencing.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              required:
+                              - name
+                              type: object
+                            objectIdSelector:
+                              description: Selector for a Group in groups to populate
+                                objectId.
+                              properties:
+                                matchControllerRef:
+                                  description: |-
+                                    MatchControllerRef ensures an object with the same controller reference
+                                    as the selecting object is selected.
+                                  type: boolean
+                                matchLabels:
+                                  additionalProperties:
+                                    type: string
+                                  description: MatchLabels ensures an object with
+                                    matching labels is selected.
+                                  type: object
+                                policy:
+                                  description: Policies for selection.
+                                  properties:
+                                    resolution:
+                                      default: Required
+                                      description: |-
+                                        Resolution specifies whether resolution of this reference is required.
+                                        The default is 'Required', which means the reconcile will fail if the
+                                        reference cannot be resolved. 'Optional' means this reference will be
+                                        a no-op if it cannot be resolved.
+                                      enum:
+                                      - Required
+                                      - Optional
+                                      type: string
+                                    resolve:
+                                      description: |-
+                                        Resolve specifies when this reference should be resolved. The default
+                                        is 'IfNotPresent', which will attempt to resolve the reference only when
+                                        the corresponding field is not present. Use 'Always' to resolve the
+                                        reference on every reconcile.
+                                      enum:
+                                      - Always
+                                      - IfNotPresent
+                                      type: string
+                                  type: object
+                              type: object
+                            subjectType:
+                              description: |-
+                                Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                Type of users
+                              type: string
+                          type: object
+                        type: array
+                      requestsAccepted:
+                        description: |-
+                          Whether to accept requests using this policy. When false, no new requests can be made using this policy.
+                          Whether to accept requests now, when disabled, no new requests can be made using this policy
+                        type: boolean
+                      scopeType:
+                        description: |-
+                          Specifies the scopes of the requestors. Valid values are AllConfiguredConnectedOrganizationSubjects, AllExistingConnectedOrganizationSubjects, AllExistingDirectoryMemberUsers, AllExistingDirectorySubjects, AllExternalSubjects, NoSubjects, SpecificConnectedOrganizationSubjects, or SpecificDirectorySubjects.
+                          Specify the scopes of the requestors
+                        type: string
+                    type: object
+                type: object
+              managementPolicies:
+                default:
+                - '*'
+                description: |-
+                  THIS IS A BETA FIELD. It is on by default but can be opted out
+                  through a Crossplane feature flag.
+                  ManagementPolicies specify the array of actions Crossplane is allowed to
+                  take on the managed and external resources.
+                  This field is planned to replace the DeletionPolicy field in a future
+                  release. Currently, both could be set independently and non-default
+                  values would be honored if the feature flag is enabled. If both are
+                  custom, the DeletionPolicy field will be ignored.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223
+                  and this one: https://github.com/crossplane/crossplane/blob/444267e84783136daa93568b364a5f01228cacbe/design/one-pager-ignore-changes.md
+                items:
+                  description: |-
+                    A ManagementAction represents an action that the Crossplane controllers
+                    can take on an external resource.
+                  enum:
+                  - Observe
+                  - Create
+                  - Update
+                  - Delete
+                  - LateInitialize
+                  - '*'
+                  type: string
+                type: array
+              providerConfigRef:
+                default:
+                  name: default
+                description: |-
+                  ProviderConfigReference specifies how the provider that will be used to
+                  create, observe, update, and delete this managed resource should be
+                  configured.
+                properties:
+                  name:
+                    description: Name of the referenced object.
+                    type: string
+                  policy:
+                    description: Policies for referencing.
+                    properties:
+                      resolution:
+                        default: Required
+                        description: |-
+                          Resolution specifies whether resolution of this reference is required.
+                          The default is 'Required', which means the reconcile will fail if the
+                          reference cannot be resolved. 'Optional' means this reference will be
+                          a no-op if it cannot be resolved.
+                        enum:
+                        - Required
+                        - Optional
+                        type: string
+                      resolve:
+                        description: |-
+                          Resolve specifies when this reference should be resolved. The default
+                          is 'IfNotPresent', which will attempt to resolve the reference only when
+                          the corresponding field is not present. Use 'Always' to resolve the
+                          reference on every reconcile.
+                        enum:
+                        - Always
+                        - IfNotPresent
+                        type: string
+                    type: object
+                required:
+                - name
+                type: object
+              writeConnectionSecretToRef:
+                description: |-
+                  WriteConnectionSecretToReference specifies the namespace and name of a
+                  Secret to which any connection details for this managed resource should
+                  be written. Connection details frequently include the endpoint, username,
+                  and password required to connect to the managed resource.
+                properties:
+                  name:
+                    description: Name of the secret.
+                    type: string
+                  namespace:
+                    description: Namespace of the secret.
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - forProvider
+            type: object
+            x-kubernetes-validations:
+            - message: spec.forProvider.description is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.description)
+                || (has(self.initProvider) && has(self.initProvider.description))'
+            - message: spec.forProvider.displayName is a required parameter
+              rule: '!(''*'' in self.managementPolicies || ''Create'' in self.managementPolicies
+                || ''Update'' in self.managementPolicies) || has(self.forProvider.displayName)
+                || (has(self.initProvider) && has(self.initProvider.displayName))'
+          status:
+            description: AccessPackageAssignmentPolicyStatus defines the observed
+              state of AccessPackageAssignmentPolicy.
+            properties:
+              atProvider:
+                properties:
+                  accessPackageId:
+                    description: |-
+                      The ID of the access package that will contain the policy.
+                      The ID of the access package that will contain the policy
+                    type: string
+                  approvalSettings:
+                    description: |-
+                      An approval_settings block to specify whether approvals are required and how they are obtained, as documented below.
+                      Settings of whether approvals are required and how they are obtained
+                    properties:
+                      approvalRequired:
+                        description: |-
+                          Whether an approval is required.
+                          Whether an approval is required
+                        type: boolean
+                      approvalRequiredForExtension:
+                        description: |-
+                          Whether an approval is required to grant extension. Same approval settings used to approve initial access will apply.
+                          Whether an approval is required to grant extension. Same approval settings used to approve initial access will apply
+                        type: boolean
+                      approvalStage:
+                        description: |-
+                          An approval_stage block specifying the process to obtain an approval, as documented below.
+                          The process to obtain an approval
+                        items:
+                          properties:
+                            alternativeApprovalEnabled:
+                              description: |-
+                                Whether alternative approvers are enabled.
+                                If no action taken, forward to alternate approvers?
+                              type: boolean
+                            alternativeApprover:
+                              description: |-
+                                A block specifying alternative approvers when escalation is enabled and the primary approvers do not respond before the escalation time, as documented below.
+                                If escalation is enabled and the primary approvers do not respond before the escalation time, the escalationApprovers are the users who will be asked to approve requests. This can be a collection of singleUser, groupMembers, requestorManager, internalSponsors and externalSponsors. When creating or updating a policy, if there are no escalation approvers, or escalation approvers are not required for the stage, the value of this property should be an empty collection
+                              items:
+                                properties:
+                                  backup:
+                                    description: |-
+                                      For a user in an approval stage, this property indicates whether the user is a backup approver.
+                                      For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                                    type: boolean
+                                  objectId:
+                                    description: |-
+                                      The ID of the subject.
+                                      The object ID of the subject
+                                    type: string
+                                  subjectType:
+                                    description: |-
+                                      Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                      Type of users
+                                    type: string
+                                type: object
+                              type: array
+                            approvalTimeoutInDays:
+                              description: |-
+                                Maximum number of days within which a request must be approved. If a request is not approved within this time period after it is made, it will be automatically rejected.
+                                Decision must be made in how many days? If a request is not approved within this time period after it is made, it will be automatically rejected
+                              type: number
+                            approverJustificationRequired:
+                              description: |-
+                                Whether an approver must provide a justification for their decision. Justification is visible to other approvers and the requestor.
+                                Whether an approver must provide a justification for their decision. Justification is visible to other approvers and the requestor
+                              type: boolean
+                            enableAlternativeApprovalInDays:
+                              description: |-
+                                Number of days before the request is forwarded to alternative approvers.
+                                Forward to alternate approver(s) after how many days?
+                              type: number
+                            primaryApprover:
+                              description: |-
+                                A block specifying the users who will be asked to approve requests, as documented below.
+                                The users who will be asked to approve requests. A collection of singleUser, groupMembers, requestorManager, internalSponsors and externalSponsors. When creating or updating a policy, include at least one userSet in this collection
+                              items:
+                                properties:
+                                  backup:
+                                    description: |-
+                                      For a user in an approval stage, this property indicates whether the user is a backup fallback approver.
+                                      For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                                    type: boolean
+                                  objectId:
+                                    description: |-
+                                      The ID of the subject.
+                                      The object ID of the subject
+                                    type: string
+                                  subjectType:
+                                    description: |-
+                                      Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                      Type of users
+                                    type: string
+                                type: object
+                              type: array
+                          type: object
+                        type: array
+                      requestorJustificationRequired:
+                        description: |-
+                          Whether a requestor is required to provide a justification to request an access package. Justification is visible to approvers and the requestor.
+                          Whether requestor are required to provide a justification to request an access package. Justification is visible to other approvers and the requestor
+                        type: boolean
+                    type: object
+                  assignmentReviewSettings:
+                    description: |-
+                      An assignment_review_settings block, to specify whether assignment review is needed and how it is conducted, as documented below.
+                      The settings of whether assignment review is needed and how it's conducted
+                    properties:
+                      accessRecommendationEnabled:
+                        description: |-
+                          in at least once during the last 30 days. The reviewer will be recommended to deny the review if the user has not signed-in during the last 30 days.
+                          Whether to show Show reviewer decision helpers. If enabled, system recommendations based on users' access information will be shown to the reviewers. The reviewer will be recommended to approve the review if the user has signed-in at least once during the last 30 days. The reviewer will be recommended to deny the review if the user has not signed-in during the last 30 days
+                        type: boolean
+                      accessReviewTimeoutBehavior:
+                        description: |-
+                          Specifies the actions the system takes if reviewers don't respond in time. Valid values are keepAccess, removeAccess, or acceptAccessRecommendation.
+                          What actions the system takes if reviewers don't respond in time
+                        type: string
+                      approverJustificationRequired:
+                        description: |-
+                          Whether a reviewer needs to provide a justification for their decision. Justification is visible to other reviewers and the requestor.
+                          Whether a reviewer need provide a justification for their decision. Justification is visible to other reviewers and the requestor
+                        type: boolean
+                      durationInDays:
+                        description: |-
+                          (Number) How many days each occurrence of the access review series will run.
+                          How many days each occurrence of the access review series will run
+                        type: number
+                      enabled:
+                        description: |-
+                          Whether to enable assignment review.
+                          Whether to enable assignment review
+                        type: boolean
+                      reviewFrequency:
+                        description: |-
+                          This will determine how often the access review campaign runs, valid values are weekly, monthly, quarterly, halfyearly, or annual.
+                          This will determine how often the access review campaign runs
+                        type: string
+                      reviewType:
+                        description: |-
+                          review or specific reviewers. Valid values are Manager, Reviewers, or Self.
+                          Self review or specific reviewers
+                        type: string
+                      reviewer:
+                        description: |-
+                          One or more reviewer blocks to specify the users who will be reviewers (when review_type is Reviewers), as documented below.
+                          If the reviewerType is Reviewers, this collection specifies the users who will be reviewers, either by ID or as members of a group, using a collection of singleUser and groupMembers
+                        items:
+                          properties:
+                            backup:
+                              description: |-
+                                For a user in an approval stage, this property indicates whether the user is a backup approver.
+                                For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                              type: boolean
+                            objectId:
+                              description: |-
+                                The ID of the subject.
+                                The object ID of the subject
+                              type: string
+                            subjectType:
+                              description: |-
+                                Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                Type of users
+                              type: string
+                          type: object
+                        type: array
+                      startingOn:
+                        description: |-
+                          01-01T01:02:03Z), default is now. Once an access review has been created, you cannot update its start date
+                          This is the date the access review campaign will start on, formatted as an RFC3339 date string in UTC(e.g. 2018-01-01T01:02:03Z), default is now. Once an access review has been created, you cannot update its start date
+                        type: string
+                    type: object
+                  description:
+                    description: |-
+                      The description of the policy.
+                      The description of the policy
+                    type: string
+                  displayName:
+                    description: |-
+                      The display name of the policy.
+                      The display name of the policy
+                    type: string
+                  durationInDays:
+                    description: |-
+                      How many days this assignment is valid for.
+                      How many days this assignment is valid for
+                    type: number
+                  expirationDate:
+                    description: |-
+                      01-01T01:02:03Z).
+                      The date that this assignment expires, formatted as an RFC3339 date string in UTC (e.g. 2018-01-01T01:02:03Z)
+                    type: string
+                  extensionEnabled:
+                    description: |-
+                      Whether users will be able to request extension of their access to this package before their access expires.
+                      When enabled, users will be able to request extension of their access to this package before their access expires
+                    type: boolean
+                  id:
+                    description: (String) The ID of this resource.
+                    type: string
+                  question:
+                    description: |-
+                      One or more question blocks for the requestor, as documented below.
+                      One or more questions to the requestor
+                    items:
+                      properties:
+                        choice:
+                          description: |-
+                            One or more blocks configuring a choice to the question, as documented below.
+                            Configuration of a choice to the question
+                          items:
+                            properties:
+                              actualValue:
+                                description: |-
+                                  The actual value of this choice.
+                                  The actual value of this choice
+                                type: string
+                              displayValue:
+                                description: |-
+                                  A block describing the display text of this choice, as documented below.
+                                  The display text of this choice
+                                properties:
+                                  defaultText:
+                                    description: |-
+                                      The default text of this question choice.
+                                      The default text of this question
+                                    type: string
+                                  localizedText:
+                                    description: |-
+                                      One or more blocks describing localized text of this question choice, as documented below.
+                                      The localized text of this question
+                                    items:
+                                      properties:
+                                        content:
+                                          description: |-
+                                            The localized content of this question choice.
+                                            The localized content of this question
+                                          type: string
+                                        languageCode:
+                                          description: |-
+                                            The ISO 639 language code for this question choice content.
+                                            The language code of this question content
+                                          type: string
+                                      type: object
+                                    type: array
+                                type: object
+                            type: object
+                          type: array
+                        required:
+                          description: |-
+                            Whether this question is required.
+                            Whether this question is required
+                          type: boolean
+                        sequence:
+                          description: |-
+                            The sequence number of this question.
+                            The sequence number of this question
+                          type: number
+                        text:
+                          description: |-
+                            A block describing the content of this question, as documented below.
+                            The content of this question
+                          properties:
+                            defaultText:
+                              description: |-
+                                The default text of this question.
+                                The default text of this question
+                              type: string
+                            localizedText:
+                              description: |-
+                                One or more blocks describing localized text of this question, as documented below.
+                                The localized text of this question
+                              items:
+                                properties:
+                                  content:
+                                    description: |-
+                                      The localized content of this question.
+                                      The localized content of this question
+                                    type: string
+                                  languageCode:
+                                    description: |-
+                                      The ISO 639 language code for this question content.
+                                      The language code of this question content
+                                    type: string
+                                type: object
+                              type: array
+                          type: object
+                      type: object
+                    type: array
+                  requestorSettings:
+                    description: |-
+                      A requestor_settings block to configure the users who can request access, as documented below.
+                      This block configures the users who can request access
+                    properties:
+                      requestor:
+                        description: |-
+                          A block specifying the users who are allowed to request on this policy, as documented below.
+                          The users who are allowed to request on this policy, which can be singleUser, groupMembers, and connectedOrganizationMembers
+                        items:
+                          properties:
+                            backup:
+                              description: |-
+                                For a user in an approval stage, this property indicates whether the user is a backup approver.
+                                For a user in an approval stage, this property indicates whether the user is a backup fallback approver
+                              type: boolean
+                            objectId:
+                              description: |-
+                                The ID of the subject.
+                                The object ID of the subject
+                              type: string
+                            subjectType:
+                              description: |-
+                                Specifies the type of users. Valid values are singleUser, groupMembers, connectedOrganizationMembers, requestorManager, internalSponsors, or externalSponsors.
+                                Type of users
+                              type: string
+                          type: object
+                        type: array
+                      requestsAccepted:
+                        description: |-
+                          Whether to accept requests using this policy. When false, no new requests can be made using this policy.
+                          Whether to accept requests now, when disabled, no new requests can be made using this policy
+                        type: boolean
+                      scopeType:
+                        description: |-
+                          Specifies the scopes of the requestors. Valid values are AllConfiguredConnectedOrganizationSubjects, AllExistingConnectedOrganizationSubjects, AllExistingDirectoryMemberUsers, AllExistingDirectorySubjects, AllExternalSubjects, NoSubjects, SpecificConnectedOrganizationSubjects, or SpecificDirectorySubjects.
+                          Specify the scopes of the requestors
+                        type: string
+                    type: object
+                type: object
+              conditions:
+                description: Conditions of the resource.
+                items:
+                  description: A Condition that may apply to a resource.
+                  properties:
+                    lastTransitionTime:
+                      description: |-
+                        LastTransitionTime is the last time this condition transitioned from one
+                        status to another.
+                      format: date-time
+                      type: string
+                    message:
+                      description: |-
+                        A Message containing details about this condition's last transition from
+                        one status to another, if any.
+                      type: string
+                    observedGeneration:
+                      description: |-
+                        ObservedGeneration represents the .metadata.generation that the condition was set based upon.
+                        For instance, if .metadata.generation is currently 12, but the .status.conditions[x].observedGeneration is 9, the condition is out of date
+                        with respect to the current state of the instance.
+                      format: int64
+                      type: integer
+                    reason:
+                      description: A Reason for this condition's last transition from
+                        one status to another.
+                      type: string
+                    status:
+                      description: Status of this condition; is it currently True,
+                        False, or Unknown?
+                      type: string
+                    type:
+                      description: |-
+                        Type of this condition. At most one of each condition type may apply to
+                        a resource at any point in time.
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              lastHandledReconcileAt:
+                description: |-
+                  LastHandledReconcileAt holds the value of the most recent
+                  reconcile-requested-at annotation token that the controller has
+                  processed. Users can compare this to the annotation to determine
+                  whether a reconcile request has been handled.
+                type: string
+              observedGeneration:
+                description: |-
+                  ObservedGeneration is the latest metadata.generation
+                  which resulted in either a ready state, or stalled due to error
+                  it can not recover from without human intervention.
+                format: int64
+                type: integer
+            type: object
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
