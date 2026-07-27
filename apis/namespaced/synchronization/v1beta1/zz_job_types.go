@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type JobInitParameters struct {
@@ -27,11 +26,11 @@ type JobInitParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.NamespacedReference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.NamespacedReference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.NamespacedSelector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.NamespacedSelector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 
 	// Identifier of the synchronization template this job is based on.
 	// Identifier of the synchronization template this job is based on.
@@ -74,11 +73,11 @@ type JobParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.NamespacedReference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.NamespacedReference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.NamespacedSelector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.NamespacedSelector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 
 	// Identifier of the synchronization template this job is based on.
 	// Identifier of the synchronization template this job is based on.
@@ -123,8 +122,8 @@ type JobSpec struct {
 
 // JobStatus defines the observed state of Job.
 type JobStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        JobObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               JobObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

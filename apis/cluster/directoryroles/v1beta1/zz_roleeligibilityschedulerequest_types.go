@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type RoleEligibilityScheduleRequestInitParameters struct {
@@ -31,11 +31,11 @@ type RoleEligibilityScheduleRequestInitParameters struct {
 
 	// Reference to a User in users to populate principalId.
 	// +kubebuilder:validation:Optional
-	PrincipalIDRef *v1.Reference `json:"principalIdRef,omitempty" tf:"-"`
+	PrincipalIDRef *v2.Reference `json:"principalIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate principalId.
 	// +kubebuilder:validation:Optional
-	PrincipalIDSelector *v1.Selector `json:"principalIdSelector,omitempty" tf:"-"`
+	PrincipalIDSelector *v2.Selector `json:"principalIdSelector,omitempty" tf:"-"`
 
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this role eligibility schedule request
@@ -45,11 +45,11 @@ type RoleEligibilityScheduleRequestInitParameters struct {
 
 	// Reference to a Role in directoryroles to populate roleDefinitionId.
 	// +kubebuilder:validation:Optional
-	RoleDefinitionIDRef *v1.Reference `json:"roleDefinitionIdRef,omitempty" tf:"-"`
+	RoleDefinitionIDRef *v2.Reference `json:"roleDefinitionIdRef,omitempty" tf:"-"`
 
 	// Selector for a Role in directoryroles to populate roleDefinitionId.
 	// +kubebuilder:validation:Optional
-	RoleDefinitionIDSelector *v1.Selector `json:"roleDefinitionIdSelector,omitempty" tf:"-"`
+	RoleDefinitionIDSelector *v2.Selector `json:"roleDefinitionIdSelector,omitempty" tf:"-"`
 }
 
 type RoleEligibilityScheduleRequestObservation struct {
@@ -94,11 +94,11 @@ type RoleEligibilityScheduleRequestParameters struct {
 
 	// Reference to a User in users to populate principalId.
 	// +kubebuilder:validation:Optional
-	PrincipalIDRef *v1.Reference `json:"principalIdRef,omitempty" tf:"-"`
+	PrincipalIDRef *v2.Reference `json:"principalIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate principalId.
 	// +kubebuilder:validation:Optional
-	PrincipalIDSelector *v1.Selector `json:"principalIdSelector,omitempty" tf:"-"`
+	PrincipalIDSelector *v2.Selector `json:"principalIdSelector,omitempty" tf:"-"`
 
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this role eligibility schedule request
@@ -109,17 +109,17 @@ type RoleEligibilityScheduleRequestParameters struct {
 
 	// Reference to a Role in directoryroles to populate roleDefinitionId.
 	// +kubebuilder:validation:Optional
-	RoleDefinitionIDRef *v1.Reference `json:"roleDefinitionIdRef,omitempty" tf:"-"`
+	RoleDefinitionIDRef *v2.Reference `json:"roleDefinitionIdRef,omitempty" tf:"-"`
 
 	// Selector for a Role in directoryroles to populate roleDefinitionId.
 	// +kubebuilder:validation:Optional
-	RoleDefinitionIDSelector *v1.Selector `json:"roleDefinitionIdSelector,omitempty" tf:"-"`
+	RoleDefinitionIDSelector *v2.Selector `json:"roleDefinitionIdSelector,omitempty" tf:"-"`
 }
 
 // RoleEligibilityScheduleRequestSpec defines the desired state of RoleEligibilityScheduleRequest
 type RoleEligibilityScheduleRequestSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     RoleEligibilityScheduleRequestParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   RoleEligibilityScheduleRequestParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -135,8 +135,8 @@ type RoleEligibilityScheduleRequestSpec struct {
 
 // RoleEligibilityScheduleRequestStatus defines the observed state of RoleEligibilityScheduleRequest.
 type RoleEligibilityScheduleRequestStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        RoleEligibilityScheduleRequestObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RoleEligibilityScheduleRequestObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

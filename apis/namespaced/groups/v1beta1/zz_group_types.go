@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type DynamicMembershipInitParameters struct {
@@ -107,11 +106,11 @@ type GroupInitParameters struct {
 
 	// References to User in users to populate members.
 	// +kubebuilder:validation:Optional
-	MembersRefs []v1.NamespacedReference `json:"membersRefs,omitempty" tf:"-"`
+	MembersRefs []v2.NamespacedReference `json:"membersRefs,omitempty" tf:"-"`
 
 	// Selector for a list of User in users to populate members.
 	// +kubebuilder:validation:Optional
-	MembersSelector *v1.NamespacedSelector `json:"membersSelector,omitempty" tf:"-"`
+	MembersSelector *v2.NamespacedSelector `json:"membersSelector,omitempty" tf:"-"`
 
 	// The on-premises group type that the AAD group will be written as, when writeback is enabled. Possible values are UniversalDistributionGroup, UniversalMailEnabledSecurityGroup, or UniversalSecurityGroup.
 	// Indicates the target on-premise group type the group will be written back as
@@ -362,11 +361,11 @@ type GroupParameters struct {
 
 	// References to User in users to populate members.
 	// +kubebuilder:validation:Optional
-	MembersRefs []v1.NamespacedReference `json:"membersRefs,omitempty" tf:"-"`
+	MembersRefs []v2.NamespacedReference `json:"membersRefs,omitempty" tf:"-"`
 
 	// Selector for a list of User in users to populate members.
 	// +kubebuilder:validation:Optional
-	MembersSelector *v1.NamespacedSelector `json:"membersSelector,omitempty" tf:"-"`
+	MembersSelector *v2.NamespacedSelector `json:"membersSelector,omitempty" tf:"-"`
 
 	// The on-premises group type that the AAD group will be written as, when writeback is enabled. Possible values are UniversalDistributionGroup, UniversalMailEnabledSecurityGroup, or UniversalSecurityGroup.
 	// Indicates the target on-premise group type the group will be written back as
@@ -436,8 +435,8 @@ type GroupSpec struct {
 
 // GroupStatus defines the observed state of Group.
 type GroupStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        GroupObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               GroupObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

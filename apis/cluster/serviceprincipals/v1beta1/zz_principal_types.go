@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AppRolesInitParameters struct {
@@ -157,11 +157,11 @@ type PrincipalInitParameters struct {
 
 	// Reference to a Application in applications to populate clientId.
 	// +kubebuilder:validation:Optional
-	ClientIDRef *v1.Reference `json:"clientIdRef,omitempty" tf:"-"`
+	ClientIDRef *v2.Reference `json:"clientIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate clientId.
 	// +kubebuilder:validation:Optional
-	ClientIDSelector *v1.Selector `json:"clientIdSelector,omitempty" tf:"-"`
+	ClientIDSelector *v2.Selector `json:"clientIdSelector,omitempty" tf:"-"`
 
 	// A description of the service principal provided for internal end-users.
 	// Description of the service principal provided for internal end-users
@@ -356,11 +356,11 @@ type PrincipalParameters struct {
 
 	// Reference to a Application in applications to populate clientId.
 	// +kubebuilder:validation:Optional
-	ClientIDRef *v1.Reference `json:"clientIdRef,omitempty" tf:"-"`
+	ClientIDRef *v2.Reference `json:"clientIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate clientId.
 	// +kubebuilder:validation:Optional
-	ClientIDSelector *v1.Selector `json:"clientIdSelector,omitempty" tf:"-"`
+	ClientIDSelector *v2.Selector `json:"clientIdSelector,omitempty" tf:"-"`
 
 	// A description of the service principal provided for internal end-users.
 	// Description of the service principal provided for internal end-users
@@ -440,8 +440,8 @@ type SAMLSingleSignOnParameters struct {
 
 // PrincipalSpec defines the desired state of Principal
 type PrincipalSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     PrincipalParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   PrincipalParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -457,16 +457,16 @@ type PrincipalSpec struct {
 
 // PrincipalStatus defines the observed state of Principal.
 type PrincipalStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PrincipalObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PrincipalObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +kubebuilder:deprecatedversion:warning="This API version is deprecated. Deprecated since v2.3.0."
+// +kubebuilder:deprecatedversion:warning="This API version is deprecated. Deprecated since xpv2.3.0."
 
 // Principal is the Schema for the Principals API.
-// Deprecated: This API version (v1beta1) has been deprecated in release v2.3.0.
+// Deprecated: This API version (v1beta1) has been deprecated in release xpv2.3.0.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AccessPolicyInitParameters struct {
@@ -818,8 +818,8 @@ type UsersParameters struct {
 
 // AccessPolicySpec defines the desired state of AccessPolicy
 type AccessPolicySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     AccessPolicyParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   AccessPolicyParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -835,16 +835,16 @@ type AccessPolicySpec struct {
 
 // AccessPolicyStatus defines the observed state of AccessPolicy.
 type AccessPolicyStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AccessPolicyObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AccessPolicyObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
-// +kubebuilder:deprecatedversion:warning="This API version is deprecated. Deprecated since v2.3.0."
+// +kubebuilder:deprecatedversion:warning="This API version is deprecated. Deprecated since xpv2.3.0."
 
 // AccessPolicy is the Schema for the AccessPolicys API.
-// Deprecated: This API version (v1beta1) has been deprecated in release v2.3.0.
+// Deprecated: This API version (v1beta1) has been deprecated in release xpv2.3.0.
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"

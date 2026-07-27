@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type MemberInitParameters struct {
@@ -23,11 +23,11 @@ type MemberInitParameters struct {
 
 	// Reference to a Group in groups to populate groupObjectId.
 	// +kubebuilder:validation:Optional
-	GroupObjectIDRef *v1.Reference `json:"groupObjectIdRef,omitempty" tf:"-"`
+	GroupObjectIDRef *v2.Reference `json:"groupObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in groups to populate groupObjectId.
 	// +kubebuilder:validation:Optional
-	GroupObjectIDSelector *v1.Selector `json:"groupObjectIdSelector,omitempty" tf:"-"`
+	GroupObjectIDSelector *v2.Selector `json:"groupObjectIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the principal you want to add as a member to the group. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the principal you want to add as a member to the group. Supported object types are Users, Groups or Service Principals
@@ -37,11 +37,11 @@ type MemberInitParameters struct {
 
 	// Reference to a User in users to populate memberObjectId.
 	// +kubebuilder:validation:Optional
-	MemberObjectIDRef *v1.Reference `json:"memberObjectIdRef,omitempty" tf:"-"`
+	MemberObjectIDRef *v2.Reference `json:"memberObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate memberObjectId.
 	// +kubebuilder:validation:Optional
-	MemberObjectIDSelector *v1.Selector `json:"memberObjectIdSelector,omitempty" tf:"-"`
+	MemberObjectIDSelector *v2.Selector `json:"memberObjectIdSelector,omitempty" tf:"-"`
 }
 
 type MemberObservation struct {
@@ -68,11 +68,11 @@ type MemberParameters struct {
 
 	// Reference to a Group in groups to populate groupObjectId.
 	// +kubebuilder:validation:Optional
-	GroupObjectIDRef *v1.Reference `json:"groupObjectIdRef,omitempty" tf:"-"`
+	GroupObjectIDRef *v2.Reference `json:"groupObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in groups to populate groupObjectId.
 	// +kubebuilder:validation:Optional
-	GroupObjectIDSelector *v1.Selector `json:"groupObjectIdSelector,omitempty" tf:"-"`
+	GroupObjectIDSelector *v2.Selector `json:"groupObjectIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the principal you want to add as a member to the group. Supported object types are Users, Groups or Service Principals. Changing this forces a new resource to be created.
 	// The object ID of the principal you want to add as a member to the group. Supported object types are Users, Groups or Service Principals
@@ -83,17 +83,17 @@ type MemberParameters struct {
 
 	// Reference to a User in users to populate memberObjectId.
 	// +kubebuilder:validation:Optional
-	MemberObjectIDRef *v1.Reference `json:"memberObjectIdRef,omitempty" tf:"-"`
+	MemberObjectIDRef *v2.Reference `json:"memberObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate memberObjectId.
 	// +kubebuilder:validation:Optional
-	MemberObjectIDSelector *v1.Selector `json:"memberObjectIdSelector,omitempty" tf:"-"`
+	MemberObjectIDSelector *v2.Selector `json:"memberObjectIdSelector,omitempty" tf:"-"`
 }
 
 // MemberSpec defines the desired state of Member
 type MemberSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     MemberParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   MemberParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -109,8 +109,8 @@ type MemberSpec struct {
 
 // MemberStatus defines the observed state of Member.
 type MemberStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        MemberObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               MemberObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

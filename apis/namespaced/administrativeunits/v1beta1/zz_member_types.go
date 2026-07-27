@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type MemberInitParameters struct {
@@ -23,11 +22,11 @@ type MemberInitParameters struct {
 
 	// Reference to a Unit in administrativeunits to populate administrativeUnitObjectId.
 	// +kubebuilder:validation:Optional
-	AdministrativeUnitObjectIDRef *v1.NamespacedReference `json:"administrativeUnitObjectIdRef,omitempty" tf:"-"`
+	AdministrativeUnitObjectIDRef *v2.NamespacedReference `json:"administrativeUnitObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Unit in administrativeunits to populate administrativeUnitObjectId.
 	// +kubebuilder:validation:Optional
-	AdministrativeUnitObjectIDSelector *v1.NamespacedSelector `json:"administrativeUnitObjectIdSelector,omitempty" tf:"-"`
+	AdministrativeUnitObjectIDSelector *v2.NamespacedSelector `json:"administrativeUnitObjectIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the user or group you want to add as a member of the administrative unit. Changing this forces a new resource to be created.
 	// The object ID of the member
@@ -57,11 +56,11 @@ type MemberParameters struct {
 
 	// Reference to a Unit in administrativeunits to populate administrativeUnitObjectId.
 	// +kubebuilder:validation:Optional
-	AdministrativeUnitObjectIDRef *v1.NamespacedReference `json:"administrativeUnitObjectIdRef,omitempty" tf:"-"`
+	AdministrativeUnitObjectIDRef *v2.NamespacedReference `json:"administrativeUnitObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Unit in administrativeunits to populate administrativeUnitObjectId.
 	// +kubebuilder:validation:Optional
-	AdministrativeUnitObjectIDSelector *v1.NamespacedSelector `json:"administrativeUnitObjectIdSelector,omitempty" tf:"-"`
+	AdministrativeUnitObjectIDSelector *v2.NamespacedSelector `json:"administrativeUnitObjectIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the user or group you want to add as a member of the administrative unit. Changing this forces a new resource to be created.
 	// The object ID of the member
@@ -88,8 +87,8 @@ type MemberSpec struct {
 
 // MemberStatus defines the observed state of Member.
 type MemberStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        MemberObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               MemberObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

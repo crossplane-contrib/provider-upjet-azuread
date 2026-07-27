@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CredentialInitParameters struct {
@@ -21,7 +21,7 @@ type CredentialInitParameters struct {
 
 	// The value of the secret.
 	// Value for this key-value pair.
-	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type CredentialObservation struct {
@@ -41,7 +41,7 @@ type CredentialParameters struct {
 	// The value of the secret.
 	// Value for this key-value pair.
 	// +kubebuilder:validation:Optional
-	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type SecretInitParameters struct {
@@ -56,11 +56,11 @@ type SecretInitParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 }
 
 type SecretObservation struct {
@@ -90,17 +90,17 @@ type SecretParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 }
 
 // SecretSpec defines the desired state of Secret
 type SecretSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     SecretParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   SecretParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -116,8 +116,8 @@ type SecretSpec struct {
 
 // SecretStatus defines the observed state of Secret.
 type SecretStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        SecretObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               SecretObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

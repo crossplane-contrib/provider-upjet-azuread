@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PrivilegedAccessGroupEligibilityScheduleInitParameters struct {
@@ -36,11 +35,11 @@ type PrivilegedAccessGroupEligibilityScheduleInitParameters struct {
 
 	// Reference to a Group in groups to populate groupId.
 	// +kubebuilder:validation:Optional
-	GroupIDRef *v1.NamespacedReference `json:"groupIdRef,omitempty" tf:"-"`
+	GroupIDRef *v2.NamespacedReference `json:"groupIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in groups to populate groupId.
 	// +kubebuilder:validation:Optional
-	GroupIDSelector *v1.NamespacedSelector `json:"groupIdSelector,omitempty" tf:"-"`
+	GroupIDSelector *v2.NamespacedSelector `json:"groupIdSelector,omitempty" tf:"-"`
 
 	// The justification for this assignment. May be required by the role policy.
 	// The justification for the assignment
@@ -58,11 +57,11 @@ type PrivilegedAccessGroupEligibilityScheduleInitParameters struct {
 
 	// Reference to a User in users to populate principalId.
 	// +kubebuilder:validation:Optional
-	PrincipalIDRef *v1.NamespacedReference `json:"principalIdRef,omitempty" tf:"-"`
+	PrincipalIDRef *v2.NamespacedReference `json:"principalIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate principalId.
 	// +kubebuilder:validation:Optional
-	PrincipalIDSelector *v1.NamespacedSelector `json:"principalIdSelector,omitempty" tf:"-"`
+	PrincipalIDSelector *v2.NamespacedSelector `json:"principalIdSelector,omitempty" tf:"-"`
 
 	// 01-01T01:02:03Z). If not provided, the assignment is immediately valid.
 	// The date that this assignment starts, formatted as an RFC3339 date string in UTC (e.g. 2018-01-01T01:02:03Z)
@@ -153,11 +152,11 @@ type PrivilegedAccessGroupEligibilityScheduleParameters struct {
 
 	// Reference to a Group in groups to populate groupId.
 	// +kubebuilder:validation:Optional
-	GroupIDRef *v1.NamespacedReference `json:"groupIdRef,omitempty" tf:"-"`
+	GroupIDRef *v2.NamespacedReference `json:"groupIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in groups to populate groupId.
 	// +kubebuilder:validation:Optional
-	GroupIDSelector *v1.NamespacedSelector `json:"groupIdSelector,omitempty" tf:"-"`
+	GroupIDSelector *v2.NamespacedSelector `json:"groupIdSelector,omitempty" tf:"-"`
 
 	// The justification for this assignment. May be required by the role policy.
 	// The justification for the assignment
@@ -178,11 +177,11 @@ type PrivilegedAccessGroupEligibilityScheduleParameters struct {
 
 	// Reference to a User in users to populate principalId.
 	// +kubebuilder:validation:Optional
-	PrincipalIDRef *v1.NamespacedReference `json:"principalIdRef,omitempty" tf:"-"`
+	PrincipalIDRef *v2.NamespacedReference `json:"principalIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate principalId.
 	// +kubebuilder:validation:Optional
-	PrincipalIDSelector *v1.NamespacedSelector `json:"principalIdSelector,omitempty" tf:"-"`
+	PrincipalIDSelector *v2.NamespacedSelector `json:"principalIdSelector,omitempty" tf:"-"`
 
 	// 01-01T01:02:03Z). If not provided, the assignment is immediately valid.
 	// The date that this assignment starts, formatted as an RFC3339 date string in UTC (e.g. 2018-01-01T01:02:03Z)
@@ -219,8 +218,8 @@ type PrivilegedAccessGroupEligibilityScheduleSpec struct {
 
 // PrivilegedAccessGroupEligibilityScheduleStatus defines the observed state of PrivilegedAccessGroupEligibilitySchedule.
 type PrivilegedAccessGroupEligibilityScheduleStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PrivilegedAccessGroupEligibilityScheduleObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PrivilegedAccessGroupEligibilityScheduleObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

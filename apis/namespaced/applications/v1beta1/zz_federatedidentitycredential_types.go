@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type FederatedIdentityCredentialInitParameters struct {
@@ -23,11 +22,11 @@ type FederatedIdentityCredentialInitParameters struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the `aud` claim of incoming tokens.
@@ -93,11 +92,11 @@ type FederatedIdentityCredentialParameters struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the aud claim of incoming tokens.
 	// List of audiences that can appear in the external token. This specifies what should be accepted in the `aud` claim of incoming tokens.
@@ -144,8 +143,8 @@ type FederatedIdentityCredentialSpec struct {
 
 // FederatedIdentityCredentialStatus defines the observed state of FederatedIdentityCredential.
 type FederatedIdentityCredentialStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        FederatedIdentityCredentialObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               FederatedIdentityCredentialObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

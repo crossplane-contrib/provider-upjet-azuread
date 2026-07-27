@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PermissionGrantInitParameters struct {
@@ -29,11 +28,11 @@ type PermissionGrantInitParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate resourceServicePrincipalObjectId.
 	// +kubebuilder:validation:Optional
-	ResourceServicePrincipalObjectIDRef *v1.NamespacedReference `json:"resourceServicePrincipalObjectIdRef,omitempty" tf:"-"`
+	ResourceServicePrincipalObjectIDRef *v2.NamespacedReference `json:"resourceServicePrincipalObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate resourceServicePrincipalObjectId.
 	// +kubebuilder:validation:Optional
-	ResourceServicePrincipalObjectIDSelector *v1.NamespacedSelector `json:"resourceServicePrincipalObjectIdSelector,omitempty" tf:"-"`
+	ResourceServicePrincipalObjectIDSelector *v2.NamespacedSelector `json:"resourceServicePrincipalObjectIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.
 	// The object ID of the service principal for which this delegated permission grant should be created
@@ -43,11 +42,11 @@ type PermissionGrantInitParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalObjectId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalObjectIDRef *v1.NamespacedReference `json:"servicePrincipalObjectIdRef,omitempty" tf:"-"`
+	ServicePrincipalObjectIDRef *v2.NamespacedReference `json:"servicePrincipalObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalObjectId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalObjectIDSelector *v1.NamespacedSelector `json:"servicePrincipalObjectIdSelector,omitempty" tf:"-"`
+	ServicePrincipalObjectIDSelector *v2.NamespacedSelector `json:"servicePrincipalObjectIdSelector,omitempty" tf:"-"`
 
 	// - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.
 	// The object ID of the user on behalf of whom the service principal is authorized to access the resource
@@ -57,11 +56,11 @@ type PermissionGrantInitParameters struct {
 
 	// Reference to a User in users to populate userObjectId.
 	// +kubebuilder:validation:Optional
-	UserObjectIDRef *v1.NamespacedReference `json:"userObjectIdRef,omitempty" tf:"-"`
+	UserObjectIDRef *v2.NamespacedReference `json:"userObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate userObjectId.
 	// +kubebuilder:validation:Optional
-	UserObjectIDSelector *v1.NamespacedSelector `json:"userObjectIdSelector,omitempty" tf:"-"`
+	UserObjectIDSelector *v2.NamespacedSelector `json:"userObjectIdSelector,omitempty" tf:"-"`
 }
 
 type PermissionGrantObservation struct {
@@ -104,11 +103,11 @@ type PermissionGrantParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate resourceServicePrincipalObjectId.
 	// +kubebuilder:validation:Optional
-	ResourceServicePrincipalObjectIDRef *v1.NamespacedReference `json:"resourceServicePrincipalObjectIdRef,omitempty" tf:"-"`
+	ResourceServicePrincipalObjectIDRef *v2.NamespacedReference `json:"resourceServicePrincipalObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate resourceServicePrincipalObjectId.
 	// +kubebuilder:validation:Optional
-	ResourceServicePrincipalObjectIDSelector *v1.NamespacedSelector `json:"resourceServicePrincipalObjectIdSelector,omitempty" tf:"-"`
+	ResourceServicePrincipalObjectIDSelector *v2.NamespacedSelector `json:"resourceServicePrincipalObjectIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the service principal for which this delegated permission grant should be created. Changing this forces a new resource to be created.
 	// The object ID of the service principal for which this delegated permission grant should be created
@@ -119,11 +118,11 @@ type PermissionGrantParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalObjectId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalObjectIDRef *v1.NamespacedReference `json:"servicePrincipalObjectIdRef,omitempty" tf:"-"`
+	ServicePrincipalObjectIDRef *v2.NamespacedReference `json:"servicePrincipalObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalObjectId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalObjectIDSelector *v1.NamespacedSelector `json:"servicePrincipalObjectIdSelector,omitempty" tf:"-"`
+	ServicePrincipalObjectIDSelector *v2.NamespacedSelector `json:"servicePrincipalObjectIdSelector,omitempty" tf:"-"`
 
 	// - The object ID of the user on behalf of whom the service principal is authorized to access the resource. When omitted, the delegated permission grant will be consented for all users. Changing this forces a new resource to be created.
 	// The object ID of the user on behalf of whom the service principal is authorized to access the resource
@@ -134,11 +133,11 @@ type PermissionGrantParameters struct {
 
 	// Reference to a User in users to populate userObjectId.
 	// +kubebuilder:validation:Optional
-	UserObjectIDRef *v1.NamespacedReference `json:"userObjectIdRef,omitempty" tf:"-"`
+	UserObjectIDRef *v2.NamespacedReference `json:"userObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate userObjectId.
 	// +kubebuilder:validation:Optional
-	UserObjectIDSelector *v1.NamespacedSelector `json:"userObjectIdSelector,omitempty" tf:"-"`
+	UserObjectIDSelector *v2.NamespacedSelector `json:"userObjectIdSelector,omitempty" tf:"-"`
 }
 
 // PermissionGrantSpec defines the desired state of PermissionGrant
@@ -160,8 +159,8 @@ type PermissionGrantSpec struct {
 
 // PermissionGrantStatus defines the observed state of PermissionGrant.
 type PermissionGrantStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PermissionGrantObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PermissionGrantObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

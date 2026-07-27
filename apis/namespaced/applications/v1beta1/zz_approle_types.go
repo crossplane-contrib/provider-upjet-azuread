@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type AppRoleInitParameters_2 struct {
@@ -28,11 +27,11 @@ type AppRoleInitParameters_2 struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// Description of the app role that appears when the role is being assigned, and if the role functions as an application permissions, during the consent experiences.
 	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
@@ -97,11 +96,11 @@ type AppRoleParameters_2 struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// Description of the app role that appears when the role is being assigned, and if the role functions as an application permissions, during the consent experiences.
 	// Description of the app role that appears when the role is being assigned and, if the role functions as an application permissions, during the consent experiences
@@ -143,8 +142,8 @@ type AppRoleSpec struct {
 
 // AppRoleStatus defines the observed state of AppRole.
 type AppRoleStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        AppRoleObservation_2 `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               AppRoleObservation_2 `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

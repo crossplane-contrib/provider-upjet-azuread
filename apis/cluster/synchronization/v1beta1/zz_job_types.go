@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type JobInitParameters struct {
@@ -26,11 +26,11 @@ type JobInitParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 
 	// Identifier of the synchronization template this job is based on.
 	// Identifier of the synchronization template this job is based on.
@@ -73,11 +73,11 @@ type JobParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 
 	// Identifier of the synchronization template this job is based on.
 	// Identifier of the synchronization template this job is based on.
@@ -105,8 +105,8 @@ type ScheduleParameters struct {
 
 // JobSpec defines the desired state of Job
 type JobSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     JobParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   JobParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -122,8 +122,8 @@ type JobSpec struct {
 
 // JobStatus defines the observed state of Job.
 type JobStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        JobObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               JobObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

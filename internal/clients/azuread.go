@@ -13,8 +13,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	tfsdk "github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 
-	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 	upjetmetrics "github.com/crossplane/upjet/v2/pkg/metrics"
 	"github.com/crossplane/upjet/v2/pkg/terraform"
 	tfazureclient "github.com/hashicorp/terraform-provider-azuread/xpprovider"
@@ -61,10 +61,10 @@ const (
 )
 
 var (
-	credentialsSourceUserAssignedManagedIdentity   xpv1.CredentialsSource = "UserAssignedManagedIdentity"
-	credentialsSourceSystemAssignedManagedIdentity xpv1.CredentialsSource = "SystemAssignedManagedIdentity"
-	credentialsSourceOIDCTokenFile                 xpv1.CredentialsSource = "OIDCTokenFile"
-	credentialsSourceUpbound                       xpv1.CredentialsSource = "Upbound"
+	credentialsSourceUserAssignedManagedIdentity   xpv2.CredentialsSource = "UserAssignedManagedIdentity"
+	credentialsSourceSystemAssignedManagedIdentity xpv2.CredentialsSource = "SystemAssignedManagedIdentity"
+	credentialsSourceOIDCTokenFile                 xpv2.CredentialsSource = "OIDCTokenFile"
+	credentialsSourceUpbound                       xpv2.CredentialsSource = "Upbound"
 )
 
 // graphServiceFromPath extracts a short service label from a Microsoft Graph
@@ -72,9 +72,9 @@ var (
 //
 // Graph URL pattern: /{version}/{service}/...
 // Examples:
-//   - /v1.0/groups/abc-123      → "groups"
+//   - /xpv2.0/groups/abc-123      → "groups"
 //   - /beta/servicePrincipals   → "servicePrincipals"
-//   - /v1.0/directory/admin...  → "directory"
+//   - /xpv2.0/directory/admin...  → "directory"
 func graphServiceFromPath(path string) string {
 	parts := strings.SplitN(strings.TrimPrefix(path, "/"), "/", 3)
 	if len(parts) >= 2 && parts[1] != "" {

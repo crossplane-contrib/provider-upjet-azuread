@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type RoleAssignmentInitParameters struct {
@@ -32,11 +31,11 @@ type RoleAssignmentInitParameters struct {
 
 	// Reference to a User in users to populate principalObjectId.
 	// +kubebuilder:validation:Optional
-	PrincipalObjectIDRef *v1.NamespacedReference `json:"principalObjectIdRef,omitempty" tf:"-"`
+	PrincipalObjectIDRef *v2.NamespacedReference `json:"principalObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate principalObjectId.
 	// +kubebuilder:validation:Optional
-	PrincipalObjectIDSelector *v1.NamespacedSelector `json:"principalObjectIdSelector,omitempty" tf:"-"`
+	PrincipalObjectIDSelector *v2.NamespacedSelector `json:"principalObjectIdSelector,omitempty" tf:"-"`
 
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this assignment
@@ -46,11 +45,11 @@ type RoleAssignmentInitParameters struct {
 
 	// Reference to a Role in directoryroles to populate roleId.
 	// +kubebuilder:validation:Optional
-	RoleIDRef *v1.NamespacedReference `json:"roleIdRef,omitempty" tf:"-"`
+	RoleIDRef *v2.NamespacedReference `json:"roleIdRef,omitempty" tf:"-"`
 
 	// Selector for a Role in directoryroles to populate roleId.
 	// +kubebuilder:validation:Optional
-	RoleIDSelector *v1.NamespacedSelector `json:"roleIdSelector,omitempty" tf:"-"`
+	RoleIDSelector *v2.NamespacedSelector `json:"roleIdSelector,omitempty" tf:"-"`
 }
 
 type RoleAssignmentObservation struct {
@@ -95,11 +94,11 @@ type RoleAssignmentParameters struct {
 
 	// Reference to a User in users to populate principalObjectId.
 	// +kubebuilder:validation:Optional
-	PrincipalObjectIDRef *v1.NamespacedReference `json:"principalObjectIdRef,omitempty" tf:"-"`
+	PrincipalObjectIDRef *v2.NamespacedReference `json:"principalObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a User in users to populate principalObjectId.
 	// +kubebuilder:validation:Optional
-	PrincipalObjectIDSelector *v1.NamespacedSelector `json:"principalObjectIdSelector,omitempty" tf:"-"`
+	PrincipalObjectIDSelector *v2.NamespacedSelector `json:"principalObjectIdSelector,omitempty" tf:"-"`
 
 	// The template ID (in the case of built-in roles) or object ID (in the case of custom roles) of the directory role you want to assign. Changing this forces a new resource to be created.
 	// The object ID of the directory role for this assignment
@@ -110,11 +109,11 @@ type RoleAssignmentParameters struct {
 
 	// Reference to a Role in directoryroles to populate roleId.
 	// +kubebuilder:validation:Optional
-	RoleIDRef *v1.NamespacedReference `json:"roleIdRef,omitempty" tf:"-"`
+	RoleIDRef *v2.NamespacedReference `json:"roleIdRef,omitempty" tf:"-"`
 
 	// Selector for a Role in directoryroles to populate roleId.
 	// +kubebuilder:validation:Optional
-	RoleIDSelector *v1.NamespacedSelector `json:"roleIdSelector,omitempty" tf:"-"`
+	RoleIDSelector *v2.NamespacedSelector `json:"roleIdSelector,omitempty" tf:"-"`
 }
 
 // RoleAssignmentSpec defines the desired state of RoleAssignment
@@ -136,8 +135,8 @@ type RoleAssignmentSpec struct {
 
 // RoleAssignmentStatus defines the observed state of RoleAssignment.
 type RoleAssignmentStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        RoleAssignmentObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RoleAssignmentObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

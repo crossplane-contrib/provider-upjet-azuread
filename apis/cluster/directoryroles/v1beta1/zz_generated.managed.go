@@ -5,204 +5,204 @@
 
 package v1beta1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *CustomDirectoryRole) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *CustomDirectoryRole) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *CustomDirectoryRole) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) GetProviderConfigReference() *xpv1.Reference {
+func (mg *CustomDirectoryRole) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *CustomDirectoryRole) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) SetConditions(c ...xpv1.Condition) {
+func (mg *CustomDirectoryRole) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *CustomDirectoryRole) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *CustomDirectoryRole) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *CustomDirectoryRole) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this CustomDirectoryRole.
-func (mg *CustomDirectoryRole) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *CustomDirectoryRole) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this Role.
-func (mg *Role) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *Role) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this Role.
-func (mg *Role) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *Role) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this Role.
-func (mg *Role) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *Role) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this Role.
-func (mg *Role) GetProviderConfigReference() *xpv1.Reference {
+func (mg *Role) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this Role.
-func (mg *Role) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *Role) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this Role.
-func (mg *Role) SetConditions(c ...xpv1.Condition) {
+func (mg *Role) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this Role.
-func (mg *Role) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *Role) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this Role.
-func (mg *Role) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *Role) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this Role.
-func (mg *Role) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *Role) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this Role.
-func (mg *Role) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *Role) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this RoleAssignment.
-func (mg *RoleAssignment) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *RoleAssignment) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this RoleAssignment.
-func (mg *RoleAssignment) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *RoleAssignment) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this RoleAssignment.
-func (mg *RoleAssignment) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *RoleAssignment) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this RoleAssignment.
-func (mg *RoleAssignment) GetProviderConfigReference() *xpv1.Reference {
+func (mg *RoleAssignment) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this RoleAssignment.
-func (mg *RoleAssignment) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *RoleAssignment) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this RoleAssignment.
-func (mg *RoleAssignment) SetConditions(c ...xpv1.Condition) {
+func (mg *RoleAssignment) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this RoleAssignment.
-func (mg *RoleAssignment) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *RoleAssignment) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this RoleAssignment.
-func (mg *RoleAssignment) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *RoleAssignment) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this RoleAssignment.
-func (mg *RoleAssignment) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *RoleAssignment) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this RoleAssignment.
-func (mg *RoleAssignment) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *RoleAssignment) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *RoleEligibilityScheduleRequest) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *RoleEligibilityScheduleRequest) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *RoleEligibilityScheduleRequest) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) GetProviderConfigReference() *xpv1.Reference {
+func (mg *RoleEligibilityScheduleRequest) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *RoleEligibilityScheduleRequest) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) SetConditions(c ...xpv1.Condition) {
+func (mg *RoleEligibilityScheduleRequest) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *RoleEligibilityScheduleRequest) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *RoleEligibilityScheduleRequest) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *RoleEligibilityScheduleRequest) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this RoleEligibilityScheduleRequest.
-func (mg *RoleEligibilityScheduleRequest) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *RoleEligibilityScheduleRequest) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

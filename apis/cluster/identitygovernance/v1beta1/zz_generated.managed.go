@@ -5,104 +5,104 @@
 
 package v1beta1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) GetProviderConfigReference() *xpv1.Reference {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) SetConditions(c ...xpv1.Condition) {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this PrivilegedAccessGroupAssignmentSchedule.
-func (mg *PrivilegedAccessGroupAssignmentSchedule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *PrivilegedAccessGroupAssignmentSchedule) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
 
 // GetCondition of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) GetProviderConfigReference() *xpv1.Reference {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) SetConditions(c ...xpv1.Condition) {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this PrivilegedAccessGroupEligibilitySchedule.
-func (mg *PrivilegedAccessGroupEligibilitySchedule) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *PrivilegedAccessGroupEligibilitySchedule) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }
