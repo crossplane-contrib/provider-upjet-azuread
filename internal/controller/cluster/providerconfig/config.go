@@ -5,6 +5,7 @@
 package providerconfig
 
 import (
+	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/providerconfig"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
@@ -43,5 +44,14 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 			mgr.GetLogger().Error(err, "unable to setup reconciler", "gvk", v1beta1.ProviderConfigGroupVersionKind.String())
 		}
 	}, v1beta1.ProviderConfigGroupVersionKind, v1beta1.ProviderConfigUsageGroupVersionKind)
+	return nil
+}
+
+// SetupWebhookWithManager registers the conversion webhook for ProviderConfig.
+func SetupWebhookWithManager(mgr ctrl.Manager) error {
+	if err := ctrl.NewWebhookManagedBy(mgr, &v1beta1.ProviderConfig{}).
+		Complete(); err != nil {
+		return errors.Wrap(err, "cannot register webhook for the kind v1beta1.ProviderConfig")
+	}
 	return nil
 }
