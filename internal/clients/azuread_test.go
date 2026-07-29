@@ -16,11 +16,11 @@ func Test_graphServiceFromPath(t *testing.T) {
 		want string
 	}{
 		"v1_groups_collection": {
-			path: "/xpv2.0/groups",
+			path: "/v1.0/groups",
 			want: "groups",
 		},
 		"v1_groups_item": {
-			path: "/xpv2.0/groups/abc-123",
+			path: "/v1.0/groups/abc-123",
 			want: "groups",
 		},
 		"not_valid_graph_path": {

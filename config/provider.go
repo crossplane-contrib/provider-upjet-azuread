@@ -68,7 +68,7 @@ var providerMetadata string
 //go:embed old-singleton-list-apis.txt
 var oldSingletonListAPIs string
 
-// workaround for the TF Google xpv2.41.0-based no-fork release: We would like to
+// workaround for the TF Google v2.41.0-based no-fork release: We would like to
 // keep the types in the generated CRDs intact
 // (prevent number->int type replacements).
 func getProviderSchema(s string) (*schema.Provider, error) {
@@ -186,7 +186,7 @@ func bumpVersionsWithEmbeddedLists(pc *ujconfig.Provider) {
 			if err := r.SetDeprecatedVersion("v1beta1",
 				ujconfig.VersionDeprecation{
 					Warning:            "This API version is deprecated.",
-					DeprecationRelease: "xpv2.3.0",
+					DeprecationRelease: "v2.3.0",
 				}); err != nil {
 				panic(err)
 			}

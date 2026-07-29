@@ -72,9 +72,9 @@ var (
 //
 // Graph URL pattern: /{version}/{service}/...
 // Examples:
-//   - /xpv2.0/groups/abc-123      → "groups"
+//   - /v1.0/groups/abc-123      → "groups"
 //   - /beta/servicePrincipals   → "servicePrincipals"
-//   - /xpv2.0/directory/admin...  → "directory"
+//   - /v1.0/directory/admin...  → "directory"
 func graphServiceFromPath(path string) string {
 	parts := strings.SplitN(strings.TrimPrefix(path, "/"), "/", 3)
 	if len(parts) >= 2 && parts[1] != "" {

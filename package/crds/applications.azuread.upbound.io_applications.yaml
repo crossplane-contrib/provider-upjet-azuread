@@ -32,13 +32,13 @@ spec:
       name: AGE
       type: date
     deprecated: true
-    deprecationWarning: This API version is deprecated. Deprecated since xpv2.3.0.
+    deprecationWarning: This API version is deprecated. Deprecated since v2.3.0.
     name: v1beta1
     schema:
       openAPIV3Schema:
         description: |-
           Application is the Schema for the Applications API.
-          Deprecated: This API version (v1beta1) has been deprecated in release xpv2.3.0.
+          Deprecated: This API version (v1beta1) has been deprecated in release v2.3.0.
         properties:
           apiVersion:
             description: |-
