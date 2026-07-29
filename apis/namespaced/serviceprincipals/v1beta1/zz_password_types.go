@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PasswordInitParameters struct {
@@ -40,11 +39,11 @@ type PasswordInitParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.NamespacedReference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.NamespacedReference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.NamespacedSelector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.NamespacedSelector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 
 	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
 	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
@@ -116,11 +115,11 @@ type PasswordParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.NamespacedReference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.NamespacedReference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.NamespacedSelector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.NamespacedSelector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 
 	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. 2018-01-01T01:02:03Z). If this isn't specified, the current date is used.  Changing this field forces a new resource to be created.
 	// The start date from which the password is valid, formatted as an RFC3339 date string (e.g. `2018-01-01T01:02:03Z`). If this isn't specified, the current date is used
@@ -147,8 +146,8 @@ type PasswordSpec struct {
 
 // PasswordStatus defines the observed state of Password.
 type PasswordStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PasswordObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PasswordObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type RoleAssignmentInitParameters struct {
@@ -28,11 +27,11 @@ type RoleAssignmentInitParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate principalObjectId.
 	// +kubebuilder:validation:Optional
-	PrincipalObjectIDRef *v1.NamespacedReference `json:"principalObjectIdRef,omitempty" tf:"-"`
+	PrincipalObjectIDRef *v2.NamespacedReference `json:"principalObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate principalObjectId.
 	// +kubebuilder:validation:Optional
-	PrincipalObjectIDSelector *v1.NamespacedSelector `json:"principalObjectIdSelector,omitempty" tf:"-"`
+	PrincipalObjectIDSelector *v2.NamespacedSelector `json:"principalObjectIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the service principal representing the resource. Changing this forces a new resource to be created.
 	// The object ID of the service principal representing the resource
@@ -42,11 +41,11 @@ type RoleAssignmentInitParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate resourceObjectId.
 	// +kubebuilder:validation:Optional
-	ResourceObjectIDRef *v1.NamespacedReference `json:"resourceObjectIdRef,omitempty" tf:"-"`
+	ResourceObjectIDRef *v2.NamespacedReference `json:"resourceObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate resourceObjectId.
 	// +kubebuilder:validation:Optional
-	ResourceObjectIDSelector *v1.NamespacedSelector `json:"resourceObjectIdSelector,omitempty" tf:"-"`
+	ResourceObjectIDSelector *v2.NamespacedSelector `json:"resourceObjectIdSelector,omitempty" tf:"-"`
 }
 
 type RoleAssignmentObservation struct {
@@ -94,11 +93,11 @@ type RoleAssignmentParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate principalObjectId.
 	// +kubebuilder:validation:Optional
-	PrincipalObjectIDRef *v1.NamespacedReference `json:"principalObjectIdRef,omitempty" tf:"-"`
+	PrincipalObjectIDRef *v2.NamespacedReference `json:"principalObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate principalObjectId.
 	// +kubebuilder:validation:Optional
-	PrincipalObjectIDSelector *v1.NamespacedSelector `json:"principalObjectIdSelector,omitempty" tf:"-"`
+	PrincipalObjectIDSelector *v2.NamespacedSelector `json:"principalObjectIdSelector,omitempty" tf:"-"`
 
 	// The object ID of the service principal representing the resource. Changing this forces a new resource to be created.
 	// The object ID of the service principal representing the resource
@@ -109,11 +108,11 @@ type RoleAssignmentParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate resourceObjectId.
 	// +kubebuilder:validation:Optional
-	ResourceObjectIDRef *v1.NamespacedReference `json:"resourceObjectIdRef,omitempty" tf:"-"`
+	ResourceObjectIDRef *v2.NamespacedReference `json:"resourceObjectIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate resourceObjectId.
 	// +kubebuilder:validation:Optional
-	ResourceObjectIDSelector *v1.NamespacedSelector `json:"resourceObjectIdSelector,omitempty" tf:"-"`
+	ResourceObjectIDSelector *v2.NamespacedSelector `json:"resourceObjectIdSelector,omitempty" tf:"-"`
 }
 
 // RoleAssignmentSpec defines the desired state of RoleAssignment
@@ -135,8 +134,8 @@ type RoleAssignmentSpec struct {
 
 // RoleAssignmentStatus defines the observed state of RoleAssignment.
 type RoleAssignmentStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        RoleAssignmentObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               RoleAssignmentObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

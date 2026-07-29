@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ClaimsMappingPolicyAssignmentInitParameters struct {
@@ -22,11 +22,11 @@ type ClaimsMappingPolicyAssignmentInitParameters struct {
 
 	// Reference to a ClaimsMappingPolicy in policies to populate claimsMappingPolicyId.
 	// +kubebuilder:validation:Optional
-	ClaimsMappingPolicyIDRef *v1.Reference `json:"claimsMappingPolicyIdRef,omitempty" tf:"-"`
+	ClaimsMappingPolicyIDRef *v2.Reference `json:"claimsMappingPolicyIdRef,omitempty" tf:"-"`
 
 	// Selector for a ClaimsMappingPolicy in policies to populate claimsMappingPolicyId.
 	// +kubebuilder:validation:Optional
-	ClaimsMappingPolicyIDSelector *v1.Selector `json:"claimsMappingPolicyIdSelector,omitempty" tf:"-"`
+	ClaimsMappingPolicyIDSelector *v2.Selector `json:"claimsMappingPolicyIdSelector,omitempty" tf:"-"`
 
 	// The ID of the service principal for the policy assignment.
 	// ID of the service principal for which to assign the policy
@@ -35,11 +35,11 @@ type ClaimsMappingPolicyAssignmentInitParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 }
 
 type ClaimsMappingPolicyAssignmentObservation struct {
@@ -66,11 +66,11 @@ type ClaimsMappingPolicyAssignmentParameters struct {
 
 	// Reference to a ClaimsMappingPolicy in policies to populate claimsMappingPolicyId.
 	// +kubebuilder:validation:Optional
-	ClaimsMappingPolicyIDRef *v1.Reference `json:"claimsMappingPolicyIdRef,omitempty" tf:"-"`
+	ClaimsMappingPolicyIDRef *v2.Reference `json:"claimsMappingPolicyIdRef,omitempty" tf:"-"`
 
 	// Selector for a ClaimsMappingPolicy in policies to populate claimsMappingPolicyId.
 	// +kubebuilder:validation:Optional
-	ClaimsMappingPolicyIDSelector *v1.Selector `json:"claimsMappingPolicyIdSelector,omitempty" tf:"-"`
+	ClaimsMappingPolicyIDSelector *v2.Selector `json:"claimsMappingPolicyIdSelector,omitempty" tf:"-"`
 
 	// The ID of the service principal for the policy assignment.
 	// ID of the service principal for which to assign the policy
@@ -80,17 +80,17 @@ type ClaimsMappingPolicyAssignmentParameters struct {
 
 	// Reference to a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDRef *v1.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
+	ServicePrincipalIDRef *v2.Reference `json:"servicePrincipalIdRef,omitempty" tf:"-"`
 
 	// Selector for a Principal in serviceprincipals to populate servicePrincipalId.
 	// +kubebuilder:validation:Optional
-	ServicePrincipalIDSelector *v1.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
+	ServicePrincipalIDSelector *v2.Selector `json:"servicePrincipalIdSelector,omitempty" tf:"-"`
 }
 
 // ClaimsMappingPolicyAssignmentSpec defines the desired state of ClaimsMappingPolicyAssignment
 type ClaimsMappingPolicyAssignmentSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ClaimsMappingPolicyAssignmentParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ClaimsMappingPolicyAssignmentParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -106,8 +106,8 @@ type ClaimsMappingPolicyAssignmentSpec struct {
 
 // ClaimsMappingPolicyAssignmentStatus defines the observed state of ClaimsMappingPolicyAssignment.
 type ClaimsMappingPolicyAssignmentStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ClaimsMappingPolicyAssignmentObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ClaimsMappingPolicyAssignmentObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

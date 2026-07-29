@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PreAuthorizedInitParameters struct {
@@ -23,11 +22,11 @@ type PreAuthorizedInitParameters struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// The client ID of the application being authorized. Changing this field forces a new resource to be created.
 	// The client ID of the pre-authorized application
@@ -37,11 +36,11 @@ type PreAuthorizedInitParameters struct {
 
 	// Reference to a Application in applications to populate authorizedClientId.
 	// +kubebuilder:validation:Optional
-	AuthorizedClientIDRef *v1.NamespacedReference `json:"authorizedClientIdRef,omitempty" tf:"-"`
+	AuthorizedClientIDRef *v2.NamespacedReference `json:"authorizedClientIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate authorizedClientId.
 	// +kubebuilder:validation:Optional
-	AuthorizedClientIDSelector *v1.NamespacedSelector `json:"authorizedClientIdSelector,omitempty" tf:"-"`
+	AuthorizedClientIDSelector *v2.NamespacedSelector `json:"authorizedClientIdSelector,omitempty" tf:"-"`
 
 	// A set of permission scope IDs required by the authorized application.
 	// The IDs of the permission scopes required by the pre-authorized application
@@ -77,11 +76,11 @@ type PreAuthorizedParameters struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// The client ID of the application being authorized. Changing this field forces a new resource to be created.
 	// The client ID of the pre-authorized application
@@ -92,11 +91,11 @@ type PreAuthorizedParameters struct {
 
 	// Reference to a Application in applications to populate authorizedClientId.
 	// +kubebuilder:validation:Optional
-	AuthorizedClientIDRef *v1.NamespacedReference `json:"authorizedClientIdRef,omitempty" tf:"-"`
+	AuthorizedClientIDRef *v2.NamespacedReference `json:"authorizedClientIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate authorizedClientId.
 	// +kubebuilder:validation:Optional
-	AuthorizedClientIDSelector *v1.NamespacedSelector `json:"authorizedClientIdSelector,omitempty" tf:"-"`
+	AuthorizedClientIDSelector *v2.NamespacedSelector `json:"authorizedClientIdSelector,omitempty" tf:"-"`
 
 	// A set of permission scope IDs required by the authorized application.
 	// The IDs of the permission scopes required by the pre-authorized application
@@ -124,8 +123,8 @@ type PreAuthorizedSpec struct {
 
 // PreAuthorizedStatus defines the observed state of PreAuthorized.
 type PreAuthorizedStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PreAuthorizedObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PreAuthorizedObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

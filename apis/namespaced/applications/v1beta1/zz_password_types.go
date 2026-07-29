@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type PasswordInitParameters_2 struct {
@@ -23,11 +22,11 @@ type PasswordInitParameters_2 struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// A display name for the password. Changing this field forces a new resource to be created.
 	// A display name for the password
@@ -95,11 +94,11 @@ type PasswordParameters_2 struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.NamespacedReference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.NamespacedSelector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// A display name for the password. Changing this field forces a new resource to be created.
 	// A display name for the password
@@ -147,8 +146,8 @@ type PasswordSpec struct {
 
 // PasswordStatus defines the observed state of Password.
 type PasswordStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        PasswordObservation_2 `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               PasswordObservation_2 `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -5,54 +5,54 @@
 
 package v1beta1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
 // GetCondition of this RoleAssignment.
-func (mg *RoleAssignment) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
+func (mg *RoleAssignment) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)
 }
 
 // GetDeletionPolicy of this RoleAssignment.
-func (mg *RoleAssignment) GetDeletionPolicy() xpv1.DeletionPolicy {
+func (mg *RoleAssignment) GetDeletionPolicy() xpv2.DeletionPolicy {
 	return mg.Spec.DeletionPolicy
 }
 
 // GetManagementPolicies of this RoleAssignment.
-func (mg *RoleAssignment) GetManagementPolicies() xpv1.ManagementPolicies {
+func (mg *RoleAssignment) GetManagementPolicies() xpv2.ManagementPolicies {
 	return mg.Spec.ManagementPolicies
 }
 
 // GetProviderConfigReference of this RoleAssignment.
-func (mg *RoleAssignment) GetProviderConfigReference() *xpv1.Reference {
+func (mg *RoleAssignment) GetProviderConfigReference() *xpv2.Reference {
 	return mg.Spec.ProviderConfigReference
 }
 
 // GetWriteConnectionSecretToReference of this RoleAssignment.
-func (mg *RoleAssignment) GetWriteConnectionSecretToReference() *xpv1.SecretReference {
+func (mg *RoleAssignment) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
 	return mg.Spec.WriteConnectionSecretToReference
 }
 
 // SetConditions of this RoleAssignment.
-func (mg *RoleAssignment) SetConditions(c ...xpv1.Condition) {
+func (mg *RoleAssignment) SetConditions(c ...xpv2.Condition) {
 	mg.Status.SetConditions(c...)
 }
 
 // SetDeletionPolicy of this RoleAssignment.
-func (mg *RoleAssignment) SetDeletionPolicy(r xpv1.DeletionPolicy) {
+func (mg *RoleAssignment) SetDeletionPolicy(r xpv2.DeletionPolicy) {
 	mg.Spec.DeletionPolicy = r
 }
 
 // SetManagementPolicies of this RoleAssignment.
-func (mg *RoleAssignment) SetManagementPolicies(r xpv1.ManagementPolicies) {
+func (mg *RoleAssignment) SetManagementPolicies(r xpv2.ManagementPolicies) {
 	mg.Spec.ManagementPolicies = r
 }
 
 // SetProviderConfigReference of this RoleAssignment.
-func (mg *RoleAssignment) SetProviderConfigReference(r *xpv1.Reference) {
+func (mg *RoleAssignment) SetProviderConfigReference(r *xpv2.Reference) {
 	mg.Spec.ProviderConfigReference = r
 }
 
 // SetWriteConnectionSecretToReference of this RoleAssignment.
-func (mg *RoleAssignment) SetWriteConnectionSecretToReference(r *xpv1.SecretReference) {
+func (mg *RoleAssignment) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
 	mg.Spec.WriteConnectionSecretToReference = r
 }

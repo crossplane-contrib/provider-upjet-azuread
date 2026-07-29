@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type ActivationRulesInitParameters struct {
@@ -869,11 +869,11 @@ type GroupRoleManagementPolicyInitParameters struct {
 
 	// Reference to a Group in groups to populate groupId.
 	// +kubebuilder:validation:Optional
-	GroupIDRef *v1.Reference `json:"groupIdRef,omitempty" tf:"-"`
+	GroupIDRef *v2.Reference `json:"groupIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in groups to populate groupId.
 	// +kubebuilder:validation:Optional
-	GroupIDSelector *v1.Selector `json:"groupIdSelector,omitempty" tf:"-"`
+	GroupIDSelector *v2.Selector `json:"groupIdSelector,omitempty" tf:"-"`
 
 	// A notification_rules block as defined below.
 	// The notification rules of the policy
@@ -948,11 +948,11 @@ type GroupRoleManagementPolicyParameters struct {
 
 	// Reference to a Group in groups to populate groupId.
 	// +kubebuilder:validation:Optional
-	GroupIDRef *v1.Reference `json:"groupIdRef,omitempty" tf:"-"`
+	GroupIDRef *v2.Reference `json:"groupIdRef,omitempty" tf:"-"`
 
 	// Selector for a Group in groups to populate groupId.
 	// +kubebuilder:validation:Optional
-	GroupIDSelector *v1.Selector `json:"groupIdSelector,omitempty" tf:"-"`
+	GroupIDSelector *v2.Selector `json:"groupIdSelector,omitempty" tf:"-"`
 
 	// A notification_rules block as defined below.
 	// The notification rules of the policy
@@ -1050,8 +1050,8 @@ type PrimaryApproverParameters struct {
 
 // GroupRoleManagementPolicySpec defines the desired state of GroupRoleManagementPolicy
 type GroupRoleManagementPolicySpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     GroupRoleManagementPolicyParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   GroupRoleManagementPolicyParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -1067,8 +1067,8 @@ type GroupRoleManagementPolicySpec struct {
 
 // GroupRoleManagementPolicyStatus defines the observed state of GroupRoleManagementPolicy.
 type GroupRoleManagementPolicyStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        GroupRoleManagementPolicyObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               GroupRoleManagementPolicyObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

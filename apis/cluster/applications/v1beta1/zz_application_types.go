@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type APIInitParameters struct {
@@ -24,11 +24,11 @@ type APIInitParameters struct {
 
 	// References to Application in applications to populate knownClientApplications.
 	// +kubebuilder:validation:Optional
-	KnownClientApplicationsRefs []v1.Reference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
+	KnownClientApplicationsRefs []v2.Reference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
 
 	// Selector for a list of Application in applications to populate knownClientApplications.
 	// +kubebuilder:validation:Optional
-	KnownClientApplicationsSelector *v1.Selector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
+	KnownClientApplicationsSelector *v2.Selector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
 	// Allows an application to use claims mapping without specifying a custom signing key
@@ -75,11 +75,11 @@ type APIParameters struct {
 
 	// References to Application in applications to populate knownClientApplications.
 	// +kubebuilder:validation:Optional
-	KnownClientApplicationsRefs []v1.Reference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
+	KnownClientApplicationsRefs []v2.Reference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
 
 	// Selector for a list of Application in applications to populate knownClientApplications.
 	// +kubebuilder:validation:Optional
-	KnownClientApplicationsSelector *v1.Selector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
+	KnownClientApplicationsSelector *v2.Selector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
 	// Allows an application to use claims mapping without specifying a custom signing key
@@ -1174,8 +1174,8 @@ type WebParameters struct {
 
 // ApplicationSpec defines the desired state of Application
 type ApplicationSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     ApplicationParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   ApplicationParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -1191,8 +1191,8 @@ type ApplicationSpec struct {
 
 // ApplicationStatus defines the observed state of Application.
 type ApplicationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ApplicationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ApplicationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

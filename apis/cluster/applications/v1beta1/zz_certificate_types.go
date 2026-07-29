@@ -10,7 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type CertificateInitParameters struct {
@@ -23,11 +23,11 @@ type CertificateInitParameters struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.Reference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.
 	// Specifies the encoding used for the supplied certificate data
@@ -55,7 +55,7 @@ type CertificateInitParameters struct {
 
 	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.
 	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the `encoding` argument
-	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 type CertificateObservation struct {
@@ -102,11 +102,11 @@ type CertificateParameters struct {
 
 	// Reference to a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDRef *v1.Reference `json:"applicationIdRef,omitempty" tf:"-"`
+	ApplicationIDRef *v2.Reference `json:"applicationIdRef,omitempty" tf:"-"`
 
 	// Selector for a Application in applications to populate applicationId.
 	// +kubebuilder:validation:Optional
-	ApplicationIDSelector *v1.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
+	ApplicationIDSelector *v2.Selector `json:"applicationIdSelector,omitempty" tf:"-"`
 
 	// Specifies the encoding used for the supplied certificate data. Must be one of pem, base64 or hex. Defaults to pem.
 	// Specifies the encoding used for the supplied certificate data
@@ -141,13 +141,13 @@ type CertificateParameters struct {
 	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the encoding argument.
 	// The certificate data, which can be PEM encoded, base64 encoded DER or hexadecimal encoded DER. See also the `encoding` argument
 	// +kubebuilder:validation:Optional
-	ValueSecretRef v1.SecretKeySelector `json:"valueSecretRef" tf:"-"`
+	ValueSecretRef v2.SecretKeySelector `json:"valueSecretRef" tf:"-"`
 }
 
 // CertificateSpec defines the desired state of Certificate
 type CertificateSpec struct {
-	v1.ResourceSpec `json:",inline"`
-	ForProvider     CertificateParameters `json:"forProvider"`
+	v2.ClusterManagedResourceSpec `json:",inline"`
+	ForProvider                   CertificateParameters `json:"forProvider"`
 	// THIS IS A BETA FIELD. It will be honored
 	// unless the Management Policies feature flag is disabled.
 	// InitProvider holds the same fields as ForProvider, with the exception
@@ -163,8 +163,8 @@ type CertificateSpec struct {
 
 // CertificateStatus defines the observed state of Certificate.
 type CertificateStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        CertificateObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               CertificateObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true

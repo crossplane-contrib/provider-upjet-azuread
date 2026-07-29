@@ -10,8 +10,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	v1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
-	v2 "github.com/crossplane/crossplane-runtime/v2/apis/common/v2"
+	v2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 )
 
 type APIInitParameters struct {
@@ -25,11 +24,11 @@ type APIInitParameters struct {
 
 	// References to Application in applications to populate knownClientApplications.
 	// +kubebuilder:validation:Optional
-	KnownClientApplicationsRefs []v1.NamespacedReference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
+	KnownClientApplicationsRefs []v2.NamespacedReference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
 
 	// Selector for a list of Application in applications to populate knownClientApplications.
 	// +kubebuilder:validation:Optional
-	KnownClientApplicationsSelector *v1.NamespacedSelector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
+	KnownClientApplicationsSelector *v2.NamespacedSelector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
 	// Allows an application to use claims mapping without specifying a custom signing key
@@ -76,11 +75,11 @@ type APIParameters struct {
 
 	// References to Application in applications to populate knownClientApplications.
 	// +kubebuilder:validation:Optional
-	KnownClientApplicationsRefs []v1.NamespacedReference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
+	KnownClientApplicationsRefs []v2.NamespacedReference `json:"knownClientApplicationsRefs,omitempty" tf:"-"`
 
 	// Selector for a list of Application in applications to populate knownClientApplications.
 	// +kubebuilder:validation:Optional
-	KnownClientApplicationsSelector *v1.NamespacedSelector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
+	KnownClientApplicationsSelector *v2.NamespacedSelector `json:"knownClientApplicationsSelector,omitempty" tf:"-"`
 
 	// Allows an application to use claims mapping without specifying a custom signing key. Defaults to false.
 	// Allows an application to use claims mapping without specifying a custom signing key
@@ -1192,8 +1191,8 @@ type ApplicationSpec struct {
 
 // ApplicationStatus defines the observed state of Application.
 type ApplicationStatus struct {
-	v1.ResourceStatus `json:",inline"`
-	AtProvider        ApplicationObservation `json:"atProvider,omitempty"`
+	v2.ManagedResourceStatus `json:",inline"`
+	AtProvider               ApplicationObservation `json:"atProvider,omitempty"`
 }
 
 // +kubebuilder:object:root=true
