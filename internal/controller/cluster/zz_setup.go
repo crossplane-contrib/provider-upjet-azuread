@@ -133,3 +133,47 @@ func SetupGated(mgr ctrl.Manager, o controller.Options) error {
 	}
 	return nil
 }
+
+// SetupWebhookWithManager registers conversion webhooks for all resource kinds in the group.
+func SetupWebhookWithManager(mgr ctrl.Manager) error {
+	for _, setup := range []func(ctrl.Manager) error{
+		member.SetupWebhookWithManager,
+		unit.SetupWebhookWithManager,
+		roleassignment.SetupWebhookWithManager,
+		application.SetupWebhookWithManager,
+		approle.SetupWebhookWithManager,
+		certificate.SetupWebhookWithManager,
+		federatedidentitycredential.SetupWebhookWithManager,
+		flexiblefederatedidentitycredential.SetupWebhookWithManager,
+		password.SetupWebhookWithManager,
+		preauthorized.SetupWebhookWithManager,
+		accesspolicy.SetupWebhookWithManager,
+		location.SetupWebhookWithManager,
+		customdirectoryrole.SetupWebhookWithManager,
+		role.SetupWebhookWithManager,
+		roleassignmentdirectoryroles.SetupWebhookWithManager,
+		roleeligibilityschedulerequest.SetupWebhookWithManager,
+		group.SetupWebhookWithManager,
+		membergroups.SetupWebhookWithManager,
+		privilegedaccessgroupassignmentschedule.SetupWebhookWithManager,
+		privilegedaccessgroupeligibilityschedule.SetupWebhookWithManager,
+		invitation.SetupWebhookWithManager,
+		claimsmappingpolicy.SetupWebhookWithManager,
+		grouprolemanagementpolicy.SetupWebhookWithManager,
+		providerconfig.SetupWebhookWithManager,
+		permissiongrant.SetupWebhookWithManager,
+		certificateserviceprincipals.SetupWebhookWithManager,
+		claimsmappingpolicyassignment.SetupWebhookWithManager,
+		passwordserviceprincipals.SetupWebhookWithManager,
+		principal.SetupWebhookWithManager,
+		tokensigningcertificate.SetupWebhookWithManager,
+		job.SetupWebhookWithManager,
+		secret.SetupWebhookWithManager,
+		user.SetupWebhookWithManager,
+	} {
+		if err := setup(mgr); err != nil {
+			return err
+		}
+	}
+	return nil
+}
