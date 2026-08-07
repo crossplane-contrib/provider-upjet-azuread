@@ -8,13 +8,13 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackageassignmentpolicy
+  name: accesspackageassignmentpolicy
 spec:
   forProvider:
     accessPackageIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: accesspackageassignmentpolicy
     approvalSettings:
       approvalRequired: true
       approvalStage:
@@ -22,7 +22,7 @@ spec:
         primaryApprover:
         - objectIdSelector:
             matchLabels:
-              testing.upbound.io/example-name: approvers
+              testing.upbound.io/example-name: accesspackageassignmentpolicy-approvers
           subjectType: groupMembers
     assignmentReviewSettings:
       accessReviewTimeoutBehavior: keepAccess
@@ -40,7 +40,7 @@ spec:
       requestor:
       - objectIdSelector:
           matchLabels:
-            testing.upbound.io/example-name: requestors
+            testing.upbound.io/example-name: accesspackageassignmentpolicy-requestors
         subjectType: groupMembers
       scopeType: SpecificDirectorySubjects
 ---
@@ -50,15 +50,15 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackageassignmentpolicy
+  name: accesspackageassignmentpolicy
 spec:
   forProvider:
     catalogIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: accesspackageassignmentpolicy
     description: Example access package
-    displayName: example-access-package
+    displayName: example-policy-package
 ---
 apiVersion: identitygovernance.azuread.upbound.io/v1beta1
 kind: AccessPackageCatalog
@@ -66,12 +66,12 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackageassignmentpolicy
+  name: accesspackageassignmentpolicy
 spec:
   forProvider:
     description: Example catalog
-    displayName: example-catalog
+    displayName: example-policy-catalog
 ---
 apiVersion: groups.azuread.upbound.io/v1beta2
 kind: Group
@@ -79,11 +79,11 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
   labels:
-    testing.upbound.io/example-name: approvers
-  name: approvers
+    testing.upbound.io/example-name: accesspackageassignmentpolicy-approvers
+  name: accesspackageassignmentpolicy-approvers
 spec:
   forProvider:
-    displayName: example-approvers
+    displayName: example-policy-approvers
     securityEnabled: true
 ---
 apiVersion: groups.azuread.upbound.io/v1beta2
@@ -92,9 +92,9 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
   labels:
-    testing.upbound.io/example-name: requestors
-  name: requestors
+    testing.upbound.io/example-name: accesspackageassignmentpolicy-requestors
+  name: accesspackageassignmentpolicy-requestors
 spec:
   forProvider:
-    displayName: example-requestors
+    displayName: example-policy-requestors
     securityEnabled: true

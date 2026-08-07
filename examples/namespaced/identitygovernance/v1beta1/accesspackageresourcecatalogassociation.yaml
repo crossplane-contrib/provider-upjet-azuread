@@ -8,17 +8,17 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcecatalogassociation
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackageresourcecatalogassociation
+  name: accesspackageresourcecatalogassociation
   namespace: upbound-system
 spec:
   forProvider:
     catalogIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: accesspackageresourcecatalogassociation
     resourceOriginIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: accesspackageresourcecatalogassociation
     resourceOriginSystem: AadGroup
 ---
 apiVersion: identitygovernance.azuread.m.upbound.io/v1beta1
@@ -27,13 +27,13 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcecatalogassociation
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackageresourcecatalogassociation
+  name: accesspackageresourcecatalogassociation
   namespace: upbound-system
 spec:
   forProvider:
     description: Example access package catalog
-    displayName: example-access-package-catalog
+    displayName: example-catalog-association-catalog
 ---
 apiVersion: groups.azuread.m.upbound.io/v1beta1
 kind: Group
@@ -41,10 +41,10 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcecatalogassociation
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackageresourcecatalogassociation
+  name: accesspackageresourcecatalogassociation
   namespace: upbound-system
 spec:
   forProvider:
-    displayName: example-group
+    displayName: example-catalog-association-group
     securityEnabled: true

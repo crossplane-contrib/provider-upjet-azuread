@@ -8,16 +8,16 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackage
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackage
+  name: accesspackage
   namespace: upbound-system
 spec:
   forProvider:
     catalogIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: accesspackage
     description: Example access package
-    displayName: example-access-package
+    displayName: example-package
 ---
 apiVersion: identitygovernance.azuread.m.upbound.io/v1beta1
 kind: AccessPackageCatalog
@@ -25,10 +25,10 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackage
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackage
+  name: accesspackage
   namespace: upbound-system
 spec:
   forProvider:
     description: Example access package catalog
-    displayName: example-access-package-catalog
+    displayName: example-package-catalog

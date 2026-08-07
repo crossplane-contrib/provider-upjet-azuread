@@ -8,16 +8,16 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackagecatalogroleassignment
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackagecatalogroleassignment
+  name: accesspackagecatalogroleassignment
 spec:
   forProvider:
     catalogIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: accesspackagecatalogroleassignment
     principalObjectIdSelector:
       matchLabels:
-        testing.upbound.io/example-name: example
+        testing.upbound.io/example-name: accesspackagecatalogroleassignment
     # Object ID of the built-in "Catalog owner" entitlement management role.
     # The azuread_access_package_catalog_role data source is not available as a
     # managed resource, so the role ID has to be supplied directly.
@@ -29,12 +29,12 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackagecatalogroleassignment
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackagecatalogroleassignment
+  name: accesspackagecatalogroleassignment
 spec:
   forProvider:
     description: Example access package catalog
-    displayName: example-access-package-catalog
+    displayName: example-role-assignment-catalog
 ---
 apiVersion: groups.azuread.upbound.io/v1beta2
 kind: Group
@@ -42,8 +42,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackagecatalogroleassignment
   labels:
-    testing.upbound.io/example-name: example
-  name: example
+    testing.upbound.io/example-name: accesspackagecatalogroleassignment
+  name: accesspackagecatalogroleassignment
 spec:
   forProvider:
     displayName: example-catalog-owners
