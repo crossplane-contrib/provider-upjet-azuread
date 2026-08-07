@@ -7,6 +7,24 @@
 package v1beta1
 
 // Hub marks this type as a conversion hub.
+func (tr *AccessPackage) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *AccessPackageAssignmentPolicy) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *AccessPackageCatalog) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *AccessPackageCatalogRoleAssignment) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *AccessPackageResourceCatalogAssociation) Hub() {}
+
+// Hub marks this type as a conversion hub.
+func (tr *AccessPackageResourcePackageAssociation) Hub() {}
+
+// Hub marks this type as a conversion hub.
 func (tr *PrivilegedAccessGroupAssignmentSchedule) Hub() {}
 
 // Hub marks this type as a conversion hub.

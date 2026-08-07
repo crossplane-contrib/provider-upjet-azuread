@@ -7,6 +7,306 @@ package v1beta1
 
 import xpv2 "github.com/crossplane/crossplane/apis/v2/core/v2"
 
+// GetCondition of this AccessPackage.
+func (mg *AccessPackage) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this AccessPackage.
+func (mg *AccessPackage) GetDeletionPolicy() xpv2.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this AccessPackage.
+func (mg *AccessPackage) GetManagementPolicies() xpv2.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this AccessPackage.
+func (mg *AccessPackage) GetProviderConfigReference() *xpv2.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this AccessPackage.
+func (mg *AccessPackage) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this AccessPackage.
+func (mg *AccessPackage) SetConditions(c ...xpv2.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this AccessPackage.
+func (mg *AccessPackage) SetDeletionPolicy(r xpv2.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this AccessPackage.
+func (mg *AccessPackage) SetManagementPolicies(r xpv2.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this AccessPackage.
+func (mg *AccessPackage) SetProviderConfigReference(r *xpv2.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this AccessPackage.
+func (mg *AccessPackage) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) GetDeletionPolicy() xpv2.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) GetManagementPolicies() xpv2.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) GetProviderConfigReference() *xpv2.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) SetConditions(c ...xpv2.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) SetDeletionPolicy(r xpv2.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) SetManagementPolicies(r xpv2.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) SetProviderConfigReference(r *xpv2.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) GetDeletionPolicy() xpv2.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) GetManagementPolicies() xpv2.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) GetProviderConfigReference() *xpv2.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) SetConditions(c ...xpv2.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) SetDeletionPolicy(r xpv2.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) SetManagementPolicies(r xpv2.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) SetProviderConfigReference(r *xpv2.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this AccessPackageCatalog.
+func (mg *AccessPackageCatalog) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) GetDeletionPolicy() xpv2.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) GetManagementPolicies() xpv2.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) GetProviderConfigReference() *xpv2.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) SetConditions(c ...xpv2.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) SetDeletionPolicy(r xpv2.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) SetManagementPolicies(r xpv2.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) SetProviderConfigReference(r *xpv2.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) GetDeletionPolicy() xpv2.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) GetManagementPolicies() xpv2.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) GetProviderConfigReference() *xpv2.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) SetConditions(c ...xpv2.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) SetDeletionPolicy(r xpv2.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) SetManagementPolicies(r xpv2.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) SetProviderConfigReference(r *xpv2.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
+// GetCondition of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
+	return mg.Status.GetCondition(ct)
+}
+
+// GetDeletionPolicy of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) GetDeletionPolicy() xpv2.DeletionPolicy {
+	return mg.Spec.DeletionPolicy
+}
+
+// GetManagementPolicies of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) GetManagementPolicies() xpv2.ManagementPolicies {
+	return mg.Spec.ManagementPolicies
+}
+
+// GetProviderConfigReference of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) GetProviderConfigReference() *xpv2.Reference {
+	return mg.Spec.ProviderConfigReference
+}
+
+// GetWriteConnectionSecretToReference of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) GetWriteConnectionSecretToReference() *xpv2.SecretReference {
+	return mg.Spec.WriteConnectionSecretToReference
+}
+
+// SetConditions of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) SetConditions(c ...xpv2.Condition) {
+	mg.Status.SetConditions(c...)
+}
+
+// SetDeletionPolicy of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) SetDeletionPolicy(r xpv2.DeletionPolicy) {
+	mg.Spec.DeletionPolicy = r
+}
+
+// SetManagementPolicies of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) SetManagementPolicies(r xpv2.ManagementPolicies) {
+	mg.Spec.ManagementPolicies = r
+}
+
+// SetProviderConfigReference of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) SetProviderConfigReference(r *xpv2.Reference) {
+	mg.Spec.ProviderConfigReference = r
+}
+
+// SetWriteConnectionSecretToReference of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) SetWriteConnectionSecretToReference(r *xpv2.SecretReference) {
+	mg.Spec.WriteConnectionSecretToReference = r
+}
+
 // GetCondition of this PrivilegedAccessGroupAssignmentSchedule.
 func (mg *PrivilegedAccessGroupAssignmentSchedule) GetCondition(ct xpv2.ConditionType) xpv2.Condition {
 	return mg.Status.GetCondition(ct)

@@ -15,6 +15,505 @@ import (
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
 
+// ResolveReferences of this AccessPackage.
+func (mg *AccessPackage) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CatalogID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.CatalogIDRef,
+		Selector:     mg.Spec.ForProvider.CatalogIDSelector,
+		To: reference.To{
+			List:    &AccessPackageCatalogList{},
+			Managed: &AccessPackageCatalog{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CatalogID")
+	}
+	mg.Spec.ForProvider.CatalogID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CatalogIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CatalogID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.CatalogIDRef,
+		Selector:     mg.Spec.InitProvider.CatalogIDSelector,
+		To: reference.To{
+			List:    &AccessPackageCatalogList{},
+			Managed: &AccessPackageCatalog{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CatalogID")
+	}
+	mg.Spec.InitProvider.CatalogID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CatalogIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this AccessPackageAssignmentPolicy.
+func (mg *AccessPackageAssignmentPolicy) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AccessPackageID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.AccessPackageIDRef,
+		Selector:     mg.Spec.ForProvider.AccessPackageIDSelector,
+		To: reference.To{
+			List:    &AccessPackageList{},
+			Managed: &AccessPackage{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.AccessPackageID")
+	}
+	mg.Spec.ForProvider.AccessPackageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.AccessPackageIDRef = rsp.ResolvedReference
+
+	if mg.Spec.ForProvider.ApprovalSettings != nil {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.ApprovalSettings.ApprovalStage); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover); i5++ {
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectID),
+					Extract:      resource.ExtractParamPath("object_id", true),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectIDRef,
+					Selector:     mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectIDSelector,
+					To: reference.To{
+						List:    &v1beta1.GroupList{},
+						Managed: &v1beta1.Group{},
+					},
+				})
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectID")
+				}
+				mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	if mg.Spec.ForProvider.ApprovalSettings != nil {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.ApprovalSettings.ApprovalStage); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover); i5++ {
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectID),
+					Extract:      resource.ExtractParamPath("object_id", true),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectIDRef,
+					Selector:     mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectIDSelector,
+					To: reference.To{
+						List:    &v1beta1.GroupList{},
+						Managed: &v1beta1.Group{},
+					},
+				})
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectID")
+				}
+				mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.ForProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	if mg.Spec.ForProvider.AssignmentReviewSettings != nil {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.AssignmentReviewSettings.Reviewer); i4++ {
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AssignmentReviewSettings.Reviewer[i4].ObjectID),
+				Extract:      resource.ExtractParamPath("object_id", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.AssignmentReviewSettings.Reviewer[i4].ObjectIDRef,
+				Selector:     mg.Spec.ForProvider.AssignmentReviewSettings.Reviewer[i4].ObjectIDSelector,
+				To: reference.To{
+					List:    &v1beta1.GroupList{},
+					Managed: &v1beta1.Group{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.AssignmentReviewSettings.Reviewer[i4].ObjectID")
+			}
+			mg.Spec.ForProvider.AssignmentReviewSettings.Reviewer[i4].ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.AssignmentReviewSettings.Reviewer[i4].ObjectIDRef = rsp.ResolvedReference
+
+		}
+	}
+	if mg.Spec.ForProvider.RequestorSettings != nil {
+		for i4 := 0; i4 < len(mg.Spec.ForProvider.RequestorSettings.Requestor); i4++ {
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RequestorSettings.Requestor[i4].ObjectID),
+				Extract:      resource.ExtractParamPath("object_id", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.ForProvider.RequestorSettings.Requestor[i4].ObjectIDRef,
+				Selector:     mg.Spec.ForProvider.RequestorSettings.Requestor[i4].ObjectIDSelector,
+				To: reference.To{
+					List:    &v1beta1.GroupList{},
+					Managed: &v1beta1.Group{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.ForProvider.RequestorSettings.Requestor[i4].ObjectID")
+			}
+			mg.Spec.ForProvider.RequestorSettings.Requestor[i4].ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.ForProvider.RequestorSettings.Requestor[i4].ObjectIDRef = rsp.ResolvedReference
+
+		}
+	}
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AccessPackageID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.AccessPackageIDRef,
+		Selector:     mg.Spec.InitProvider.AccessPackageIDSelector,
+		To: reference.To{
+			List:    &AccessPackageList{},
+			Managed: &AccessPackage{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AccessPackageID")
+	}
+	mg.Spec.InitProvider.AccessPackageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AccessPackageIDRef = rsp.ResolvedReference
+
+	if mg.Spec.InitProvider.ApprovalSettings != nil {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.ApprovalSettings.ApprovalStage); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover); i5++ {
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectID),
+					Extract:      resource.ExtractParamPath("object_id", true),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectIDRef,
+					Selector:     mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectIDSelector,
+					To: reference.To{
+						List:    &v1beta1.GroupList{},
+						Managed: &v1beta1.Group{},
+					},
+				})
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectID")
+				}
+				mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].AlternativeApprover[i5].ObjectIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	if mg.Spec.InitProvider.ApprovalSettings != nil {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.ApprovalSettings.ApprovalStage); i4++ {
+			for i5 := 0; i5 < len(mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover); i5++ {
+				rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+					CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectID),
+					Extract:      resource.ExtractParamPath("object_id", true),
+					Namespace:    mg.GetNamespace(),
+					Reference:    mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectIDRef,
+					Selector:     mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectIDSelector,
+					To: reference.To{
+						List:    &v1beta1.GroupList{},
+						Managed: &v1beta1.Group{},
+					},
+				})
+				if err != nil {
+					return errors.Wrap(err, "mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectID")
+				}
+				mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+				mg.Spec.InitProvider.ApprovalSettings.ApprovalStage[i4].PrimaryApprover[i5].ObjectIDRef = rsp.ResolvedReference
+
+			}
+		}
+	}
+	if mg.Spec.InitProvider.AssignmentReviewSettings != nil {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.AssignmentReviewSettings.Reviewer); i4++ {
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AssignmentReviewSettings.Reviewer[i4].ObjectID),
+				Extract:      resource.ExtractParamPath("object_id", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.AssignmentReviewSettings.Reviewer[i4].ObjectIDRef,
+				Selector:     mg.Spec.InitProvider.AssignmentReviewSettings.Reviewer[i4].ObjectIDSelector,
+				To: reference.To{
+					List:    &v1beta1.GroupList{},
+					Managed: &v1beta1.Group{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.AssignmentReviewSettings.Reviewer[i4].ObjectID")
+			}
+			mg.Spec.InitProvider.AssignmentReviewSettings.Reviewer[i4].ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.AssignmentReviewSettings.Reviewer[i4].ObjectIDRef = rsp.ResolvedReference
+
+		}
+	}
+	if mg.Spec.InitProvider.RequestorSettings != nil {
+		for i4 := 0; i4 < len(mg.Spec.InitProvider.RequestorSettings.Requestor); i4++ {
+			rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+				CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.RequestorSettings.Requestor[i4].ObjectID),
+				Extract:      resource.ExtractParamPath("object_id", true),
+				Namespace:    mg.GetNamespace(),
+				Reference:    mg.Spec.InitProvider.RequestorSettings.Requestor[i4].ObjectIDRef,
+				Selector:     mg.Spec.InitProvider.RequestorSettings.Requestor[i4].ObjectIDSelector,
+				To: reference.To{
+					List:    &v1beta1.GroupList{},
+					Managed: &v1beta1.Group{},
+				},
+			})
+			if err != nil {
+				return errors.Wrap(err, "mg.Spec.InitProvider.RequestorSettings.Requestor[i4].ObjectID")
+			}
+			mg.Spec.InitProvider.RequestorSettings.Requestor[i4].ObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+			mg.Spec.InitProvider.RequestorSettings.Requestor[i4].ObjectIDRef = rsp.ResolvedReference
+
+		}
+	}
+
+	return nil
+}
+
+// ResolveReferences of this AccessPackageCatalogRoleAssignment.
+func (mg *AccessPackageCatalogRoleAssignment) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CatalogID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.CatalogIDRef,
+		Selector:     mg.Spec.ForProvider.CatalogIDSelector,
+		To: reference.To{
+			List:    &AccessPackageCatalogList{},
+			Managed: &AccessPackageCatalog{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CatalogID")
+	}
+	mg.Spec.ForProvider.CatalogID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CatalogIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.PrincipalObjectID),
+		Extract:      resource.ExtractParamPath("object_id", true),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.PrincipalObjectIDRef,
+		Selector:     mg.Spec.ForProvider.PrincipalObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta1.GroupList{},
+			Managed: &v1beta1.Group{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.PrincipalObjectID")
+	}
+	mg.Spec.ForProvider.PrincipalObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.PrincipalObjectIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CatalogID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.CatalogIDRef,
+		Selector:     mg.Spec.InitProvider.CatalogIDSelector,
+		To: reference.To{
+			List:    &AccessPackageCatalogList{},
+			Managed: &AccessPackageCatalog{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CatalogID")
+	}
+	mg.Spec.InitProvider.CatalogID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CatalogIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.PrincipalObjectID),
+		Extract:      resource.ExtractParamPath("object_id", true),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.PrincipalObjectIDRef,
+		Selector:     mg.Spec.InitProvider.PrincipalObjectIDSelector,
+		To: reference.To{
+			List:    &v1beta1.GroupList{},
+			Managed: &v1beta1.Group{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.PrincipalObjectID")
+	}
+	mg.Spec.InitProvider.PrincipalObjectID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.PrincipalObjectIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this AccessPackageResourceCatalogAssociation.
+func (mg *AccessPackageResourceCatalogAssociation) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CatalogID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.CatalogIDRef,
+		Selector:     mg.Spec.ForProvider.CatalogIDSelector,
+		To: reference.To{
+			List:    &AccessPackageCatalogList{},
+			Managed: &AccessPackageCatalog{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CatalogID")
+	}
+	mg.Spec.ForProvider.CatalogID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CatalogIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ResourceOriginID),
+		Extract:      resource.ExtractParamPath("object_id", true),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.ResourceOriginIDRef,
+		Selector:     mg.Spec.ForProvider.ResourceOriginIDSelector,
+		To: reference.To{
+			List:    &v1beta1.GroupList{},
+			Managed: &v1beta1.Group{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.ResourceOriginID")
+	}
+	mg.Spec.ForProvider.ResourceOriginID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.ResourceOriginIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CatalogID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.CatalogIDRef,
+		Selector:     mg.Spec.InitProvider.CatalogIDSelector,
+		To: reference.To{
+			List:    &AccessPackageCatalogList{},
+			Managed: &AccessPackageCatalog{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CatalogID")
+	}
+	mg.Spec.InitProvider.CatalogID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CatalogIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.ResourceOriginID),
+		Extract:      resource.ExtractParamPath("object_id", true),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.ResourceOriginIDRef,
+		Selector:     mg.Spec.InitProvider.ResourceOriginIDSelector,
+		To: reference.To{
+			List:    &v1beta1.GroupList{},
+			Managed: &v1beta1.Group{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.ResourceOriginID")
+	}
+	mg.Spec.InitProvider.ResourceOriginID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.ResourceOriginIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
+// ResolveReferences of this AccessPackageResourcePackageAssociation.
+func (mg *AccessPackageResourcePackageAssociation) ResolveReferences(ctx context.Context, c client.Reader) error {
+	r := reference.NewAPINamespacedResolver(c, mg)
+
+	var rsp reference.NamespacedResolutionResponse
+	var err error
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.AccessPackageID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.AccessPackageIDRef,
+		Selector:     mg.Spec.ForProvider.AccessPackageIDSelector,
+		To: reference.To{
+			List:    &AccessPackageList{},
+			Managed: &AccessPackage{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.AccessPackageID")
+	}
+	mg.Spec.ForProvider.AccessPackageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.AccessPackageIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CatalogResourceAssociationID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.ForProvider.CatalogResourceAssociationIDRef,
+		Selector:     mg.Spec.ForProvider.CatalogResourceAssociationIDSelector,
+		To: reference.To{
+			List:    &AccessPackageResourceCatalogAssociationList{},
+			Managed: &AccessPackageResourceCatalogAssociation{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.ForProvider.CatalogResourceAssociationID")
+	}
+	mg.Spec.ForProvider.CatalogResourceAssociationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.ForProvider.CatalogResourceAssociationIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.AccessPackageID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.AccessPackageIDRef,
+		Selector:     mg.Spec.InitProvider.AccessPackageIDSelector,
+		To: reference.To{
+			List:    &AccessPackageList{},
+			Managed: &AccessPackage{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.AccessPackageID")
+	}
+	mg.Spec.InitProvider.AccessPackageID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.AccessPackageIDRef = rsp.ResolvedReference
+
+	rsp, err = r.Resolve(ctx, reference.NamespacedResolutionRequest{
+		CurrentValue: reference.FromPtrValue(mg.Spec.InitProvider.CatalogResourceAssociationID),
+		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
+		Reference:    mg.Spec.InitProvider.CatalogResourceAssociationIDRef,
+		Selector:     mg.Spec.InitProvider.CatalogResourceAssociationIDSelector,
+		To: reference.To{
+			List:    &AccessPackageResourceCatalogAssociationList{},
+			Managed: &AccessPackageResourceCatalogAssociation{},
+		},
+	})
+	if err != nil {
+		return errors.Wrap(err, "mg.Spec.InitProvider.CatalogResourceAssociationID")
+	}
+	mg.Spec.InitProvider.CatalogResourceAssociationID = reference.ToPtrValue(rsp.ResolvedValue)
+	mg.Spec.InitProvider.CatalogResourceAssociationIDRef = rsp.ResolvedReference
+
+	return nil
+}
+
 // ResolveReferences of this PrivilegedAccessGroupAssignmentSchedule.
 func (mg *PrivilegedAccessGroupAssignmentSchedule) ResolveReferences(ctx context.Context, c client.Reader) error {
 	r := reference.NewAPINamespacedResolver(c, mg)

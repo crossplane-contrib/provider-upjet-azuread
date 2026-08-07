@@ -1,0 +1,73 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: identitygovernance.azuread.m.upbound.io/v1beta1
+kind: AccessPackageAssignmentPolicy
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    accessPackageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    approvalSettings:
+      approvalRequired: true
+      approvalStage:
+      - approvalTimeoutInDays: 14
+        primaryApprover:
+        - objectIdSelector:
+            matchLabels:
+              testing.upbound.io/example-name: example
+          subjectType: groupMembers
+    assignmentReviewSettings:
+      accessReviewTimeoutBehavior: keepAccess
+      durationInDays: 3
+      enabled: true
+      reviewFrequency: weekly
+      reviewType: Self
+    description: My assignment policy
+    displayName: assignment-policy
+    durationInDays: 90
+    question:
+    - text:
+        defaultText: hello, how are you?
+    requestorSettings:
+      scopeType: AllExistingDirectoryMemberUsers
+
+---
+
+apiVersion: identitygovernance.azuread.m.upbound.io/v1beta1
+kind: AccessPackageCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    description: Example catalog
+    displayName: example-catalog
+
+---
+
+apiVersion: groups.azuread.m.upbound.io/v1beta1
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+  namespace: upbound-system
+spec:
+  forProvider:
+    displayName: group-name
+    securityEnabled: true

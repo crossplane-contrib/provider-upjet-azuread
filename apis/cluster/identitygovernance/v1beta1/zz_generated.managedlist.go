@@ -7,6 +7,60 @@ package v1beta1
 
 import resource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 
+// GetItems of this AccessPackageAssignmentPolicyList.
+func (l *AccessPackageAssignmentPolicyList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this AccessPackageCatalogList.
+func (l *AccessPackageCatalogList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this AccessPackageCatalogRoleAssignmentList.
+func (l *AccessPackageCatalogRoleAssignmentList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this AccessPackageList.
+func (l *AccessPackageList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this AccessPackageResourceCatalogAssociationList.
+func (l *AccessPackageResourceCatalogAssociationList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
+// GetItems of this AccessPackageResourcePackageAssociationList.
+func (l *AccessPackageResourcePackageAssociationList) GetItems() []resource.Managed {
+	items := make([]resource.Managed, len(l.Items))
+	for i := range l.Items {
+		items[i] = &l.Items[i]
+	}
+	return items
+}
+
 // GetItems of this PrivilegedAccessGroupAssignmentScheduleList.
 func (l *PrivilegedAccessGroupAssignmentScheduleList) GetItems() []resource.Managed {
 	items := make([]resource.Managed, len(l.Items))
