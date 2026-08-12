@@ -49,6 +49,7 @@ kind: AccessPackage
 metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-accesspackage-associations.sh
   labels:
     testing.upbound.io/example-name: accesspackageassignmentpolicy
   name: accesspackageassignmentpolicy
@@ -65,6 +66,7 @@ kind: AccessPackageCatalog
 metadata:
   annotations:
     meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageassignmentpolicy
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-accesspackage-associations.sh
   labels:
     testing.upbound.io/example-name: accesspackageassignmentpolicy
   name: accesspackageassignmentpolicy
