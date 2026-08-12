@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2025 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackageCatalogRoleAssignment
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackagecatalogroleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    catalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    principalObjectIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: azuread_user
+    roleId: ${data.azuread_access_package_catalog_role.example.object_id}
+
+---
+
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackageCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackagecatalogroleassignment
+  labels:
+    testing.upbound.io/example-name: example
+  name: example
+spec:
+  forProvider:
+    description: Example access package catalog
+    displayName: example-access-package-catalog

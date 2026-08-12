@@ -135,6 +135,23 @@ var terraformPluginSDKExternalNameConfigs = map[string]config.ExternalName{
 	// 00000000-0000-0000-0000-000000000000_member_00000000-0000-0000-0000-00000000
 	// {group_id}_member_{eligibility_schedule_request_id}
 	"azuread_privileged_access_group_eligibility_schedule": config.IdentifierFromProvider,
+	// azuread_access_package can be imported using the ID of the access package
+	// 00000000-0000-0000-0000-000000000000
+	"azuread_access_package": config.IdentifierFromProvider,
+	// azuread_access_package_assignment_policy can be imported using the ID of the assignment policy
+	// 00000000-0000-0000-0000-000000000000
+	"azuread_access_package_assignment_policy": config.IdentifierFromProvider,
+	// No import documented
+	"azuread_access_package_catalog": config.IdentifierFromProvider,
+	// azuread_access_package_catalog_role_assignment can be imported using the ID of the assignment
+	// 00000000-0000-0000-0000-000000000000
+	"azuread_access_package_catalog_role_assignment": config.IdentifierFromProvider,
+	// The ID is the concatenation of catalog_id and resource_origin_id with a colon in between
+	// 00000000-0000-0000-0000-000000000000:11111111-1111-1111-1111-111111111111
+	"azuread_access_package_resource_catalog_association": config.IdentifierFromProvider,
+	// The ID is combined by four fields with a colon in between, the four fields are
+	// access_package_id, this package association id, resource_origin_id and access_type
+	"azuread_access_package_resource_package_association": config.IdentifierFromProvider,
 }
 
 // cliReconciledExternalNameConfigs contains all external name configurations

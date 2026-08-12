@@ -1,0 +1,83 @@
+# SPDX-FileCopyrightText: 2026 The Crossplane Authors <https://crossplane.io>
+#
+# SPDX-License-Identifier: CC0-1.0
+
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackageResourcePackageAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcepackageassociation
+    upjet.upbound.io/manual-intervention: "Requires the EntitlementManagement.ReadWrite.All Graph application permission (or the Identity Governance Administrator role), which is not granted to the uptest identity"
+  labels:
+    testing.upbound.io/example-name: accesspackageresourcepackageassociation
+  name: accesspackageresourcepackageassociation
+spec:
+  forProvider:
+    accessPackageIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: accesspackageresourcepackageassociation
+    catalogResourceAssociationIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: accesspackageresourcepackageassociation
+---
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackage
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcepackageassociation
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-accesspackage-associations.sh
+  labels:
+    testing.upbound.io/example-name: accesspackageresourcepackageassociation
+  name: accesspackageresourcepackageassociation
+spec:
+  forProvider:
+    catalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: accesspackageresourcepackageassociation
+    description: Example access package
+    displayName: example-package-association-package
+---
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackageResourceCatalogAssociation
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcepackageassociation
+  labels:
+    testing.upbound.io/example-name: accesspackageresourcepackageassociation
+  name: accesspackageresourcepackageassociation
+spec:
+  forProvider:
+    catalogIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: accesspackageresourcepackageassociation
+    resourceOriginIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: accesspackageresourcepackageassociation
+    resourceOriginSystem: AadGroup
+---
+apiVersion: identitygovernance.azuread.upbound.io/v1beta1
+kind: AccessPackageCatalog
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcepackageassociation
+    uptest.upbound.io/pre-delete-hook: ../testhooks/delete-accesspackage-associations.sh
+  labels:
+    testing.upbound.io/example-name: accesspackageresourcepackageassociation
+  name: accesspackageresourcepackageassociation
+spec:
+  forProvider:
+    description: Example access package catalog
+    displayName: example-package-association-catalog
+---
+apiVersion: groups.azuread.upbound.io/v1beta2
+kind: Group
+metadata:
+  annotations:
+    meta.upbound.io/example-id: identitygovernance/v1beta1/accesspackageresourcepackageassociation
+  labels:
+    testing.upbound.io/example-name: accesspackageresourcepackageassociation
+  name: accesspackageresourcepackageassociation
+spec:
+  forProvider:
+    displayName: example-package-association-group
+    securityEnabled: true
