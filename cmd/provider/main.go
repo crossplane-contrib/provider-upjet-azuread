@@ -30,11 +30,15 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	authv1 "k8s.io/api/authorization/v1"
+	corev1 "k8s.io/api/core/v1"
 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	clientgoscheme "k8s.io/client-go/kubernetes/scheme"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/cache"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
 	"sigs.k8s.io/controller-runtime/pkg/metrics"
@@ -83,6 +87,7 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 
 		enableManagementPolicies = app.Flag("enable-management-policies", "Enable support for Management Policies.").Default("true").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
 		enableChangeLogs         = app.Flag("enable-changelogs", "Enable support for capturing change logs during reconciliation.").Default("false").Envar("ENABLE_CHANGE_LOGS").Bool()
+		enableSecretCache        = app.Flag("enable-secret-cache", "Enable caching of Secret objects. When true, Secrets are served from the informer cache instead of direct API calls. This reduces API server load but increases memory usage.").Default("true").Envar("ENABLE_SECRET_CACHE").Bool()
 
 		certsDirSet = false
 		// we record whether the command-line option "--certs-dir" was supplied
@@ -136,11 +141,33 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 		}
 	}
 
+	var clientOpts client.Options
+	if !*enableSecretCache {
+		clientOpts = client.Options{
+			Cache: &client.CacheOptions{
+				DisableFor: []client.Object{&corev1.Secret{}},
+			},
+		}
+	}
+
+	scheme := runtime.NewScheme()
+	kingpin.FatalIfError(clientgoscheme.AddToScheme(scheme), "Cannot add clientgo scheme")
+	kingpin.FatalIfError(clusterapis.AddToScheme(scheme), "Cannot add cluster-scoped Azuread APIs to scheme")
+	kingpin.FatalIfError(namespacedapis.AddToScheme(scheme), "Cannot add namespaced Azuread APIs to scheme")
+	kingpin.FatalIfError(apiextensionsv1.AddToScheme(scheme), "Cannot register k8s apiextensions APIs to scheme")
+
 	mgr, err := ctrl.NewManager(cfg, ctrl.Options{
+		Scheme:           scheme,
+		Client:           clientOpts,
 		LeaderElection:   *leaderElection,
 		LeaderElectionID: "crossplane-leader-election-provider-azuread",
 		Cache: cache.Options{
 			SyncPeriod: syncPeriod,
+			ByObject: map[client.Object]cache.ByObject{
+				&apiextensionsv1.CustomResourceDefinition{}: {
+					Transform: customresourcesgate.TransformStripCRDSchema,
+				},
+			},
 		},
 		Metrics: metricsserver.Options{
 			BindAddress: *metricsBindAddress,
@@ -159,11 +186,8 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 	if len(*certsDir) > 0 {
 		kingpin.FatalIfError(mgr.AddReadyzCheck("webhook", mgr.GetWebhookServer().StartedChecker()), "Cannot add webhook server readyz checker to controller manager")
 	}
-	kingpin.FatalIfError(clusterapis.AddToScheme(mgr.GetScheme()), "Cannot add cluster-scoped Azuread APIs to scheme")
 	kingpin.FatalIfError(resolverapis.BuildScheme(clusterapis.AddToSchemes), "Cannot register the cluster-scoped AzureAD APIs with the API resolver's runtime scheme")
-	kingpin.FatalIfError(namespacedapis.AddToScheme(mgr.GetScheme()), "Cannot add namespaced Azuread APIs to scheme")
 	kingpin.FatalIfError(resolverapis.BuildScheme(namespacedapis.AddToSchemes), "Cannot register the namespaced AzureAD APIs with the API resolver's runtime scheme")
-	kingpin.FatalIfError(apiextensionsv1.AddToScheme(mgr.GetScheme()), "Cannot register k8s apiextensions APIs to scheme")
 
 	metricRecorder := managed.NewMRMetricRecorder()
 	stateMetrics := statemetrics.NewMRStateMetrics()
