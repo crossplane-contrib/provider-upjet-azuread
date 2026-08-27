@@ -31,7 +31,7 @@ metadata:
   namespace: upbound-system
 spec:
   forProvider:
-    applicationIdSelector:
+    clientIdSelector:
       matchLabels:
         testing.upbound.io/example-name: example
     appRoleAssignmentRequired: false
