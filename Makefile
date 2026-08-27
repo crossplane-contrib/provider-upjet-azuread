@@ -60,6 +60,7 @@ YQ_VERSION = v4.40.5
 CRDDIFF_VERSION = v0.12.1
 CROSSPLANE_VERSION = 2.3.4
 CROSSPLANE_CLI_VERSION = v2.3.4
+KUBECTL_VALIDATE_VERSION ?= v0.0.4
 
 -include build/makelib/k8s_tools.mk
 
@@ -239,7 +240,24 @@ go.lint.analysiskey-interval:
 go.lint.analysiskey:
 	@echo $$(make go.lint.analysiskey-interval)$$(sha1sum go.sum | cut -d' ' -f1)
 
-.PHONY: cobertura submodules fallthrough run crds.clean uptest e2e crddiff schema-version-diff
+KUBECTL_VALIDATE := $(TOOLS_HOST_DIR)/kubectl-validate-$(KUBECTL_VALIDATE_VERSION)
+
+$(KUBECTL_VALIDATE):
+	@$(INFO) installing kubectl-validate $(KUBECTL_VALIDATE_VERSION)
+	@mkdir -p $(TOOLS_HOST_DIR)
+	@GOBIN=$(abspath $(TOOLS_HOST_DIR)) go install sigs.k8s.io/kubectl-validate@$(KUBECTL_VALIDATE_VERSION)
+	@mv $(TOOLS_HOST_DIR)/kubectl-validate $@
+	@$(OK) installed kubectl-validate $(KUBECTL_VALIDATE_VERSION)
+
+example-lint: $(KUBECTL_VALIDATE)
+	@failed_scopes=""; \
+	$(INFO) linting cluster scoped example manifests; \
+	$(KUBECTL_VALIDATE) examples/cluster --local-crds package/crds || failed_scopes="cluster"; \
+	$(INFO) linting namespaced scoped example manifests; \
+	$(KUBECTL_VALIDATE) examples/namespaced --local-crds package/crds || failed_scopes="$${failed_scopes:+$$failed_scopes, }namespaced"; \
+	[ -z "$$failed_scopes" ] && $(OK) linted example manifests || (echo "Failed scopes: $$failed_scopes"; $(FAIL))
+
+.PHONY: cobertura submodules fallthrough run crds.clean uptest e2e crddiff schema-version-diff example-lint
 
 # ====================================================================================
 # Special Targets
