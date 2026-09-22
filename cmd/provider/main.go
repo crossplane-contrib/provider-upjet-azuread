@@ -53,6 +53,7 @@ import (
 	"github.com/upbound/provider-azuread/v2/internal/clients"
 	clustercontroller "github.com/upbound/provider-azuread/v2/internal/controller/cluster"
 	namespacedcontroller "github.com/upbound/provider-azuread/v2/internal/controller/namespaced"
+	"github.com/upbound/provider-azuread/v2/internal/diff"
 	"github.com/upbound/provider-azuread/v2/internal/features"
 	"github.com/upbound/provider-azuread/v2/internal/version"
 )
@@ -96,9 +97,19 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 			certsDirSet = true
 			return nil
 		}).String()
+
+		// Running the provider's controllers is the default command, so that
+		// the provider keeps behaving as it did before the internal commands
+		// were introduced, i.e. when it's invoked without any arguments.
+		startCmd = app.Command("start", "Start the provider's controllers.").Default()
+
+		internalCmd   = app.Command("internal", "Commands used internally by the Crossplane ecosystem. No compatibility guarantees are made for them.")
+		diffServerCmd = internalCmd.Command("diff-server", "Start a gRPC server serving the provider diff services.")
+		diffNetwork   = diffServerCmd.Flag("network", "The network the diff gRPC server listens on.").Default("tcp").Envar("DIFF_SERVER_NETWORK").Enum("tcp", "unix")
+		diffAddress   = diffServerCmd.Flag("address", "The address the diff gRPC server listens on. A socket path when the network is unix.").Default(":9099").Envar("DIFF_SERVER_ADDRESS").String()
 	)
 
-	kingpin.MustParse(app.Parse(os.Args[1:]))
+	cmd := kingpin.MustParse(app.Parse(os.Args[1:]))
 	log.Default().SetOutput(io.Discard)
 	ctrl.SetLogger(zap.New(zap.WriteTo(io.Discard)))
 
@@ -109,6 +120,14 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 		// *very* verbose even at info level, so we only provide it a real
 		// logger when we're running in debug mode.
 		ctrl.SetLogger(zl)
+	}
+
+	switch cmd {
+	case diffServerCmd.FullCommand():
+		kingpin.FatalIfError(diff.Serve(ctrl.SetupSignalHandler(), *diffNetwork, *diffAddress, logr), "Cannot run the diff gRPC server")
+		return
+	case startCmd.FullCommand():
+		// the provider's controllers are started below.
 	}
 
 	// currently, we configure the jitter to be the 5% of the poll interval
