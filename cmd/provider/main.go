@@ -124,7 +124,12 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 
 	switch cmd {
 	case diffServerCmd.FullCommand():
-		kingpin.FatalIfError(diff.Serve(ctrl.SetupSignalHandler(), *diffNetwork, *diffAddress, logr), "Cannot run the diff gRPC server")
+		// The diff server only needs to deserialize this provider's managed
+		// resources, so its scheme holds just the provider's APIs.
+		diffScheme := runtime.NewScheme()
+		kingpin.FatalIfError(clusterapis.AddToScheme(diffScheme), "Cannot add cluster-scoped Azuread APIs to the diff server scheme")
+		kingpin.FatalIfError(namespacedapis.AddToScheme(diffScheme), "Cannot add namespaced Azuread APIs to the diff server scheme")
+		kingpin.FatalIfError(diff.Serve(ctrl.SetupSignalHandler(), *diffNetwork, *diffAddress, diffScheme, logr), "Cannot run the diff gRPC server")
 		return
 	case startCmd.FullCommand():
 		// the provider's controllers are started below.
