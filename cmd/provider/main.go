@@ -26,6 +26,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/statemetrics"
 	tjcontroller "github.com/crossplane/upjet/v2/pkg/controller"
 	"github.com/crossplane/upjet/v2/pkg/controller/conversion"
+	"github.com/crossplane/upjet/v2/pkg/diffserver"
 	"github.com/hashicorp/terraform-provider-azuread/xpprovider"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -53,7 +54,6 @@ import (
 	"github.com/upbound/provider-azuread/v2/internal/clients"
 	clustercontroller "github.com/upbound/provider-azuread/v2/internal/controller/cluster"
 	namespacedcontroller "github.com/upbound/provider-azuread/v2/internal/controller/namespaced"
-	"github.com/upbound/provider-azuread/v2/internal/diff"
 	"github.com/upbound/provider-azuread/v2/internal/features"
 	"github.com/upbound/provider-azuread/v2/internal/version"
 )
@@ -129,7 +129,7 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 		diffScheme := runtime.NewScheme()
 		kingpin.FatalIfError(clusterapis.AddToScheme(diffScheme), "Cannot add cluster-scoped Azuread APIs to the diff server scheme")
 		kingpin.FatalIfError(namespacedapis.AddToScheme(diffScheme), "Cannot add namespaced Azuread APIs to the diff server scheme")
-		kingpin.FatalIfError(diff.Serve(ctrl.SetupSignalHandler(), *diffNetwork, *diffAddress, diffScheme, logr), "Cannot run the diff gRPC server")
+		kingpin.FatalIfError(diffserver.Serve(ctrl.SetupSignalHandler(), *diffNetwork, *diffAddress, diffScheme, logr), "Cannot run the diff gRPC server")
 		return
 	case startCmd.FullCommand():
 		// the provider's controllers are started below.
