@@ -142,7 +142,7 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 		s := diffserver.NewServer(
 			diffserver.WithProviderConfigurations(clusterProvider, namespacedProvider),
 			diffserver.WithLogger(logr),
-			diffserver.WithTerraformSetupFn(clients.TerraformSetupBuilder(sdkProvider)),
+			diffserver.WithTerraformSetupFn(clients.OfflineTerraformSetupBuilder(sdkProvider)),
 		)
 		kingpin.FatalIfError(s.Serve(ctrl.SetupSignalHandler(), *diffNetwork, *diffAddress, diffScheme), "Cannot run the diff gRPC server")
 		return
