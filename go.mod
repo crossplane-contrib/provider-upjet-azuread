@@ -181,6 +181,6 @@ require (
 	software.sslmate.com/src/go-pkcs12 v0.7.3 // indirect
 )
 
-replace github.com/hashicorp/terraform-provider-azuread => github.com/ulucinar/terraform-provider-azuread v0.0.0-20260924154558-82fd56646a79
+replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20260924171304-042c15e37d8c
 
 replace github.com/crossplane/upjet/v2 => ../upjet
