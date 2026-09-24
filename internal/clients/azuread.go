@@ -298,8 +298,11 @@ func resolveProviderConfigModern(ctx context.Context, crClient client.Client, mg
 		return nil, errors.Errorf("referenced provider config kind %q is not a provider config type %s/%s", configRef.Kind, mg.GetNamespace(), mg.GetName())
 	}
 
-	// Namespace will be ignored if the PC is a cluster-scoped type
-	if err := crClient.Get(ctx, types.NamespacedName{Name: configRef.Name, Namespace: mg.GetNamespace()}, pcObj); err != nil {
+	ns := mg.GetNamespace()
+	if configRef.Kind == namespacedv1beta1.ClusterProviderConfigKind {
+		ns = ""
+	}
+	if err := crClient.Get(ctx, types.NamespacedName{Name: configRef.Name, Namespace: ns}, pcObj); err != nil {
 		return nil, errors.Wrap(err, errGetProviderConfig)
 	}
 

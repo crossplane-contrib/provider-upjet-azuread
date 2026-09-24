@@ -122,14 +122,29 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 		ctrl.SetLogger(zl)
 	}
 
+	ctx := context.Background()
+	sdkProvider, err := xpprovider.GetProviderSchema(ctx)
+	kingpin.FatalIfError(err, "Cannot get TF SDK provider")
+	clusterProvider, err := pconfig.GetProvider(ctx, sdkProvider, false)
+	kingpin.FatalIfError(err, "Cannot initialize the cluster provider configuration")
+	namespacedProvider, err := pconfig.GetNamespacedProvider(ctx, sdkProvider, false)
+	kingpin.FatalIfError(err, "Cannot initialize the namespaced provider configuration")
+
 	switch cmd {
 	case diffServerCmd.FullCommand():
 		// The diff server only needs to deserialize this provider's managed
 		// resources, so its scheme holds just the provider's APIs.
 		diffScheme := runtime.NewScheme()
+		kingpin.FatalIfError(corev1.AddToScheme(diffScheme), "Cannot add Kubernetes core APIs to the diff server scheme")
 		kingpin.FatalIfError(clusterapis.AddToScheme(diffScheme), "Cannot add cluster-scoped Azuread APIs to the diff server scheme")
 		kingpin.FatalIfError(namespacedapis.AddToScheme(diffScheme), "Cannot add namespaced Azuread APIs to the diff server scheme")
-		kingpin.FatalIfError(diffserver.Serve(ctrl.SetupSignalHandler(), *diffNetwork, *diffAddress, diffScheme, logr), "Cannot run the diff gRPC server")
+
+		s := diffserver.NewServer(
+			diffserver.WithProviderConfigurations(clusterProvider, namespacedProvider),
+			diffserver.WithLogger(logr),
+			diffserver.WithTerraformSetupFn(clients.TerraformSetupBuilder(sdkProvider)),
+		)
+		kingpin.FatalIfError(s.Serve(ctrl.SetupSignalHandler(), *diffNetwork, *diffAddress, diffScheme), "Cannot run the diff gRPC server")
 		return
 	case startCmd.FullCommand():
 		// the provider's controllers are started below.
@@ -219,13 +234,6 @@ func main() { //nolint:gocyclo // easier to follow as a unit
 	metrics.Registry.MustRegister(metricRecorder)
 	metrics.Registry.MustRegister(stateMetrics)
 
-	ctx := context.Background()
-	sdkProvider, err := xpprovider.GetProviderSchema(ctx)
-	kingpin.FatalIfError(err, "Cannot get TF SDK provider")
-	clusterProvider, err := pconfig.GetProvider(ctx, sdkProvider, false)
-	kingpin.FatalIfError(err, "Cannot initialize the cluster provider configuration")
-	namespacedProvider, err := pconfig.GetNamespacedProvider(ctx, sdkProvider, false)
-	kingpin.FatalIfError(err, "Cannot initialize the namespaced provider configuration")
 	clusterOpts := tjcontroller.Options{
 		Options: xpcontroller.Options{
 			Logger:                  logr,
