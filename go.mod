@@ -4,7 +4,7 @@
 
 module github.com/upbound/provider-azuread/v2
 
-go 1.26.6
+go 1.26.8
 
 tool golang.org/x/tools/cmd/goimports
 
@@ -13,14 +13,15 @@ require (
 	github.com/alecthomas/kingpin/v2 v2.4.0
 	github.com/crossplane/crossplane-runtime/v2 v2.5.0-rc.0.0.20260908074656-9b2fb6b1d1ff
 	github.com/crossplane/crossplane-tools v0.0.0-20260719180100-659f1dc036c5
-	github.com/crossplane/crossplane/apis/v2 v2.4.0
+	github.com/crossplane/crossplane/apis/v2 v2.4.1
 	github.com/crossplane/upjet/v2 v2.4.1-0.20260728103920-4f6e6e10dff2
 	github.com/google/go-cmp v0.7.0
+	github.com/hashicorp/go-azure-sdk/sdk v0.20260212.1143955
 	github.com/hashicorp/terraform-json v0.27.2
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.2
 	github.com/hashicorp/terraform-provider-azuread v1.6.1-0.20230727144955-0adfe586f500
 	github.com/pkg/errors v0.9.1
-	google.golang.org/grpc v1.82.1
+	google.golang.org/grpc v1.83.2
 	k8s.io/api v0.36.2
 	k8s.io/apiextensions-apiserver v0.36.2
 	k8s.io/apimachinery v0.36.2
@@ -76,7 +77,6 @@ require (
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-azure-helpers v0.80.0 // indirect
 	github.com/hashicorp/go-azure-sdk/microsoft-graph v0.20260212.1143955 // indirect
-	github.com/hashicorp/go-azure-sdk/sdk v0.20260212.1143955 // indirect
 	github.com/hashicorp/go-checkpoint v0.5.0 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-cty v1.5.0 // indirect
@@ -161,7 +161,7 @@ require (
 	golang.org/x/tools v0.49.0 // indirect
 	gomodules.xyz/jsonpatch/v2 v2.5.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260523011958-0a33c5d7ca68 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260526163538-3dc84a4a5aaa // indirect
 	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
@@ -180,4 +180,6 @@ require (
 	software.sslmate.com/src/go-pkcs12 v0.7.3 // indirect
 )
 
-replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20260707060449-1f6e89d6d3b6
+replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20260924171304-042c15e37d8c
+
+replace github.com/crossplane/upjet/v2 => github.com/ulucinar/upbound-upjet/v2 v2.0.0-20260925195943-6ba5adb9a7cf
