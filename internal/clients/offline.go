@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2024 The Crossplane Authors <https://crossplane.io>
+// SPDX-FileCopyrightText: 2026 The Crossplane Authors <https://crossplane.io>
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -15,6 +15,7 @@ import (
 
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	xpresource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	"github.com/crossplane/upjet/v2/pkg/diffserver"
 	"github.com/crossplane/upjet/v2/pkg/terraform"
 	"github.com/hashicorp/go-azure-sdk/sdk/auth"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -47,12 +48,14 @@ const (
 	// offline diff server refused to send. The request's query string is
 	// deliberately left out: it carries $filter values taken from the
 	// resource's own fields.
-	fmtErrOfflineRequestBlocked = "the offline diff server blocked an outbound Microsoft Graph request (%s %s): computing this diff requires calling Azure, which is not possible offline. On Group, Application and Unit resources this is usually caused by spec.forProvider.preventDuplicateNames being true"
+	fmtErrOfflineRequestBlocked = "offline diff server blocked an outbound Microsoft Graph request (%s %s): computing this diff requires calling Azure, which is not possible offline."
 
 	// offlineTokenLifetime is what the offline token claims for expires_in.
 	// The value is immaterial: when the cached token lapses, the Azure SDK
 	// simply asks offlineTokenClient for another one.
 	offlineTokenLifetime = "3600"
+
+	valUnknown = "<unknown>"
 )
 
 // EnableOfflineAuthentication replaces the HTTP clients that the Azure SDK uses
@@ -121,14 +124,15 @@ func configureOffline(ctx context.Context, tfProvider *schema.Provider, pcSpec *
 // the offline access token. The Azure SDK returns a request middleware's error
 // to the caller without sending the request.
 func denyOutboundRequest(req *http.Request) (*http.Request, error) {
-	method, path := "unknown", "unknown"
+	method := valUnknown
+	path := valUnknown
 	if req != nil {
 		method = req.Method
 		if req.URL != nil {
 			path = req.URL.Path
 		}
 	}
-	return nil, errors.Errorf(fmtErrOfflineRequestBlocked, method, path)
+	return nil, diffserver.NewDiffComputationNotSupportedError(errors.Errorf(fmtErrOfflineRequestBlocked, method, path))
 }
 
 // offlineConfiguration returns the Terraform provider configuration to use for
