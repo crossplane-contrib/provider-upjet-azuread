@@ -55,6 +55,8 @@ const (
 	keyEnvironment              = "environment"
 	keyOidcTokenFilePath        = "oidc_token_file_path"
 	keyUseOIDC                  = "use_oidc"
+	// Terraform Provider configuration values
+	valTrue = "true"
 	// Default OidcTokenFilePath, used only if AZURE_FEDERATED_TOKEN_FILE is
 	// not set and no explicit oidcTokenFilePath is configured. The azure
 	// workload identity webhook owns this path and has changed it before
@@ -182,7 +184,7 @@ func msiAuth(pcSpec *namespacedv1beta1.ProviderConfigSpec, ps *terraform.Setup) 
 		return errors.New(errTenantIDNotSet)
 	}
 	ps.Configuration[keyTenantID] = *pcSpec.TenantID
-	ps.Configuration[keyUseMSI] = "true"
+	ps.Configuration[keyUseMSI] = valTrue
 	if pcSpec.MSIEndpoint != nil {
 		ps.Configuration[keyMSIEndpoint] = *pcSpec.MSIEndpoint
 	}
@@ -215,7 +217,7 @@ func oidcAuth(pcSpec *namespacedv1beta1.ProviderConfigSpec, ps *terraform.Setup)
 	}
 	ps.Configuration[keyTenantID] = *pcSpec.TenantID
 	ps.Configuration[keyClientID] = *pcSpec.ClientID
-	ps.Configuration[keyUseOIDC] = "true"
+	ps.Configuration[keyUseOIDC] = valTrue
 	return nil
 }
 
@@ -229,7 +231,7 @@ func upboundAuth(pcSpec *namespacedv1beta1.ProviderConfigSpec, ps *terraform.Set
 	ps.Configuration[keyOidcTokenFilePath] = upboundProviderIdentityTokenFile
 	ps.Configuration[keyTenantID] = *pcSpec.TenantID
 	ps.Configuration[keyClientID] = *pcSpec.ClientID
-	ps.Configuration[keyUseOIDC] = "true"
+	ps.Configuration[keyUseOIDC] = valTrue
 	return nil
 }
 

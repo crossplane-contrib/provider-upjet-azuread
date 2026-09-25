@@ -17,6 +17,9 @@ import (
 	tfazureclient "github.com/hashicorp/terraform-provider-azuread/xpprovider"
 )
 
+// keyDisplayName is the azuread_group attribute the offline diff tests change.
+const keyDisplayName = "display_name"
+
 // TestOfflineConfigure asserts that the AzureAD Terraform provider can be
 // configured with no credentials and no access to Azure. The assertion is
 // meaningful because the offline configuration's client secret is a
@@ -64,15 +67,15 @@ func TestOfflineDiff(t *testing.T) {
 		Attributes: map[string]string{
 			"id":               offlineObjectID,
 			"object_id":        offlineObjectID,
-			"display_name":     "old-name",
+			keyDisplayName:     "old-name",
 			"description":      "before",
-			"security_enabled": "true",
+			"security_enabled": valTrue,
 			"mail_enabled":     "false",
 		},
 	}
 	config := &tfsdk.ResourceConfig{
 		Config: map[string]any{
-			"display_name":     "new-name",
+			keyDisplayName:     "new-name",
 			"description":      "after",
 			"security_enabled": true,
 			"mail_enabled":     false,
@@ -91,7 +94,7 @@ func TestOfflineDiff(t *testing.T) {
 		}
 	}
 	want := map[string][2]string{
-		"display_name":            {"old-name", "new-name"},
+		keyDisplayName:            {"old-name", "new-name"},
 		"description":             {"before", "after"},
 		"prevent_duplicate_names": {"", "false"},
 		"writeback_enabled":       {"", "false"},
@@ -124,15 +127,15 @@ func TestOfflineDiffBlocksOutboundRequest(t *testing.T) {
 		Attributes: map[string]string{
 			"id":                      offlineObjectID,
 			"object_id":               offlineObjectID,
-			"display_name":            "old-name",
-			"security_enabled":        "true",
+			keyDisplayName:            "old-name",
+			"security_enabled":        valTrue,
 			"mail_enabled":            "false",
-			"prevent_duplicate_names": "true",
+			"prevent_duplicate_names": valTrue,
 		},
 	}
 	config := &tfsdk.ResourceConfig{
 		Config: map[string]any{
-			"display_name":            "new-name",
+			keyDisplayName:            "new-name",
 			"security_enabled":        true,
 			"mail_enabled":            false,
 			"prevent_duplicate_names": true,

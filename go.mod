@@ -182,4 +182,4 @@ require (
 
 replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20260924171304-042c15e37d8c
 
-replace github.com/crossplane/upjet/v2 => github.com/ulucinar/upbound-upjet/v2 v2.0.0-20260925185012-1377eea66de4
+replace github.com/crossplane/upjet/v2 => github.com/ulucinar/upbound-upjet/v2 v2.0.0-20260925195943-6ba5adb9a7cf
