@@ -42,7 +42,6 @@ require (
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudflare/circl v1.6.3 // indirect
-	github.com/crossplane/crossplane/v2 v2.1.3 // indirect
 	github.com/dave/jennifer v1.7.1 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/emicklei/go-restful/v3 v3.13.0 // indirect
@@ -183,4 +182,4 @@ require (
 
 replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20260924171304-042c15e37d8c
 
-replace github.com/crossplane/upjet/v2 => ../upjet
+replace github.com/crossplane/upjet/v2 => github.com/ulucinar/upbound-upjet/v2 v2.0.0-20260925185012-1377eea66de4
