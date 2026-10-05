@@ -20,7 +20,7 @@ require (
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.2
 	github.com/hashicorp/terraform-provider-azuread v1.6.1-0.20230727144955-0adfe586f500
 	github.com/pkg/errors v0.9.1
-	google.golang.org/grpc v1.83.1
+	google.golang.org/grpc v1.83.2
 	k8s.io/api v0.36.2
 	k8s.io/apiextensions-apiserver v0.36.2
 	k8s.io/apimachinery v0.36.2
