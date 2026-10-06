@@ -17,8 +17,15 @@ import (
 	tfazureclient "github.com/hashicorp/terraform-provider-azuread/xpprovider"
 )
 
-// keyDisplayName is the azuread_group attribute the offline diff tests change.
-const keyDisplayName = "display_name"
+// The azuread_group attributes the offline diff tests set, and the string form
+// of a false boolean, which is how Terraform's flatmap state spells one.
+const (
+	keyDisplayName           = "display_name"
+	keySecurityEnabled       = "security_enabled"
+	keyMailEnabled           = "mail_enabled"
+	keyPreventDuplicateNames = "prevent_duplicate_names"
+	valFalse                 = "false"
+)
 
 // TestOfflineConfigure asserts that the AzureAD Terraform provider can be
 // configured with no credentials and no access to Azure. The assertion is
@@ -69,16 +76,16 @@ func TestOfflineDiff(t *testing.T) {
 			"object_id":        offlineObjectID,
 			keyDisplayName:     "old-name",
 			"description":      "before",
-			"security_enabled": valTrue,
-			"mail_enabled":     "false",
+			keySecurityEnabled: valTrue,
+			keyMailEnabled:     valFalse,
 		},
 	}
 	config := &tfsdk.ResourceConfig{
 		Config: map[string]any{
 			keyDisplayName:     "new-name",
 			"description":      "after",
-			"security_enabled": true,
-			"mail_enabled":     false,
+			keySecurityEnabled: true,
+			keyMailEnabled:     false,
 		},
 	}
 
@@ -94,10 +101,10 @@ func TestOfflineDiff(t *testing.T) {
 		}
 	}
 	want := map[string][2]string{
-		keyDisplayName:            {"old-name", "new-name"},
-		"description":             {"before", "after"},
-		"prevent_duplicate_names": {"", "false"},
-		"writeback_enabled":       {"", "false"},
+		keyDisplayName:           {"old-name", "new-name"},
+		"description":            {"before", "after"},
+		keyPreventDuplicateNames: {"", valFalse},
+		"writeback_enabled":      {"", valFalse},
 	}
 	if d := cmp.Diff(want, got); d != "" {
 		t.Errorf("unexpected diff for azuread_group -want, +got:\n%s", d)
@@ -125,20 +132,20 @@ func TestOfflineDiffBlocksOutboundRequest(t *testing.T) {
 	state := &tfsdk.InstanceState{
 		ID: offlineObjectID,
 		Attributes: map[string]string{
-			"id":                      offlineObjectID,
-			"object_id":               offlineObjectID,
-			keyDisplayName:            "old-name",
-			"security_enabled":        valTrue,
-			"mail_enabled":            "false",
-			"prevent_duplicate_names": valTrue,
+			"id":                     offlineObjectID,
+			"object_id":              offlineObjectID,
+			keyDisplayName:           "old-name",
+			keySecurityEnabled:       valTrue,
+			keyMailEnabled:           valFalse,
+			keyPreventDuplicateNames: valTrue,
 		},
 	}
 	config := &tfsdk.ResourceConfig{
 		Config: map[string]any{
-			keyDisplayName:            "new-name",
-			"security_enabled":        true,
-			"mail_enabled":            false,
-			"prevent_duplicate_names": true,
+			keyDisplayName:           "new-name",
+			keySecurityEnabled:       true,
+			keyMailEnabled:           false,
+			keyPreventDuplicateNames: true,
 		},
 	}
 

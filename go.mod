@@ -14,7 +14,7 @@ require (
 	github.com/crossplane/crossplane-runtime/v2 v2.5.0-rc.0.0.20260908074656-9b2fb6b1d1ff
 	github.com/crossplane/crossplane-tools v0.0.0-20260719180100-659f1dc036c5
 	github.com/crossplane/crossplane/apis/v2 v2.4.2
-	github.com/crossplane/upjet/v2 v2.4.1-0.20260728103920-4f6e6e10dff2
+	github.com/crossplane/upjet/v2 v2.5.1-0.20261005082904-c3b7d449d0d4
 	github.com/google/go-cmp v0.7.0
 	github.com/hashicorp/go-azure-sdk/sdk v0.20260212.1143955
 	github.com/hashicorp/terraform-json v0.27.2
@@ -181,5 +181,3 @@ require (
 )
 
 replace github.com/hashicorp/terraform-provider-azuread => github.com/upbound/terraform-provider-azuread v0.0.0-20260924171304-042c15e37d8c
-
-replace github.com/crossplane/upjet/v2 => github.com/ulucinar/upbound-upjet/v2 v2.0.0-20260925195943-6ba5adb9a7cf

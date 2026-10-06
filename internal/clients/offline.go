@@ -113,6 +113,18 @@ func configureOffline(ctx context.Context, tfProvider *schema.Provider, pcSpec *
 	// itself is reached through a separate client, so a CustomizeDiff function
 	// that calls the API - see denyOutboundRequest - would otherwise retry
 	// against an unreachable endpoint until it timed out.
+	//
+	// The guard can only go on here, after Configure: it is registered on the
+	// Graph clients held by the provider's Meta, which Configure is what
+	// creates. That leaves Configure itself unguarded, and it does contain one
+	// Graph call - when the access token carries no oid claim, the provider
+	// queries Graph for the authenticated principal's object ID. Two separate
+	// things keep that call from going out: offlineAccessToken always mints a
+	// non-empty oid, so the branch is never taken, and configureNoForkAzureClient
+	// passes Configure a context.WithoutCancel context, which carries no
+	// deadline, which the Azure SDK requires before it will run a paged
+	// operation. Both are covered by the egress tests in offline_egress_test.go,
+	// which watch the process's real network boundary.
 	if !tfazureclient.RegisterRequestMiddleware(ps.Meta, denyOutboundRequest) {
 		return terraform.Setup{}, errors.New(errRegisterRequestMiddleware)
 	}
