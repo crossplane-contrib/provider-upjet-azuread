@@ -26,7 +26,7 @@ import (
 )
 
 // GetNamespacedProvider returns the namespaced provider configuration
-func GetNamespacedProvider(ctx context.Context, sdkProvider *schema.Provider, generationProvider bool) (*ujconfig.Provider, error) {
+func GetNamespacedProvider(_ context.Context, sdkProvider *schema.Provider, generationProvider bool) (*ujconfig.Provider, error) {
 	if generationProvider {
 		p, err := getProviderSchema(providerSchema)
 		if err != nil {
