@@ -30,6 +30,12 @@ const (
 	// which defaults to true and shells out to the `az` binary.
 	keyUseCLI = "use_cli"
 
+	// Terraform Provider configuration key for a custom Azure Metadata
+	// Service hostname. Left unset, it falls back to ARM_METADATA_HOSTNAME
+	// from the process environment; see offlineConfiguration's own comment
+	// for why it is pinned instead.
+	keyMetadataHost = "metadata_host"
+
 	// Placeholder identities used when configuring the Terraform provider for
 	// offline diffs. They are only ever observed locally: nothing derived from
 	// them leaves the process, because the token they end up in is minted by
@@ -161,6 +167,20 @@ func offlineConfiguration(pcSpec *namespacedv1beta1.ProviderConfigSpec) map[stri
 		// through to the Azure CLI authorizer and shell out to `az`.
 		keyClientSecret: offlineClientSecret,
 		keyUseCLI:       false,
+		// Every other key here pins a Terraform-side default that would
+		// otherwise come from the process environment, but ARM_* env vars
+		// would only ever steer *which* authorizer gets built - the request
+		// that authorizer eventually sends still goes through the same
+		// offlineTokenClient, package-level-swapped in EnableOfflineAuthentication,
+		// regardless of which one was picked. metadata_host is different: it
+		// is read before any authorizer exists, to discover the cloud
+		// environment itself, via a plain *http.Client that EnableOfflineAuthentication's
+		// swap never touches. Left unpinned, a host environment carrying
+		// ARM_METADATA_HOSTNAME (a real setting for Azure Stack/sovereign-cloud
+		// deployments, which this ProviderConfig has no field for - the only
+		// way to set it is directly on the pod) makes the offline diff server
+		// issue a genuine, unstubbed outbound request.
+		keyMetadataHost: "",
 	}
 
 	if pcSpec == nil {

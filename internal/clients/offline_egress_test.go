@@ -32,6 +32,11 @@ const graphHost = "graph.microsoft.com"
 // loginHost is the endpoint the Azure SDK requests access tokens from.
 const loginHost = "login.microsoftonline.com"
 
+// customMetadataHost is a stand-in for a real Azure Stack/sovereign-cloud
+// metadata endpoint, used only as a hostname an ARM_METADATA_HOSTNAME value
+// would plausibly carry; nothing actually needs to be listening on it.
+const customMetadataHost = "management.azurestack.example"
+
 // realAuthClient is the Azure SDK's own token HTTP client, captured during
 // package variable initialisation - that is, before any test can call
 // EnableOfflineAuthentication, whose sync.Once swap cannot be undone. Holding
@@ -309,5 +314,66 @@ func TestConfigureEgressesWithoutOfflineAuthentication(t *testing.T) {
 
 	if !egress.reached(loginHost) {
 		t.Errorf("expected Configure to request a token from %s, recorded: %v", loginHost, egress.records())
+	}
+}
+
+// TestOfflineConfigureDoesNotEgressToMetadataHost asserts that a host
+// environment carrying ARM_METADATA_HOSTNAME - a real setting for Azure
+// Stack/sovereign-cloud deployments, and the only way to set it at all, since
+// this ProviderConfig has no field for it - cannot make the offline diff
+// server reach out to it.
+//
+// This is a different code path from every other egress test in this file:
+// environments.FromEndpoint, which providerConfigure calls when metadata_host
+// is non-empty, builds its own *http.Client from scratch rather than going
+// through auth.Client/auth.MetadataClient, so EnableOfflineAuthentication's
+// swap does not cover it. What closes this one is offlineConfiguration
+// pinning metadata_host to "" explicitly, overriding the environment default -
+// see TestEgressTripwireObservesUnpinnedMetadataHost for what happens without
+// that pin.
+func TestOfflineConfigureDoesNotEgressToMetadataHost(t *testing.T) {
+	t.Setenv("ARM_METADATA_HOSTNAME", customMetadataHost)
+	EnableOfflineAuthentication()
+	egress.reset()
+
+	p, err := tfazureclient.GetProviderSchema(context.Background())
+	if err != nil {
+		t.Fatalf("cannot get the AzureAD provider schema: %v", err)
+	}
+	if _, err := configureOffline(context.Background(), p, nil); err != nil {
+		t.Fatalf("cannot configure the AzureAD provider offline: %v", err)
+	}
+
+	if got := egress.records(); len(got) > 0 {
+		t.Errorf("configuring the provider offline reached the network: %v", got)
+	}
+}
+
+// TestEgressTripwireObservesUnpinnedMetadataHost is the positive control for
+// TestOfflineConfigureDoesNotEgressToMetadataHost. It builds the same offline
+// configuration but deletes the metadata_host pin from it before calling
+// Configure, reproducing what every key in offlineConfiguration would do if
+// left to the environment default, and shows the tripwire catches the
+// resulting request.
+func TestEgressTripwireObservesUnpinnedMetadataHost(t *testing.T) {
+	t.Setenv("ARM_METADATA_HOSTNAME", customMetadataHost)
+	EnableOfflineAuthentication()
+	egress.reset()
+
+	p, err := tfazureclient.GetProviderSchema(context.Background())
+	if err != nil {
+		t.Fatalf("cannot get the AzureAD provider schema: %v", err)
+	}
+	cfg := offlineConfiguration(nil)
+	delete(cfg, keyMetadataHost)
+
+	ps := terraform.Setup{Configuration: cfg}
+	// Expected to fail: the tripwire refuses the metadata request, so the cloud
+	// environment is never resolved and Configure cannot proceed. What matters
+	// here is that the request was seen leaving, not that Configure errors.
+	_ = configureNoForkAzureClient(context.Background(), &ps, *p) //nolint:errcheck
+
+	if !egress.reached(customMetadataHost) {
+		t.Errorf("expected the unpinned metadata_host to reach %s, recorded: %v", customMetadataHost, egress.records())
 	}
 }
